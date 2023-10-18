@@ -1,13 +1,4 @@
-import {
-  DollarSign,
-  Home,
-  List,
-  LogIn,
-  Menu,
-  MoveDown,
-  Percent,
-  ShoppingBag,
-} from 'lucide-react'
+import { Home, List, LogIn, Menu, Percent, ShoppingBag } from 'lucide-react'
 import { Card } from './card'
 import { Button } from './button'
 import { Sheet, SheetContent, SheetHeader, SheetTrigger } from './sheet'
