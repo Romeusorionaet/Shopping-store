@@ -1,32 +1,31 @@
-import { CategoryItem } from '@/components/Categories/category'
 import { prismaClient } from '@/lib/prisma'
+import Link from 'next/link'
+import { DiscountedProducts } from './components/Categories/discounted-products'
 
 export default async function Home() {
-  // for username, use client component
-  // const { data } = useSession()
-  // console.log(data)
-
-  const categoryList = await getData()
+  const { props } = await getDataProducts()
 
   return (
     <div>
-      {/* {data?.user?.name && (
-        <h1>Seja bem vindo {data?.user?.name} ao shopping store</h1>
-      )} */}
-
-      <div className="bg-red-700 w-2/4 h-[26rem] max-auto">
+      <div className="bg-red-700 w-2/4 h-[16rem]">
         <p>banner de promoção aqui</p>
       </div>
 
-      <CategoryItem categoryList={categoryList.props?.categoryList} />
+      <div className="my-20 bg-red-500">
+        <Link href="/catalog">Ver Nosso Catálogo</Link>
+      </div>
+
+      <DiscountedProducts products={props?.products} />
     </div>
   )
 }
 
-export const getData = async () => {
-  const categoryList = await prismaClient.category.findMany({})
+export const getDataProducts = async () => {
+  // get only products that be discounted
+  // discounted are products where discount ir more that 0
+  const products = await prismaClient.product.findMany({})
 
-  if (!categoryList) {
+  if (!products) {
     return {
       notFound: true,
     }
@@ -34,7 +33,7 @@ export const getData = async () => {
 
   return {
     props: {
-      categoryList,
+      products,
     },
     revalidate: 60 * 60 * 24, // 1 day
   }
