@@ -3,14 +3,13 @@ import Link from 'next/link'
 
 interface ParamsProps {
   params: {
-    id: string
     slug: string
   }
 }
 
-export default async function Product({ params }: ParamsProps) {
-  const { id, slug } = params
-  const { props } = await getDataSelectedProducts(id)
+export default async function Category({ params }: ParamsProps) {
+  const { slug } = params
+  const { props } = await getDataCategory(slug)
 
   return (
     <div>
@@ -18,8 +17,8 @@ export default async function Product({ params }: ParamsProps) {
         <h1>{slug}</h1>
 
         <div className="flex flex-wrap gap-8 justify-center my-8">
-          {props?.selectedProducts &&
-            props.selectedProducts.map((product) => {
+          {props?.selectedProducts.products &&
+            props.selectedProducts.products.map((product) => {
               return (
                 <Link href={`/details/${product.slug}`} key={product.id}>
                   <p className="block bg-red-900">{product.name}</p>
@@ -35,10 +34,13 @@ export default async function Product({ params }: ParamsProps) {
   )
 }
 
-export const getDataSelectedProducts = async (id: string) => {
-  const selectedProducts = await prismaClient.product.findMany({
+export const getDataCategory = async (slug: string) => {
+  const selectedProducts = await prismaClient.category.findFirst({
     where: {
-      categoryId: id,
+      slug,
+    },
+    include: {
+      products: true,
     },
   })
 

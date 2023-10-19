@@ -1,5 +1,5 @@
 import { prismaClient } from '@/lib/prisma'
-import Link from 'next/link'
+import CategoryItem from './components/category-item'
 
 export default async function Catalog() {
   const { props } = await getDataCatalog()
@@ -14,10 +14,7 @@ export default async function Catalog() {
             props.categories.map((category) => {
               return (
                 <div key={category.id}>
-                  <Link href={`/product/${category.slug}/${category.id}`}>
-                    {category.name}
-                  </Link>
-                  <img src={category.imageUrl} alt="" />
+                  <CategoryItem category={category} />
                 </div>
               )
             })}
