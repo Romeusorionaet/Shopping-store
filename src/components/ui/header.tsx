@@ -115,7 +115,19 @@ export function Header() {
       </Sheet>
 
       <h1 className="text-2xl font-bold">Shopping Store</h1>
-      <ShoppingBag size={28} />
+      <Sheet>
+        <SheetTrigger asChild>
+          <Button size="icon" variant="outline" className="group">
+            <ShoppingBag size={28} />
+          </Button>
+        </SheetTrigger>
+
+        <SheetContent>
+          <SheetHeader className="text-left text-lg font-bold">
+            Sacola
+          </SheetHeader>
+        </SheetContent>
+      </Sheet>
     </Card>
   )
 }
