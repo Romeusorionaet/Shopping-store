@@ -1,4 +1,5 @@
 import { prismaClient } from '@/lib/prisma'
+import Link from 'next/link'
 
 interface ParamsProps {
   params: {
@@ -20,12 +21,12 @@ export default async function Product({ params }: ParamsProps) {
           {props?.selectedProducts &&
             props.selectedProducts.map((product) => {
               return (
-                <div key={product.id}>
+                <Link href={`/details/${product.slug}`} key={product.id}>
                   <p className="block bg-red-900">{product.name}</p>
                   <img className="w-20" src={product.imageUrls[0]} alt="" />
                   <p>Valor do produto {Number(product.basePrice)}</p>
                   <p>{Number(product.discountPercentage)} % de desconto</p>
-                </div>
+                </Link>
               )
             })}
         </div>
