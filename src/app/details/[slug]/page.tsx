@@ -1,4 +1,5 @@
 import { prismaClient } from '@/lib/prisma'
+import { ProductList } from '../components/product-list'
 
 interface ParamsProps {
   params: {
@@ -35,6 +36,14 @@ export default async function Details({ params }: ParamsProps) {
             </div>
           )}
         </div>
+
+        <div>
+          <h2>
+            Lista do footer com items da mesma categoria sem o item autal{' '}
+          </h2>
+
+          <ProductList products={props?.product.category.products} />
+        </div>
       </div>
     </div>
   )
@@ -45,8 +54,20 @@ export const getDataUniqueProduct = async (slug: string) => {
     where: {
       slug,
     },
+    include: {
+      category: {
+        include: {
+          products: {
+            where: {
+              slug: {
+                not: slug,
+              },
+            },
+          },
+        },
+      },
+    },
   })
-  console.log(product)
 
   if (!product) {
     return {
