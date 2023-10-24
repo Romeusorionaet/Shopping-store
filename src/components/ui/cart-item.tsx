@@ -1,19 +1,20 @@
-import { CartContext, CartProduct } from '@/providers/cart'
 import Image from 'next/image'
 import { Button } from './button'
 import { ArrowLeftIcon, ArrowRightIcon, TrashIcon } from 'lucide-react'
-import { useContext } from 'react'
+import { CartProduct, useCartStore } from '@/providers/zustand-store'
 
 interface CartItemProps {
   product: CartProduct
 }
 
-const CartItem = ({ product }: CartItemProps) => {
+export function CartItem({ product }: CartItemProps) {
   const {
     decreaseProductQuantity,
     increaseProductQuantity,
     removeProductFromCart,
-  } = useContext(CartContext)
+  } = useCartStore()
+
+  const basePrice = Number(product.basePrice) * product.quantity
 
   const handleDecreaseProductQuantityClick = () => {
     decreaseProductQuantity(product.id)
@@ -46,15 +47,16 @@ const CartItem = ({ product }: CartItemProps) => {
         <div className="flex flex-col">
           <p className="text-xs">{product.name}</p>
 
-          <div className="flex items-center gap-2">
+          <div className="flex flex-col items-center gap-2">
+            {product.discountPercentage > 0 && (
+              <p className="text-xs line-through opacity-75">
+                R$ {basePrice.toFixed(2)}
+              </p>
+            )}
+
             <p className="text-sm font-bold">
               R$ {product.totalPrice.toFixed(2)}
             </p>
-            {product.discountPercentage > 0 && (
-              <p className="text-xs line-through opacity-75">
-                R$ {Number(product.basePrice).toFixed(2)}
-              </p>
-            )}
           </div>
 
           <div className="flex items-center gap-1">
@@ -87,5 +89,3 @@ const CartItem = ({ product }: CartItemProps) => {
     </div>
   )
 }
-
-export default CartItem

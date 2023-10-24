@@ -7,9 +7,12 @@ import { Button } from './button'
 import { Card } from './card'
 import { Avatar, AvatarFallback, AvatarImage } from './avatar'
 import { Separator } from './separator'
+import { useRouter } from 'next/navigation'
+import { Cart } from './cart'
 
 export function Header() {
   const { status, data } = useSession()
+  const router = useRouter()
 
   const handleLogin = async () => {
     try {
@@ -27,12 +30,20 @@ export function Header() {
     }
   }
 
+  const handleBackHomePage = () => {
+    router.push('/')
+  }
+
   return (
     <Card className="flex justify-around items-center rounded-none p-4">
       <Sheet>
         <SheetTrigger asChild>
-          <Button size="icon" variant="outline" className="bg-white group ">
-            <Menu className="group-hover:text-white transition duration-700" />
+          <Button
+            size="icon"
+            variant="outline"
+            className="group hover:bg-white"
+          >
+            <Menu className="group-hover:text-zinc-900 transition duration-700" />
           </Button>
         </SheetTrigger>
 
@@ -88,6 +99,7 @@ export function Header() {
             )}
 
             <Button
+              onClick={() => handleBackHomePage()}
               size="icon"
               className="font-semibold w-full gap-1 justify-start bg-transparent"
             >
@@ -126,6 +138,8 @@ export function Header() {
           <SheetHeader className="text-left text-lg font-bold">
             Sacola
           </SheetHeader>
+
+          <Cart />
         </SheetContent>
       </Sheet>
     </Card>
