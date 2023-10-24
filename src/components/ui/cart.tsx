@@ -3,15 +3,25 @@ import { Separator } from './separator'
 import { Button } from './button'
 import { CartItem } from './cart-item'
 import { loadStripe } from '@stripe/stripe-js'
-import { createCheckout } from '@/app/api/checkout'
 import { useCartStore } from '@/providers/zustand-store'
 import { calculateCartAllValues } from '@/utils/calculate-cart-all-values'
+import { createCheckout } from '@/actions/checkout'
+import { createOrder } from '@/actions/order'
+import { useSession } from 'next-auth/react'
 
 export function Cart() {
   const { cart } = useCartStore()
   const { subtotal, totalDiscount, total } = calculateCartAllValues(cart)
+  const { data } = useSession()
 
   const handleFinishPurchaseClick = async () => {
+    if (!data?.user) {
+      // fazer redirecionamento para tela de login
+      console.log('sem user logado')
+      return
+    }
+    await createOrder(cart, (data?.user as any).id)
+
     const checkout = await createCheckout(cart)
 
     const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY)
