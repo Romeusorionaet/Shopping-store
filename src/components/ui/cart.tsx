@@ -1,30 +1,95 @@
 import { ShoppingCartIcon } from 'lucide-react'
-import { useContext } from 'react'
-import { CartContext } from '@/providers/cart'
-import CartItem from './cart-item'
-import { computeProductTotalPrice } from '@/ultis/compute-product-to-total-price'
+import { Separator } from './separator'
+import { Button } from './button'
+import { CartItem } from './cart-item'
+import { loadStripe } from '@stripe/stripe-js'
+import { createCheckout } from '@/app/api/checkout'
+import { useCartStore } from '@/providers/zustand-store'
+import { calculateCartAllValues } from '@/utils/calculate-cart-all-values'
 
-const Cart = () => {
-  const { products } = useContext(CartContext)
+export function Cart() {
+  const { cart } = useCartStore()
+  const { subtotal, totalDiscount, total } = calculateCartAllValues(cart)
+
+  const handleFinishPurchaseClick = async () => {
+    const checkout = await createCheckout(cart)
+
+    const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY)
+    const stripe = await stripePromise
+
+    if (stripe) {
+      stripe
+        .redirectToCheckout({
+          sessionId: checkout.id,
+        })
+        .then(function (result) {
+          if (result.error) {
+            console.error(result.error)
+          }
+        })
+    }
+  }
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex h-full flex-col gap-8">
       <div className="w-fit gap-1 border-2 border-primary px-3 py-[0.375rem] text-base uppercase">
         <ShoppingCartIcon size={16} />
-        Catálogo
+        Carrinho
       </div>
 
       {/* RENDERIZAR OS PRODUTOS */}
-      <div className="flex flex-col gap-5">
-        {products.map((product) => (
-          <CartItem
-            key={product.id}
-            product={computeProductTotalPrice(product as any) as any}
-          />
-        ))}
+      <div className="flex h-full max-h-full flex-col gap-5 overflow-hidden">
+        <div className="flex h-full flex-col gap-8">
+          {cart.length > 0 ? (
+            cart.map((product) => (
+              <CartItem key={product.id} product={product} />
+            ))
+          ) : (
+            <p className="text-center font-semibold">
+              Carrinho vazio. Vamos fazer compras?
+            </p>
+          )}
+        </div>
       </div>
+
+      {cart.length > 0 && (
+        <div className="flex flex-col gap-3">
+          <Separator />
+
+          <div className="flex items-center justify-between text-xs">
+            <p>Subtotal</p>
+            <p>R$ {subtotal.toFixed(2)}</p>
+          </div>
+
+          <Separator />
+
+          <div className="flex items-center justify-between text-xs">
+            <p>Entrega</p>
+            <p>GRÁTIS</p>
+          </div>
+
+          <Separator />
+
+          <div className="flex items-center justify-between text-xs">
+            <p>Descontos</p>
+            <p>- R$ {totalDiscount.toFixed(2)}</p>
+          </div>
+
+          <Separator />
+
+          <div className="flex items-center justify-between text-sm font-bold">
+            <p>Total</p>
+            <p>R$ {total.toFixed(2)}</p>
+          </div>
+
+          <Button
+            className="mt-7 font-bold uppercase"
+            onClick={handleFinishPurchaseClick}
+          >
+            Finalizar compra
+          </Button>
+        </div>
+      )}
     </div>
   )
 }
-
-export default Cart

@@ -3,7 +3,9 @@ declare namespace NodeJS {
     DATABASE_URL: string
     GOOGLE_CLIENT_ID: string
     GOOGLE_CLIENT_SECRET_ID: string
-    NEXTAUTH_URL: string
+    HOST_URL: string
     NEXTAUTH_SECRET: string
+    NEXT_PUBLIC_STRIPE_PUBLIC_KEY: string
+    STRIPE_SECRET_KEY: string
   }
 }
