@@ -1,6 +1,6 @@
-import { prismaClient } from '@/lib/prisma'
-import { ProductList } from '../components/product-list'
+import { getDataUniqueProduct } from '@/lib/getData/get-data-unique-product'
 import { AddProductInCart } from '../components/add-product-in-cart'
+import { ProductList } from '../components/product-list'
 
 interface ParamsProps {
   params: {
@@ -39,38 +39,4 @@ export default async function Details({ params }: ParamsProps) {
       </div>
     </div>
   )
-}
-
-export const getDataUniqueProduct = async (slug: string) => {
-  const product = await prismaClient.product.findFirst({
-    where: {
-      slug,
-    },
-    include: {
-      category: {
-        include: {
-          products: {
-            where: {
-              slug: {
-                not: slug,
-              },
-            },
-          },
-        },
-      },
-    },
-  })
-
-  if (!product) {
-    return {
-      notFound: true,
-    }
-  }
-
-  return {
-    props: {
-      product,
-    },
-    revalidate: 60 * 60 * 24, // 1 day
-  }
 }

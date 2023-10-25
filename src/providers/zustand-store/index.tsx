@@ -1,4 +1,5 @@
 import { Product } from '@prisma/client'
+import { useEffect } from 'react'
 import { create } from 'zustand'
 
 export interface CartProduct extends Product {
@@ -15,13 +16,18 @@ export interface CartStore {
 }
 
 const getInitialCartState = () => {
-  const cartSavedInLocalStorage = JSON.parse(
-    localStorage.getItem('@fsw-store/cart-products') || '[]',
-  )
+  if (typeof window !== 'undefined') {
+    const cartSavedInLocalStorage = JSON.parse(
+      localStorage.getItem('@fsw-store/cart-products') || '[]',
+    )
+
+    return {
+      cart: cartSavedInLocalStorage,
+    }
+  }
 
   return {
-    cart: cartSavedInLocalStorage,
-    quantity: 0,
+    cart: [],
   }
 }
 

@@ -1,4 +1,4 @@
-import { prismaClient } from '@/lib/prisma'
+import { getDataCategory } from '@/lib/getData/get-data-category'
 import Link from 'next/link'
 
 interface ParamsProps {
@@ -32,28 +32,4 @@ export default async function Category({ params }: ParamsProps) {
       </div>
     </div>
   )
-}
-
-export const getDataCategory = async (slug: string) => {
-  const selectedProducts = await prismaClient.category.findFirst({
-    where: {
-      slug,
-    },
-    include: {
-      products: true,
-    },
-  })
-
-  if (!selectedProducts) {
-    return {
-      notFound: true,
-    }
-  }
-
-  return {
-    props: {
-      selectedProducts,
-    },
-    revalidate: 60 * 60 * 24, // 1 day
-  }
 }
