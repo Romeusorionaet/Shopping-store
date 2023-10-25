@@ -3,7 +3,10 @@
 import { initializeStripe } from '@/lib/stripe'
 import { CartProduct } from '@/providers/zustand-store'
 
-export const createCheckout = async (products: CartProduct[]) => {
+export const createCheckout = async (
+  products: CartProduct[],
+  orderId: string,
+) => {
   const stripe = initializeStripe()
 
   const checkout = await stripe.checkout.sessions.create({
@@ -11,6 +14,9 @@ export const createCheckout = async (products: CartProduct[]) => {
     mode: 'payment',
     success_url: `${process.env.HOST_URL}/success`,
     cancel_url: process.env.HOST_URL,
+    metadata: {
+      orderId,
+    },
     line_items: products.map((product) => {
       const totalDiscount =
         Number(product.basePrice) * (product.discountPercentage / 100)

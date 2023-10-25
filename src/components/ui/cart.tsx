@@ -20,24 +20,27 @@ export function Cart() {
       console.log('sem user logado')
       return
     }
-    await createOrder(cart, (data?.user as any).id)
+    const order = await createOrder(cart, (data?.user as any).id)
 
-    const checkout = await createCheckout(cart)
+    const checkout = await createCheckout(cart, order.id)
 
-    const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY)
-    const stripe = await stripePromise
+    const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY)
+    // const stripe = await stripePromise
 
-    if (stripe) {
-      stripe
-        .redirectToCheckout({
-          sessionId: checkout.id,
-        })
-        .then(function (result) {
-          if (result.error) {
-            console.error(result.error)
-          }
-        })
-    }
+    stripe?.redirectToCheckout({
+      sessionId: checkout.id,
+    })
+    // if (stripe) {
+    //   stripe
+    //     .redirectToCheckout({
+    //       sessionId: checkout.id,
+    //     })
+    //     .then(function (result) {
+    //       if (result.error) {
+    //         console.error(result.error)
+    //       }
+    //     })
+    // }
   }
 
   return (
