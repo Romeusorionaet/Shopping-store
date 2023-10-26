@@ -13,22 +13,16 @@ export const POST = async (req: Request) => {
 
   const text = await req.text()
 
-  let event
-
-  try {
-    event = stripe.webhooks.constructEvent(
-      text,
-      signature,
-      process.env.STRIPE_WEBHOOK_SECRET_KEY,
-      400,
-    )
-  } catch (err) {
-    console.log('Deu Erro no event', err)
-  }
+  const event = stripe.webhooks.constructEvent(
+    text,
+    signature,
+    process.env.STRIPE_WEBHOOK_SECRET_KEY,
+    400,
+  )
 
   console.log('========', event?.type)
 
-  if (event && event.type === 'checkout.session.completed') {
+  if (event.type === 'checkout.session.completed') {
     console.log('====entrou aqui=======')
     const session = event.data.object as any
 
