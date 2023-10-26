@@ -20,8 +20,6 @@ export const POST = async (req: Request) => {
     400,
   )
 
-  console.log('========', event?.type)
-
   if (event.type === 'checkout.session.completed') {
     console.log('====entrou aqui=======')
     const session = event.data.object as any
