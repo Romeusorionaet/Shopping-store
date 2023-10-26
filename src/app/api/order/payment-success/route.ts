@@ -17,6 +17,7 @@ export const POST = async (request: Request) => {
     text,
     signature,
     process.env.STRIPE_WEBHOOK_SECRET_KEY,
+    600,
   )
 
   console.log('========', event.type)
