@@ -1,5 +1,4 @@
 import { Product } from '@prisma/client'
-import { useEffect } from 'react'
 import { create } from 'zustand'
 
 export interface CartProduct extends Product {

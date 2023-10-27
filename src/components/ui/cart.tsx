@@ -25,22 +25,18 @@ export function Cart() {
     const checkout = await createCheckout(cart, order.id)
 
     const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY)
-    // const stripe = await stripePromise
 
-    stripe?.redirectToCheckout({
-      sessionId: checkout.id,
-    })
-    // if (stripe) {
-    //   stripe
-    //     .redirectToCheckout({
-    //       sessionId: checkout.id,
-    //     })
-    //     .then(function (result) {
-    //       if (result.error) {
-    //         console.error(result.error)
-    //       }
-    //     })
-    // }
+    if (stripe) {
+      stripe
+        .redirectToCheckout({
+          sessionId: checkout.id,
+        })
+        .then(function (result) {
+          if (result.error) {
+            console.error(result.error)
+          }
+        })
+    }
   }
 
   return (
