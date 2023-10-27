@@ -30,8 +30,12 @@ export function Header() {
     }
   }
 
-  const handleBackHomePage = () => {
+  const handleNavigateToHomePage = () => {
     router.push('/')
+  }
+
+  const handleNavigateToOrdersPage = () => {
+    router.push('/orders')
   }
 
   return (
@@ -99,7 +103,7 @@ export function Header() {
             )}
 
             <Button
-              onClick={() => handleBackHomePage()}
+              onClick={() => handleNavigateToHomePage()}
               size="icon"
               className="font-semibold w-full gap-1 justify-start bg-transparent"
             >
@@ -121,6 +125,15 @@ export function Header() {
             >
               <List size={16} />
               Catálogo
+            </Button>
+
+            <Button
+              onClick={() => handleNavigateToOrdersPage()}
+              size="icon"
+              className="font-semibold w-full gap-1 justify-start bg-transparent"
+            >
+              <List size={16} />
+              Meus pedidos
             </Button>
           </div>
         </SheetContent>
