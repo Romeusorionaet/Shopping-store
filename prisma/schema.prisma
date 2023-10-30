@@ -57,6 +57,23 @@ model OrderProduct {
   quantity           Int
 }
 
+model Address {
+  id           String @id @default(uuid())
+  cep          String
+  city         String
+  uf           String
+  street       String
+  neighborhood String
+  number       String
+  complement   String
+  username     String
+  phoneNumber  String
+  email        String
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+}
+
 model Account {
   id                String  @id @default(cuid())
   userId            String
@@ -93,6 +110,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   Order         Order[]
+  Address       Address[]
 }
 
 model VerificationToken {
