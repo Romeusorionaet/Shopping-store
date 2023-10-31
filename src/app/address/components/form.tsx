@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { createAddress } from '@/actions/address'
 import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 
 const addressFormSchema = z.object({
   cep: z.string().min(8, 'O CEP deve ter 8 números.'),
@@ -27,7 +28,6 @@ export function Form() {
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors, isSubmitting },
   } = useForm<AddressFormData>({
     resolver: zodResolver(addressFormSchema),
@@ -35,6 +35,7 @@ export function Form() {
 
   const { data } = useSession()
   const userId = data?.user.id
+  const router = useRouter()
 
   console.log(errors)
 
@@ -53,7 +54,7 @@ export function Form() {
     } catch (err) {
       console.log(err)
     }
-    reset()
+    router.refresh()
   }
 
   return (

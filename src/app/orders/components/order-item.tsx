@@ -47,7 +47,8 @@ export function OrderItem({ order }: OrderProductProps) {
                 Pedido com {order.orderProducts.length} produto(s)
               </p>
               <span className="text-xs opacity-60">
-                Feito em {format(order.createdAt, "d/MM/y 'às' HH:mm")}
+                {/* order.trackingCode */}
+                Código de restreio: <strong>54564584</strong>
               </span>
             </div>
           </AccordionTrigger>
@@ -65,7 +66,7 @@ export function OrderItem({ order }: OrderProductProps) {
                 <div>
                   <p className="font-bold">Data</p>
                   <p className="opacity-60">
-                    {format(order.createdAt, 'd/MM/y')}
+                    {format(order.createdAt, "d/MM/y 'às' HH:mm")}
                   </p>
                 </div>
 

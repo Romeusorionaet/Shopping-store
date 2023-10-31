@@ -1,5 +1,6 @@
 import { prismaClient } from '@/lib/prisma'
 import { initializeStripe } from '@/lib/stripe'
+import { generateCode } from '@/utils/tracking-code-generator'
 import { NextResponse } from 'next/server'
 
 const stripe = initializeStripe()
@@ -20,33 +21,48 @@ export const POST = async (req: Request) => {
     400,
   )
 
-  if (event.type === 'checkout.session.completed') {
-    const session = event.data.object as any
+  try {
+    if (event.type === 'checkout.session.completed') {
+      const session = event.data.object as any
 
-    await stripe.checkout.sessions.retrieve(event.data.object.id, {
-      expand: ['line_items'],
-    })
+      await stripe.checkout.sessions.retrieve(event.data.object.id, {
+        expand: ['line_items'],
+      })
 
-    await prismaClient.order.update({
-      where: {
-        id: session.metadata.orderId,
-      },
-      data: {
-        status: 'PAYMENT_CONFIRMED',
-      },
-    })
-  }
+      await prismaClient.order.update({
+        where: {
+          id: session.metadata.orderId,
+        },
+        data: {
+          status: 'PAYMENT_CONFIRMED',
+        },
+      })
 
-  if (event.type === 'checkout.session.expired') {
-    console.log('checkout.session.expired')
-  }
+      const trackingCode = generateCode()
 
-  if (event.type === 'checkout.session.async_payment_failed') {
-    console.log('checkout.session.async_payment_failed')
-  }
+      // await prismaClient.order.update({
+      //   where: {
+      //     id: session.metadata.orderId,
+      //   },
+      //   data: {
+      //     trackingCode,
+      //   },
+      // })
+    }
 
-  if (event.type === 'checkout.session.async_payment_succeeded') {
-    console.log('checkout.session.async_payment_succeeded')
+    if (event.type === 'checkout.session.expired') {
+      console.log('checkout.session.expired')
+    }
+
+    if (event.type === 'checkout.session.async_payment_failed') {
+      console.log('checkout.session.async_payment_failed')
+    }
+
+    if (event.type === 'checkout.session.async_payment_succeeded') {
+      console.log('checkout.session.async_payment_succeeded')
+    }
+  } catch (err) {
+    alert(err)
   }
 
   return NextResponse.json({ received: true })
