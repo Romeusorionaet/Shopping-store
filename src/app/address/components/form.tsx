@@ -21,12 +21,13 @@ const addressFormSchema = z.object({
   email: z.string(),
 })
 
-type AddressFormData = z.infer<typeof addressFormSchema>
+export type AddressFormData = z.infer<typeof addressFormSchema>
 
 export function Form() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm<AddressFormData>({
     resolver: zodResolver(addressFormSchema),
@@ -39,8 +40,6 @@ export function Form() {
 
   async function handleAddressForm(data: AddressFormData) {
     if (!userId) {
-      // fazer redirecionamento para tela de login
-      console.log('sem user logado')
       return
     }
 
@@ -49,10 +48,12 @@ export function Form() {
         dataAddress: data,
         userId,
       })
+
       console.log(response)
     } catch (err) {
       console.log(err)
     }
+    reset()
   }
 
   return (
