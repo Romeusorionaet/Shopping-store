@@ -1,6 +1,5 @@
 import { prismaClient } from '@/lib/prisma'
 import { initializeStripe } from '@/lib/stripe'
-import { generateCode } from '@/utils/tracking-code-generator'
 import { NextResponse } from 'next/server'
 
 const stripe = initializeStripe()
@@ -37,17 +36,6 @@ export const POST = async (req: Request) => {
           status: 'PAYMENT_CONFIRMED',
         },
       })
-
-      const trackingCode = generateCode()
-
-      // await prismaClient.order.update({
-      //   where: {
-      //     id: session.metadata.orderId,
-      //   },
-      //   data: {
-      //     trackingCode,
-      //   },
-      // })
     }
 
     if (event.type === 'checkout.session.expired') {

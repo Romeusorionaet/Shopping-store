@@ -1,3 +1,5 @@
+'use client'
+
 import { Separator } from '@/components/ui/separator'
 import {
   Accordion,
@@ -37,6 +39,11 @@ export function OrderItem({ order }: OrderProductProps) {
     total += currentTotalPrice
   })
 
+  const handleNavigateToCorreiosPage = () => {
+    // site dos correios link
+    // navigate.push('')
+  }
+
   return (
     <div className="px-5">
       <Accordion type="single" className="w-full" collapsible>
@@ -46,9 +53,17 @@ export function OrderItem({ order }: OrderProductProps) {
               <p className="text-sm font-bold uppercase">
                 Pedido com {order.orderProducts.length} produto(s)
               </p>
+              {/* {order.trackingCode ? (
+                <span className="text-xs opacity-60">
+                  Código de restreio: <strong>{order.trackingCode}</strong>
+                </span>
+              ) : (
+                <span className="text-xs opacity-60">
+                  Estamos preparando o seu produto para envio
+                </span>
+              )} */}
               <span className="text-xs opacity-60">
-                {/* order.trackingCode */}
-                Código de restreio: <strong>54564584</strong>
+                Código de restreio: <strong>561461461</strong>
               </span>
             </div>
           </AccordionTrigger>
@@ -114,7 +129,9 @@ export function OrderItem({ order }: OrderProductProps) {
               </div>
 
               <div>
-                <Button>Acompanhar pedido</Button>
+                <Button onClick={handleNavigateToCorreiosPage}>
+                  Acompanhar pedido
+                </Button>
               </div>
             </div>
           </AccordionContent>
