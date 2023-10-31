@@ -9,6 +9,7 @@ import { Prisma } from '@prisma/client'
 import { format } from 'date-fns'
 import { getOrderStatus } from '../helpers/get-order-status'
 import OrderProductItem from './order-product-item'
+import { Button } from '@/components/ui/button'
 
 export interface OrderProductProps {
   order: Prisma.OrderGetPayload<{
@@ -109,6 +110,10 @@ export function OrderItem({ order }: OrderProductProps) {
                   <p>Total</p>
                   <p>R$ {total.toFixed(2)}</p>
                 </div>
+              </div>
+
+              <div>
+                <Button>Acompanhar pedido</Button>
               </div>
             </div>
           </AccordionContent>

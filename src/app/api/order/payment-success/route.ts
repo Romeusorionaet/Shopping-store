@@ -21,21 +21,12 @@ export const POST = async (req: Request) => {
   )
 
   if (event.type === 'checkout.session.completed') {
-    console.log('====entrou aqui=======')
     const session = event.data.object as any
 
-    const sessionWithLineItems = await stripe.checkout.sessions.retrieve(
-      event.data.object.id,
-      {
-        expand: ['line_items'],
-      },
-    )
+    await stripe.checkout.sessions.retrieve(event.data.object.id, {
+      expand: ['line_items'],
+    })
 
-    const lineItems = sessionWithLineItems.line_items
-
-    console.log('==============', lineItems)
-
-    // ATUALIZAR PEDIDO
     await prismaClient.order.update({
       where: {
         id: session.metadata.orderId,
@@ -44,6 +35,18 @@ export const POST = async (req: Request) => {
         status: 'PAYMENT_CONFIRMED',
       },
     })
+  }
+
+  if (event.type === 'checkout.session.expired') {
+    console.log('checkout.session.expired')
+  }
+
+  if (event.type === 'checkout.session.async_payment_failed') {
+    console.log('checkout.session.async_payment_failed')
+  }
+
+  if (event.type === 'checkout.session.async_payment_succeeded') {
+    console.log('checkout.session.async_payment_succeeded')
   }
 
   return NextResponse.json({ received: true })

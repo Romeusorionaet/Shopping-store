@@ -2,40 +2,24 @@ import { ShoppingCartIcon } from 'lucide-react'
 import { Separator } from './separator'
 import { Button } from './button'
 import { CartItem } from './cart-item'
-import { loadStripe } from '@stripe/stripe-js'
 import { useCartStore } from '@/providers/zustand-store'
 import { calculateCartAllValues } from '@/utils/calculate-cart-all-values'
-import { createCheckout } from '@/actions/checkout'
-import { createOrder } from '@/actions/order'
+import { useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 
 export function Cart() {
   const { cart } = useCartStore()
   const { subtotal, totalDiscount, total } = calculateCartAllValues(cart)
+  const navigate = useRouter()
   const { data } = useSession()
+  const hasUser = data?.user
 
-  const handleFinishPurchaseClick = async () => {
-    if (!data?.user) {
-      // fazer redirecionamento para tela de login
-      console.log('sem user logado')
-      return
-    }
-    const order = await createOrder(cart, (data?.user as any).id)
-
-    const checkout = await createCheckout(cart, order.id)
-
-    const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY)
-
-    if (stripe) {
-      stripe
-        .redirectToCheckout({
-          sessionId: checkout.id,
-        })
-        .then(function (result) {
-          if (result.error) {
-            console.error(result.error)
-          }
-        })
+  const handleNavigateToAddressPage = () => {
+    if (!hasUser) {
+      alert('faça login na sua conta')
+      navigate.push('/')
+    } else {
+      navigate.push('/address')
     }
   }
 
@@ -73,13 +57,6 @@ export function Cart() {
           <Separator />
 
           <div className="flex items-center justify-between text-xs">
-            <p>Entrega</p>
-            <p>GRÁTIS</p>
-          </div>
-
-          <Separator />
-
-          <div className="flex items-center justify-between text-xs">
             <p>Descontos</p>
             <p>- R$ {totalDiscount.toFixed(2)}</p>
           </div>
@@ -91,11 +68,8 @@ export function Cart() {
             <p>R$ {total.toFixed(2)}</p>
           </div>
 
-          <Button
-            className="mt-7 font-bold uppercase"
-            onClick={handleFinishPurchaseClick}
-          >
-            Finalizar compra
+          <Button onClick={handleNavigateToAddressPage}>
+            Dados de entrega
           </Button>
         </div>
       )}

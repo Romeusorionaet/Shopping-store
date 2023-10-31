@@ -33,7 +33,7 @@ export default async function Details({ params }: ParamsProps) {
       </div>
 
       <div>
-        <h2>Lista do footer com items da mesma categoria sem o item autal </h2>
+        <h2>Lista do footer com items da mesma categoria sem o item autal</h2>
 
         <ProductList products={props?.product.category.products} />
       </div>

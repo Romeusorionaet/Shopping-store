@@ -5,7 +5,6 @@ import { useState } from 'react'
 
 export function AddProductInCart({ product }: any) {
   const [quantity] = useState(1)
-  // const { addProductToCart } = useContext(CartContext)
   const { addProductToCart } = useCartStore()
 
   const handleAddToProductInCart = (product: any) => {

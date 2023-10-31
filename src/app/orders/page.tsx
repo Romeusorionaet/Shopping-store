@@ -12,7 +12,6 @@ export default async function Orders() {
 
   const { props } = await getDataOrders(session.user.id)
   const orders = props.orders
-  //   console.log(orders)
 
   return (
     <div>
@@ -22,7 +21,13 @@ export default async function Orders() {
 
       <div className="flex flex-col justify-center">
         {orders &&
-          orders.map((order) => <OrderItem key={order.id} order={order} />)}
+          orders.map((order) => {
+            if (order.status === 'PAYMENT_CONFIRMED') {
+              return <OrderItem key={order.id} order={order} />
+            } else {
+              return <></>
+            }
+          })}
       </div>
     </div>
   )
