@@ -8,5 +8,7 @@ declare namespace NodeJS {
     NEXT_PUBLIC_STRIPE_PUBLIC_KEY: string
     STRIPE_SECRET_KEY: string
     STRIPE_WEBHOOK_SECRET_KEY: string
+    UPLOADTHING_SECRET: string
+    UPLOADTHING_APP_ID: string
   }
 }

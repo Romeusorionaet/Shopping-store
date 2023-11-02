@@ -38,6 +38,10 @@ export function Header() {
     router.push('/orders')
   }
 
+  const handleNavigateToRegisterProducts = () => {
+    router.push('/register')
+  }
+
   return (
     <Card className="flex justify-around items-center rounded-none p-4">
       <Sheet>
@@ -135,6 +139,19 @@ export function Header() {
               <List size={16} />
               Meus pedidos
             </Button>
+
+            {data && data.user.id !== 'keg' ? (
+              <Button
+                onClick={() => handleNavigateToRegisterProducts()}
+                size="icon"
+                className="font-semibold w-full gap-1 justify-start bg-transparent"
+              >
+                <List size={16} />
+                Controlar produtos
+              </Button>
+            ) : (
+              <></>
+            )}
           </div>
         </SheetContent>
       </Sheet>
