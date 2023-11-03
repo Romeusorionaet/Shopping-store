@@ -5,7 +5,7 @@ const f = createUploadthing()
 const auth = (req: Request) => ({ id: 'fakeId' })
 
 export const ourFileRouter = {
-  imageUploader: f({ image: { maxFileSize: '2MB', maxFileCount: 1 } })
+  imageShoppingStore: f({ image: { maxFileSize: '2MB', maxFileCount: 4 } })
     .middleware(async ({ req }) => {
       const user = await auth(req)
 
@@ -18,12 +18,6 @@ export const ourFileRouter = {
 
       console.log('file url', file.url)
     }),
-
-  mediaPost: f({
-    image: { maxFileSize: '2MB', maxFileCount: 1 },
-  })
-    .middleware(({ req }) => auth(req))
-    .onUploadComplete((data) => console.log('file', data)),
 } satisfies FileRouter
 
 export type OurFileRouter = typeof ourFileRouter
