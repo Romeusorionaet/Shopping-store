@@ -5,7 +5,12 @@ const f = createUploadthing()
 const auth = (req: Request) => ({ id: 'fakeId' })
 
 export const ourFileRouter = {
-  imageShoppingStore: f({ image: { maxFileSize: '2MB', maxFileCount: 4 } })
+  imageShoppingStore: f({
+    image: {
+      maxFileSize: '2MB',
+      maxFileCount: 4,
+    },
+  })
     .middleware(async ({ req }) => {
       const user = await auth(req)
 

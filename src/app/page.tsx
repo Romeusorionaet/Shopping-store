@@ -1,4 +1,4 @@
-import { DiscountedProducts } from '@/components/Categories/discounted-products'
+import { DiscountedProducts } from '@/components/discounted-products'
 import { getDataProducts } from '@/lib/getData/get-data-products'
 import Link from 'next/link'
 
