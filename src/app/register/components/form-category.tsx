@@ -8,6 +8,7 @@ import { createCategory } from '@/actions/register/category/create'
 import { useState } from 'react'
 import { OurFileRouter } from '@/app/api/uploadthing/core'
 import { FormError } from '@/components/form/form-error'
+import { Input } from '@/components/ui/input'
 
 interface ImageDataProps {
   fileName: string
@@ -42,8 +43,6 @@ export function FormCategory() {
   } = useForm<RegisterFormData>({
     resolver: zodResolver(registerFormSchema),
   })
-
-  console.log(errors)
 
   async function handleRegisterProduct(data: RegisterFormData) {
     const { name, slug } = data
@@ -101,7 +100,7 @@ export function FormCategory() {
       <div className="flex flex-col space-y-4">
         <label className="flex flex-col gap-2">
           Nome
-          <input
+          <Input
             className="bg-zinc-600"
             type="text"
             placeholder="name"
@@ -112,7 +111,7 @@ export function FormCategory() {
 
         <label className="flex flex-col gap-2">
           Slug
-          <input
+          <Input
             className="bg-zinc-600"
             type="text"
             placeholder="slug"
