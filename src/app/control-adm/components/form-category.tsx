@@ -4,11 +4,11 @@ import { UploadButton } from '@uploadthing/react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { createCategory } from '@/actions/register/category/create'
 import { useState } from 'react'
 import { OurFileRouter } from '@/app/api/uploadthing/core'
 import { FormError } from '@/components/form/form-error'
 import { Input } from '@/components/ui/input'
+import { createCategory } from '@/actions/register/category'
 
 interface ImageDataProps {
   fileName: string

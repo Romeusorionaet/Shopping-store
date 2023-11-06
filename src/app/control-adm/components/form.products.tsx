@@ -9,7 +9,7 @@ import { OurFileRouter } from '@/app/api/uploadthing/core'
 import { FormError } from '@/components/form/form-error'
 import { Input } from '@/components/ui/input'
 import Image from 'next/image'
-import { createProduct } from '@/actions/register/products/create'
+import { createProduct } from '@/actions/register/products'
 
 interface ImageDataProps {
   fileName: string

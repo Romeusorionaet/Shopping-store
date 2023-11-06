@@ -39,7 +39,7 @@ export function Header() {
   }
 
   const handleNavigateToRegisterProducts = () => {
-    router.push('/register')
+    router.push('/control-adm')
   }
 
   return (
