@@ -6,6 +6,7 @@ const prisma = new PrismaClient()
 
 export const deleteCategory = async (categoryId: string) => {
   try {
+    console.log(categoryId)
     await prisma.category.delete({
       where: {
         id: categoryId,
@@ -15,6 +16,6 @@ export const deleteCategory = async (categoryId: string) => {
     return { message: 'Categoria deletada.' }
   } catch (err) {
     console.log(err)
-    return { message: 'Error ao deletar categoria.', err }
+    return { message: 'Error ao deletar categoria.' }
   }
 }

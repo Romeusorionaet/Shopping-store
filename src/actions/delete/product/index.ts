@@ -15,6 +15,6 @@ export const deleteProduct = async (productId: string) => {
     return { message: 'Produto deletada.' }
   } catch (err) {
     console.log(err)
-    return { message: 'Error ao deletar produto.', err }
+    return { message: 'Error ao deletar produto.' }
   }
 }

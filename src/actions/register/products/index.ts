@@ -39,6 +39,6 @@ export const createProduct = async ({ dataProduct }: Props) => {
     }
   } catch (err) {
     console.log(err)
-    return { message: 'Error ao registrar produto', err }
+    return { message: 'Error ao registrar produto' }
   }
 }
