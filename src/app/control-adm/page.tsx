@@ -11,17 +11,22 @@ export default async function ControlAdm() {
 
   return (
     <div>
-      <main className="space-y-8">
-        <div className="my-8 text-center">
-          <h1>Save product</h1>
+      <main className="p-4">
+        <h1 className="my-6 text-center text-xl font-bold">
+          Controle de estoque
+        </h1>
+
+        <div className="my-6 border-t border-zinc-500/60 pt-10">
+          <h2 className="text-lg ">
+            Cadastro de catalogo, <span className="opacity-80">categoria</span>.
+          </h2>
+          <p className="mt-4">Categorias existentes</p>
         </div>
 
-        <h2 className="text-center">Categorias existentes</h2>
-
-        <div className="flex flex-wrap gap-4 justify-center border-b border-white pb-8">
+        <div className="flex flex-wrap gap-4 justify-center mb-10 border-b border-zinc-400 pb-8 p-2 h-40 overflow-y-auto bg-zinc-500/20 rounded-md">
           {categories.props?.categories.map((catalog) => {
             return (
-              <div className="bg-cyan-800 p-1 rounded-md" key={catalog.id}>
+              <div className="bg-zinc-200/10 p-2 rounded-md" key={catalog.id}>
                 <p>{catalog.name}</p>
               </div>
             )
@@ -29,8 +34,6 @@ export default async function ControlAdm() {
         </div>
 
         <FormCategory />
-
-        <h2>Registrar Produtos</h2>
 
         <FormProduct listOfCategory={categories.props?.categories} />
 

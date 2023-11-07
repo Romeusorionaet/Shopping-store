@@ -9,6 +9,14 @@ import { OurFileRouter } from '@/app/api/uploadthing/core'
 import { FormError } from '@/components/form/form-error'
 import { Input } from '@/components/ui/input'
 import { createCategory } from '@/actions/register/category'
+import Image from 'next/image'
+import { ArrowBigRight } from 'lucide-react'
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@radix-ui/react-accordion'
 
 interface ImageDataProps {
   fileName: string
@@ -22,11 +30,6 @@ const registerFormSchema = z.object({
     .transform(
       (val) => val.charAt(0).toUpperCase() + val.slice(1).toLowerCase(),
     ),
-  slug: z
-    .string()
-    .min(3, { message: 'No mínimo 3 caracteres.' })
-    .toLowerCase()
-    .transform((val) => val.replace(/\s+/g, '-')),
 })
 
 type RegisterFormData = z.infer<typeof registerFormSchema>
@@ -39,95 +42,109 @@ export function FormCategory() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm<RegisterFormData>({
     resolver: zodResolver(registerFormSchema),
   })
 
   async function handleRegisterProduct(data: RegisterFormData) {
-    const { name, slug } = data
+    const { name } = data
+
+    if (imageDataCategory[0].fileUrl === '') {
+      alert('Escolha uma imagem que represente a categoria.')
+      return
+    }
+
+    const newSlug = name.toLowerCase().replace(/ /g, '-')
 
     const dataCategory = {
       name,
-      slug,
+      slug: newSlug,
       fileUrl: imageDataCategory[0].fileUrl,
     }
 
     try {
       const result = await createCategory({ dataCategory })
       alert(result?.message)
+      reset()
+      setImageDataCategory([{ fileName: '', fileUrl: '' }])
     } catch (err) {
       console.log(err)
     }
   }
 
   return (
-    <form method="post" onSubmit={handleSubmit(handleRegisterProduct)}>
-      <div className="flex justify-around items-center">
-        <UploadButton<OurFileRouter>
-          endpoint="imageShoppingStore"
-          onClientUploadComplete={(res) => {
-            res && setImageDataCategory(res)
-            alert('Imagem da categoria salva no banco Uploadthing!')
-          }}
-          onUploadError={(error: Error) => {
-            alert(`ERROR! ${error.message}`)
-          }}
-          className="bg-green-500 p-1 w-[6rem] text-xs rounded-md"
-        />
-
-        <div className="border border-zinc-50/40 w-[6rem] h-[6rem]">
-          {imageDataCategory[0].fileUrl ? (
-            <div className="flex flex-col gap-2 items-center">
-              <img
-                width={0}
-                className="h-full w-full"
-                src={imageDataCategory[0].fileUrl}
-                alt={imageDataCategory[0].fileName}
+    <Accordion
+      type="single"
+      collapsible
+      className="border border-zinc-500/60 my-10 p-2 rounded-md"
+    >
+      <AccordionItem value="item-1">
+        <AccordionTrigger>Criar categoria</AccordionTrigger>
+        <AccordionContent className="mt-6">
+          <form method="post" onSubmit={handleSubmit(handleRegisterProduct)}>
+            <div className="flex justify-around items-center">
+              <UploadButton<OurFileRouter>
+                endpoint="imageShoppingStore"
+                onClientUploadComplete={(res) => {
+                  res && setImageDataCategory(res)
+                  alert('Imagem da categoria salva no banco Uploadthing!')
+                }}
+                onUploadError={(error: Error) => {
+                  alert(`ERROR! ${error.message}`)
+                }}
+                className="bg-green-500/40 pb-2 w-[6rem] text-xs rounded-md text-center"
               />
-              <p className="text-xs opacity-50">
-                {imageDataCategory && imageDataCategory[0].fileName}
-              </p>
+
+              <ArrowBigRight />
+
+              <div className="border border-zinc-50/40 w-[6rem] h-[6rem]">
+                {imageDataCategory[0].fileUrl ? (
+                  <div className="flex flex-col gap-2 items-center">
+                    <Image
+                      width={0}
+                      height={0}
+                      sizes="100vw"
+                      className="h-full w-auto"
+                      src={imageDataCategory[0].fileUrl}
+                      alt={imageDataCategory[0].fileName}
+                    />
+                    <p className="text-xs opacity-50">
+                      {imageDataCategory && imageDataCategory[0].fileName}
+                    </p>
+                  </div>
+                ) : (
+                  <div className="flex justify-center items-center h-full">
+                    <p className="opacity-50 text-xs text-center">sem imagem</p>
+                  </div>
+                )}
+              </div>
             </div>
-          ) : (
-            <div className="flex justify-center items-center h-full">
-              <p className="opacity-50 text-xs text-center">sem imagem</p>
+
+            <div className="flex flex-col my-4">
+              <label className="flex flex-col gap-2">
+                Nome
+                <Input
+                  className="bg-zinc-600"
+                  type="text"
+                  placeholder="name"
+                  {...register('name')}
+                />
+                <FormError errors={errors.name?.message} />
+              </label>
+
+              <button
+                type="submit"
+                className="bg-green-500 p-2 rounded-md text-white disabled:bg-zinc-400"
+                disabled={isSubmitting}
+              >
+                Salvar
+              </button>
             </div>
-          )}
-        </div>
-      </div>
-
-      <div className="flex flex-col space-y-4">
-        <label className="flex flex-col gap-2">
-          Nome
-          <Input
-            className="bg-zinc-600"
-            type="text"
-            placeholder="name"
-            {...register('name')}
-          />
-          <FormError errors={errors.name?.message} />
-        </label>
-
-        <label className="flex flex-col gap-2">
-          Slug
-          <Input
-            className="bg-zinc-600"
-            type="text"
-            placeholder="slug"
-            {...register('slug')}
-          />
-          <FormError errors={errors.slug?.message} />
-        </label>
-
-        <button
-          type="submit"
-          className="bg-blue-500 p-2 rounded-md text-white"
-          disabled={isSubmitting}
-        >
-          Salvar
-        </button>
-      </div>
-    </form>
+          </form>
+        </AccordionContent>
+      </AccordionItem>
+    </Accordion>
   )
 }
