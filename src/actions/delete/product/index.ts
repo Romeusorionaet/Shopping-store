@@ -12,7 +12,7 @@ export const deleteProduct = async (productId: string) => {
       },
     })
 
-    return { message: 'Produto deletada.' }
+    return { message: 'Produto deletado.' }
   } catch (err) {
     console.log(err)
     return { message: 'Error ao deletar produto.' }

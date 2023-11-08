@@ -9,9 +9,11 @@ import { FormError } from '@/components/form/form-error'
 import { OurFileRouter } from '@/app/api/uploadthing/core'
 import { useState } from 'react'
 import { UploadButton } from '@uploadthing/react'
+import Image from 'next/image'
 import { updateProduct } from '@/actions/update/product'
 import { useRouter } from 'next/navigation'
 import { deleteProduct } from '@/actions/delete/product'
+import { Trash } from 'lucide-react'
 
 interface FormUpdateProps {
   product: Product
@@ -69,7 +71,6 @@ export function FormUpdate({ product }: FormUpdateProps) {
     }
 
     try {
-      console.log(updatedData)
       const result = await updateProduct({ updatedData })
       navigate.push('/control-adm')
       alert(result.message)
@@ -91,37 +92,42 @@ export function FormUpdate({ product }: FormUpdateProps) {
   return (
     <form onSubmit={handleSubmit(handleUpdateProduct)}>
       <div className="flex flex-col gap-4" key={product.id}>
-        <label>
+        <label className="flex flex-col gap-2">
           Nome
-          <Input
-            className="bg-zinc-300 text-zinc-950"
-            defaultValue={product.name}
-            {...register('name')}
-          />
+          <Input defaultValue={product.name} {...register('name')} />
           <FormError errors={errors.name?.message} />
         </label>
 
-        <div>
-          <div>
+        <div className="flex flex-col justify-center items-center gap-4 mt-2">
+          <div className="w-full flex flex-col items-center">
             {imageDataProduct[0].fileUrl ? (
-              <img
+              <Image
+                width={0}
+                height={0}
+                sizes="100vw"
                 className="w-20 h-20"
                 src={imageDataProduct[0].fileUrl}
                 alt={imageDataProduct[0].fileName}
               />
             ) : (
-              <img
-                className="w-20 h-20"
+              <Image
+                width={0}
+                height={0}
+                sizes="100vw"
+                className="w-40 h-40"
                 src={product.imageUrls[0]}
                 alt={product.name}
               />
             )}
 
-            <div className="flex">
+            <div className="flex mt-4">
               {imageDataProduct[0].fileUrl
                 ? imageDataProduct.map((imageUrl) => {
                     return (
-                      <img
+                      <Image
+                        width={0}
+                        height={0}
+                        sizes="100vw"
                         className="w-20 h-20"
                         key={imageUrl.fileUrl}
                         src={imageUrl.fileUrl}
@@ -131,9 +137,12 @@ export function FormUpdate({ product }: FormUpdateProps) {
                   })
                 : product.imageUrls.map((imageUrl) => {
                     return (
-                      <img
+                      <Image
+                        width={0}
+                        height={0}
+                        sizes="100vw"
                         key={imageUrl}
-                        className="w-10"
+                        className="w-20 h-20"
                         src={imageUrl}
                         alt=""
                       />
@@ -152,36 +161,34 @@ export function FormUpdate({ product }: FormUpdateProps) {
               onUploadError={(error: Error) => {
                 alert(`ERROR! ${error.message}`)
               }}
-              className="bg-green-800 p-1 text-xs rounded-md"
+              className="bg-green-500/40 pb-2 w-[6rem] text-xs rounded-md text-center"
             />
           </div>
         </div>
 
         <div>
-          <label>
+          <label className="flex flex-col gap-2">
             Preço base
             <Input
-              className="bg-zinc-300 text-zinc-950"
               defaultValue={Number(product.basePrice)}
               {...register('basePrice')}
             />
             <FormError errors={errors.basePrice?.message} />
           </label>
 
-          <label>
+          <label className="flex flex-col gap-2">
             Disconto
             <Input
-              className="bg-zinc-300 text-zinc-950"
               defaultValue={product.discountPercentage}
               {...register('discountPercentage')}
             />
             <FormError errors={errors.discountPercentage?.message} />
           </label>
 
-          <label>
+          <label className="flex flex-col gap-2">
             Descrição
             <textarea
-              className="bg-zinc-300 text-zinc-950 resize-none w-full h-40"
+              className="bg-zinc-800 w-full h-40 resize-none p-2 rounded-md scrollbar"
               defaultValue={product.description}
               {...register('description')}
             ></textarea>
@@ -190,9 +197,9 @@ export function FormUpdate({ product }: FormUpdateProps) {
         </div>
       </div>
 
-      <div className="flex justify-between">
+      <div className="flex justify-between my-4">
         <button
-          className="bg-green-500 p-2 rounded-md"
+          className="bg-green-500/40 text-sm p-2 rounded-md border-b border-zinc-500/60 duration-700 hover:bg-green-500"
           disabled={isSubmitting}
           type="submit"
         >
@@ -200,11 +207,10 @@ export function FormUpdate({ product }: FormUpdateProps) {
         </button>
 
         <button
-          className="bg-red-500 p-2 rounded-md"
-          type="button"
           onClick={handleDeleteProduct}
+          className="text-red-400 p-2 rounded-md"
         >
-          Deletar
+          <Trash size={28} />
         </button>
       </div>
     </form>

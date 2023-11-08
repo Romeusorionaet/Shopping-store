@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import '../styles/globals.css'
 import { Header } from '@/components/ui/header'
 import { AuthProvider } from '@/providers/auth'
+import '../styles/scrollbar.css'
 
 const inter = Inter({ subsets: ['latin'] })
 

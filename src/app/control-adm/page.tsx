@@ -37,7 +37,9 @@ export default async function ControlAdm() {
 
         <FormProduct listOfCategory={categories.props?.categories} />
 
-        <AreaUpdateCategory listOfCategory={categories.props?.categories} />
+        {categories.props && (
+          <AreaUpdateCategory listOfCategory={categories.props?.categories} />
+        )}
 
         <AreaUpdateProduct listOfProducts={products.props.products} />
       </main>

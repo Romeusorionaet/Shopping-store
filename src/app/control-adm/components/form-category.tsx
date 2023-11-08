@@ -81,7 +81,7 @@ export function FormCategory() {
       className="border border-zinc-500/60 my-10 p-2 rounded-md"
     >
       <AccordionItem value="item-1">
-        <AccordionTrigger>Criar categoria</AccordionTrigger>
+        <AccordionTrigger>Cadastrar categoria</AccordionTrigger>
         <AccordionContent className="mt-6">
           <form method="post" onSubmit={handleSubmit(handleRegisterProduct)}>
             <div className="flex justify-around items-center">
