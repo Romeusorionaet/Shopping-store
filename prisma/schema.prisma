@@ -26,6 +26,7 @@ model Product {
   basePrice          Decimal        @db.Decimal(8, 2)
   imageUrls          String[]
   categoryId         String
+  quantity           Int            @default(1)
   category           Category       @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   discountPercentage Int            @default(0)
   OrderProduct       OrderProduct[]
@@ -107,10 +108,16 @@ model User {
   email         String?   @unique
   emailVerified DateTime?
   image         String?
+  isAdm         Boolean   @default(false)
   accounts      Account[]
   sessions      Session[]
   Order         Order[]
   Address       Address[]
+}
+
+model AdmPassword {
+  id       String @id @default(cuid())
+  password String
 }
 
 model VerificationToken {
