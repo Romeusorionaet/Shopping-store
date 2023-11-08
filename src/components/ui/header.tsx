@@ -140,7 +140,7 @@ export function Header() {
               Meus pedidos
             </Button>
 
-            {data && data.user.id !== 'keg' ? (
+            {data && data.user.email === 'romeusoares14569@gmail.com' ? (
               <Button
                 onClick={() => handleNavigateToRegisterProducts()}
                 size="icon"
