@@ -1,11 +1,18 @@
 import { prismaClient } from '@/lib/prisma'
 
 export const getDataProducts = async () => {
-  // get only products that be discounted
-  // discounted are products where discount ir more that 0
-  const products = await prismaClient.product.findMany({})
+  try {
+    const products = await prismaClient.product.findMany({})
 
-  if (!products) {
+    return {
+      props: {
+        products,
+      },
+      revalidate: 60 * 60 * 24, // 1 day
+    }
+  } catch (err) {
+    console.log(err)
+
     return {
       notFound: true,
       props: {
@@ -13,12 +20,5 @@ export const getDataProducts = async () => {
       },
       revalidate: 0,
     }
-  }
-
-  return {
-    props: {
-      products,
-    },
-    revalidate: 60 * 60 * 24, // 1 day
   }
 }

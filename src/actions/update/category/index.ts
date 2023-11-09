@@ -15,8 +15,6 @@ interface updateCategoryProps {
 
 export const updateCategory = async ({ updatedData }: updateCategoryProps) => {
   try {
-    console.log('====start=====')
-    console.log(updatedData)
     await prisma.category.update({
       where: {
         id: updatedData.id,

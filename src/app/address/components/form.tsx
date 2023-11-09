@@ -37,20 +37,16 @@ export function Form() {
   const userId = data?.user.id
   const router = useRouter()
 
-  console.log(errors)
-
   async function handleAddressForm(data: AddressFormData) {
     if (!userId) {
       return
     }
 
     try {
-      const response = await createAddress({
+      await createAddress({
         dataAddress: data,
         userId,
       })
-
-      console.log(response)
     } catch (err) {
       console.log(err)
     }

@@ -6,7 +6,6 @@ const prisma = new PrismaClient()
 
 export const deleteCategory = async (categoryId: string) => {
   try {
-    console.log(categoryId)
     await prisma.category.delete({
       where: {
         id: categoryId,

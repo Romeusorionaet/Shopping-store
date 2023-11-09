@@ -41,7 +41,9 @@ export default async function ControlAdm() {
           <AreaUpdateCategory listOfCategory={categories.props?.categories} />
         )}
 
-        <AreaUpdateProduct listOfProducts={products.props.products} />
+        {products && (
+          <AreaUpdateProduct listOfProducts={products.props.products} />
+        )}
       </main>
     </div>
   )
