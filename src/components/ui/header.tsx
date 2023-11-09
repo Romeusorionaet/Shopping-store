@@ -10,7 +10,11 @@ import { Separator } from './separator'
 import { useRouter } from 'next/navigation'
 import { Cart } from './cart'
 
-export function Header() {
+interface Props {
+  isAdm?: boolean
+}
+
+export function Header({ isAdm }: Props) {
   const { status, data } = useSession()
   const router = useRouter()
 
@@ -140,7 +144,7 @@ export function Header() {
               Meus pedidos
             </Button>
 
-            {data && data.user.email === 'romeusoares14569@gmail.com' ? (
+            {isAdm ? (
               <Button
                 onClick={() => handleNavigateToRegisterProducts()}
                 size="icon"
