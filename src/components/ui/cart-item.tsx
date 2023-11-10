@@ -29,24 +29,22 @@ export function CartItem({ product }: CartItemProps) {
   }
 
   return (
-    <div className="flex items-center justify-between">
-      <div className="flex items-center gap-4">
-        {/* PARTE DIREITA (FOTO E NOME) */}
+    <div className="flex flex-col gap-2 items-center justify-between">
+      <p className="text-xs whitespace-nowrap">{product.name}</p>
 
-        <div className="flex h-[77px] w-[77px] items-center justify-center rounded-lg bg-accent">
+      <div className="flex gap-1">
+        <div className="flex w-[40%] items-center justify-center rounded-md">
           <Image
             src={product.imageUrls[0]}
             width={0}
             height={0}
             sizes="100vw"
             alt={product.name}
-            className="h-auto max-h-[70%] w-auto max-w-[80%]"
+            className="w-full h-full"
           />
         </div>
 
-        <div className="flex flex-col">
-          <p className="text-xs">{product.name}</p>
-
+        <div className="flex w-[40%] flex-col items-center gap-2">
           <div className="flex flex-col items-center gap-2">
             {product.discountPercentage > 0 && (
               <p className="text-xs line-through opacity-75">
@@ -59,33 +57,36 @@ export function CartItem({ product }: CartItemProps) {
             </p>
           </div>
 
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-3">
             <Button
               size="icon"
               variant="outline"
-              className="h-8 w-8"
+              className="h-6 w-6"
               onClick={handleDecreaseProductQuantityClick}
             >
               <ArrowLeftIcon size={16} />
             </Button>
 
-            <span className="text-xs">{product.quantity}</span>
+            <span className="">{product.quantity}</span>
 
             <Button
               size="icon"
               variant="outline"
-              className="h-8 w-8"
+              className="h-6 w-6"
               onClick={handleIncreaseProductQuantityClick}
             >
               <ArrowRightIcon size={16} />
             </Button>
           </div>
         </div>
+        <Button
+          size="icon"
+          className="bg-transparent"
+          onClick={handleRemoveProductClick}
+        >
+          <TrashIcon size={22} />
+        </Button>
       </div>
-
-      <Button size="icon" variant="outline" onClick={handleRemoveProductClick}>
-        <TrashIcon size={16} />
-      </Button>
     </div>
   )
 }

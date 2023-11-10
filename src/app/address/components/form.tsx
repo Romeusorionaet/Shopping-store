@@ -8,18 +8,19 @@ import { z } from 'zod'
 import { createAddress } from '@/actions/address'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
+import { FormError } from '@/components/form/form-error'
 
 const addressFormSchema = z.object({
+  username: z.string().min(1, 'Este campo é obrigatório.'),
+  email: z.string().min(1, 'Este campo é obrigatório.'),
+  phoneNumber: z.string().min(1, 'Este campo é obrigatório.'),
   cep: z.string().min(8, 'O CEP deve ter 8 números.'),
-  city: z.string(),
-  uf: z.string(),
-  street: z.string(),
-  neighborhood: z.string(),
-  number: z.string(),
-  complement: z.string(),
-  username: z.string(),
-  phoneNumber: z.string(),
-  email: z.string(),
+  city: z.string().min(1, 'Este campo é obrigatório.'),
+  uf: z.string().min(1, 'Este campo é obrigatório.'),
+  street: z.string().min(1, 'Este campo é obrigatório.'),
+  neighborhood: z.string().min(1, 'Este campo é obrigatório.'),
+  number: z.string().min(1, 'Este campo é obrigatório.'),
+  complement: z.string().min(1, 'Este campo é obrigatório.'),
 })
 
 export type AddressFormData = z.infer<typeof addressFormSchema>
@@ -54,59 +55,128 @@ export function Form() {
   }
 
   return (
-    <form onSubmit={handleSubmit(handleAddressForm)}>
-      <div>
-        <Input
-          type="number"
-          inputMode="decimal"
-          id="cep"
-          placeholder="CEP"
-          {...register('cep')}
-        />
-        <Input
-          type="text"
-          maxLength={30}
-          placeholder="Cidade"
-          {...register('city')}
-        />
-        <Input type="text" maxLength={2} placeholder="UF" {...register('uf')} />
-        <Input
-          type="text"
-          maxLength={30}
-          placeholder="Bairro"
-          {...register('neighborhood')}
-        />
-        <Input type="text" placeholder="Rua" {...register('street')} />
-        <Input
-          type="number"
-          maxLength={10}
-          placeholder="Número"
-          {...register('number')}
-        />
-        <Input
-          type="text"
-          maxLength={30}
-          placeholder="Complemento"
-          {...register('complement')}
-        />
-        <Input
-          type="text"
-          maxLength={30}
-          placeholder="Nome completo"
-          {...register('username')}
-        />
-        <Input
-          type="number"
-          maxLength={30}
-          placeholder="Número de telefone"
-          {...register('phoneNumber')}
-        />
-        <Input
-          type="text"
-          maxLength={30}
-          placeholder="e-mail"
-          {...register('email')}
-        />
+    <form onSubmit={handleSubmit(handleAddressForm)} className="space-y-4">
+      <div className="space-y-4">
+        <h2 className="text-center font-bold">Preencher formulário</h2>
+        <label className="flex flex-col gap-1">
+          Nome completo
+          <Input
+            type="text"
+            maxLength={30}
+            placeholder="Nome completo"
+            className="bg-transparent border border-zinc-400"
+            {...register('username')}
+          />
+          <FormError errors={errors.username?.message} />
+        </label>
+
+        <label className="flex flex-col gap-1">
+          E-mail
+          <Input
+            type="text"
+            maxLength={30}
+            placeholder="e-mail"
+            className="bg-transparent border border-zinc-400"
+            {...register('email')}
+          />
+          <FormError errors={errors.email?.message} />
+        </label>
+
+        <label className="flex flex-col gap-1">
+          Número para contato
+          <Input
+            type="number"
+            maxLength={30}
+            placeholder="Número de telefone"
+            className="bg-transparent border border-zinc-400"
+            {...register('phoneNumber')}
+          />
+          <FormError errors={errors.username?.message} />
+        </label>
+
+        <label className="flex flex-col gap-1">
+          CEP
+          <Input
+            type="number"
+            inputMode="decimal"
+            id="cep"
+            placeholder="CEP"
+            className="bg-transparent border border-zinc-400"
+            {...register('cep')}
+          />
+          <FormError errors={errors.cep?.message} />
+        </label>
+
+        <label className="flex flex-col gap-1">
+          Cidade
+          <Input
+            type="text"
+            maxLength={30}
+            placeholder="Cidade"
+            className="bg-transparent border border-zinc-400"
+            {...register('city')}
+          />
+          <FormError errors={errors.city?.message} />
+        </label>
+
+        <label className="flex flex-col gap-1">
+          UF
+          <Input
+            type="text"
+            maxLength={2}
+            placeholder="RN"
+            className="bg-transparent border border-zinc-400"
+            {...register('uf')}
+          />
+          <FormError errors={errors.uf?.message} />
+        </label>
+
+        <label className="flex flex-col gap-1">
+          Bairro
+          <Input
+            type="text"
+            maxLength={30}
+            placeholder="Bairro"
+            className="bg-transparent border border-zinc-400"
+            {...register('neighborhood')}
+          />
+          <FormError errors={errors.neighborhood?.message} />
+        </label>
+
+        <label className="flex flex-col gap-1">
+          Rua
+          <Input
+            type="text"
+            placeholder="Rua"
+            className="bg-transparent border border-zinc-400"
+            {...register('street')}
+          />
+          <FormError errors={errors.street?.message} />
+        </label>
+
+        <label className="flex flex-col gap-1">
+          Número
+          <Input
+            type="number"
+            maxLength={10}
+            placeholder="Número"
+            className="bg-transparent border border-zinc-400"
+            {...register('number')}
+          />
+          <FormError errors={errors.number?.message} />
+        </label>
+
+        <label className="flex flex-col gap-1">
+          Complemento
+          <Input
+            type="text"
+            maxLength={50}
+            placeholder="Complemento"
+            className="bg-transparent border border-zinc-400"
+            {...register('complement')}
+          />
+          <FormError errors={errors.complement?.message} />
+        </label>
       </div>
       {/* Método de entrega: Você pode querer adicionar um campo ou uma seleção para
       permitir que os clientes escolham um método de entrega preferido, como
@@ -114,7 +184,7 @@ export function Form() {
 
       <Button
         type="submit"
-        className="data-[disabled=true]:cursor-not-allowed"
+        className="data-[disabled=true]:cursor-not-allowed border bg-amber-100 hover:bg-amber-200 duration-700"
         aria-disabled={isSubmitting}
       >
         salvar

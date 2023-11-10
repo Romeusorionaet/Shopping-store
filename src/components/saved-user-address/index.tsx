@@ -8,7 +8,10 @@ export function SavedUserAddress({
   userAddress: OmitIdAndUserId<AddressFormData>
 }) {
   return (
-    <div>
+    <div className="mt-4 flex flex-col gap-1 opacity-80">
+      <p>{userAddress.username}</p>
+      <p>{userAddress.email}</p>
+      <p>{userAddress.phoneNumber}</p>
       <p>{userAddress.cep}</p>
       <p>{userAddress.city}</p>
       <p>{userAddress.uf}</p>
@@ -16,9 +19,6 @@ export function SavedUserAddress({
       <p>{userAddress.street}</p>
       <p>{userAddress.number}</p>
       <p>{userAddress.complement}</p>
-      <p>{userAddress.username}</p>
-      <p>{userAddress.phoneNumber}</p>
-      <p>{userAddress.email}</p>
     </div>
   )
 }

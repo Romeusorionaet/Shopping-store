@@ -12,5 +12,5 @@ export default async function layoutAdm({ children }: Props) {
     return null
   }
 
-  return <>{children}</>
+  return <div className="bg-slate-950">{children}</div>
 }

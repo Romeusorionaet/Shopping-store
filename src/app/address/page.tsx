@@ -15,27 +15,25 @@ export default async function Address() {
   const { props } = await getDataAddress(userId)
 
   return (
-    <div>
-      <h1>Complete seu pedido</h1>
-      <div>
-        <div>
-          <h2>Endereço de Entrega</h2>
-          <p>informe o endereço onde deseja receber seu pedido</p>
-        </div>
+    <div className="p-2 mt-4">
+      <h1 className="font-bold">Preencha corretamente o local de entrega</h1>
+
+      <div className="my-4">
+        {props?.userAddress ? (
+          <>
+            <h2>Endereço salvo:</h2>
+            <SavedUserAddress userAddress={props.userAddress} />
+          </>
+        ) : (
+          <></>
+        )}
       </div>
 
       <Form />
 
-      <div>
-        <h2>Endereço salvo</h2>
-        {props?.userAddress ? (
-          <SavedUserAddress userAddress={props.userAddress} />
-        ) : (
-          <span>Sem endereço salvo</span>
-        )}
+      <div className="flex justify-end">
+        <CheckoutCart />
       </div>
-
-      <CheckoutCart />
     </div>
   )
 }

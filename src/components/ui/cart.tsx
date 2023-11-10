@@ -24,14 +24,12 @@ export function Cart() {
   }
 
   return (
-    <div className="flex h-full flex-col gap-8">
-      <div className="w-fit gap-1 border-2 border-primary px-3 py-[0.375rem] text-base uppercase">
-        <ShoppingCartIcon size={16} />
-        Carrinho
+    <div className="flex h-full flex-col gap-6 pb-2">
+      <div className="border border-primary p-1 mt-2">
+        <p className="text-center uppercase text-base">alguma mensagem</p>
       </div>
 
-      {/* RENDERIZAR OS PRODUTOS */}
-      <div className="flex h-full max-h-full flex-col gap-5 overflow-hidden">
+      <div className="flex h-full flex-col gap-5 overflow-y-auto">
         <div className="flex h-full flex-col gap-8">
           {cart.length > 0 ? (
             cart.map((product) => (
@@ -47,28 +45,31 @@ export function Cart() {
 
       {cart.length > 0 && (
         <div className="flex flex-col gap-3">
-          <Separator />
+          <Separator className="opacity-20" />
 
           <div className="flex items-center justify-between text-xs">
             <p>Subtotal</p>
             <p>R$ {subtotal.toFixed(2)}</p>
           </div>
 
-          <Separator />
+          <Separator className="opacity-20" />
 
           <div className="flex items-center justify-between text-xs">
             <p>Descontos</p>
             <p>- R$ {totalDiscount.toFixed(2)}</p>
           </div>
 
-          <Separator />
+          <Separator className="opacity-20" />
 
           <div className="flex items-center justify-between text-sm font-bold">
             <p>Total</p>
             <p>R$ {total.toFixed(2)}</p>
           </div>
 
-          <Button onClick={handleNavigateToAddressPage}>
+          <Button
+            className="bg-amber-100 hover:bg-amber-200 duration-700 border"
+            onClick={handleNavigateToAddressPage}
+          >
             Dados de entrega
           </Button>
         </div>

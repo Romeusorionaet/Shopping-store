@@ -1,10 +1,18 @@
 'use client'
 
-import { Home, List, LogIn, Menu, Percent, ShoppingBag } from 'lucide-react'
+import {
+  BaggageClaim,
+  Home,
+  LibraryBig,
+  LogIn,
+  Menu,
+  Percent,
+  ShoppingBag,
+  SlidersHorizontal,
+} from 'lucide-react'
 import { Sheet, SheetContent, SheetHeader, SheetTrigger } from './sheet'
 import { signIn, signOut, useSession } from 'next-auth/react'
 import { Button } from './button'
-import { Card } from './card'
 import { Avatar, AvatarFallback, AvatarImage } from './avatar'
 import { Separator } from './separator'
 import { useRouter } from 'next/navigation'
@@ -47,15 +55,15 @@ export function Header({ isAdm }: Props) {
   }
 
   return (
-    <Card className="flex justify-around items-center rounded-none p-4">
+    <header className="flex justify-around items-center rounded-none p-4 bg-amber-200">
       <Sheet>
         <SheetTrigger asChild>
           <Button
             size="icon"
             variant="outline"
-            className="group hover:bg-white"
+            className="border-none hover:bg-amber-300 duration-700"
           >
-            <Menu className="group-hover:text-zinc-900 transition duration-700" />
+            <Menu />
           </Button>
         </SheetTrigger>
 
@@ -81,7 +89,7 @@ export function Header({ isAdm }: Props) {
                 </div>
               </div>
 
-              <Separator />
+              <Separator className="opacity-20" />
             </div>
           )}
 
@@ -103,7 +111,7 @@ export function Header({ isAdm }: Props) {
                 size="icon"
                 variant="outline"
                 onClick={handleLogout}
-                className="font-semibold w-full gap-4 hover:bg-white hover:text-primary"
+                className="font-semibold w-full gap-4 hover:text-primary hover:bg-amber-100 duration-700"
               >
                 <LogIn />
                 Sair
@@ -113,7 +121,7 @@ export function Header({ isAdm }: Props) {
             <Button
               onClick={() => handleNavigateToHomePage()}
               size="icon"
-              className="font-semibold w-full gap-1 justify-start bg-transparent"
+              className="font-semibold w-full bg-amber-100 gap-4 justify-center hover:bg-amber-200 duration-700"
             >
               <Home size={16} />
               Início
@@ -121,7 +129,7 @@ export function Header({ isAdm }: Props) {
 
             <Button
               size="icon"
-              className="font-semibold w-full gap-1 justify-start bg-transparent"
+              className="font-semibold w-full bg-amber-100 gap-4 justify-center hover:bg-amber-200 duration-700"
             >
               <Percent size={16} />
               Ofertas
@@ -129,18 +137,18 @@ export function Header({ isAdm }: Props) {
 
             <Button
               size="icon"
-              className="font-semibold w-full gap-1 justify-start bg-transparent"
+              className="font-semibold w-full bg-amber-100 gap-4 justify-center hover:bg-amber-200 duration-700"
             >
-              <List size={16} />
+              <LibraryBig size={16} />
               Catálogo
             </Button>
 
             <Button
               onClick={() => handleNavigateToOrdersPage()}
               size="icon"
-              className="font-semibold w-full gap-1 justify-start bg-transparent"
+              className="font-semibold w-full bg-amber-100 gap-4 justify-center hover:bg-amber-200 duration-700"
             >
-              <List size={16} />
+              <BaggageClaim size={16} />
               Meus pedidos
             </Button>
 
@@ -148,9 +156,9 @@ export function Header({ isAdm }: Props) {
               <Button
                 onClick={() => handleNavigateToRegisterProducts()}
                 size="icon"
-                className="font-semibold w-full gap-1 justify-start bg-transparent"
+                className="font-semibold w-full bg-amber-100 gap-4 justify-center hover:bg-amber-200 duration-700"
               >
-                <List size={16} />
+                <SlidersHorizontal size={16} />
                 Controlar produtos
               </Button>
             ) : (
@@ -163,19 +171,23 @@ export function Header({ isAdm }: Props) {
       <h1 className="text-2xl font-bold">Shopping Store</h1>
       <Sheet>
         <SheetTrigger asChild>
-          <Button size="icon" variant="outline" className="group">
+          <Button
+            size="icon"
+            variant="outline"
+            className="border-none hover:bg-amber-300 duration-700"
+          >
             <ShoppingBag size={28} />
           </Button>
         </SheetTrigger>
 
         <SheetContent>
           <SheetHeader className="text-left text-lg font-bold">
-            Sacola
+            Carrinho
           </SheetHeader>
 
           <Cart />
         </SheetContent>
       </Sheet>
-    </Card>
+    </header>
   )
 }
