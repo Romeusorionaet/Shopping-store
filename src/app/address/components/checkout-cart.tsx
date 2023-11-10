@@ -6,12 +6,24 @@ import { loadStripe } from '@stripe/stripe-js'
 import { useSession } from 'next-auth/react'
 import { useCartStore } from '@/providers/zustand-store'
 import { Button } from '@/components/ui/button'
+import { useRouter } from 'next/navigation'
 
-export function CheckoutCart() {
+interface Props {
+  userHasAddress: boolean
+}
+
+export function CheckoutCart({ userHasAddress }: Props) {
   const { cart } = useCartStore()
   const { data } = useSession()
 
+  const navigate = useRouter()
+
   const handleFinishPurchaseClick = async () => {
+    if (cart.length === 0) {
+      alert('Carrinho vazio!')
+      navigate.push('/')
+      return
+    }
     const order = await createOrder(cart, (data?.user as any).id)
 
     const checkout = await createCheckout(cart, order.id)
@@ -33,7 +45,9 @@ export function CheckoutCart() {
 
   return (
     <Button
-      className="mt-7 font-bold uppercase"
+      data-address={userHasAddress}
+      disabled={!userHasAddress}
+      className="mt-8 font-bold uppercase bg-amber-100 hover:bg-amber-200 duration-700 border data-[address=false]:bg-zinc-200"
       onClick={handleFinishPurchaseClick}
     >
       Finalizar compra

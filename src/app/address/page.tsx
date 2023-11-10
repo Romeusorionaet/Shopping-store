@@ -10,9 +10,11 @@ export default async function Address() {
   const userId = session?.user.id
 
   if (!userId) {
-    return <h1>Faça login na sua conta</h1>
+    return <h1 className="text-center mt-10">Faça login na sua conta</h1>
   }
   const { props } = await getDataAddress(userId)
+
+  const userHasAddress = !!props?.userAddress
 
   return (
     <div className="p-2 mt-4">
@@ -32,7 +34,7 @@ export default async function Address() {
       <Form />
 
       <div className="flex justify-end">
-        <CheckoutCart />
+        <CheckoutCart userHasAddress={userHasAddress} />
       </div>
     </div>
   )

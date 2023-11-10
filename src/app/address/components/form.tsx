@@ -178,9 +178,6 @@ export function Form() {
           <FormError errors={errors.complement?.message} />
         </label>
       </div>
-      {/* Método de entrega: Você pode querer adicionar um campo ou uma seleção para
-      permitir que os clientes escolham um método de entrega preferido, como
-      entrega padrão, entrega expressa ou retirada na loja. */}
 
       <Button
         type="submit"
