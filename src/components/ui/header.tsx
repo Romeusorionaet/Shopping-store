@@ -55,7 +55,7 @@ export function Header({ isAdm }: Props) {
   }
 
   return (
-    <header className="flex justify-around items-center rounded-none p-4 bg-amber-200">
+    <header className="flex justify-between items-center rounded-none p-4 bg-amber-200 fixed z-20 w-full px-[5%]">
       <Sheet>
         <SheetTrigger asChild>
           <Button
