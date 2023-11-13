@@ -10,7 +10,7 @@ export function OfferBanner() {
   return (
     <div
       ref={autoSliderRef}
-      className="keen-slider pt-[4.5rem] flex overflow-hidden"
+      className="keen-slider pt-[4.5rem] flex max-w-[1480px] overflow-hidden mx-auto"
     >
       <div className="keen-slider__slide">
         <div className="md:h-[30rem] h-80">

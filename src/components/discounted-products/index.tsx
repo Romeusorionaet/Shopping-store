@@ -2,12 +2,7 @@
 
 import { useKeenSliderMode } from '@/hooks/useKeenSliderMode'
 import { Product } from '@prisma/client'
-import {
-  ArrowBigLeft,
-  ArrowBigRight,
-  ChevronLeft,
-  ChevronRight,
-} from 'lucide-react'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 import Image from 'next/image'
 
 interface productsProps {
@@ -18,22 +13,31 @@ export function DiscountedProducts({ products }: productsProps) {
   const { sliderRef, currentSlide, instanceRef } = useKeenSliderMode()
 
   return (
-    <div ref={sliderRef} className="keen-slider relative">
+    <div
+      ref={sliderRef}
+      className="keen-slider relative w-full max-w-[1400px] mx-auto"
+    >
       <div className="overflow-hidden flex">
         {products &&
           products.map((product) => {
             return (
               <div key={product.id} className="keen-slider__slide">
-                <div className="bg-amber-100 hover:bg-amber-200 duration-700 flex flex-col justify-center items-center rounded-md h-full">
+                <div className="p-4 bg-amber-50 hover:bg-amber-100 duration-700 flex flex-col justify-center items-center gap-4 rounded-md h-full lg:w-80 max-md:w-72 max-sm:w-52">
                   <p className="text-xs">{product.name}</p>
+
                   <Image
                     width={0}
                     height={0}
                     sizes="100vw"
-                    className="w-20"
+                    className="w-full h-52 object-contain"
                     src={product.imageUrls[0]}
                     alt={product.name}
                   />
+
+                  <div className="flex items-center justify-end gap-2 w-full">
+                    <p className="opacity-60">Qtd:</p>
+                    <span className="">{product.quantity}</span>
+                  </div>
                 </div>
               </div>
             )
@@ -41,7 +45,7 @@ export function DiscountedProducts({ products }: productsProps) {
       </div>
       {instanceRef.current && (
         <div className="flex absolute max-md:hidden top-0 w-full h-full items-center justify-between">
-          <div className="w-20 h-full bg-gradient-to-r from-amber-200 z-10 flex">
+          <div className="w-20 h-full bg-gradient-to-r from-amber-100 z-10 flex">
             <Arrow
               left
               onClick={(e) =>
@@ -51,7 +55,7 @@ export function DiscountedProducts({ products }: productsProps) {
             />
           </div>
 
-          <div className="w-20 h-full bg-gradient-to-l from-amber-200 z-10 flex">
+          <div className="w-20 h-full bg-gradient-to-l from-amber-100 z-10 flex">
             <Arrow
               onClick={(e) =>
                 e.stopPropagation() || instanceRef.current?.next()

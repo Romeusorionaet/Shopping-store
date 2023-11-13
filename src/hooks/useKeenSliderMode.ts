@@ -41,7 +41,7 @@ export function useKeenSliderMode() {
     rtl: false,
     initial: 0,
     slides: {
-      perView: 3.2,
+      perView: 3.1,
       spacing: 10,
     },
     slideChanged(slider) {
@@ -55,7 +55,6 @@ export function useKeenSliderMode() {
     initial: 0,
     slides: {
       perView: 1.5,
-      spacing: 10,
     },
     slideChanged(slider) {
       setCurrentSlide(slider.track.details.rel)
@@ -63,7 +62,7 @@ export function useKeenSliderMode() {
   })
 
   const sliderRef =
-    widthScreen && widthScreen <= 800
+    widthScreen && widthScreen <= 768
       ? sliderRefModeMobile
       : sliderRefModeDesktop
 

@@ -121,7 +121,7 @@ export function Header({ isAdm }: Props) {
             <Button
               onClick={() => handleNavigateToHomePage()}
               size="icon"
-              className="font-semibold w-full bg-amber-100 gap-4 justify-center hover:bg-amber-200 duration-700"
+              className="font-semibold w-full hover:bg-amber-100 gap-4 justify-start p-4 bg-transparent duration-700"
             >
               <Home size={16} />
               Início
@@ -129,7 +129,7 @@ export function Header({ isAdm }: Props) {
 
             <Button
               size="icon"
-              className="font-semibold w-full bg-amber-100 gap-4 justify-center hover:bg-amber-200 duration-700"
+              className="font-semibold w-full hover:bg-amber-100 gap-4 justify-start p-4 bg-transparent duration-700"
             >
               <Percent size={16} />
               Ofertas
@@ -137,7 +137,7 @@ export function Header({ isAdm }: Props) {
 
             <Button
               size="icon"
-              className="font-semibold w-full bg-amber-100 gap-4 justify-center hover:bg-amber-200 duration-700"
+              className="font-semibold w-full hover:bg-amber-100 gap-4 justify-start p-4 bg-transparent duration-700"
             >
               <LibraryBig size={16} />
               Catálogo
@@ -146,7 +146,7 @@ export function Header({ isAdm }: Props) {
             <Button
               onClick={() => handleNavigateToOrdersPage()}
               size="icon"
-              className="font-semibold w-full bg-amber-100 gap-4 justify-center hover:bg-amber-200 duration-700"
+              className="font-semibold w-full hover:bg-amber-100 gap-4 justify-start p-4 bg-transparent duration-700"
             >
               <BaggageClaim size={16} />
               Meus pedidos
@@ -156,7 +156,7 @@ export function Header({ isAdm }: Props) {
               <Button
                 onClick={() => handleNavigateToRegisterProducts()}
                 size="icon"
-                className="font-semibold w-full bg-amber-100 gap-4 justify-center hover:bg-amber-200 duration-700"
+                className="font-semibold w-full hover:bg-amber-100 gap-4 justify-start p-4 bg-transparent duration-700"
               >
                 <SlidersHorizontal size={16} />
                 Controlar produtos
