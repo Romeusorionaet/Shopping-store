@@ -2,6 +2,7 @@ import { getDataUniqueProduct } from '@/lib/getData/get-data-unique-product'
 import { AddProductInCart } from '../components/add-product-in-cart'
 import { ProductList } from '../components/product-list'
 import { ProductImages } from '../components/product-images'
+import { CalculateValueProduct } from '@/utils/calculate-value-product'
 
 interface ParamsProps {
   params: {
@@ -18,9 +19,7 @@ export default async function Details({ params }: ParamsProps) {
     return null
   }
 
-  const totalDiscount =
-    Number(product.basePrice) * (product.discountPercentage / 100)
-  const totalPrice = Number(product.basePrice) - totalDiscount
+  const { totalPrice } = CalculateValueProduct(product)
   const totalPriceDividedByTwelve = totalPrice / 12
 
   return (

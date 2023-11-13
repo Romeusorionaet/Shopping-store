@@ -1,6 +1,7 @@
 import { getDataCategory } from '@/lib/getData/get-data-category'
 import Link from 'next/link'
 import Image from 'next/image'
+import { CalculateValueProduct } from '@/utils/calculate-value-product'
 
 interface ParamsProps {
   params: {
@@ -19,9 +20,7 @@ export default async function Category({ params }: ParamsProps) {
       <div className="flex flex-wrap gap-8 justify-center my-8">
         {props?.selectedProducts.products &&
           props.selectedProducts.products.map((product) => {
-            const totalDiscount =
-              Number(product.basePrice) * (product.discountPercentage / 100)
-            const totalPrice = Number(product.basePrice) - totalDiscount
+            const { totalPrice } = CalculateValueProduct(product)
             return (
               <Link
                 href={`/details/${product.slug}`}

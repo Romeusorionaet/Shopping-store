@@ -1,6 +1,7 @@
 'use client'
 
 import { useKeenSliderMode } from '@/hooks/useKeenSliderMode'
+import { CalculateValueProduct } from '@/utils/calculate-value-product'
 import { Product } from '@prisma/client'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import Image from 'next/image'
@@ -21,9 +22,7 @@ export function CarouselProducts({ products }: productsProps) {
         <div className="overflow-hidden flex">
           {products &&
             products.map((product) => {
-              const totalDiscount =
-                Number(product.basePrice) * (product.discountPercentage / 100)
-              const totalPrice = Number(product.basePrice) - totalDiscount
+              const { totalPrice } = CalculateValueProduct(product)
 
               return (
                 <div key={product.id} className="keen-slider__slide z-20">
