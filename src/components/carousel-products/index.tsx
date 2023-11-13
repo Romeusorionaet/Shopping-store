@@ -27,10 +27,14 @@ export function CarouselProducts({ products }: productsProps) {
 
               return (
                 <div key={product.id} className="keen-slider__slide z-20">
-                  <div className="p-4 bg-amber-50/60 hover:bg-amber-50 duration-700 flex flex-col justify-center items-center gap-2 rounded-md h-full lg:w-80 max-md:w-72 max-sm:w-52">
+                  <div className="p-4 bg-amber-50/60 hover:bg-amber-100 duration-700 flex flex-col justify-center items-center gap-2 rounded-md h-full lg:w-80 max-md:w-72 max-sm:w-52">
                     <p className="text-sm">{product.name}</p>
 
                     <div>
+                      <span className="absolute bottom-28 left-0 bg-zinc-100/40 p-1 rounded-md font-bold">
+                        {product.placeOfSale}
+                      </span>
+
                       {product.discountPercentage !== 0 && (
                         <p className="text-xs line-through opacity-75">
                           R$ {Number(product.basePrice).toFixed(2)}

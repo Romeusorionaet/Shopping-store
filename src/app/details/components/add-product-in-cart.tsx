@@ -14,7 +14,7 @@ export function AddProductInCart({ product }: any) {
   return (
     <button
       onClick={() => handleAddToProductInCart(product)}
-      className="bg-green-500 p-2"
+      className="bg-green-500 p-2 rounded-md"
     >
       Adicionar no carrinho
     </button>
