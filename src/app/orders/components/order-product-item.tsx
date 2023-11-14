@@ -9,7 +9,7 @@ interface OrderProductItemProps {
   }>
 }
 
-const OrderProductItem = ({ orderProduct }: OrderProductItemProps) => {
+export function OrderProductItem({ orderProduct }: OrderProductItemProps) {
   let total = 0
 
   const currentTotalDiscount =
@@ -23,19 +23,19 @@ const OrderProductItem = ({ orderProduct }: OrderProductItemProps) => {
 
   return (
     <div className="flex items-center gap-4">
-      <div className="flex h-[77px] w-[100px] items-center justify-center rounded-lg bg-accent">
+      <div className="flex h-[77px] w-[100px] items-center justify-center rounded-lg bg-amber-50">
         <Image
           src={orderProduct.product.imageUrls[0]}
           width={0}
           height={0}
           sizes="100vw"
-          className="h-auto max-h-[80%] w-auto max-w-[80%] object-contain"
+          className="h-auto max-h-[80%] w-auto max-w-[80%]"
           alt={orderProduct.product.name}
         />
       </div>
 
       <div className="flex w-full flex-col gap-1">
-        <div className="flex w-fit rounded-md bg-accent px-3 py-1">
+        <div className="flex w-fit rounded-md px-3 py-1">
           <p className="text-[10px]">
             Vendido e entregue por{' '}
             <span className="font-bold">shopping-store</span>
@@ -61,5 +61,3 @@ const OrderProductItem = ({ orderProduct }: OrderProductItemProps) => {
     </div>
   )
 }
-
-export default OrderProductItem

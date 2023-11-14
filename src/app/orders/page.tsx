@@ -2,6 +2,7 @@ import { authOptions } from '@/lib/auth'
 import { getDataOrders } from '@/lib/getData/get-data-orders'
 import { getServerSession } from 'next-auth'
 import { OrderItem } from './components/order-item'
+import { OrderWaitingForPayment } from './components/order-waiting-for-payment'
 
 export default async function Orders() {
   const session = await getServerSession(authOptions)
@@ -11,23 +12,42 @@ export default async function Orders() {
   }
 
   const { props } = await getDataOrders(session.user.id)
-  const orders = props.orders
+  const orders = props?.orders
 
   return (
-    <div>
-      <div className="my-10">
+    <div className="pt-28 p-4 max-w-[800px] mx-auto">
+      <div>
         <h1>Seus pedidos</h1>
       </div>
 
-      <div className="flex flex-col justify-center">
-        {orders &&
+      <div className="flex flex-col justify-center mt-4">
+        {orders && orders.length >= 1 ? (
           orders.map((order) => {
             if (order.status === 'PAYMENT_CONFIRMED') {
               return <OrderItem key={order.id} order={order} />
             } else {
-              return <></>
+              return null
             }
-          })}
+          })
+        ) : (
+          <p className="text-center mt-8 opacity-80">
+            Você ainda não fez nem uma compra
+          </p>
+        )}
+      </div>
+
+      <div className="flex flex-col gap-2 justify-center mt-8">
+        {orders && orders.length >= 1 ? (
+          orders.map((order) => {
+            if (order.status === 'WAITING_FOR_PAYMENT') {
+              return <OrderWaitingForPayment key={order.id} order={order} />
+            } else {
+              return null
+            }
+          })
+        ) : (
+          <></>
+        )}
       </div>
     </div>
   )

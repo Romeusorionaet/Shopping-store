@@ -1,5 +1,6 @@
 'use client'
 
+import { Button } from '@/components/ui/button'
 import { useCartStore } from '@/providers/zustand-store'
 import { useState } from 'react'
 
@@ -12,11 +13,11 @@ export function AddProductInCart({ product }: any) {
   }
 
   return (
-    <button
+    <Button
       onClick={() => handleAddToProductInCart(product)}
       className="bg-green-500 p-2 rounded-md sm:w-56"
     >
       Adicionar no carrinho
-    </button>
+    </Button>
   )
 }

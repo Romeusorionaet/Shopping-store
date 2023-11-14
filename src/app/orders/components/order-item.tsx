@@ -10,8 +10,8 @@ import {
 import { Prisma } from '@prisma/client'
 import { format } from 'date-fns'
 import { getOrderStatus } from '../helpers/get-order-status'
-import OrderProductItem from './order-product-item'
 import { Button } from '@/components/ui/button'
+import { OrderProductItem } from './order-product-item'
 
 export interface OrderProductProps {
   order: Prisma.OrderGetPayload<{
@@ -45,15 +45,14 @@ export function OrderItem({ order }: OrderProductProps) {
   }
 
   return (
-    <div className="px-5">
-      <Accordion type="single" className="w-full" collapsible>
-        <AccordionItem value={order.id}>
-          <AccordionTrigger>
-            <div className="flex flex-col gap-1 my-4">
-              <p className="text-sm font-bold uppercase">
-                Pedido com {order.orderProducts.length} produto(s)
-              </p>
-              {/* {order.trackingCode ? (
+    <Accordion type="single" className="w-full" collapsible>
+      <AccordionItem value={order.id}>
+        <AccordionTrigger>
+          <div className="flex flex-col gap-1 my-4">
+            <p className="text-sm font-bold uppercase">
+              Pedido com {order.orderProducts.length} produto(s)
+            </p>
+            {/* {order.trackingCode ? (
                 <span className="text-xs opacity-60">
                   Código de restreio: <strong>{order.trackingCode}</strong>
                 </span>
@@ -62,81 +61,81 @@ export function OrderItem({ order }: OrderProductProps) {
                   Estamos preparando o seu produto para envio
                 </span>
               )} */}
-              <span className="text-xs opacity-60">
-                Código de restreio: <strong>561461461</strong>
-              </span>
-            </div>
-          </AccordionTrigger>
+            <span className="text-xs opacity-60">
+              Código de restreio: <strong>561461461</strong>
+            </span>
+          </div>
+        </AccordionTrigger>
 
-          <AccordionContent>
-            <div className="flex flex-col gap-4">
-              <div className="flex items-center justify-between">
-                <div className="font-bold">
-                  <p>Status</p>
-                  <p className="text-[#8162FF]">
-                    {getOrderStatus(order.status)}
-                  </p>
-                </div>
-
-                <div>
-                  <p className="font-bold">Data</p>
-                  <p className="opacity-60">
-                    {format(order.createdAt, "d/MM/y 'às' HH:mm")}
-                  </p>
-                </div>
-
-                <div>
-                  <p className="font-bold">Pagamento</p>
-                  <p className="opacity-60">Cartão</p>
-                </div>
-              </div>
-
-              {order.orderProducts.map((orderProduct) => (
-                <OrderProductItem
-                  key={orderProduct.id}
-                  orderProduct={orderProduct}
-                />
-              ))}
-
-              <div className="flex w-full flex-col gap-1 text-xs">
-                <Separator />
-
-                <div className="flex w-full justify-between py-3">
-                  <p>Subtotal</p>
-                  <p>R$ {subtotal.toFixed(2)}</p>
-                </div>
-
-                <Separator />
-
-                <div className="flex w-full justify-between py-3">
-                  <p>Entrega</p>
-                  <p>GRÁTIS</p>
-                </div>
-
-                <Separator />
-
-                <div className="flex w-full justify-between py-3">
-                  <p>Descontos</p>
-                  <p>-R$ {totalDiscount.toFixed(2)}</p>
-                </div>
-
-                <Separator />
-
-                <div className="flex w-full justify-between py-3 text-sm font-bold">
-                  <p>Total</p>
-                  <p>R$ {total.toFixed(2)}</p>
-                </div>
+        <AccordionContent>
+          <div className="flex flex-col gap-4">
+            <div className="flex items-center justify-between">
+              <div className="font-bold">
+                <p>Status</p>
+                <p className="text-green-500">{getOrderStatus(order.status)}</p>
               </div>
 
               <div>
-                <Button onClick={handleNavigateToCorreiosPage}>
-                  Acompanhar pedido
-                </Button>
+                <p className="font-bold">Data</p>
+                <p className="opacity-60">
+                  {format(order.createdAt, "d/MM/y 'às' HH:mm")}
+                </p>
+              </div>
+
+              <div>
+                <p className="font-bold">Pagamento</p>
+                <p className="opacity-60">Cartão</p>
               </div>
             </div>
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
-    </div>
+
+            {order.orderProducts.map((orderProduct) => (
+              <OrderProductItem
+                key={orderProduct.id}
+                orderProduct={orderProduct}
+              />
+            ))}
+
+            <div className="flex w-full flex-col gap-1 text-xs">
+              <Separator />
+
+              <div className="flex w-full justify-between py-3">
+                <p>Subtotal</p>
+                <p>R$ {subtotal.toFixed(2)}</p>
+              </div>
+
+              <Separator />
+
+              <div className="flex w-full justify-between py-3">
+                <p>Entrega</p>
+                <p>GRÁTIS</p>
+              </div>
+
+              <Separator />
+
+              <div className="flex w-full justify-between py-3">
+                <p>Descontos</p>
+                <p>-R$ {totalDiscount.toFixed(2)}</p>
+              </div>
+
+              <Separator />
+
+              <div className="flex w-full justify-between py-3 text-sm font-bold">
+                <p>Total</p>
+                <p>R$ {total.toFixed(2)}</p>
+              </div>
+            </div>
+
+            <div>
+              <Button
+                className="bg-green-500 p-2 rounded-md sm:w-56"
+                onClick={handleNavigateToCorreiosPage}
+              >
+                Acompanhar pedido
+              </Button>
+            </div>
+          </div>
+        </AccordionContent>
+      </AccordionItem>
+    </Accordion>
   )
 }

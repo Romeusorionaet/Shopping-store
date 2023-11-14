@@ -5,6 +5,7 @@ import { NextResponse } from 'next/server'
 const stripe = initializeStripe()
 
 export const POST = async (req: Request) => {
+  console.log('oiioooioi')
   const signature = req.headers.get('stripe-signature')
 
   if (!signature) {
