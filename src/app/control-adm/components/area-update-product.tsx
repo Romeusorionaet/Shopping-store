@@ -50,7 +50,7 @@ export function AreaUpdateProduct({ listOfProducts }: Props) {
                   <div className="space-y-2">
                     <h3 className="font-bold">{product.name}</h3>
                     <p>
-                      Valor bruto{' '}
+                      Valor bruto R${' '}
                       <span className="font-bold opacity-80">
                         {Number(product.basePrice)}
                       </span>
@@ -60,6 +60,7 @@ export function AreaUpdateProduct({ listOfProducts }: Props) {
                       <span className="font-bold opacity-80">
                         {Number(product.discountPercentage)}
                       </span>
+                      %
                     </p>
 
                     <Link
@@ -70,12 +71,12 @@ export function AreaUpdateProduct({ listOfProducts }: Props) {
                     </Link>
                   </div>
 
-                  <div className="h-[6rem]">
+                  <div className="h-[6rem] max-w-[50%]">
                     <Image
                       width={0}
                       height={0}
                       sizes="100vw"
-                      className="h-full w-auto"
+                      className="h-full w-auto object-contain"
                       src={product.imageUrls[0]}
                       alt={product.name}
                     />

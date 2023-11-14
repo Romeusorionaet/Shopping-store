@@ -5,7 +5,6 @@ import { NextResponse } from 'next/server'
 const stripe = initializeStripe()
 
 export const POST = async (req: Request) => {
-  console.log('oiioooioi')
   const signature = req.headers.get('stripe-signature')
 
   if (!signature) {
@@ -37,18 +36,6 @@ export const POST = async (req: Request) => {
           status: 'PAYMENT_CONFIRMED',
         },
       })
-    }
-
-    if (event.type === 'checkout.session.expired') {
-      console.log('checkout.session.expired')
-    }
-
-    if (event.type === 'checkout.session.async_payment_failed') {
-      console.log('checkout.session.async_payment_failed')
-    }
-
-    if (event.type === 'checkout.session.async_payment_succeeded') {
-      console.log('checkout.session.async_payment_succeeded')
     }
   } catch (err) {
     alert(err)

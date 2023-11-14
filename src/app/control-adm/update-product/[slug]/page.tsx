@@ -12,8 +12,8 @@ export default async function UpdateProduct({ params }: ParamsProps) {
   const data = await getDataUniqueProduct(slug)
 
   return (
-    <div>
-      <h1 className="text-center mt-8 font-thin">
+    <div className="p-4">
+      <h1 className="text-center mt-8">
         Altere os valores para atualizar o produto
       </h1>
 

@@ -6,11 +6,13 @@ interface Props {
 
 export default async function layoutAdm({ children }: Props) {
   const { props } = await getDataUser()
-  const isAdm = props.isAdm
+  const isAdm = props?.isAdm
 
   if (!isAdm) {
     return null
   }
 
-  return <div className="bg-slate-950">{children}</div>
+  return (
+    <div className="bg-slate-950 text-white pt-28 min-h-screen">{children}</div>
+  )
 }
