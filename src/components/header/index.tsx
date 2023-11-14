@@ -10,13 +10,13 @@ import {
   ShoppingBag,
   SlidersHorizontal,
 } from 'lucide-react'
-import { Sheet, SheetContent, SheetHeader, SheetTrigger } from './sheet'
+import { Sheet, SheetContent, SheetHeader, SheetTrigger } from '../ui/sheet'
 import { signIn, signOut, useSession } from 'next-auth/react'
-import { Button } from './button'
-import { Avatar, AvatarFallback, AvatarImage } from './avatar'
-import { Separator } from './separator'
+import { Button } from '../ui/button'
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
+import { Separator } from '../ui/separator'
 import { useRouter } from 'next/navigation'
-import { Cart } from './cart'
+import { Cart } from '../cart'
 
 interface Props {
   isAdm?: boolean
@@ -63,7 +63,7 @@ export function Header({ isAdm }: Props) {
   }
 
   return (
-    <header className="flex justify-between items-center rounded-none p-4 bg-amber-200 fixed z-20 w-full px-[5%]">
+    <header className="flex justify-between items-center rounded-none p-4 bg-amber-200 fixed z-30 w-full px-[5%]">
       <Sheet>
         <SheetTrigger asChild>
           <Button

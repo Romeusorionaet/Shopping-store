@@ -1,10 +1,10 @@
-import { Separator } from './separator'
-import { Button } from './button'
-import { CartItem } from './cart-item'
+import { Separator } from '../ui/separator'
+import { Button } from '../ui/button'
 import { useCartStore } from '@/providers/zustand-store'
 import { calculateCartAllValues } from '@/utils/calculate-cart-all-values'
 import { useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
+import { CartItem } from './cart-item'
 
 export function Cart() {
   const { cart } = useCartStore()

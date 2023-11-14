@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { Button } from './button'
+import { Button } from '../ui/button'
 import { ArrowLeftIcon, ArrowRightIcon, TrashIcon } from 'lucide-react'
 import { CartProduct, useCartStore } from '@/providers/zustand-store'
 

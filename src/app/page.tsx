@@ -15,7 +15,7 @@ export default async function Home() {
   const allProducts = props.products.sort(() => Math.random() - 0.5)
 
   return (
-    <div className="flex flex-col gap-6 overflow-hidden pb-8 max-w-[1480px] mx-auto">
+    <main className="flex flex-col gap-6 overflow-hidden pb-8 max-w-[1480px] mx-auto">
       <div className="relative max-w-[1480px] w-full mx-auto">
         <div className="bg-gradient-to-r from-amber-100/40 h-full w-40 max-2xl:w-28 max-sm:w-10 absolute left-0 top-0 z-10" />
         <OfferBanner />
@@ -29,17 +29,15 @@ export default async function Home() {
         <LibraryBig size={16} />
       </div>
 
-      <div>
+      <div className="px-2">
         <h2 className="my-4 text-lg">Produtos em Promoção</h2>
 
         <CarouselProducts products={filteredProductsWithDiscount} />
-      </div>
 
-      <div>
         <h2 className="my-4 text-lg">Todos os Produtos</h2>
 
         <CarouselProducts products={allProducts} />
       </div>
-    </div>
+    </main>
   )
 }
