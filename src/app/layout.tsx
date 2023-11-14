@@ -20,7 +20,7 @@ export default async function RootLayout({
   children: React.ReactNode
 }) {
   const { props } = await getDataUser()
-  const isAdm = props.isAdm
+  const isAdm = props?.isAdm
 
   return (
     <html lang="en">

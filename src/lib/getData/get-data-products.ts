@@ -8,7 +8,7 @@ export const getDataProducts = async () => {
       props: {
         products,
       },
-      revalidate: 60 * 60 * 24, // 1 day
+      revalidate: 60 * 60 * 24,
     }
   } catch (err) {
     console.log(err)

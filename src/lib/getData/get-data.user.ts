@@ -5,10 +5,18 @@ import { prismaClient } from '../prisma'
 import { authOptions } from '../auth'
 
 export const getDataUser = async () => {
-  const session = await getServerSession(authOptions)
-  const userId = session?.user.id
+  try {
+    const session = await getServerSession(authOptions)
+    const userId = session?.user.id
 
-  if (userId) {
+    if (!userId) {
+      return {
+        props: {
+          isAdm: false,
+        },
+      }
+    }
+
     const user = await prismaClient.user.findUnique({
       where: {
         id: userId,
@@ -21,14 +29,12 @@ export const getDataUser = async () => {
       props: {
         isAdm,
       },
-      revalidate: 60 * 60 * 24, // 1 day
+      revalidate: 60 * 60 * 24,
     }
-  } else {
+  } catch (err) {
+    console.log(err)
     return {
-      props: {
-        isAdm: false,
-      },
-      revalidate: 60 * 60 * 24, // 1 day
+      error: 'Something went wrong while fetching the user.',
     }
   }
 }

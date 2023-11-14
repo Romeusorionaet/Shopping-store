@@ -1,4 +1,3 @@
-import { ShoppingCartIcon } from 'lucide-react'
 import { Separator } from './separator'
 import { Button } from './button'
 import { CartItem } from './cart-item'

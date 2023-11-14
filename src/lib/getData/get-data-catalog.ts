@@ -1,18 +1,24 @@
 import { prismaClient } from '@/lib/prisma'
 
 export const getDataCatalog = async () => {
-  const categories = await prismaClient.category.findMany({})
+  try {
+    const categories = await prismaClient.category.findMany({})
 
-  if (!categories) {
-    return {
-      notFound: true,
+    if (!categories || categories.length === 0) {
+      return {
+        notFound: true,
+      }
     }
-  }
 
-  return {
-    props: {
-      categories,
-    },
-    revalidate: 60 * 60 * 24, // 1 day
+    return {
+      props: {
+        categories,
+      },
+      revalidate: 60 * 60 * 24,
+    }
+  } catch (error) {
+    return {
+      error: 'Something went wrong while fetching the catalog data.',
+    }
   }
 }
