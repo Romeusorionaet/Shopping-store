@@ -1,8 +1,8 @@
 import { getDataUniqueProduct } from '@/lib/getData/get-data-unique-product'
 import { AddProductInCart } from '../components/add-product-in-cart'
-import { ProductList } from '../components/product-list'
 import { ProductImages } from '../components/product-images'
 import { CalculateValueProduct } from '@/utils/calculate-value-product'
+import { CarouselProducts } from '@/components/carousel-products'
 
 interface ParamsProps {
   params: {
@@ -24,10 +24,10 @@ export default async function Details({ params }: ParamsProps) {
 
   return (
     <div className="h-screen flex flex-col justify-between pt-[4.5rem]">
-      <div className="flex max-2xl:flex-col gap-8 items-center justify-center my-8">
+      <div className="flex max-md:flex-col gap-8 justify-center items-center md:items-start my-8">
         <ProductImages imageUrls={product.imageUrls} name={product.name} />
 
-        <div className="flex flex-col gap-4 max-w-[80%] 2xl:w-[50%] 2xl:p-4">
+        <div className="flex flex-col gap-4 2xl:w-[50%] p-4">
           <h1 className="font-bold">{product.name}</h1>
           <div>
             {product.discountPercentage !== 0 && (
@@ -66,10 +66,10 @@ export default async function Details({ params }: ParamsProps) {
         </div>
       </div>
 
-      <div>
-        <h2>Lista do footer com items da mesma categoria sem o item autal</h2>
+      <div className="p-4 space-y-8">
+        <h2 className="text-lg md:text-2xl uppercase">Veja também</h2>
 
-        <ProductList products={props?.product.category.products} />
+        <CarouselProducts products={product.category.products} />
       </div>
     </div>
   )

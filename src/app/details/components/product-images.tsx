@@ -16,23 +16,23 @@ export function ProductImages({ imageUrls, name }: ProductImagesProps) {
   }
 
   return (
-    <div className="flex flex-col lg:min-h-full lg:w-3/5 2xl:min-w-[50%]">
-      <div className="flex h-[380px] w-full max-w-[80%] mx-auto items-center justify-center bg-amber-50/60 hover:bg-amber-100 duration-700 lg:h-full lg:rounded-lg">
+    <div className="flex lg:flex-row-reverse max-lg:flex-col items-center lg:items-start max-md:gap-4 md:h-[31rem] md:w-3/5 md:min-w-[50%]">
+      <div className="flex h-[380px] w-full max-w-[80%] mx-auto items-center justify-center  duration-700 md:h-5/6 rounded-md p-1">
         <Image
           src={currentImage}
           alt={name}
           height={0}
           width={0}
           sizes="100vw"
-          className="h-full max-h-[70%] w-auto max-w-[80%] object-contain"
+          className="h-full max-h-[90%] w-auto max-w-[90%] object-contain"
         />
       </div>
 
-      <div className="mt-8 grid grid-cols-4 gap-4 px-5 lg:px-0">
+      <div className="flex lg:flex-col gap-2 px-2">
         {imageUrls.map((imageUrl) => (
           <button
             key={imageUrl}
-            className={`flex h-[100px] items-center justify-center rounded-lg bg-amber-50/60 hover:bg-amber-100 duration-700
+            className={`flex h-[100px] w-full items-center justify-center rounded-lg bg-amber-50/60 hover:bg-amber-100 duration-700
                 ${
                   imageUrl === currentImage &&
                   'border-2 border-solid border-amber-300 bg-amber-100'
@@ -46,7 +46,7 @@ export function ProductImages({ imageUrls, name }: ProductImagesProps) {
               height={0}
               width={0}
               sizes="100vw"
-              className="h-auto max-h-[70%] w-auto max-w-[80%]"
+              className="h-auto w-auto max-h-[70%] max-w-[80%] md:max-h-[40%] md:max-w-[50%]"
             />
           </button>
         ))}

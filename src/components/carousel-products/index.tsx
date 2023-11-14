@@ -70,7 +70,7 @@ export function CarouselProducts({ products }: productsProps) {
         </div>
         {instanceRef.current && (
           <div className="flex absolute max-md:hidden top-0 w-full h-full items-center justify-between">
-            <div className="w-20 h-full bg-gradient-to-r from-amber-100 flex">
+            <div className="w-20 h-full bg-gradient-to-r from-amber-200/60 flex">
               <Arrow
                 left
                 onClick={(e) =>
@@ -80,7 +80,7 @@ export function CarouselProducts({ products }: productsProps) {
               />
             </div>
 
-            <div className="w-20 h-full bg-gradient-to-l from-amber-100 flex">
+            <div className="w-20 h-full bg-gradient-to-l from-amber-200/60 flex">
               <Arrow
                 onClick={(e) =>
                   e.stopPropagation() || instanceRef.current?.next()
