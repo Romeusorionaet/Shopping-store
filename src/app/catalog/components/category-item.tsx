@@ -8,7 +8,7 @@ interface CategoryItemProps {
 
 const CategoryItem = ({ category }: CategoryItemProps) => {
   return (
-    <Link href={`/category/${category.slug}`}>
+    <Link href={`/catalog/category/${category.slug}`}>
       <div className="flex flex-col items-center justify-center gap-2 w-60 rounded-lg py-2 bg-amber-50/60 hover:bg-amber-100 duration-700">
         <Image
           width={0}

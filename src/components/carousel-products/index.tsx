@@ -5,6 +5,7 @@ import { CalculateValueProduct } from '@/utils/calculate-value-product'
 import { Product } from '@prisma/client'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import Image from 'next/image'
+import Link from 'next/link'
 
 interface productsProps {
   products: Product[] | undefined
@@ -12,6 +13,11 @@ interface productsProps {
 
 export function CarouselProducts({ products }: productsProps) {
   const { sliderRef, currentSlide, instanceRef } = useKeenSliderMode()
+
+  if (!products) {
+    return
+  }
+  const verifySizeProducts = products.length >= 4
 
   return (
     <div
@@ -26,49 +32,51 @@ export function CarouselProducts({ products }: productsProps) {
 
               return (
                 <div key={product.id} className="keen-slider__slide z-20">
-                  <div className="p-4 bg-amber-50/60 hover:bg-amber-100 duration-700 flex flex-col justify-center items-center gap-2 rounded-md h-full lg:w-80 max-md:w-72 max-sm:w-52">
-                    <p className="text-sm">{product.name}</p>
+                  <Link href={`/details/${product.slug}`}>
+                    <div className="p-4 bg-amber-50/60 hover:bg-amber-100 duration-700 flex flex-col justify-center items-center gap-2 rounded-md h-full lg:w-80 max-md:w-72 max-sm:w-52">
+                      <p className="text-sm">{product.name}</p>
 
-                    <div>
-                      <span className="absolute bottom-28 left-0 bg-zinc-100/40 p-1 rounded-md font-bold">
-                        {product.placeOfSale}
-                      </span>
+                      <div>
+                        <span className="absolute bottom-28 left-0 bg-zinc-100/40 p-1 rounded-md font-bold">
+                          {product.placeOfSale}
+                        </span>
 
-                      {product.discountPercentage !== 0 && (
-                        <p className="text-xs line-through opacity-75">
-                          R$ {Number(product.basePrice).toFixed(2)}
-                        </p>
-                      )}
+                        {product.discountPercentage !== 0 && (
+                          <p className="text-xs line-through opacity-75">
+                            R$ {Number(product.basePrice).toFixed(2)}
+                          </p>
+                        )}
 
-                      <p>R$ {totalPrice}</p>
-                    </div>
+                        <p>R$ {totalPrice}</p>
+                      </div>
 
-                    <Image
-                      width={0}
-                      height={0}
-                      sizes="100vw"
-                      className="w-full h-52 object-contain"
-                      src={product.imageUrls[0]}
-                      alt={product.name}
-                    />
+                      <Image
+                        width={0}
+                        height={0}
+                        sizes="100vw"
+                        className="w-full h-52 object-contain"
+                        src={product.imageUrls[0]}
+                        alt={product.name}
+                      />
 
-                    <div className="flex items-center justify-between gap-2 w-full">
-                      {product.discountPercentage !== 0 && (
+                      <div className="flex items-center justify-between gap-2 w-full">
+                        {product.discountPercentage !== 0 && (
+                          <p>
+                            <strong>{product.discountPercentage}%</strong> Desc
+                          </p>
+                        )}
+
                         <p>
-                          <strong>{product.discountPercentage}%</strong> Desc
+                          Qtd: <strong>{product.quantity}</strong>
                         </p>
-                      )}
-
-                      <p>
-                        Qtd: <strong>{product.quantity}</strong>
-                      </p>
+                      </div>
                     </div>
-                  </div>
+                  </Link>
                 </div>
               )
             })}
         </div>
-        {instanceRef.current && (
+        {instanceRef.current && verifySizeProducts && (
           <div className="flex absolute max-md:hidden top-0 w-full h-full items-center justify-between">
             <div className="w-20 h-full bg-gradient-to-r from-amber-200/60 flex">
               <Arrow
@@ -87,7 +95,7 @@ export function CarouselProducts({ products }: productsProps) {
                 }
                 disabled={
                   currentSlide ===
-                  instanceRef.current.track.details.slides.length - 1
+                  instanceRef.current.track.details?.slides.length - 1
                 }
               />
             </div>

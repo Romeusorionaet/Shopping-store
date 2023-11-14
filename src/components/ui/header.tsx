@@ -2,11 +2,11 @@
 
 import {
   BaggageClaim,
+  Flame,
   Home,
   LibraryBig,
   LogIn,
   Menu,
-  Percent,
   ShoppingBag,
   SlidersHorizontal,
 } from 'lucide-react'
@@ -46,6 +46,14 @@ export function Header({ isAdm }: Props) {
     router.push('/')
   }
 
+  const handleNavigateToOffers = () => {
+    router.push('/offers')
+  }
+
+  const handleNavigateToCatalog = () => {
+    router.push('/catalog')
+  }
+
   const handleNavigateToOrdersPage = () => {
     router.push('/orders')
   }
@@ -61,7 +69,7 @@ export function Header({ isAdm }: Props) {
           <Button
             size="icon"
             variant="outline"
-            className="border-none hover:bg-amber-300 duration-700"
+            className="border-none bg-amber-200 hover:bg-white duration-700"
           >
             <Menu />
           </Button>
@@ -99,7 +107,7 @@ export function Header({ isAdm }: Props) {
                 size="icon"
                 variant="outline"
                 onClick={handleLogin}
-                className="font-semibold w-full gap-4 hover:bg-white hover:text-primary"
+                className="font-semibold w-full gap-4 hover:bg-amber-50 hover:text-primary"
               >
                 <LogIn />
                 Fazer login
@@ -111,7 +119,7 @@ export function Header({ isAdm }: Props) {
                 size="icon"
                 variant="outline"
                 onClick={handleLogout}
-                className="font-semibold w-full gap-4 hover:text-primary hover:bg-amber-100 duration-700"
+                className="font-semibold w-full gap-4 hover:text-primary hover:bg-amber-50 duration-700"
               >
                 <LogIn />
                 Sair
@@ -121,34 +129,48 @@ export function Header({ isAdm }: Props) {
             <Button
               onClick={() => handleNavigateToHomePage()}
               size="icon"
-              className="font-semibold w-full hover:bg-amber-100 gap-4 justify-start p-4 bg-transparent duration-700"
+              className="group font-semibold w-full hover:bg-amber-50 gap-4 justify-start p-4 bg-transparent duration-700"
             >
-              <Home size={16} />
+              <Home
+                className="group-hover:text-amber-500 duration-700"
+                size={16}
+              />
               Início
             </Button>
 
             <Button
+              onClick={handleNavigateToOffers}
               size="icon"
-              className="font-semibold w-full hover:bg-amber-100 gap-4 justify-start p-4 bg-transparent duration-700"
+              className="group font-semibold w-full hover:bg-amber-50 gap-4 justify-start p-4 bg-transparent duration-700"
             >
-              <Percent size={16} />
-              Ofertas
+              <Flame
+                className="group-hover:text-amber-500 duration-700"
+                size={16}
+              />
+              Super Ofertas
             </Button>
 
             <Button
+              onClick={handleNavigateToCatalog}
               size="icon"
-              className="font-semibold w-full hover:bg-amber-100 gap-4 justify-start p-4 bg-transparent duration-700"
+              className="group font-semibold w-full hover:bg-amber-50 gap-4 justify-start p-4 bg-transparent duration-700"
             >
-              <LibraryBig size={16} />
+              <LibraryBig
+                className="group-hover:text-amber-500 duration-700"
+                size={16}
+              />
               Catálogo
             </Button>
 
             <Button
               onClick={() => handleNavigateToOrdersPage()}
               size="icon"
-              className="font-semibold w-full hover:bg-amber-100 gap-4 justify-start p-4 bg-transparent duration-700"
+              className="group font-semibold w-full hover:bg-amber-50 gap-4 justify-start p-4 bg-transparent duration-700"
             >
-              <BaggageClaim size={16} />
+              <BaggageClaim
+                className="group-hover:text-amber-500 duration-700"
+                size={16}
+              />
               Meus pedidos
             </Button>
 
@@ -156,9 +178,12 @@ export function Header({ isAdm }: Props) {
               <Button
                 onClick={() => handleNavigateToRegisterProducts()}
                 size="icon"
-                className="font-semibold w-full hover:bg-amber-100 gap-4 justify-start p-4 bg-transparent duration-700"
+                className="group font-semibold w-full hover:bg-amber-50 gap-4 justify-start p-4 bg-transparent duration-700"
               >
-                <SlidersHorizontal size={16} />
+                <SlidersHorizontal
+                  className="group-hover:text-amber-500 duration-700"
+                  size={16}
+                />
                 Controlar produtos
               </Button>
             ) : (
@@ -168,13 +193,18 @@ export function Header({ isAdm }: Props) {
         </SheetContent>
       </Sheet>
 
-      <h1 className="text-2xl font-bold">Shopping Store</h1>
+      <h1
+        onClick={handleNavigateToHomePage}
+        className="text-2xl font-bold cursor-pointer"
+      >
+        Shopping Store
+      </h1>
       <Sheet>
         <SheetTrigger asChild>
           <Button
             size="icon"
             variant="outline"
-            className="border-none hover:bg-amber-300 duration-700"
+            className="border-none bg-amber-200 hover:bg-white duration-700"
           >
             <ShoppingBag size={28} />
           </Button>
