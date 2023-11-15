@@ -2,6 +2,9 @@
 
 import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
+import uniqueCartIcon from '../../../public/unique-cart-icon.png'
+import confetes from '../../../public/confetes.png'
+import Image from 'next/image'
 
 export default function Success() {
   const navigate = useRouter()
@@ -11,8 +14,23 @@ export default function Success() {
   }
 
   return (
-    <div className="pt-28">
-      <h1 className="text-center">Success page</h1>
+    <div className="text-center">
+      <Image
+        width={0}
+        height={0}
+        sizes="100vw"
+        className="w-full h-52 object-contain"
+        src={confetes}
+        alt="unique Cart Icon"
+      />
+      <Image
+        width={0}
+        height={0}
+        sizes="100vw"
+        className="w-full h-52 object-contain -mt-24"
+        src={uniqueCartIcon}
+        alt="unique Cart Icon"
+      />
 
       <Button
         onClick={handleNavigateToOrders}
