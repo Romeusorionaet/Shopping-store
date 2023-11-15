@@ -3,6 +3,7 @@ import { AddProductInCart } from '../components/add-product-in-cart'
 import { ProductImages } from '../components/product-images'
 import { CalculateValueProduct } from '@/utils/calculate-value-product'
 import { CarouselProducts } from '@/components/carousel-products'
+import { AskForProductReturn } from '../components/Ask-for-product-return'
 
 interface ParamsProps {
   params: {
@@ -29,6 +30,9 @@ export default async function Details({ params }: ParamsProps) {
 
         <div className="flex flex-col gap-4 2xl:w-[50%] p-4">
           <h1 className="font-bold">{product.name}</h1>
+          <p>
+            Quantidade em estoque: <strong>{product.quantity}</strong>
+          </p>
           <div>
             {product.discountPercentage !== 0 && (
               <div className="flex gap-8">
@@ -42,7 +46,7 @@ export default async function Details({ params }: ParamsProps) {
               </div>
             )}
             <div>
-              <p className="text-xl">R$ {totalPrice}</p>
+              <p className="text-xl">R$ {totalPrice.toFixed(2)}</p>
               <p>
                 em{' '}
                 <span className="text-green-500">
@@ -55,13 +59,25 @@ export default async function Details({ params }: ParamsProps) {
           <p className="text-xl">Descrição:</p>
           <p>{product.description}</p>
 
-          {product.placeOfSale !== 'onlineStore' ? (
-            <p>
-              Não fazemos a entrega deste produto. Retirar na loja Shopping
-              Store
-            </p>
+          {product.quantity !== 0 ? (
+            <div>
+              {product.placeOfSale !== 'onlineStore' ? (
+                <p>
+                  Não fazemos a entrega deste produto. Retirar na loja Shopping
+                  Store
+                </p>
+              ) : (
+                <AddProductInCart product={props?.product} />
+              )}
+            </div>
           ) : (
-            <AddProductInCart product={props?.product} />
+            <div className="space-y-4">
+              <p>
+                Não temos mais este produto no momento. Por favor mande sua
+                mensagem para o retorno do produto ao estoque.
+              </p>
+              <AskForProductReturn productName={props.product.name} />
+            </div>
           )}
         </div>
       </div>
