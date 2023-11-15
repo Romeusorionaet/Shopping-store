@@ -39,6 +39,7 @@ const registerFormSchema = z.object({
   discountPercentage: z
     .string()
     .min(1, { message: 'Informe o valor do desconto.' }),
+  quantity: z.string().nullable(),
 })
 
 type RegisterFormData = z.infer<typeof registerFormSchema>
@@ -70,7 +71,7 @@ export function FormProduct({ listOfCategory }: Props) {
   })
 
   async function handleRegisterProduct(data: RegisterFormData) {
-    const { name, basePrice, description, discountPercentage } = data
+    const { name, basePrice, description, discountPercentage, quantity } = data
     const newSlug = name.toLowerCase().replace(/ /g, '-')
 
     if (imageDataProducts.length !== 4) {
@@ -88,6 +89,7 @@ export function FormProduct({ listOfCategory }: Props) {
       basePrice,
       categoryId,
       discountPercentage: parseFloat(discountPercentage),
+      quantity: Number(quantity) === 0 ? 1 : Number(quantity),
     }
 
     try {
@@ -182,7 +184,7 @@ export function FormProduct({ listOfCategory }: Props) {
 
               <label className="flex flex-col gap-2">
                 Nome
-                <Input type="text" placeholder="nome" {...register('name')} />
+                <Input placeholder="nome" {...register('name')} />
                 <FormError errors={errors.name?.message} />
               </label>
 
@@ -215,6 +217,16 @@ export function FormProduct({ listOfCategory }: Props) {
                   {...register('discountPercentage')}
                 />
                 <FormError errors={errors.discountPercentage?.message} />
+              </label>
+
+              <label className="flex flex-col gap-2">
+                <span>Quantidade</span>
+
+                <p className="text-xs opacity-90">
+                  Opcional, valor padrão será 1
+                </p>
+
+                <Input placeholder="1" {...register('quantity')} />
               </label>
 
               <label className="flex flex-col gap-2">

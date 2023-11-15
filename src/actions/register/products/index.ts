@@ -11,6 +11,7 @@ interface Props {
     imageUrls: string[]
     categoryId: string
     discountPercentage: number
+    quantity: number
   }
 }
 
@@ -27,14 +28,12 @@ export const createProduct = async ({ dataProduct }: Props) => {
         },
       },
     })
-
     if (existingProduct) {
       return { message: 'Já existe um produto com esse nome nesta categoria.' }
     } else {
       await prisma.product.createMany({
         data: dataProduct,
       })
-
       return { message: 'Produto registrado.' }
     }
   } catch (err) {

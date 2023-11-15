@@ -6,13 +6,14 @@ const prisma = new PrismaClient()
 
 interface updateProdutoProps {
   updatedData: {
+    id: string
     name: string
     slug: string
     basePrice: string
     description: string
-    discountPercentage: string
     imageUrls: string[]
-    id: string
+    discountPercentage: string
+    quantity: number
   }
 }
 
@@ -25,10 +26,11 @@ export const updateProduct = async ({ updatedData }: updateProdutoProps) => {
       data: {
         name: updatedData.name,
         slug: updatedData.slug,
-        imageUrls: updatedData.imageUrls,
         basePrice: Number(updatedData.basePrice),
         discountPercentage: Number(updatedData.discountPercentage),
+        imageUrls: updatedData.imageUrls,
         description: updatedData.description,
+        quantity: updatedData.quantity,
       },
     })
 

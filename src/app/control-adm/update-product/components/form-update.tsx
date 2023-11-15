@@ -38,6 +38,7 @@ const updateFormSchema = z.object({
   discountPercentage: z
     .string()
     .min(1, { message: 'Informe o valor do desconto.' }),
+  quantity: z.string().nullable(),
 })
 
 type UpdateFormData = z.infer<typeof updateFormSchema>
@@ -61,7 +62,7 @@ export function FormUpdate({ product }: FormUpdateProps) {
   })
 
   const handleUpdateProduct = async (data: UpdateFormData) => {
-    const { basePrice, description, discountPercentage, name } = data
+    const { basePrice, description, discountPercentage, name, quantity } = data
     const newImageUrls = imageDataProduct.map((item) => item.fileUrl)
     const newSlug = name.toLowerCase().replace(/ /g, '-')
 
@@ -73,6 +74,7 @@ export function FormUpdate({ product }: FormUpdateProps) {
       description,
       discountPercentage,
       imageUrls: newImageUrls.length > 1 ? newImageUrls : product.imageUrls,
+      quantity: Number(quantity) === 0 ? 1 : Number(quantity),
     }
 
     try {
@@ -147,6 +149,19 @@ export function FormUpdate({ product }: FormUpdateProps) {
             </label>
 
             <label className="flex flex-col gap-2">
+              <span>Quantidade</span>
+
+              <p className="text-xs opacity-90">
+                Opcional, valor padrão será 1
+              </p>
+
+              <Input
+                defaultValue={product.quantity}
+                {...register('quantity')}
+              />
+            </label>
+
+            <label className="flex flex-col gap-2 mt-4">
               Descrição
               <textarea
                 className="bg-zinc-800 w-full h-40 resize-none p-2 rounded-md scrollbar"
