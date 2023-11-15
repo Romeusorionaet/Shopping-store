@@ -28,17 +28,38 @@ export const POST = async (req: Request) => {
         expand: ['line_items'],
       })
 
-      await prismaClient.order.update({
+      const order = await prismaClient.order.update({
         where: {
           id: session.metadata.orderId,
+        },
+        include: {
+          orderProducts: true,
         },
         data: {
           status: 'PAYMENT_CONFIRMED',
         },
       })
+
+      const listOfQuantityOfProductsSold = order.orderProducts
+
+      for (const productSold of listOfQuantityOfProductsSold) {
+        const productId = productSold.productId
+        const quantitySold = productSold.quantity
+
+        await prismaClient.product.update({
+          where: {
+            id: productId,
+          },
+          data: {
+            quantity: {
+              decrement: quantitySold,
+            },
+          },
+        })
+      }
     }
   } catch (err) {
-    alert(err)
+    console.log(err)
   }
 
   return NextResponse.json({ received: true })

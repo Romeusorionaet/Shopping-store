@@ -38,13 +38,15 @@ export default async function Orders() {
 
       <div className="flex flex-col gap-2 justify-center mt-8">
         {orders && orders.length >= 1 ? (
-          orders.map((order) => {
-            if (order.status === 'WAITING_FOR_PAYMENT') {
-              return <OrderWaitingForPayment key={order.id} order={order} />
-            } else {
-              return null
-            }
-          })
+          orders
+            .map((order) => {
+              if (order.status === 'WAITING_FOR_PAYMENT') {
+                return <OrderWaitingForPayment key={order.id} order={order} />
+              } else {
+                return null
+              }
+            })
+            .reverse()
         ) : (
           <></>
         )}

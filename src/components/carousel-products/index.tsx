@@ -29,11 +29,15 @@ export function CarouselProducts({ products }: productsProps) {
           {products &&
             products.map((product) => {
               const { totalPrice } = CalculateValueProduct(product)
+              const productAvailable = product.quantity === 0
 
               return (
                 <div key={product.id} className="keen-slider__slide z-20">
                   <Link href={`/details/${product.slug}`}>
-                    <div className="p-4 bg-amber-50/60 hover:bg-amber-100 duration-700 flex flex-col justify-center items-center gap-2 rounded-md h-full lg:w-80 max-md:w-72 max-sm:w-52">
+                    <div
+                      data-quantity={productAvailable}
+                      className="p-4 bg-amber-50/60 hover:bg-amber-100 duration-700 flex flex-col justify-center items-center gap-2 rounded-md h-full data-[quantity=true]:bg-zinc-200 data-[quantity=true]:hover:bg-zinc-300 lg:w-80 max-md:w-72 max-sm:w-52"
+                    >
                       <p className="text-sm">{product.name}</p>
 
                       <div>
@@ -47,7 +51,7 @@ export function CarouselProducts({ products }: productsProps) {
                           </p>
                         )}
 
-                        <p>R$ {totalPrice}</p>
+                        <p>R$ {totalPrice.toFixed(2)}</p>
                       </div>
 
                       <Image
