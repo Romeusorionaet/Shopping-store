@@ -9,6 +9,9 @@ export default async function ControlAdm() {
   const categories = await getDataCatalog()
   const products = await getDataProducts()
 
+  const listOfCategories = categories.props?.categories
+  const listOfProducts = products.props.products
+
   return (
     <main className="px-4 max-w-[800px] mx-auto">
       <h1 className="my-6 text-center text-xl font-bold">
@@ -19,13 +22,14 @@ export default async function ControlAdm() {
 
       <FormProduct listOfCategory={categories.props?.categories} />
 
-      {categories.props && (
-        <AreaUpdateCategory listOfCategory={categories.props?.categories} />
+      {listOfCategories && (
+        <AreaUpdateCategory
+          listOfCategory={listOfCategories}
+          listOfProducts={listOfProducts}
+        />
       )}
 
-      {products && (
-        <AreaUpdateProduct listOfProducts={products.props.products} />
-      )}
+      {listOfProducts && <AreaUpdateProduct listOfProducts={listOfProducts} />}
     </main>
   )
 }

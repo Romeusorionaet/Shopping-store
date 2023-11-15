@@ -5,6 +5,7 @@ import { updateCategory } from '@/actions/update/category'
 import { OurFileRouter } from '@/app/api/uploadthing/core'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { Product } from '@prisma/client'
 import {
   Accordion,
   AccordionContent,
@@ -35,9 +36,10 @@ interface Props {
     slug: string
     imageUrl: string
   }[]
+  listOfProducts: Product[]
 }
 
-export function AreaUpdateCategory({ listOfCategory }: Props) {
+export function AreaUpdateCategory({ listOfCategory, listOfProducts }: Props) {
   const [imageDataCategory, setImageDataCategory] = useState<ImageDataProps[]>([
     { fileName: '', fileUrl: '' },
   ])
@@ -95,7 +97,10 @@ export function AreaUpdateCategory({ listOfCategory }: Props) {
       className="border border-zinc-500/60 my-10 p-2 rounded-md"
     >
       <AccordionItem value="item-1">
-        <AccordionTrigger>Atualizar categoria</AccordionTrigger>
+        <AccordionTrigger className="flex justify-between w-full">
+          <p>Atualizar categoria</p>
+          <span className="font-bold">{listOfCategory.length}</span>
+        </AccordionTrigger>
         <AccordionContent>
           <Input
             type="text"
@@ -109,6 +114,10 @@ export function AreaUpdateCategory({ listOfCategory }: Props) {
             {filteredCategory &&
               filteredCategory.map((category) => {
                 const isEditing = editingProductId === category.id
+                const filteredProductsForEachCategories = listOfProducts.filter(
+                  (product) => product.categoryId === category.id,
+                )
+
                 return (
                   <div
                     key={category.id}
@@ -158,11 +167,18 @@ export function AreaUpdateCategory({ listOfCategory }: Props) {
                       </div>
                     </div>
 
-                    <div>
+                    <div className="space-y-2">
                       <Input
                         defaultValue={category.name}
                         onChange={(e) => setNewCategoryName(e.target.value)}
                       />
+                      <p className="text-xs">
+                        Existe{' '}
+                        <strong>
+                          {filteredProductsForEachCategories.length}
+                        </strong>{' '}
+                        produto(s) cadastrado para nessa categoria.
+                      </p>
                     </div>
 
                     <div className="flex gap-6 text-sm">

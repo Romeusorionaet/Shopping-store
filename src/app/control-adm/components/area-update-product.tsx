@@ -30,7 +30,10 @@ export function AreaUpdateProduct({ listOfProducts }: Props) {
       className="border border-zinc-500/60 my-10 p-2 rounded-md"
     >
       <AccordionItem value="item-1">
-        <AccordionTrigger>Atualizar produto</AccordionTrigger>
+        <AccordionTrigger className="flex justify-between w-full">
+          <p>Atualizar produto</p>{' '}
+          <span className="font-bold">{listOfProducts.length}</span>
+        </AccordionTrigger>
         <AccordionContent>
           <Input
             type="text"

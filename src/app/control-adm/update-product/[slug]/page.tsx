@@ -10,6 +10,7 @@ interface ParamsProps {
 export default async function UpdateProduct({ params }: ParamsProps) {
   const { slug } = params
   const data = await getDataUniqueProduct(slug)
+  const product = data.props?.product
 
   return (
     <div className="p-4 max-w-[800px] mx-auto">
@@ -18,7 +19,7 @@ export default async function UpdateProduct({ params }: ParamsProps) {
       </h1>
 
       <div className="flex flex-col flex-wrap gap-8 items-center justify-center my-8">
-        {data.props && <FormUpdate product={data.props.product} />}
+        {product && <FormUpdate product={product} />}
       </div>
     </div>
   )
