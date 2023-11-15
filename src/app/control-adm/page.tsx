@@ -10,24 +10,22 @@ export default async function ControlAdm() {
   const products = await getDataProducts()
 
   return (
-    <div>
-      <main className="px-4">
-        <h1 className="my-6 text-center text-xl font-bold">
-          Controle de estoque
-        </h1>
+    <main className="px-4 max-w-[800px] mx-auto">
+      <h1 className="my-6 text-center text-xl font-bold">
+        Controle de estoque
+      </h1>
 
-        <FormCategory />
+      <FormCategory />
 
-        <FormProduct listOfCategory={categories.props?.categories} />
+      <FormProduct listOfCategory={categories.props?.categories} />
 
-        {categories.props && (
-          <AreaUpdateCategory listOfCategory={categories.props?.categories} />
-        )}
+      {categories.props && (
+        <AreaUpdateCategory listOfCategory={categories.props?.categories} />
+      )}
 
-        {products && (
-          <AreaUpdateProduct listOfProducts={products.props.products} />
-        )}
-      </main>
-    </div>
+      {products && (
+        <AreaUpdateProduct listOfProducts={products.props.products} />
+      )}
+    </main>
   )
 }

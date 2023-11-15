@@ -47,7 +47,7 @@ export function CheckoutCart({ userHasAddress }: Props) {
     <Button
       data-address={userHasAddress}
       disabled={!userHasAddress}
-      className="mt-8 font-bold uppercase bg-amber-100 hover:bg-amber-200 duration-700 border data-[address=false]:bg-zinc-200"
+      className="mt-8 uppercase ata-[address=false]:bg-zinc-200"
       onClick={handleFinishPurchaseClick}
     >
       Finalizar compra

@@ -192,11 +192,7 @@ export function Form() {
               </label>
             </div>
 
-            <Button
-              type="submit"
-              className="data-[disabled=true]:cursor-not-allowed border bg-amber-100 hover:bg-amber-200 duration-700"
-              aria-disabled={isSubmitting}
-            >
+            <Button type="submit" className="mt-8" aria-disabled={isSubmitting}>
               salvar
             </Button>
           </form>

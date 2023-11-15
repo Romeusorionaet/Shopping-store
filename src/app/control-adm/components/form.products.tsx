@@ -17,6 +17,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@radix-ui/react-accordion'
+import { Button } from '@/components/ui/button'
 
 interface ImageDataProps {
   fileName: string
@@ -227,13 +228,13 @@ export function FormProduct({ listOfCategory }: Props) {
                 <FormError errors={errors.description?.message} />
               </label>
 
-              <button
+              <Button
                 type="submit"
-                className="bg-green-500 p-2 rounded-md text-white disabled:bg-zinc-400"
+                className="text-zinc-950 disabled:bg-zinc-400"
                 disabled={isSubmitting}
               >
                 Salvar
-              </button>
+              </Button>
             </div>
           </form>
         </AccordionContent>

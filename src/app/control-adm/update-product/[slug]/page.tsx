@@ -12,7 +12,7 @@ export default async function UpdateProduct({ params }: ParamsProps) {
   const data = await getDataUniqueProduct(slug)
 
   return (
-    <div className="p-4">
+    <div className="p-4 max-w-[800px] mx-auto">
       <h1 className="text-center mt-8">
         Altere os valores para atualizar o produto
       </h1>

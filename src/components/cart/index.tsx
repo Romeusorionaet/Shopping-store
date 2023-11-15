@@ -11,10 +11,14 @@ export function Cart() {
   const { subtotal, totalDiscount, total } = calculateCartAllValues(cart)
   const navigate = useRouter()
   const { data } = useSession()
-  const hasUser = data?.user
+  const user = data?.user
+
+  if (!user) {
+    return <h1 className="text-center pt-28">Faça login na sua conta</h1>
+  }
 
   const handleNavigateToAddressPage = () => {
-    if (!hasUser) {
+    if (!user) {
       alert('faça login na sua conta')
       navigate.push('/')
     } else {
@@ -65,10 +69,7 @@ export function Cart() {
             <p>R$ {total.toFixed(2)}</p>
           </div>
 
-          <Button
-            className="bg-amber-100 hover:bg-amber-200 duration-700 border"
-            onClick={handleNavigateToAddressPage}
-          >
+          <Button onClick={handleNavigateToAddressPage}>
             Dados de entrega
           </Button>
         </div>

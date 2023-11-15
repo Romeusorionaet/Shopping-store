@@ -35,19 +35,19 @@ export function AreaUpdateProduct({ listOfProducts }: Props) {
           <Input
             type="text"
             value={searchTerm}
-            className="border border-white my-8"
+            className="border border-green-500 my-8"
             placeholder="Nome do produto..."
             onChange={(e) => setSearchTerm(e.target.value)}
           />
 
-          <div className="flex flex-col gap-4 h-96 overflow-y-auto p-2 bg-zinc-200/5">
+          <div className="flex flex-col gap-4 h-96 overflow-y-auto p-2 bg-zinc-200/5 scrollbar">
             {filteredProducts.map((product) => {
               return (
                 <div
-                  className="border-b border-white pb-4 flex justify-between gap-2"
+                  className="border-b border-white pb-4 flex justify-between gap-4"
                   key={product.id}
                 >
-                  <div className="space-y-2">
+                  <div className="space-y-2 w-full max-w-[50%] max-sm:text-sm flex flex-col justify-center">
                     <h3 className="font-bold">{product.name}</h3>
                     <p>
                       Valor bruto R${' '}
@@ -64,19 +64,19 @@ export function AreaUpdateProduct({ listOfProducts }: Props) {
                     </p>
 
                     <Link
-                      className="bg-green-500/40 text-sm inline-block p-2 rounded-md border-b border-zinc-500/60 duration-700 hover:bg-green-500"
+                      className="border bg-amber-100 hover:bg-amber-200 duration-700 p-2 rounded-md text-zinc-950 text-center w-32"
                       href={`/control-adm/update-product/${product.slug}`}
                     >
                       Iniciar edição
                     </Link>
                   </div>
 
-                  <div className="h-[6rem] max-w-[50%]">
+                  <div className="h-[200px] w-full max-w-[50%]">
                     <Image
                       width={0}
                       height={0}
                       sizes="100vw"
-                      className="h-full w-auto object-contain"
+                      className="h-full max-h-[90%] w-full object-contain"
                       src={product.imageUrls[0]}
                       alt={product.name}
                     />

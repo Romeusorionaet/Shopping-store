@@ -15,6 +15,7 @@ import { useRouter } from 'next/navigation'
 import { deleteProduct } from '@/actions/delete/product'
 import { Trash } from 'lucide-react'
 import { ProductImages } from '@/app/details/components/product-images'
+import { Button } from '@/components/ui/button'
 
 interface FormUpdateProps {
   product: Product
@@ -94,17 +95,17 @@ export function FormUpdate({ product }: FormUpdateProps) {
   }
 
   return (
-    <div className="space-y-8">
-      {imageDataProduct[0].fileUrl ? (
-        <ProductImages
-          imageUrls={fileUrlsArray}
-          name={imageDataProduct[0].fileName}
-        />
-      ) : (
-        <ProductImages imageUrls={product.imageUrls} name={product.name} />
-      )}
+    <div className="space-y-8 w-full">
+      <div className="flex flex-col items-center justify-center gap-8">
+        {imageDataProduct[0].fileUrl ? (
+          <ProductImages
+            imageUrls={fileUrlsArray}
+            name={imageDataProduct[0].fileName}
+          />
+        ) : (
+          <ProductImages imageUrls={product.imageUrls} name={product.name} />
+        )}
 
-      <div className="flex justify-center">
         <UploadButton<OurFileRouter>
           endpoint="imageShoppingStore"
           onClientUploadComplete={(res) => {
@@ -158,20 +159,17 @@ export function FormUpdate({ product }: FormUpdateProps) {
         </div>
 
         <div className="flex justify-between my-4">
-          <button
-            className="bg-green-500/40 text-sm p-2 rounded-md border-b border-zinc-500/60 duration-700 hover:bg-green-500"
+          <Button
+            className="text-zinc-950"
             disabled={isSubmitting}
             type="submit"
           >
             Atualizar
-          </button>
+          </Button>
 
-          <button
-            onClick={handleDeleteProduct}
-            className="text-red-400 p-2 rounded-md"
-          >
+          <Button variant={'destructive'} onClick={handleDeleteProduct}>
             <Trash size={28} />
-          </button>
+          </Button>
         </div>
       </form>
     </div>

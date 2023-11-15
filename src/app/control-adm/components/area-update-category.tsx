@@ -3,6 +3,7 @@
 import { deleteCategory } from '@/actions/delete/category'
 import { updateCategory } from '@/actions/update/category'
 import { OurFileRouter } from '@/app/api/uploadthing/core'
+import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import {
   Accordion,
@@ -99,12 +100,12 @@ export function AreaUpdateCategory({ listOfCategory }: Props) {
           <Input
             type="text"
             value={searchTerm}
-            className="border border-white my-8"
+            className="border border-green-500 my-8"
             placeholder="Nome da categoria..."
             onChange={(e) => setSearchTerm(e.target.value)}
           />
 
-          <div className="flex flex-wrap justify-center gap-4 h-96 overflow-y-auto p-2 bg-zinc-200/5">
+          <div className="flex flex-wrap justify-center gap-4 h-96 overflow-y-auto p-2 bg-zinc-200/5 scrollbar">
             {filteredCategory &&
               filteredCategory.map((category) => {
                 const isEditing = editingProductId === category.id
@@ -113,54 +114,48 @@ export function AreaUpdateCategory({ listOfCategory }: Props) {
                     key={category.id}
                     className="flex flex-col gap-4 mb-8 w-full border-b border-zinc-400 pb-8"
                   >
-                    <div className="h-[6rem] flex justify-between items-center">
-                      <UploadButton<OurFileRouter>
-                        endpoint="imageShoppingStore"
-                        onClientUploadComplete={(res) => {
-                          res && setImageDataCategory(res)
-                          setIdFile(category.id)
-                          alert(
-                            'Imagem da categoria salva no banco Uploadthing!',
+                    <div className="h-[6rem] flex flex-1 justify-between items-center sm:justify-evenly">
+                      <div className="flex items-center">
+                        <UploadButton<OurFileRouter>
+                          endpoint="imageShoppingStore"
+                          onClientUploadComplete={(res) => {
+                            res && setImageDataCategory(res)
+                            setIdFile(category.id)
+                            alert(
+                              'Imagem da categoria salva no banco Uploadthing!',
+                            )
+                          }}
+                          onUploadError={(error: Error) => {
+                            alert(`ERROR! ${error.message}`)
+                          }}
+                          className="bg-green-500/40 pb-2 w-[6rem] text-xs rounded-md text-center"
+                        />
+                        <ArrowBigRight />
+                      </div>
+
+                      <div>
+                        {idFile === category.id ? (
+                          imageDataCategory[0].fileUrl && (
+                            <Image
+                              width={0}
+                              height={0}
+                              sizes="100vw"
+                              className="h-full w-auto"
+                              src={imageDataCategory[0].fileUrl}
+                              alt={imageDataCategory[0].fileName}
+                            />
                           )
-                        }}
-                        onUploadError={(error: Error) => {
-                          alert(`ERROR! ${error.message}`)
-                        }}
-                        className="bg-green-500/40 pb-2 w-[6rem] text-xs rounded-md text-center"
-                      />
-
-                      <ArrowBigRight />
-
-                      {imageDataCategory[0].fileUrl ? (
-                        idFile === category.id ? (
-                          <Image
-                            width={0}
-                            height={0}
-                            sizes="100vw"
-                            className="h-full w-auto"
-                            src={imageDataCategory[0].fileUrl}
-                            alt={imageDataCategory[0].fileName}
-                          />
                         ) : (
                           <Image
                             width={0}
                             height={0}
                             sizes="100vw"
-                            className="h-full w-auto"
+                            className="w-full h-28 object-contain"
                             src={category.imageUrl}
                             alt={category.name}
                           />
-                        )
-                      ) : (
-                        <Image
-                          width={0}
-                          height={0}
-                          sizes="100vw"
-                          className="h-full w-auto"
-                          src={category.imageUrl}
-                          alt={category.name}
-                        />
-                      )}
+                        )}
+                      </div>
                     </div>
 
                     <div>
@@ -171,28 +166,29 @@ export function AreaUpdateCategory({ listOfCategory }: Props) {
                     </div>
 
                     <div className="flex gap-6 text-sm">
-                      <button
+                      <Button
+                        variant={'destructive'}
                         onClick={() => handleDeleteCategory(category.id)}
-                        className="text-red-400 p-2 rounded-md"
                       >
                         <Trash size={28} />
-                      </button>
-                      <button
+                      </Button>
+                      <Button
                         onClick={() => handleUpdateCategory(category)}
-                        className="hover:bg-green-500/40 p-2 rounded-md border-b border-zinc-400 duration-700"
+                        className="text-zinc-950"
                       >
                         Atualizar
-                      </button>
+                      </Button>
 
-                      <button
+                      <Button
+                        variant={'outline'}
                         data-editing={isEditing}
                         onClick={() => {
                           setEditingProductId(category.id)
                         }}
-                        className=" p-2 rounded-md data-[editing=true]:bg-green-500/40 border-b border-zinc-400"
+                        className="data-[editing=true]:bg-green-500 text-zinc-950"
                       >
-                        {isEditing ? 'Habilitado' : 'Habilitar Edição'}
-                      </button>
+                        {isEditing ? 'Habilitado' : 'Habilitar'}
+                      </Button>
                     </div>
                   </div>
                 )
