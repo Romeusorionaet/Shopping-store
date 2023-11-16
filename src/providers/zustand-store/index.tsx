@@ -2,8 +2,8 @@ import { Product } from '@prisma/client'
 import { create } from 'zustand'
 
 export interface CartProduct extends Product {
-  totalPrice: number
-  quantity: number
+  totalPrice?: number
+  quantityInStock: number
 }
 
 export interface CartStore {
@@ -17,7 +17,7 @@ export interface CartStore {
 const getInitialCartState = () => {
   if (typeof window !== 'undefined') {
     const cartSavedInLocalStorage = JSON.parse(
-      localStorage.getItem('@fsw-store/cart-products') || '[]',
+      localStorage.getItem('@shopping-store/cart-products') || '[]',
     )
 
     return {
@@ -47,6 +47,11 @@ export const useCartStore = create<CartStore>((set, get) => ({
     if (existingProductIndex !== -1) {
       const existingProduct = cart[existingProductIndex]
       const updatedCart = [...cart]
+
+      if (existingProduct.quantity >= existingProduct.quantityInStock) {
+        return
+      }
+
       const newQuantity = existingProduct.quantity + 1
       updatedCart[existingProductIndex] = {
         ...existingProduct,
@@ -63,7 +68,10 @@ export const useCartStore = create<CartStore>((set, get) => ({
     const updatedCartInLocalStorage = JSON.stringify(
       useCartStore.getState().cart,
     )
-    localStorage.setItem('@fsw-store/cart-products', updatedCartInLocalStorage)
+    localStorage.setItem(
+      '@shopping-store/cart-products',
+      updatedCartInLocalStorage,
+    )
   },
 
   decreaseProductQuantity: (productId) => {
@@ -93,7 +101,7 @@ export const useCartStore = create<CartStore>((set, get) => ({
 
         const updatedCartInLocalStorage = JSON.stringify(get().cart)
         localStorage.setItem(
-          '@fsw-store/cart-products',
+          '@shopping-store/cart-products',
           updatedCartInLocalStorage,
         )
       }
@@ -108,6 +116,10 @@ export const useCartStore = create<CartStore>((set, get) => ({
     if (existingProductIndex !== -1) {
       const updatedCart = [...cart]
       const existingProduct = cart[existingProductIndex]
+
+      if (existingProduct.quantity >= existingProduct.quantityInStock) {
+        return
+      }
 
       const totalDiscount =
         Number(existingProduct.basePrice) *
@@ -126,7 +138,7 @@ export const useCartStore = create<CartStore>((set, get) => ({
 
       const updatedCartInLocalStorage = JSON.stringify(get().cart)
       localStorage.setItem(
-        '@fsw-store/cart-products',
+        '@shopping-store/cart-products',
         updatedCartInLocalStorage,
       )
     }
@@ -142,6 +154,9 @@ export const useCartStore = create<CartStore>((set, get) => ({
     set({ cart: updatedCart })
 
     const updatedCartInLocalStorage = JSON.stringify(get().cart)
-    localStorage.setItem('@fsw-store/cart-products', updatedCartInLocalStorage)
+    localStorage.setItem(
+      '@shopping-store/cart-products',
+      updatedCartInLocalStorage,
+    )
   },
 }))
