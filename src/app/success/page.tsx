@@ -5,9 +5,14 @@ import { useRouter } from 'next/navigation'
 import uniqueCartIcon from '../../../public/unique-cart-icon.png'
 import confetes from '../../../public/confetes.png'
 import Image from 'next/image'
+import { useEffect } from 'react'
 
 export default function Success() {
   const navigate = useRouter()
+
+  useEffect(() => {
+    localStorage.setItem('@shopping-store/cart-products', '')
+  }, [])
 
   const handleNavigateToOrders = () => {
     navigate.push('/orders')

@@ -24,9 +24,14 @@ export function CheckoutCart({ userHasAddress }: Props) {
       navigate.push('/')
       return
     }
-    const order = await createOrder(cart, (data?.user as any).id)
+    const result = await createOrder(cart, (data?.user as any).id)
 
-    const checkout = await createCheckout(cart, order.id)
+    if (!result.order) {
+      alert(result.message)
+      return
+    }
+
+    const checkout = await createCheckout(cart, result.order.id)
 
     const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY)
 
@@ -47,7 +52,7 @@ export function CheckoutCart({ userHasAddress }: Props) {
     <Button
       data-address={userHasAddress}
       disabled={!userHasAddress}
-      className="mt-8 uppercase ata-[address=false]:bg-zinc-200"
+      className="mt-8 uppercase data-[address=false]:bg-zinc-400"
       onClick={handleFinishPurchaseClick}
     >
       Finalizar compra

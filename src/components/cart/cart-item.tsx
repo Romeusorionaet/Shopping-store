@@ -2,6 +2,7 @@ import Image from 'next/image'
 import { Button } from '../ui/button'
 import { ArrowLeftIcon, ArrowRightIcon, TrashIcon } from 'lucide-react'
 import { CartProduct, useCartStore } from '@/providers/zustand-store'
+import Link from 'next/link'
 
 interface CartItemProps {
   product: CartProduct
@@ -34,14 +35,16 @@ export function CartItem({ product }: CartItemProps) {
 
       <div className="flex gap-1">
         <div className="flex w-[40%] items-center justify-center rounded-md">
-          <Image
-            src={product.imageUrls[0]}
-            width={0}
-            height={0}
-            sizes="100vw"
-            alt={product.name}
-            className="w-full h-full"
-          />
+          <Link href={`/details/${product.slug}`}>
+            <Image
+              src={product.imageUrls[0]}
+              width={0}
+              height={0}
+              sizes="100vw"
+              alt={product.name}
+              className="w-full h-full"
+            />
+          </Link>
         </div>
 
         <div className="flex w-[40%] flex-col items-center gap-2">
@@ -53,7 +56,7 @@ export function CartItem({ product }: CartItemProps) {
             )}
 
             <p className="text-sm font-bold">
-              R$ {product.totalPrice.toFixed(2)}
+              R$ {product.totalPrice && product.totalPrice.toFixed(2)}
             </p>
           </div>
 
