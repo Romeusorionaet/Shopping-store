@@ -19,32 +19,36 @@ export function CheckoutCart({ userHasAddress }: Props) {
   const navigate = useRouter()
 
   const handleFinishPurchaseClick = async () => {
-    if (cart.length === 0) {
-      alert('Carrinho vazio!')
-      navigate.push('/')
-      return
-    }
-    const result = await createOrder(cart, (data?.user as any).id)
+    try {
+      if (cart.length === 0) {
+        alert('Carrinho vazio!')
+        navigate.push('/')
+        return
+      }
+      const result = await createOrder(cart, (data?.user as any).id)
 
-    if (!result.order) {
-      alert(result.message)
-      return
-    }
+      if (!result.order) {
+        alert(result.message)
+        return
+      }
 
-    const checkout = await createCheckout(cart, result.order.id)
+      const checkout = await createCheckout(cart, result.order.id)
 
-    const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY)
+      const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY)
 
-    if (stripe) {
-      stripe
-        .redirectToCheckout({
-          sessionId: checkout.id,
-        })
-        .then(function (result) {
-          if (result.error) {
-            console.error(result.error)
-          }
-        })
+      if (stripe) {
+        stripe
+          .redirectToCheckout({
+            sessionId: checkout.id,
+          })
+          .then(function (result) {
+            if (result.error) {
+              console.error(result.error)
+            }
+          })
+      }
+    } catch (err) {
+      console.log(err)
     }
   }
 

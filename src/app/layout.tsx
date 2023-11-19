@@ -6,6 +6,9 @@ import '../styles/scrollbar.css'
 import { getDataUser } from '@/lib/getData/get-data.user'
 import PrivateRoute from '@/components/routes-page/private-route'
 import { Header } from '@/components/header'
+import { NextSSRPlugin } from '@uploadthing/react/next-ssr-plugin'
+import { extractRouterConfig } from 'uploadthing/server'
+import { ourFileRouter } from './api/uploadthing/core'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -27,6 +30,7 @@ export default async function RootLayout({
       <body className={inter.className}>
         <PrivateRoute isAdm={isAdm}>
           <AuthProvider>
+            <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
             <Header isAdm={isAdm} />
             {children}
           </AuthProvider>
