@@ -21,6 +21,7 @@ CREATE TABLE "Product" (
     "imageUrls" TEXT[],
     "categoryId" TEXT NOT NULL,
     "quantity" INTEGER NOT NULL DEFAULT 1,
+    "placeOfSale" TEXT NOT NULL DEFAULT 'onlineStore',
     "discountPercentage" INTEGER NOT NULL DEFAULT 0,
 
     CONSTRAINT "Product_pkey" PRIMARY KEY ("id")
