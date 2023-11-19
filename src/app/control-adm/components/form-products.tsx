@@ -1,11 +1,9 @@
 'use client'
 
-import { UploadButton } from '@uploadthing/react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useState } from 'react'
-import { OurFileRouter } from '@/app/api/uploadthing/core'
 import { FormError } from '@/components/form/form-error'
 import { Input } from '@/components/ui/input'
 import Image from 'next/image'
@@ -18,10 +16,12 @@ import {
   AccordionTrigger,
 } from '@radix-ui/react-accordion'
 import { Button } from '@/components/ui/button'
+import '@uploadthing/react/styles.css'
+import { UploadButton } from '@/utils/generate-components'
 
 interface ImageDataProps {
-  fileName: string
-  fileUrl: string
+  name: string
+  url: string
 }
 
 const registerFormSchema = z.object({
@@ -57,7 +57,7 @@ interface Props {
 
 export function FormProduct({ listOfCategory }: Props) {
   const [imageDataProducts, setImageDataProducts] = useState<ImageDataProps[]>([
-    { fileName: '', fileUrl: '' },
+    { name: '', url: '' },
   ])
 
   const [categoryId, setCategoryId] = useState('')
@@ -79,7 +79,7 @@ export function FormProduct({ listOfCategory }: Props) {
       return
     }
 
-    const imageUrls = imageDataProducts.map((item) => item.fileUrl)
+    const imageUrls = imageDataProducts.map((item) => item.url)
 
     const dataProduct = {
       name,
@@ -111,40 +111,40 @@ export function FormProduct({ listOfCategory }: Props) {
         <AccordionContent className="mt-6">
           <form method="post" onSubmit={handleSubmit(handleRegisterProduct)}>
             <div className="flex flex-col gap-2 justify-around items-center">
-              <UploadButton<OurFileRouter>
+              <UploadButton
                 endpoint="imageShoppingStore"
                 onClientUploadComplete={(res) => {
                   res && setImageDataProducts(res)
                   alert('Imagem da categoria salva no banco Uploadthing!')
                 }}
                 onUploadError={(error: Error) => {
+                  console.log('Error', error)
                   alert(`ERROR! ${error.message}`)
                 }}
-                className="bg-green-500/40 pb-2 w-[6rem] text-xs rounded-md text-center"
               />
 
               <ArrowBigDown />
 
               <div className="border border-zinc-50/40 flex flex-wrap gap-8 justify-center p-2 pb-10">
-                {imageDataProducts[0].fileUrl ? (
+                {imageDataProducts[0].url ? (
                   imageDataProducts.map((item) => {
                     return (
                       <div
-                        key={item.fileName}
+                        key={item.name}
                         className="flex flex-col gap-2 items-center w-[6rem] h-[6rem]"
                       >
-                        {item.fileUrl && (
+                        {item.url && (
                           <Image
                             width={0}
                             height={0}
                             sizes="100vw"
                             className="h-full w-auto"
-                            src={item.fileUrl}
-                            alt={item.fileName}
+                            src={item.url}
+                            alt={item.name}
                           />
                         )}
                         <p className="text-xs opacity-50">
-                          {imageDataProducts && imageDataProducts[0].fileName}
+                          {imageDataProducts && imageDataProducts[0].name}
                         </p>
                       </div>
                     )
