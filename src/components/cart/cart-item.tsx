@@ -51,12 +51,21 @@ export function CartItem({ product }: CartItemProps) {
           <div className="flex flex-col items-center gap-2">
             {product.discountPercentage > 0 && (
               <p className="text-xs line-through opacity-75">
-                R$ {basePrice.toFixed(2)}
+                {basePrice.toLocaleString('pt-BR', {
+                  style: 'currency',
+                  currency: 'BRL',
+                  minimumFractionDigits: 2,
+                })}
               </p>
             )}
 
             <p className="text-sm font-bold">
-              R$ {product.totalPrice && product.totalPrice.toFixed(2)}
+              {product.totalPrice &&
+                product.totalPrice.toLocaleString('pt-BR', {
+                  style: 'currency',
+                  currency: 'BRL',
+                  minimumFractionDigits: 2,
+                })}
             </p>
           </div>
 
@@ -84,7 +93,7 @@ export function CartItem({ product }: CartItemProps) {
         </div>
         <Button
           size="icon"
-          className="bg-transparent"
+          variant={'destructive'}
           onClick={handleRemoveProductClick}
         >
           <TrashIcon size={22} />

@@ -37,7 +37,11 @@ export default async function Details({ params }: ParamsProps) {
             {product.discountPercentage !== 0 && (
               <div className="flex gap-8">
                 <p className="line-through opacity-75">
-                  R$ {Number(product.basePrice).toFixed(2)}
+                  {Number(product.basePrice).toLocaleString('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL',
+                    minimumFractionDigits: 2,
+                  })}
                 </p>
                 <p className="text-green-500 text-lg font-bold">
                   {product.discountPercentage}%{' '}
@@ -46,7 +50,13 @@ export default async function Details({ params }: ParamsProps) {
               </div>
             )}
             <div>
-              <p className="text-xl">R$ {totalPrice.toFixed(2)}</p>
+              <p className="text-xl">
+                {totalPrice.toLocaleString('pt-BR', {
+                  style: 'currency',
+                  currency: 'BRL',
+                  minimumFractionDigits: 2,
+                })}
+              </p>
               <p>
                 em{' '}
                 <span className="text-green-500">

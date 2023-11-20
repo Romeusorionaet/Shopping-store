@@ -52,21 +52,40 @@ export function Cart() {
 
           <div className="flex items-center justify-between text-xs">
             <p>Subtotal</p>
-            <p>R$ {subtotal.toFixed(2)}</p>
+            <p>
+              {subtotal.toLocaleString('pt-BR', {
+                style: 'currency',
+                currency: 'BRL',
+                minimumFractionDigits: 2,
+              })}
+            </p>
           </div>
 
           <Separator className="opacity-20" />
 
           <div className="flex items-center justify-between text-xs">
             <p>Descontos</p>
-            <p>- R$ {totalDiscount.toFixed(2)}</p>
+            <p>
+              -
+              {totalDiscount.toLocaleString('pt-BR', {
+                style: 'currency',
+                currency: 'BRL',
+                minimumFractionDigits: 2,
+              })}
+            </p>
           </div>
 
           <Separator className="opacity-20" />
 
           <div className="flex items-center justify-between text-sm font-bold">
             <p>Total</p>
-            <p>R$ {total.toFixed(2)}</p>
+            <p>
+              {total.toLocaleString('pt-BR', {
+                style: 'currency',
+                currency: 'BRL',
+                minimumFractionDigits: 2,
+              })}
+            </p>
           </div>
 
           <Button onClick={handleNavigateToAddressPage}>

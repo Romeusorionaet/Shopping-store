@@ -17,6 +17,7 @@ export function CarouselProducts({ products }: productsProps) {
   if (!products) {
     return
   }
+
   const verifySizeProducts = products.length >= 4
 
   return (
@@ -55,11 +56,21 @@ export function CarouselProducts({ products }: productsProps) {
 
                         {product.discountPercentage !== 0 && (
                           <p className="text-xs line-through opacity-75">
-                            R$ {Number(product.basePrice).toFixed(2)}
+                            {Number(product.basePrice).toLocaleString('pt-BR', {
+                              style: 'currency',
+                              currency: 'BRL',
+                              minimumFractionDigits: 2,
+                            })}
                           </p>
                         )}
 
-                        <p>R$ {totalPrice.toFixed(2)}</p>
+                        <p>
+                          {totalPrice.toLocaleString('pt-BR', {
+                            style: 'currency',
+                            currency: 'BRL',
+                            minimumFractionDigits: 2,
+                          })}
+                        </p>
                       </div>
 
                       <Image
