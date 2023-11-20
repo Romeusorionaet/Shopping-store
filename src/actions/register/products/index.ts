@@ -21,13 +21,19 @@ export const createProduct = async ({ dataProduct }: Props) => {
   try {
     const existingProduct = await prisma.category.findFirst({
       where: {
-        products: {
-          some: {
-            name: dataProduct.name,
+        AND: [
+          { id: dataProduct.categoryId },
+          {
+            products: {
+              some: {
+                name: dataProduct.name,
+              },
+            },
           },
-        },
+        ],
       },
     })
+
     if (existingProduct) {
       return { message: 'Já existe um produto com esse nome nesta categoria.' }
     } else {

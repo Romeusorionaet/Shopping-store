@@ -2,9 +2,9 @@
 
 import { deleteCategory } from '@/actions/delete/category'
 import { updateCategory } from '@/actions/update/category'
-import { OurFileRouter } from '@/app/api/uploadthing/core'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { UploadButton } from '@/utils/generate-components'
 import { Product } from '@prisma/client'
 import {
   Accordion,
@@ -12,14 +12,13 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@radix-ui/react-accordion'
-import { UploadButton } from '@uploadthing/react'
 import { ArrowBigRight, Trash } from 'lucide-react'
 import Image from 'next/image'
 import { useState } from 'react'
 
 interface ImageDataProps {
-  fileUrl: string
-  fileName: string
+  name: string
+  url: string
 }
 
 interface DataUpdateProps {
@@ -41,7 +40,7 @@ interface Props {
 
 export function AreaUpdateCategory({ listOfCategory, listOfProducts }: Props) {
   const [imageDataCategory, setImageDataCategory] = useState<ImageDataProps[]>([
-    { fileName: '', fileUrl: '' },
+    { name: '', url: '' },
   ])
 
   const [searchTerm, setSearchTerm] = useState('')
@@ -77,7 +76,7 @@ export function AreaUpdateCategory({ listOfCategory, listOfProducts }: Props) {
           ...dataUpdate,
           name: newCategoryNameChanged || dataUpdate.name,
           slug: newSlug || dataUpdate.slug,
-          imageUrl: imageDataCategory[0].fileUrl || dataUpdate.imageUrl,
+          imageUrl: imageDataCategory[0].url || dataUpdate.imageUrl,
         }
 
         const result = await updateCategory({ updatedData })
@@ -125,7 +124,7 @@ export function AreaUpdateCategory({ listOfCategory, listOfProducts }: Props) {
                   >
                     <div className="h-[6rem] flex flex-1 justify-between items-center sm:justify-evenly">
                       <div className="flex items-center">
-                        <UploadButton<OurFileRouter>
+                        <UploadButton
                           endpoint="imageShoppingStore"
                           onClientUploadComplete={(res) => {
                             res && setImageDataCategory(res)
@@ -144,14 +143,14 @@ export function AreaUpdateCategory({ listOfCategory, listOfProducts }: Props) {
 
                       <div>
                         {idFile === category.id ? (
-                          imageDataCategory[0].fileUrl && (
+                          imageDataCategory[0].url && (
                             <Image
                               width={0}
                               height={0}
                               sizes="100vw"
                               className="h-full w-auto"
-                              src={imageDataCategory[0].fileUrl}
-                              alt={imageDataCategory[0].fileName}
+                              src={imageDataCategory[0].url}
+                              alt={imageDataCategory[0].name}
                             />
                           )
                         ) : (

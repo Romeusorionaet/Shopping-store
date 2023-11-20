@@ -41,9 +41,17 @@ export function CarouselProducts({ products }: productsProps) {
                       <p className="text-sm">{product.name}</p>
 
                       <div>
-                        <span className="absolute bottom-28 left-0 bg-zinc-100/40 p-1 rounded-md font-bold">
-                          {product.placeOfSale}
-                        </span>
+                        <div>
+                          {product.placeOfSale === 'SELL_IN_REGION_ONLY' ? (
+                            <span className="absolute bottom-28 left-0 bg-zinc-100/40 p-1 rounded-md font-bold text-xs">
+                              Local
+                            </span>
+                          ) : (
+                            <span className="absolute bottom-28 left-0 bg-zinc-100/40 p-1 rounded-md font-bold text-xs text-green-500">
+                              Brasil
+                            </span>
+                          )}
+                        </div>
 
                         {product.discountPercentage !== 0 && (
                           <p className="text-xs line-through opacity-75">

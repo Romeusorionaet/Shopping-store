@@ -40,6 +40,7 @@ const registerFormSchema = z.object({
     .string()
     .min(1, { message: 'Informe o valor do desconto.' }),
   quantity: z.string().nullable(),
+  placeOfSale: z.string(),
 })
 
 type RegisterFormData = z.infer<typeof registerFormSchema>
@@ -65,14 +66,25 @@ export function FormProduct({ listOfCategory }: Props) {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm<RegisterFormData>({
     resolver: zodResolver(registerFormSchema),
   })
 
   async function handleRegisterProduct(data: RegisterFormData) {
-    const { name, basePrice, description, discountPercentage, quantity } = data
+    const {
+      name,
+      basePrice,
+      description,
+      discountPercentage,
+      quantity,
+      placeOfSale,
+    } = data
     const newSlug = name.toLowerCase().replace(/ /g, '-')
+
+    const salesLocationType =
+      placeOfSale === 'Sim' ? 'ONLINE_STORE' : 'SELL_IN_REGION_ONLY'
 
     if (imageDataProducts.length !== 4) {
       alert('É importante que tenha 4 imagens para o seu produto.')
@@ -90,10 +102,12 @@ export function FormProduct({ listOfCategory }: Props) {
       categoryId,
       discountPercentage: parseFloat(discountPercentage),
       quantity: Number(quantity) === 0 ? 1 : Number(quantity),
+      placeOfSale: salesLocationType,
     }
 
     try {
       const result = await createProduct({ dataProduct })
+      reset()
       alert(result?.message)
     } catch (err) {
       console.log(err)
@@ -227,6 +241,21 @@ export function FormProduct({ listOfCategory }: Props) {
                 </p>
 
                 <Input placeholder="1" {...register('quantity')} />
+              </label>
+
+              <label className="flex flex-col gap-2 mt-2">
+                <span>Faz entrega deste produto para todo Brasil?</span>
+
+                <p className="text-xs opacity-90">Valor padrão: {'Sim'}</p>
+
+                <select
+                  className="p-2 rounded-md appearance-none border border-zinc-200 text-white bg-black"
+                  {...register('placeOfSale')}
+                  onChange={(e) => setCategoryId(e.target.value)}
+                >
+                  <option value="Sim">Sim</option>
+                  <option value="Não">Não</option>
+                </select>
               </label>
 
               <label className="flex flex-col gap-2">

@@ -27,7 +27,7 @@ model Product {
   imageUrls          String[]
   categoryId         String
   quantity           Int            @default(1)
-  placeOfSale        String         @default("onlineStore")
+  placeOfSale        String         @default("ONLINE_STORE")
   category           Category       @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   discountPercentage Int            @default(0)
   OrderProduct       OrderProduct[]

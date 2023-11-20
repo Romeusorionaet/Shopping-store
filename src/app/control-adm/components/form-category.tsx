@@ -1,11 +1,9 @@
 'use client'
 
-import { UploadButton } from '@uploadthing/react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useState } from 'react'
-import { OurFileRouter } from '@/app/api/uploadthing/core'
 import { FormError } from '@/components/form/form-error'
 import { Input } from '@/components/ui/input'
 import { createCategory } from '@/actions/register/category'
@@ -18,10 +16,11 @@ import {
   AccordionTrigger,
 } from '@radix-ui/react-accordion'
 import { Button } from '@/components/ui/button'
+import { UploadButton } from '@/utils/generate-components'
 
 interface ImageDataProps {
-  fileName: string
-  fileUrl: string
+  name: string
+  url: string
 }
 
 const registerFormSchema = z.object({
@@ -37,7 +36,7 @@ type RegisterFormData = z.infer<typeof registerFormSchema>
 
 export function FormCategory() {
   const [imageDataCategory, setImageDataCategory] = useState<ImageDataProps[]>([
-    { fileName: '', fileUrl: '' },
+    { name: '', url: '' },
   ])
 
   const {
@@ -52,7 +51,7 @@ export function FormCategory() {
   async function handleRegisterProduct(data: RegisterFormData) {
     const { name } = data
 
-    if (imageDataCategory[0].fileUrl === '') {
+    if (imageDataCategory[0].url === '') {
       alert('Escolha uma imagem que represente a categoria.')
       return
     }
@@ -62,14 +61,14 @@ export function FormCategory() {
     const dataCategory = {
       name,
       slug: newSlug,
-      fileUrl: imageDataCategory[0].fileUrl,
+      fileUrl: imageDataCategory[0].url,
     }
 
     try {
       const result = await createCategory({ dataCategory })
       alert(result?.message)
       reset()
-      setImageDataCategory([{ fileName: '', fileUrl: '' }])
+      setImageDataCategory([{ name: '', url: '' }])
     } catch (err) {
       console.log(err)
     }
@@ -86,7 +85,7 @@ export function FormCategory() {
         <AccordionContent className="mt-6">
           <form method="post" onSubmit={handleSubmit(handleRegisterProduct)}>
             <div className="flex justify-around items-center">
-              <UploadButton<OurFileRouter>
+              <UploadButton
                 endpoint="imageShoppingStore"
                 onClientUploadComplete={(res) => {
                   res && setImageDataCategory(res)
@@ -95,24 +94,23 @@ export function FormCategory() {
                 onUploadError={(error: Error) => {
                   alert(`ERROR! ${error.message}`)
                 }}
-                className="bg-green-500/40 pb-2 w-[6rem] text-xs rounded-md text-center"
               />
 
               <ArrowBigRight />
 
               <div className="border border-zinc-50/40 w-[6rem] h-[6rem]">
-                {imageDataCategory[0].fileUrl ? (
+                {imageDataCategory[0].url ? (
                   <div className="flex flex-col gap-2 items-center">
                     <Image
                       width={0}
                       height={0}
                       sizes="100vw"
                       className="h-full w-auto"
-                      src={imageDataCategory[0].fileUrl}
-                      alt={imageDataCategory[0].fileName}
+                      src={imageDataCategory[0].url}
+                      alt={imageDataCategory[0].name}
                     />
                     <p className="text-xs opacity-50">
-                      {imageDataCategory && imageDataCategory[0].fileName}
+                      {imageDataCategory && imageDataCategory[0].name}
                     </p>
                   </div>
                 ) : (

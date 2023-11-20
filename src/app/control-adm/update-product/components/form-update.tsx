@@ -6,23 +6,22 @@ import { Product } from '@prisma/client'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FormError } from '@/components/form/form-error'
-import { OurFileRouter } from '@/app/api/uploadthing/core'
 import { useState } from 'react'
-import { UploadButton } from '@uploadthing/react'
 import { updateProduct } from '@/actions/update/product'
 import { useRouter } from 'next/navigation'
 import { deleteProduct } from '@/actions/delete/product'
 import { Trash } from 'lucide-react'
 import { ProductImages } from '@/app/details/components/product-images'
 import { Button } from '@/components/ui/button'
+import { UploadButton } from '@/utils/generate-components'
 
 interface FormUpdateProps {
   product: Product
 }
 
 interface ImageDataProps {
-  fileUrl: string
-  fileName: string
+  url: string
+  name: string
 }
 
 const updateFormSchema = z.object({
@@ -38,16 +37,17 @@ const updateFormSchema = z.object({
     .string()
     .min(1, { message: 'Informe o valor do desconto.' }),
   quantity: z.string().nullable(),
+  placeOfSale: z.string().nullable(),
 })
 
 type UpdateFormData = z.infer<typeof updateFormSchema>
 
 export function FormUpdate({ product }: FormUpdateProps) {
   const [imageDataProduct, setImageDataProduct] = useState<ImageDataProps[]>([
-    { fileName: '', fileUrl: '' },
+    { name: '', url: '' },
   ])
   const fileUrlsArray: string[] = imageDataProduct.map(
-    (imageData) => imageData.fileUrl,
+    (imageData) => imageData.url,
   )
 
   const navigate = useRouter()
@@ -62,7 +62,7 @@ export function FormUpdate({ product }: FormUpdateProps) {
 
   const handleUpdateProduct = async (data: UpdateFormData) => {
     const { basePrice, description, discountPercentage, name, quantity } = data
-    const newImageUrls = imageDataProduct.map((item) => item.fileUrl)
+    const newImageUrls = imageDataProduct.map((item) => item.url)
     const newSlug = name.toLowerCase().replace(/ /g, '-')
 
     const updatedData = {
@@ -98,16 +98,16 @@ export function FormUpdate({ product }: FormUpdateProps) {
   return (
     <div className="space-y-8 w-full">
       <div className="flex flex-col items-center justify-center gap-8">
-        {imageDataProduct[0].fileUrl ? (
+        {imageDataProduct[0].url ? (
           <ProductImages
             imageUrls={fileUrlsArray}
-            name={imageDataProduct[0].fileName}
+            name={imageDataProduct[0].name}
           />
         ) : (
           <ProductImages imageUrls={product.imageUrls} name={product.name} />
         )}
 
-        <UploadButton<OurFileRouter>
+        <UploadButton
           endpoint="imageShoppingStore"
           onClientUploadComplete={(res) => {
             res && setImageDataProduct(res)
@@ -158,6 +158,14 @@ export function FormUpdate({ product }: FormUpdateProps) {
                 defaultValue={product.quantity}
                 {...register('quantity')}
               />
+            </label>
+
+            <label className="flex flex-col gap-2 mt-2">
+              <span>Faz entrega deste produto para todo Brasil?</span>
+
+              <p className="text-xs opacity-90">Valor padrão: {'Sim'}</p>
+
+              <Input defaultValue={'Sim'} {...register('placeOfSale')} />
             </label>
 
             <label className="flex flex-col gap-2 mt-4">
