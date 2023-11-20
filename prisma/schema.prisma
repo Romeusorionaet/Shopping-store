@@ -37,10 +37,11 @@ model Order {
   id            String         @id @default(uuid())
   userId        String
   user          User           @relation(fields: [userId], references: [id])
-  orderProducts OrderProduct[]
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @default(now()) @updatedAt
   status        OrderStatus    @default(WAITING_FOR_PAYMENT)
+  trackingCode  String         @default("")
+  orderProducts OrderProduct[]
 }
 
 enum OrderStatus {

@@ -8,17 +8,42 @@ export function SavedUserAddress({
   userAddress: OmitIdAndUserId<AddressFormData>
 }) {
   return (
-    <div className="mt-4 flex flex-col gap-1 opacity-80">
-      <p>{userAddress.username}</p>
-      <p>{userAddress.email}</p>
-      <p>{userAddress.phoneNumber}</p>
-      <p>{userAddress.cep}</p>
-      <p>{userAddress.city}</p>
-      <p>{userAddress.uf}</p>
-      <p>{userAddress.neighborhood}</p>
-      <p>{userAddress.street}</p>
-      <p>{userAddress.number}</p>
-      <p>{userAddress.complement}</p>
+    <div className="mt-4 flex flex-col gap-1 opacity-80 bg-blue-200/40 p-1 rounded-md">
+      <h2 className="font-bold">Endereço de entrega</h2>
+
+      <div className="mt-2 text-sm">
+        <p>
+          <span className="font-bold">Nome</span>: {userAddress.username}
+        </p>
+        <p>
+          <span className="font-bold">Email</span>: {userAddress.email}
+        </p>
+        <p>
+          <span className="font-bold">Contanto</span>: {userAddress.phoneNumber}
+        </p>
+        <p>
+          <span className="font-bold">CEP</span>: {userAddress.cep}
+        </p>
+        <p>
+          <span className="font-bold">Cidade</span>: {userAddress.city}
+        </p>
+        <p>
+          <span className="font-bold">UF</span>: {userAddress.uf}
+        </p>
+        <p>
+          <span className="font-bold">Bairro</span>: {userAddress.neighborhood}
+        </p>
+        <p>
+          <span className="font-bold">Rua</span>: {userAddress.street}
+        </p>
+        <p>
+          <span className="font-bold">Número</span>: {userAddress.number}
+        </p>
+        <p>
+          <span className="font-bold">Complemento</span>:{' '}
+          {userAddress.complement}
+        </p>
+      </div>
     </div>
   )
 }
