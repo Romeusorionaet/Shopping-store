@@ -41,6 +41,7 @@ model Order {
   updatedAt     DateTime       @default(now()) @updatedAt
   status        OrderStatus    @default(WAITING_FOR_PAYMENT)
   trackingCode  String         @default("")
+  orderTracking String         @default("WAITING")
   orderProducts OrderProduct[]
 }
 

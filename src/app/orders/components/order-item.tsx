@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/accordion'
 import { Prisma } from '@prisma/client'
 import { format } from 'date-fns'
-import { getOrderStatus } from '../helpers/get-order-status'
+import { getOrderStatus } from '../../../components/helpers/get-order-status'
 import { Button } from '@/components/ui/button'
 import { OrderProductItem } from './order-product-item'
 
@@ -39,6 +39,9 @@ export function OrderItem({ order }: OrderProductProps) {
     total += currentTotalPrice
   })
 
+  const isProductDeliveredToCorreios =
+    order.orderTracking !== 'PRODUCT_DELIVERED_TO_CORREIOS'
+
   const handleNavigateToCorreiosPage = () => {
     // site dos correios link
     // navigate.push('')
@@ -48,22 +51,22 @@ export function OrderItem({ order }: OrderProductProps) {
     <Accordion type="single" className="w-full" collapsible>
       <AccordionItem value={order.id}>
         <AccordionTrigger>
-          <div className="flex flex-col gap-1 my-4">
+          <div className="flex flex-col gap-1 my-4 text-start">
             <p className="text-sm font-bold uppercase">
               Pedido com {order.orderProducts.length} produto(s)
             </p>
-            {/* {order.trackingCode ? (
-                <span className="text-xs opacity-60">
-                  Código de restreio: <strong>{order.trackingCode}</strong>
-                </span>
-              ) : (
-                <span className="text-xs opacity-60">
-                  Estamos preparando o seu produto para envio
-                </span>
-              )} */}
-            <span className="text-xs opacity-60">
-              Código de restreio: <strong>561461461</strong>
-            </span>
+            {order.trackingCode !== '' ? (
+              <span className="text-xs opacity-60">
+                Código de restreio: <strong>{order.trackingCode}</strong>
+              </span>
+            ) : (
+              <p className="text-sm opacity-60">
+                Estamos preparando o seu produto para envio. Em até 5 dias
+                úteis, o seu pedido estará pronto para ser entregue à agência
+                dos Correios. Assim que despachado, você receberá o código de
+                rastreamento para acompanhar a entrega.
+              </p>
+            )}
           </div>
         </AccordionTrigger>
 
@@ -98,28 +101,28 @@ export function OrderItem({ order }: OrderProductProps) {
             <div className="flex w-full flex-col gap-1 text-xs">
               <Separator />
 
-              <div className="flex w-full justify-between py-3">
+              <div className="flex w-full justify-between py-2">
                 <p>Subtotal</p>
                 <p>R$ {subtotal.toFixed(2)}</p>
               </div>
 
               <Separator />
 
-              <div className="flex w-full justify-between py-3">
+              <div className="flex w-full justify-between py-2">
                 <p>Entrega</p>
                 <p>GRÁTIS</p>
               </div>
 
               <Separator />
 
-              <div className="flex w-full justify-between py-3">
+              <div className="flex w-full justify-between py-2">
                 <p>Descontos</p>
                 <p>-R$ {totalDiscount.toFixed(2)}</p>
               </div>
 
               <Separator />
 
-              <div className="flex w-full justify-between py-3 text-sm font-bold">
+              <div className="flex w-full justify-between py-2 text-sm font-bold">
                 <p>Total</p>
                 <p>R$ {total.toFixed(2)}</p>
               </div>
@@ -127,6 +130,7 @@ export function OrderItem({ order }: OrderProductProps) {
 
             <div>
               <Button
+                disabled={isProductDeliveredToCorreios}
                 className="bg-green-500 p-2 rounded-md sm:w-56"
                 onClick={handleNavigateToCorreiosPage}
               >

@@ -10,7 +10,6 @@ import { OrderProps } from './area-orders-of-clients'
 import { getOrderStatus } from '@/components/helpers/get-order-status'
 import { InsertTrackingCode } from './insert-tracking-code'
 import { format } from 'date-fns'
-import { Teste } from './teste'
 import { Address } from '@prisma/client'
 import { SavedUserAddress } from '@/components/saved-user-address'
 
