@@ -1,11 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['fsw-store.s3.sa-east-1.amazonaws.com', 'utfs.io'],
-  },
-
-  experimental: {
-    serverActions: true,
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'fsw-store.s3.sa-east-1.amazonaws.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'utfs.io',
+      },
+    ],
   },
 }
 
