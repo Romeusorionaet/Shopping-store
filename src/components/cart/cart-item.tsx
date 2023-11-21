@@ -79,7 +79,7 @@ export function CartItem({ product }: CartItemProps) {
               <ArrowLeftIcon size={16} />
             </Button>
 
-            <span className="">{product.quantity}</span>
+            <span>{product.quantity}</span>
 
             <Button
               size="icon"

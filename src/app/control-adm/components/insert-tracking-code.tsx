@@ -3,6 +3,7 @@
 import { updateOrder } from '@/actions/update/order'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 interface Props {
@@ -11,6 +12,8 @@ interface Props {
 
 export function InsertTrackingCode({ orderId }: Props) {
   const [trackingCode, setTrackingCode] = useState('')
+
+  const navigate = useRouter()
 
   const handleUpdateTrackingCode = async () => {
     if (!trackingCode) {
@@ -22,6 +25,7 @@ export function InsertTrackingCode({ orderId }: Props) {
       const result = await updateOrder({ trackingCode, orderId })
       alert(result.message)
       setTrackingCode('')
+      navigate.push('/control-adm')
     } catch (err) {
       console.log(err)
     }

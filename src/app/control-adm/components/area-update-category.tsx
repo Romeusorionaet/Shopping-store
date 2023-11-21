@@ -98,7 +98,9 @@ export function AreaUpdateCategory({ listOfCategory, listOfProducts }: Props) {
       <AccordionItem value="item-1">
         <AccordionTrigger className="flex justify-between w-full">
           <p>Atualizar categoria</p>
-          <span className="font-bold">{listOfCategory.length}</span>
+          <span className="font-bold bg-amber-500 text-zinc-950 p-1 rounded-full w-8">
+            {listOfCategory.length}
+          </span>
         </AccordionTrigger>
         <AccordionContent>
           <Input
@@ -136,7 +138,6 @@ export function AreaUpdateCategory({ listOfCategory, listOfProducts }: Props) {
                           onUploadError={(error: Error) => {
                             alert(`ERROR! ${error.message}`)
                           }}
-                          className="bg-green-500/40 pb-2 w-[6rem] text-xs rounded-md text-center"
                         />
                         <ArrowBigRight />
                       </div>

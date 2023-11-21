@@ -12,6 +12,7 @@ export interface CartStore {
   decreaseProductQuantity: (productId: string) => void
   increaseProductQuantity: (productId: string) => void
   removeProductFromCart: (productId: string) => void
+  numberOfProductsCart: () => number
 }
 
 const getInitialCartState = () => {
@@ -158,5 +159,10 @@ export const useCartStore = create<CartStore>((set, get) => ({
       '@shopping-store/cart-products',
       updatedCartInLocalStorage,
     )
+  },
+
+  numberOfProductsCart: () => {
+    const { cart } = get()
+    return cart.length
   },
 }))

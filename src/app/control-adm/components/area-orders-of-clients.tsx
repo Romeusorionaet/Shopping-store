@@ -53,6 +53,8 @@ export function AreaOrdersOfClients({ ordersUsers }: OrdersUsersProps) {
     }, 0)
   }, [ordersUsers])
 
+  const hasOrders = ordersSize > 0
+
   return (
     <Accordion
       type="single"
@@ -62,7 +64,11 @@ export function AreaOrdersOfClients({ ordersUsers }: OrdersUsersProps) {
       <AccordionItem value="item-1">
         <AccordionTrigger className="flex justify-between w-full">
           <p>Todos os pedidos</p>
-          <span className="font-bold">{ordersSize}</span>
+          {hasOrders && (
+            <span className="font-bold bg-green-500 text-zinc-950 p-1 rounded-full w-8">
+              {ordersSize}
+            </span>
+          )}
         </AccordionTrigger>
         <AccordionContent>
           <Input

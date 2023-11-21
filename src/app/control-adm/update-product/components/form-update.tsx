@@ -116,7 +116,6 @@ export function FormUpdate({ product }: FormUpdateProps) {
           onUploadError={(error: Error) => {
             alert(`ERROR! ${error.message}`)
           }}
-          className="bg-green-500/40 pb-2 w-[6rem] text-xs rounded-md text-center"
         />
       </div>
 

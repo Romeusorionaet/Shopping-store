@@ -17,12 +17,16 @@ import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import { Separator } from '../ui/separator'
 import { useRouter } from 'next/navigation'
 import { Cart } from '../cart'
+import { useCartStore } from '@/providers/zustand-store'
 
 interface Props {
   isAdm?: boolean
 }
 
 export function Header({ isAdm }: Props) {
+  const { numberOfProductsCart } = useCartStore()
+  const sizeCart = numberOfProductsCart()
+
   const { status, data } = useSession()
   const router = useRouter()
 
@@ -204,9 +208,12 @@ export function Header({ isAdm }: Props) {
           <Button
             size="icon"
             variant="outline"
-            className="border-none bg-amber-200 hover:bg-white duration-700"
+            className="border-none bg-amber-200 hover:bg-white duration-700 relative"
           >
             <ShoppingBag size={28} />
+            <span className="bg-zinc-100/50 p-1 rounded-full w-6 absolute -top-2 -right-2">
+              {sizeCart}
+            </span>
           </Button>
         </SheetTrigger>
 

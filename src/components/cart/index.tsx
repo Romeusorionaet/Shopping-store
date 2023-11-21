@@ -28,9 +28,7 @@ export function Cart() {
 
   return (
     <div className="flex h-full flex-col gap-6 pb-2">
-      <div className="border border-primary p-1 mt-2">
-        <p className="text-center uppercase text-base">alguma mensagem</p>
-      </div>
+      <Button className="uppercase text-base">simular entrega</Button>
 
       <div className="flex h-full flex-col gap-5 overflow-y-auto">
         <div className="flex h-full flex-col gap-8">

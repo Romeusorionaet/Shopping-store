@@ -43,8 +43,7 @@ export function OrderItem({ order }: OrderProductProps) {
     order.orderTracking !== 'PRODUCT_DELIVERED_TO_CORREIOS'
 
   const handleNavigateToCorreiosPage = () => {
-    // site dos correios link
-    // navigate.push('')
+    open('https://www.correios.com.br/')
   }
 
   return (
@@ -56,9 +55,12 @@ export function OrderItem({ order }: OrderProductProps) {
               Pedido com {order.orderProducts.length} produto(s)
             </p>
             {order.trackingCode !== '' ? (
-              <span className="text-xs opacity-60">
-                Código de restreio: <strong>{order.trackingCode}</strong>
-              </span>
+              <p className="text-xs opacity-60">
+                Copie este código de restreio e clique em &quot;
+                <span className="text-green-500">Acompanhar pedido</span>&quot;
+                no botão abaixo:
+                <strong> {order.trackingCode}</strong>
+              </p>
             ) : (
               <p className="text-sm opacity-60">
                 Estamos preparando o seu produto para envio. Em até 5 dias
@@ -103,7 +105,13 @@ export function OrderItem({ order }: OrderProductProps) {
 
               <div className="flex w-full justify-between py-2">
                 <p>Subtotal</p>
-                <p>R$ {subtotal.toFixed(2)}</p>
+                <p>
+                  {subtotal.toLocaleString('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL',
+                    minimumFractionDigits: 2,
+                  })}
+                </p>
               </div>
 
               <Separator />
@@ -117,14 +125,27 @@ export function OrderItem({ order }: OrderProductProps) {
 
               <div className="flex w-full justify-between py-2">
                 <p>Descontos</p>
-                <p>-R$ {totalDiscount.toFixed(2)}</p>
+                <p>
+                  -
+                  {totalDiscount.toLocaleString('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL',
+                    minimumFractionDigits: 2,
+                  })}
+                </p>
               </div>
 
               <Separator />
 
               <div className="flex w-full justify-between py-2 text-sm font-bold">
                 <p>Total</p>
-                <p>R$ {total.toFixed(2)}</p>
+                <p>
+                  {total.toLocaleString('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL',
+                    minimumFractionDigits: 2,
+                  })}
+                </p>
               </div>
             </div>
 
