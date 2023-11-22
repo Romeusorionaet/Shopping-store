@@ -35,8 +35,6 @@ export default async function ControlAdm() {
     },
   })
 
-  console.log(ordersUsers)
-
   const completedPaymentUsers = ordersUsers.map((orderUser) => ({
     ...orderUser,
     Order: orderUser.Order.filter(

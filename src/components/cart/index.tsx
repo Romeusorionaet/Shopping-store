@@ -28,9 +28,7 @@ export function Cart() {
 
   return (
     <div className="flex h-full flex-col gap-6 pb-2">
-      <Button className="uppercase text-base">simular entrega</Button>
-
-      <div className="flex h-full flex-col gap-5 overflow-y-auto">
+      <div className="flex h-full flex-col gap-5 overflow-y-auto mt-10">
         <div className="flex h-full flex-col gap-8">
           {cart.length > 0 ? (
             cart.map((product) => (

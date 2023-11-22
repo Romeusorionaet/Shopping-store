@@ -17,15 +17,21 @@ import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import { Separator } from '../ui/separator'
 import { useRouter } from 'next/navigation'
 import { Cart } from '../cart'
-import { useCartStore } from '@/providers/zustand-store'
+import { useEffect, useState } from 'react'
 
 interface Props {
   isAdm?: boolean
 }
 
 export function Header({ isAdm }: Props) {
-  const { numberOfProductsCart } = useCartStore()
-  const sizeCart = numberOfProductsCart()
+  const [sizeCart, setSizeCart] = useState(0)
+
+  useEffect(() => {
+    const cartSavedInLocalStorage = JSON.parse(
+      localStorage.getItem('@shopping-store/cart-products') || '[]',
+    )
+    setSizeCart(cartSavedInLocalStorage.length)
+  }, [])
 
   const { status, data } = useSession()
   const router = useRouter()
