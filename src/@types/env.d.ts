@@ -6,9 +6,9 @@ declare namespace NodeJS {
     HOST_URL: string
     NEXTAUTH_SECRET: string
     NEXT_PUBLIC_STRIPE_PUBLIC_KEY: string
-    STRIPE_SECRET_KEY: string
-    STRIPE_WEBHOOK_SECRET_KEY: string
     UPLOADTHING_SECRET: string
     UPLOADTHING_APP_ID: string
+    MERCADOPAGO_PUBLIC_KEY: string
+    MERCADOPAGO_ACCESS_TOKEN: string
   }
 }

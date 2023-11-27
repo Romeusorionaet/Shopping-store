@@ -2,7 +2,6 @@
 
 import { createOrder } from '@/actions/order'
 import { createCheckout } from '@/actions/checkout'
-import { loadStripe } from '@stripe/stripe-js'
 import { useSession } from 'next-auth/react'
 import { useCartStore } from '@/providers/zustand-store'
 import { Button } from '@/components/ui/button'
@@ -25,27 +24,17 @@ export function CheckoutCart({ userHasAddress }: Props) {
         navigate.push('/')
         return
       }
-      const result = await createOrder(cart, (data?.user as any).id)
+      const dataOrder = await createOrder(cart, (data?.user as any).id)
 
-      if (!result.order) {
-        alert(result.message)
+      if (!dataOrder.order) {
+        alert(dataOrder.message)
         return
       }
 
-      const checkout = await createCheckout(cart, result.order.id)
+      const initPointUrl = await createCheckout(cart, dataOrder.order.id)
 
-      const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY)
-
-      if (stripe) {
-        stripe
-          .redirectToCheckout({
-            sessionId: checkout.id,
-          })
-          .then(function (result) {
-            if (result.error) {
-              console.error(result.error)
-            }
-          })
+      if (initPointUrl) {
+        window.open(initPointUrl, '_blank')
       }
     } catch (err) {
       console.log(err)

@@ -1,9 +1,9 @@
 import { Form } from './components/form'
-import { CheckoutCart } from './components/checkout-cart'
 import { getDataAddress } from '@/lib/getData/get-data-address'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { SavedUserAddress } from '@/components/saved-user-address'
+import { CheckoutCart } from './components/checkout-cart'
 
 export default async function Address() {
   const session = await getServerSession(authOptions)

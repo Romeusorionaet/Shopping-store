@@ -9,6 +9,7 @@ import { Header } from '@/components/header'
 import { NextSSRPlugin } from '@uploadthing/react/next-ssr-plugin'
 import { extractRouterConfig } from 'uploadthing/server'
 import { ourFileRouter } from './api/uploadthing/core'
+import Script from 'next/script'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -27,6 +28,8 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
+      <Script src="https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js"></Script>
+      <Script src="https://www.mercadopago.com/v1/security.js"></Script>
       <body className={inter.className}>
         <PrivateRoute isAdm={isAdm}>
           <AuthProvider>
