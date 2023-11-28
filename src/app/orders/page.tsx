@@ -3,6 +3,15 @@ import { getDataOrders } from '@/lib/getData/get-data-orders'
 import { getServerSession } from 'next-auth'
 import { OrderItem } from './components/order-item'
 import { OrderWaitingForPayment } from './components/order-waiting-for-payment'
+import { Order, OrderProduct, Product } from '@prisma/client'
+
+interface OrderProductIncludeProduct extends OrderProduct {
+  product: Product
+}
+
+export interface OrderIncludeOrderProducts extends Order {
+  orderProducts: OrderProductIncludeProduct[]
+}
 
 export default async function Orders() {
   const session = await getServerSession(authOptions)
@@ -12,7 +21,7 @@ export default async function Orders() {
   }
 
   const { props } = await getDataOrders(session.user.id)
-  const orders = props?.orders
+  const orders: OrderIncludeOrderProducts[] = JSON.parse(props.orders)
 
   return (
     <div className="pt-28 p-4 max-w-[800px] mx-auto">

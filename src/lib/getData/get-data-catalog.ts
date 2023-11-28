@@ -4,21 +4,19 @@ export const getDataCatalog = async () => {
   try {
     const categories = await prismaClient.category.findMany({})
 
-    if (!categories || categories.length === 0) {
-      return {
-        notFound: true,
-      }
-    }
-
     return {
-      props: {
-        categories,
+      propsCategories: {
+        categories: JSON.stringify(categories),
       },
       revalidate: 60 * 60 * 24,
     }
-  } catch (error) {
+  } catch (err) {
+    console.log(err)
+
     return {
-      error: 'Something went wrong while fetching the catalog data.',
+      notFound: true,
+      propsCategories: { categories: '[]' },
+      revalidate: 0,
     }
   }
 }

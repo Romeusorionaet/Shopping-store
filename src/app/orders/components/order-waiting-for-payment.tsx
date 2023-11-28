@@ -22,7 +22,7 @@ export function OrderWaitingForPayment({ order }: OrderProductProps) {
           <strong key={product.id}> ({product.product.name}), </strong>
         ))}
       </p>
-      <span>{format(order.createdAt, "d/MM/y 'às' HH:mm")}</span>
+      <span>{format(new Date(order.createdAt), "d/MM/y 'às' HH:mm")}</span>
     </div>
   )
 }

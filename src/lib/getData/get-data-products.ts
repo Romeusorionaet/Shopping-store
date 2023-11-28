@@ -6,7 +6,7 @@ export const getDataProducts = async () => {
 
     return {
       props: {
-        products,
+        products: JSON.stringify(products),
       },
       revalidate: 60 * 60 * 24,
     }
@@ -16,7 +16,7 @@ export const getDataProducts = async () => {
     return {
       notFound: true,
       props: {
-        products: [],
+        products: '[]',
       },
       revalidate: 0,
     }

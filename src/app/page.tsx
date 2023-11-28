@@ -4,15 +4,17 @@ import Link from 'next/link'
 import { LibraryBig } from 'lucide-react'
 import { OfferBanner } from '@/components/offer-banner'
 import { CarouselProducts } from '@/components/carousel-products'
+import { Product } from '@prisma/client'
 
 export default async function Home() {
   const { props } = await getDataProducts()
+  const products: Product[] = JSON.parse(props.products)
 
-  const filteredProductsWithDiscount = props.products
+  const filteredProductsWithDiscount = products
     .filter((product) => product.discountPercentage !== 0)
     .sort(() => Math.random() - 0.5)
 
-  const allProducts = props.products.sort(() => Math.random() - 0.5)
+  const allProducts = products.sort(() => Math.random() - 0.5)
 
   return (
     <main className="flex flex-col gap-6 overflow-hidden pb-8 max-w-[1480px] mx-auto">

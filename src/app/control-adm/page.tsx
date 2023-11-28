@@ -4,36 +4,22 @@ import { FormProduct } from './components/form-products'
 import { AreaUpdateCategory } from './components/area-update-category'
 import { getDataProducts } from '@/lib/getData/get-data-products'
 import { AreaUpdateProduct } from './components/area-update-product'
-import { prismaClient } from '@/lib/prisma'
-import { AreaOrdersOfClients } from './components/area-orders-of-clients'
+import {
+  AreaOrdersOfClients,
+  UserWithOrders,
+} from './components/area-orders-of-clients'
+import { Category, Product } from '@prisma/client'
+import { getDataOrdersUsers } from '@/lib/getData/get-data-orders-users'
 
 export default async function ControlAdm() {
-  const categories = await getDataCatalog()
-  const products = await getDataProducts()
+  const { propsCategories } = await getDataCatalog()
+  const categories: Category[] = JSON.parse(propsCategories.categories)
 
-  const ordersUsers = await prismaClient.user.findMany({
-    where: {
-      Order: {
-        some: {
-          id: {
-            not: undefined,
-          },
-        },
-      },
-    },
-    include: {
-      Order: {
-        include: {
-          orderProducts: {
-            include: {
-              product: true,
-            },
-          },
-        },
-      },
-      Address: true,
-    },
-  })
+  const { props } = await getDataProducts()
+  const products: Product[] = JSON.parse(props.products)
+
+  const { propsOrdersUsers } = await getDataOrdersUsers()
+  const ordersUsers: UserWithOrders[] = JSON.parse(propsOrdersUsers.ordersUsers)
 
   const completedPaymentUsers = ordersUsers.map((orderUser) => ({
     ...orderUser,
@@ -73,8 +59,7 @@ export default async function ControlAdm() {
     }),
   }))
 
-  const listOfCategories = categories.props?.categories
-  const listOfProducts = products.props.products
+  const listOfProducts = products
 
   return (
     <main className="p-4 max-w-[800px] mx-auto">
@@ -84,11 +69,11 @@ export default async function ControlAdm() {
 
       <FormCategory />
 
-      <FormProduct listOfCategory={categories.props?.categories} />
+      <FormProduct listOfCategory={categories} />
 
-      {listOfCategories && (
+      {categories && (
         <AreaUpdateCategory
-          listOfCategory={listOfCategories}
+          listOfCategory={categories}
           listOfProducts={listOfProducts}
         />
       )}

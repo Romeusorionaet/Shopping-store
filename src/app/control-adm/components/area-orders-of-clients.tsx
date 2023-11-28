@@ -25,7 +25,7 @@ export interface OrderProps {
   orderProducts: OrderProducts[]
 }
 
-interface UserWithOrders {
+export interface UserWithOrders {
   id: string
   name: string | null
   email: string | null

@@ -83,7 +83,7 @@ export function OrderItem({ order }: OrderProductProps) {
               <div>
                 <p className="font-bold">Data</p>
                 <p className="opacity-60">
-                  {format(order.createdAt, "d/MM/y 'às' HH:mm")}
+                  {format(new Date(order.createdAt), "d/MM/y 'às' HH:mm")}
                 </p>
               </div>
 

@@ -21,21 +21,21 @@ export const getDataUniqueProduct = async (slug: string) => {
       },
     })
 
-    if (!product) {
-      return {
-        notFound: true,
-      }
-    }
-
     return {
       props: {
-        product,
+        product: JSON.stringify(product),
       },
       revalidate: 60 * 60 * 24,
     }
-  } catch (error) {
+  } catch (err) {
+    console.log(err)
+
     return {
-      error: 'Something went wrong while fetching unique product data.',
+      notFound: true,
+      props: {
+        product: '[]',
+      },
+      revalidate: 0,
     }
   }
 }

@@ -4,6 +4,15 @@ import { ProductImages } from '../components/product-images'
 import { CalculateValueProduct } from '@/utils/calculate-value-product'
 import { CarouselProducts } from '@/components/carousel-products'
 import { AskForProductReturn } from '../components/Ask-for-product-return'
+import { Category, Product } from '@prisma/client'
+
+interface CategoryIncludeProducts extends Category {
+  products: Product[]
+}
+
+interface ProductIncludeCategoryAndProducts extends Product {
+  category: CategoryIncludeProducts
+}
 
 interface ParamsProps {
   params: {
@@ -14,7 +23,7 @@ interface ParamsProps {
 export default async function Details({ params }: ParamsProps) {
   const { slug } = params
   const { props } = await getDataUniqueProduct(slug)
-  const product = props?.product
+  const product: ProductIncludeCategoryAndProducts = JSON.parse(props.product)
 
   if (!product) {
     return null
@@ -77,7 +86,7 @@ export default async function Details({ params }: ParamsProps) {
                   Store
                 </p>
               ) : (
-                <AddProductInCart product={props?.product} />
+                <AddProductInCart product={product} />
               )}
             </div>
           ) : (
@@ -86,7 +95,7 @@ export default async function Details({ params }: ParamsProps) {
                 Não temos mais este produto no momento. Por favor mande sua
                 mensagem para o retorno do produto ao estoque.
               </p>
-              <AskForProductReturn productName={props.product.name} />
+              <AskForProductReturn productName={product.name} />
             </div>
           )}
         </div>

@@ -46,7 +46,7 @@ export function OrderUser({ orders, address }: OrdersProps) {
                   <div className="flex justify-between">
                     <h2 className="font-bold">Pedido</h2>
                     <span className="text-sm text-zinc-300">
-                      {format(order.createdAt, "d/MM/y 'às' HH:mm")}
+                      {format(new Date(order.createdAt), "d/MM/y 'às' HH:mm")}
                     </span>
                   </div>
 

@@ -15,25 +15,22 @@ export const getDataOrders = async (id: string) => {
       },
     })
 
-    if (!orders || orders.length === 0) {
-      return {
-        notFound: true,
-        props: {
-          orders: [],
-        },
-        revalidate: 0,
-      }
-    }
-
     return {
       props: {
-        orders,
+        orders: JSON.stringify(orders),
       },
       revalidate: 60 * 60 * 24,
     }
-  } catch (error) {
+  } catch (err) {
+    console.log(err)
+
     return {
-      error: 'Something went wrong while fetching user orders.',
+      notFound: true,
+
+      props: {
+        orders: '[]',
+      },
+      revalidate: 0,
     }
   }
 }

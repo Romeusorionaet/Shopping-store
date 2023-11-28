@@ -34,6 +34,7 @@
     "next-auth": "^4.24.3",
     "react": "^18",
     "react-dom": "^18",
+    "sharp": "^0.32.6",
     "stripe": "^14.1.0",
     "tailwind-merge": "^1.14.0",
     "tailwindcss-animate": "^1.0.7",
