@@ -3,13 +3,12 @@ import { Inter } from 'next/font/google'
 import '../styles/globals.css'
 import { AuthProvider } from '@/providers/auth'
 import '../styles/scrollbar.css'
-import { getDataUser } from '@/lib/getData/get-data.user'
-import PrivateRoute from '@/components/routes-page/private-route'
 import { Header } from '@/components/header'
 import { NextSSRPlugin } from '@uploadthing/react/next-ssr-plugin'
 import { extractRouterConfig } from 'uploadthing/server'
 import { ourFileRouter } from './api/uploadthing/core'
 import Script from 'next/script'
+import { UserContextProvider } from '@/providers/user-context'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -23,26 +22,18 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const { props } = await getDataUser()
-
-  if (!props) {
-    return null
-  }
-
-  const isAdm = props?.isAdm
-
   return (
     <html lang="en">
       <Script src="https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js"></Script>
       <Script src="https://www.mercadopago.com/v1/security.js"></Script>
       <body className={inter.className}>
-        <PrivateRoute isAdm={isAdm}>
+        <UserContextProvider>
           <AuthProvider>
             <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
-            <Header isAdm={isAdm} />
+            <Header />
             {children}
           </AuthProvider>
-        </PrivateRoute>
+        </UserContextProvider>
       </body>
     </html>
   )

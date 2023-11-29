@@ -1,15 +1,21 @@
-import { getDataUser } from '@/lib/getData/get-data.user'
+'use client'
+
+import { UserContext } from '@/providers/user-context'
+import { useContext } from 'react'
 
 interface Props {
   children: React.ReactNode
 }
 
-export default async function layoutAdm({ children }: Props) {
-  const { props } = await getDataUser()
-  const isAdm = props?.isAdm
+export default function LayoutAdm({ children }: Props) {
+  const { isAdm } = useContext(UserContext)
 
   if (!isAdm) {
-    return null
+    return (
+      <div className="bg-zinc-950 h-screen flex flex-col items-center justify-center">
+        <p className="text-red-500 uppercase text-xl">Acesso negado!</p>
+      </div>
+    )
   }
 
   return (

@@ -17,14 +17,12 @@ import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import { Separator } from '../ui/separator'
 import { useRouter } from 'next/navigation'
 import { Cart } from '../cart'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
+import { UserContext } from '@/providers/user-context'
 
-interface Props {
-  isAdm: boolean | undefined
-}
-
-export function Header({ isAdm }: Props) {
+export function Header() {
   const [sizeCart, setSizeCart] = useState(0)
+  const { isAdm } = useContext(UserContext)
 
   useEffect(() => {
     const cartSavedInLocalStorage = JSON.parse(
