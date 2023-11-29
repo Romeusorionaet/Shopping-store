@@ -59,8 +59,6 @@ export default async function ControlAdm() {
     }),
   }))
 
-  const listOfProducts = products
-
   return (
     <main className="p-4 max-w-[800px] mx-auto">
       <h1 className="my-6 text-center text-xl font-bold text-amber-500">
@@ -74,11 +72,11 @@ export default async function ControlAdm() {
       {categories && (
         <AreaUpdateCategory
           listOfCategory={categories}
-          listOfProducts={listOfProducts}
+          listOfProducts={products}
         />
       )}
 
-      {listOfProducts && <AreaUpdateProduct listOfProducts={listOfProducts} />}
+      {products && <AreaUpdateProduct listOfProducts={products} />}
 
       <h2 className="my-6 text-center text-xl font-bold text-green-500">
         Gerenciar pedidos

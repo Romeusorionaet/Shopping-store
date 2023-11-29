@@ -1,5 +1,6 @@
 import { getDataUniqueProduct } from '@/lib/getData/get-data-unique-product'
 import { FormUpdate } from '../components/form-update'
+import { ProductIncludeCategoryAndProducts } from '@/app/details/[slug]/page'
 
 interface ParamsProps {
   params: {
@@ -9,8 +10,9 @@ interface ParamsProps {
 
 export default async function UpdateProduct({ params }: ParamsProps) {
   const { slug } = params
-  const data = await getDataUniqueProduct(slug)
-  const product = data.props?.product
+
+  const { props } = await getDataUniqueProduct(slug)
+  const product: ProductIncludeCategoryAndProducts = JSON.parse(props.product)
 
   return (
     <div className="p-4 max-w-[800px] mx-auto">

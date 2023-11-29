@@ -3,7 +3,7 @@ import { checkIsPrivateRoute } from '@/utils/check-is-private-route'
 import { usePathname, useRouter } from 'next/navigation'
 
 interface Props {
-  isAdm?: boolean
+  isAdm: boolean | undefined
   children: React.ReactNode
 }
 
@@ -15,6 +15,7 @@ export default function PrivateRoute({ children, isAdm }: Props) {
 
   if (!isAdm && isPrivatePage) {
     push('/')
+    return
   }
 
   return <>{children}</>

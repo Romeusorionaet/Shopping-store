@@ -20,7 +20,7 @@ import { Cart } from '../cart'
 import { useEffect, useState } from 'react'
 
 interface Props {
-  isAdm?: boolean
+  isAdm: boolean | undefined
 }
 
 export function Header({ isAdm }: Props) {

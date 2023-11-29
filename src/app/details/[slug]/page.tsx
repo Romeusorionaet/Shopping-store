@@ -10,7 +10,7 @@ interface CategoryIncludeProducts extends Category {
   products: Product[]
 }
 
-interface ProductIncludeCategoryAndProducts extends Product {
+export interface ProductIncludeCategoryAndProducts extends Product {
   category: CategoryIncludeProducts
 }
 
