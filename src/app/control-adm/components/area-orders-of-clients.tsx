@@ -22,6 +22,7 @@ export interface OrderProps {
   createdAt: Date
   updatedAt: Date
   trackingCode: string
+  orderTracking: string
   orderProducts: OrderProducts[]
 }
 
@@ -65,7 +66,7 @@ export function AreaOrdersOfClients({ ordersUsers }: OrdersUsersProps) {
         <AccordionTrigger className="flex justify-between w-full">
           <p>Todos os pedidos</p>
           {hasOrders && (
-            <span className="font-bold bg-green-500 text-zinc-950 p-1 rounded-full w-8">
+            <span className="font-bold border border-white p-1 rounded-full w-8">
               {ordersSize}
             </span>
           )}

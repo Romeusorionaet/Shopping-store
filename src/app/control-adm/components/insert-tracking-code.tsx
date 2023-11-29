@@ -23,9 +23,28 @@ export function InsertTrackingCode({ orderId }: Props) {
 
     try {
       const result = await updateOrder({ trackingCode, orderId })
+
       alert(result.message)
+
       setTrackingCode('')
+
       navigate.push('/control-adm')
+      navigate.refresh()
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  const handleCancelOrder = async () => {
+    const trackingCode = 'canceled'
+
+    try {
+      await updateOrder({ trackingCode, orderId })
+
+      alert('Pedido cancelado')
+
+      navigate.push('/control-adm')
+      navigate.refresh()
     } catch (err) {
       console.log(err)
     }
@@ -38,9 +57,21 @@ export function InsertTrackingCode({ orderId }: Props) {
         value={trackingCode}
         onChange={(e) => setTrackingCode(e.target.value)}
       />
-      <Button onClick={handleUpdateTrackingCode} className="text-zinc-950">
-        Enviar
-      </Button>
+
+      <p className="text-sm text-zinc-300">
+        Se este pedido foi reembolsado, clique no botão de{' '}
+        <strong>cancelar</strong> abaixo.
+      </p>
+
+      <div className="flex justify-between">
+        <Button onClick={handleUpdateTrackingCode} className="text-zinc-950">
+          Enviar
+        </Button>
+
+        <Button onClick={handleCancelOrder} variant="destructive">
+          Cancelar
+        </Button>
+      </div>
     </div>
   )
 }

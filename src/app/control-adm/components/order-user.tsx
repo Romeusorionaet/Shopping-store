@@ -12,6 +12,7 @@ import { InsertTrackingCode } from './insert-tracking-code'
 import { format } from 'date-fns'
 import { Address } from '@prisma/client'
 import { SavedUserAddress } from '@/components/saved-user-address'
+import { OrderDelivered } from './order-delivered'
 
 interface OrdersProps {
   orders: OrderProps[]
@@ -38,6 +39,11 @@ export function OrderUser({ orders, address }: OrdersProps) {
                 order.status === 'PAYMENT_CONFIRMED' &&
                 order.trackingCode === ''
 
+              const isOrderDeliveredToCarreios =
+                order.orderTracking === 'PRODUCT_DELIVERED_TO_CORREIOS' &&
+                order.trackingCode !== '' &&
+                order.trackingCode !== 'canceled'
+
               return (
                 <div
                   key={order.id}
@@ -50,10 +56,12 @@ export function OrderUser({ orders, address }: OrdersProps) {
                     </span>
                   </div>
 
-                  <div className="flex justify-between">
-                    <p>Status de pagamento:</p>
-                    <p className="text-sm text-zinc-300">
-                      {getOrderStatus(order.status)}
+                  <div className="">
+                    <p>
+                      Status de pagamento:{' '}
+                      <span className="text-sm text-zinc-300">
+                        {getOrderStatus(order.status)}
+                      </span>
                     </p>
                   </div>
 
@@ -64,8 +72,18 @@ export function OrderUser({ orders, address }: OrdersProps) {
                     </p>
                   </div>
 
+                  {order.orderTracking === 'PRODUCT_DELIVERED_TO_CLIENT' && (
+                    <p className="border-x border-green-500 inline-block p-1 rounded-md">
+                      pedido entregue
+                    </p>
+                  )}
+
                   {confirmedPaymentNoTrackingCode && (
                     <InsertTrackingCode orderId={order.id} />
+                  )}
+
+                  {isOrderDeliveredToCarreios && (
+                    <OrderDelivered orderId={order.id} />
                   )}
 
                   <SavedUserAddress userAddress={userAddress} />

@@ -45,7 +45,7 @@ export default async function Orders() {
         )}
       </div>
 
-      <div className="flex flex-col gap-2 justify-center mt-8">
+      <div className="flex flex-col gap-2 mt-10 h-96 overflow-auto scrollbar">
         {orders && orders.length >= 1 ? (
           orders
             .map((order) => {

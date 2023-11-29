@@ -98,7 +98,7 @@ export function AreaUpdateCategory({ listOfCategory, listOfProducts }: Props) {
       <AccordionItem value="item-1">
         <AccordionTrigger className="flex justify-between w-full">
           <p>Atualizar categoria</p>
-          <span className="font-bold bg-amber-500 text-zinc-950 p-1 rounded-full w-8">
+          <span className="font-bold border border-white p-1 rounded-full w-8">
             {listOfCategory.length}
           </span>
         </AccordionTrigger>

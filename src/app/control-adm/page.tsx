@@ -38,7 +38,22 @@ export default async function ControlAdm() {
     ...orderUser,
     Order: orderUser.Order.filter(
       (order) =>
-        order.status === 'PAYMENT_CONFIRMED' && order.trackingCode !== '',
+        order.status === 'PAYMENT_CONFIRMED' &&
+        order.trackingCode !== '' &&
+        order.trackingCode !== 'canceled' &&
+        order.orderTracking !== 'PRODUCT_DELIVERED_TO_CLIENT',
+    ).sort((a, b) => {
+      const dateA = new Date(a.createdAt)
+      const dateB = new Date(b.createdAt)
+
+      return dateA.getTime() - dateB.getTime()
+    }),
+  }))
+
+  const historicOfOrderDeliveredToClient = ordersUsers.map((orderUser) => ({
+    ...orderUser,
+    Order: orderUser.Order.filter(
+      (order) => order.orderTracking === 'PRODUCT_DELIVERED_TO_CLIENT',
     ).sort((a, b) => {
       const dateA = new Date(a.createdAt)
       const dateB = new Date(b.createdAt)
@@ -56,6 +71,20 @@ export default async function ControlAdm() {
       const dateB = new Date(b.createdAt)
 
       return dateB.getTime() - dateA.getTime()
+    }),
+  }))
+
+  const historicOfOrdersCanceled = ordersUsers.map((orderUser) => ({
+    ...orderUser,
+    Order: orderUser.Order.filter(
+      (order) =>
+        order.status === 'PAYMENT_CONFIRMED' &&
+        order.trackingCode === 'canceled',
+    ).sort((a, b) => {
+      const dateA = new Date(a.createdAt)
+      const dateB = new Date(b.createdAt)
+
+      return dateA.getTime() - dateB.getTime()
     }),
   }))
 
@@ -102,10 +131,25 @@ export default async function ControlAdm() {
 
         <div>
           <h3>
+            Pedidos <strong className="text-green-500">entregue</strong>
+          </h3>
+          <AreaOrdersOfClients ordersUsers={historicOfOrderDeliveredToClient} />
+        </div>
+
+        <div>
+          <h3>
             Pedidos <strong className="text-red-500">pendente</strong>,{' '}
             <span className="text-sm text-zinc-300">desistente</span>.
           </h3>
           <AreaOrdersOfClients ordersUsers={uncompletedPaymentUsers} />
+        </div>
+
+        <div>
+          <h3>
+            Pedidos <strong className="text-red-500">cancelado</strong>,{' '}
+            <span className="text-sm text-zinc-300">reembolso</span>.
+          </h3>
+          <AreaOrdersOfClients ordersUsers={historicOfOrdersCanceled} />
         </div>
       </div>
     </main>
