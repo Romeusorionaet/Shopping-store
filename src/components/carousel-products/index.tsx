@@ -30,7 +30,7 @@ export function CarouselProducts({ products }: productsProps) {
           {products &&
             products.map((product) => {
               const { totalPrice } = CalculateValueProduct(product)
-              const productAvailable = product.quantity === 0
+              const productAvailable = product.quantity <= 0
 
               return (
                 <div key={product.id} className="keen-slider__slide z-20">

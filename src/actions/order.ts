@@ -18,7 +18,7 @@ export const createOrder = async (
       },
     })
 
-    if (!verifyProduct || verifyProduct.quantity === 0) {
+    if (!verifyProduct || verifyProduct.quantity <= 0) {
       if (verifyProduct) {
         invalidProducts.push(verifyProduct.name)
       }
