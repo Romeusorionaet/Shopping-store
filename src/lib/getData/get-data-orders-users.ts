@@ -30,7 +30,7 @@ export const getDataOrdersUsers = async () => {
       propsOrdersUsers: {
         ordersUsers: JSON.stringify(ordersUsers),
       },
-      revalidate: 60 * 60 * 24,
+      revalidate: 0,
     }
   } catch (err) {
     console.log(err)
