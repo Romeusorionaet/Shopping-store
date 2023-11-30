@@ -5,7 +5,6 @@ declare namespace NodeJS {
     GOOGLE_CLIENT_SECRET_ID: string
     HOST_URL: string
     NEXTAUTH_SECRET: string
-    NEXT_PUBLIC_STRIPE_PUBLIC_KEY: string
     UPLOADTHING_SECRET: string
     UPLOADTHING_APP_ID: string
     MERCADOPAGO_PUBLIC_KEY: string
