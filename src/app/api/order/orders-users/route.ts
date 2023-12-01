@@ -44,6 +44,8 @@ export const GET = async (req: Request) => {
       return NextResponse.json({ ordersUsers })
     }
   } catch (err) {
-    return NextResponse.json({ error: 'Ocorreu um erro ao buscar os dados.' })
+    return NextResponse.json({
+      error: `Ocorreu um erro ao buscar os dados. ${err}`,
+    })
   }
 }
