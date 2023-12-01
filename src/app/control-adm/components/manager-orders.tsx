@@ -26,10 +26,7 @@ export function ManageOrders() {
         }
 
         const result: PropsOrdersUsers = await axios
-          .get(
-            'https://shopping-store-kappa.vercel.app/api/order/orders-users',
-            config,
-          )
+          .get('http://localhost:3000/api/order/orders-users', config)
           .then((response) => response.data)
           .catch((err) => err)
 
@@ -42,7 +39,12 @@ export function ManageOrders() {
     fetchData()
   }, [data])
 
-  if (!dataOrders || !dataOrders.ordersUsers) {
+  console.log(dataOrders)
+  if (
+    !dataOrders ||
+    !dataOrders.ordersUsers ||
+    dataOrders.ordersUsers.length === 0
+  ) {
     return <p>Nem um pedido foi encontrado.</p>
   }
 
