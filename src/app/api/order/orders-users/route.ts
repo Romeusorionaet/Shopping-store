@@ -6,7 +6,9 @@ export const GET = async (req: Request) => {
     const userId = req.headers.get('x-user-id')
 
     if (!userId) {
-      return NextResponse.json({ error: 'Ocorreu um erro ao buscar os dados.' })
+      return NextResponse.json({
+        error: 'Ocorreu um erro ao buscar os dados de usuário.',
+      })
     }
 
     const user = await prismaClient.user.findUnique({
