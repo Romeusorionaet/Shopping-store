@@ -78,9 +78,17 @@ export default async function Details({ params }: ParamsProps) {
           <p className="text-xl">Descrição:</p>
           <p>{product.description}</p>
 
-          {product.quantity !== 0 ? (
+          {product.quantity <= 0 ? (
+            <div className="space-y-4">
+              <p>
+                Não temos mais este produto no momento. Por favor mande sua
+                mensagem para o retorno do produto ao estoque.
+              </p>
+              <AskForProductReturn productName={product.name} />
+            </div>
+          ) : (
             <div>
-              {product.placeOfSale !== 'onlineStore' ? (
+              {product.placeOfSale !== 'ONLINE_STORE' ? (
                 <p>
                   Não fazemos a entrega deste produto. Retirar na loja Shopping
                   Store
@@ -88,14 +96,6 @@ export default async function Details({ params }: ParamsProps) {
               ) : (
                 <AddProductInCart product={product} />
               )}
-            </div>
-          ) : (
-            <div className="space-y-4">
-              <p>
-                Não temos mais este produto no momento. Por favor mande sua
-                mensagem para o retorno do produto ao estoque.
-              </p>
-              <AskForProductReturn productName={product.name} />
             </div>
           )}
         </div>

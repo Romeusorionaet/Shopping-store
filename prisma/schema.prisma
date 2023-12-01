@@ -34,20 +34,27 @@ model Product {
 }
 
 model Order {
-  id            String         @id @default(uuid())
+  id            String              @id @default(uuid())
   userId        String
-  user          User           @relation(fields: [userId], references: [id])
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @default(now()) @updatedAt
-  status        OrderStatus    @default(WAITING_FOR_PAYMENT)
-  trackingCode  String         @default("")
-  orderTracking String         @default("WAITING")
+  user          User                @relation(fields: [userId], references: [id])
+  createdAt     DateTime            @default(now())
+  updatedAt     DateTime            @default(now()) @updatedAt
+  status        OrderStatus         @default(WAITING_FOR_PAYMENT)
+  trackingCode  String              @default("")
+  orderTracking OrderStatusTracking @default(WAITING)
   orderProducts OrderProduct[]
 }
 
 enum OrderStatus {
   WAITING_FOR_PAYMENT
   PAYMENT_CONFIRMED
+}
+
+enum OrderStatusTracking {
+  WAITING
+  CANCELED
+  PRODUCT_DELIVERED_TO_CORREIOS
+  PRODUCT_DELIVERED_TO_CLIENT
 }
 
 model OrderProduct {

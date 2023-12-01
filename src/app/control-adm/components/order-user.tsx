@@ -60,7 +60,7 @@ export function OrderUser({ orders, address }: OrdersProps) {
                     <p>
                       Status de pagamento:{' '}
                       <span className="text-sm text-zinc-300">
-                        {getOrderStatus(order.status)}
+                        {getOrderStatus(order.orderTracking)}
                       </span>
                     </p>
                   </div>

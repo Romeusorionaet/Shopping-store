@@ -36,10 +36,10 @@ export function InsertTrackingCode({ orderId }: Props) {
   }
 
   const handleCancelOrder = async () => {
-    const trackingCode = 'canceled'
+    const orderTracking = 'CANCELED'
 
     try {
-      await updateOrder({ trackingCode, orderId })
+      await updateOrder({ orderTracking, orderId })
 
       alert('Pedido cancelado')
 

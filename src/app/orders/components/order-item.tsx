@@ -55,7 +55,7 @@ export function OrderItem({ order }: OrderProductProps) {
             <p className="text-sm font-bold uppercase">
               Pedido com {order.orderProducts.length} produto(s)
             </p>
-            {order.trackingCode === 'canceled' ? (
+            {order.orderTracking === 'CANCELED' ? (
               <p className="text-xs opacity-60">
                 pedido cancelado: Este pedido foi{' '}
                 <span className="text-red-500">cancelado</span> por motivos de
@@ -84,8 +84,10 @@ export function OrderItem({ order }: OrderProductProps) {
             <div className="flex items-center justify-between">
               <div className="font-bold">
                 <p>Status</p>
-                {order.trackingCode === 'canceled' ? (
-                  <p className="text-red-500">reembolso</p>
+                {order.orderTracking === 'CANCELED' ? (
+                  <p className="text-red-500">
+                    {getOrderStatus(order.orderTracking)}
+                  </p>
                 ) : (
                   <p className="text-green-500">
                     {getOrderStatus(order.status)}
@@ -94,10 +96,14 @@ export function OrderItem({ order }: OrderProductProps) {
               </div>
 
               <div>
-                <p className="font-bold">Data</p>
+                <p className="font-bold">Pedido:</p>
                 <p className="opacity-60">
                   {format(new Date(order.createdAt), "d/MM/y 'às' HH:mm")}
                 </p>
+                <p>
+                  <strong>{getOrderStatus(order.orderTracking)}</strong>:
+                </p>
+                <p> {format(new Date(order.updatedAt), "d/MM/y 'às' HH:mm")}</p>
               </div>
             </div>
 

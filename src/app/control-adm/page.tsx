@@ -25,7 +25,9 @@ export default async function ControlAdm() {
     ...orderUser,
     Order: orderUser.Order.filter(
       (order) =>
-        order.status === 'PAYMENT_CONFIRMED' && order.trackingCode === '',
+        order.status === 'PAYMENT_CONFIRMED' &&
+        order.trackingCode === '' &&
+        order.orderTracking === 'WAITING',
     ).sort((a, b) => {
       const dateA = new Date(a.createdAt)
       const dateB = new Date(b.createdAt)
@@ -40,8 +42,7 @@ export default async function ControlAdm() {
       (order) =>
         order.status === 'PAYMENT_CONFIRMED' &&
         order.trackingCode !== '' &&
-        order.trackingCode !== 'canceled' &&
-        order.orderTracking !== 'PRODUCT_DELIVERED_TO_CLIENT',
+        order.orderTracking === 'PRODUCT_DELIVERED_TO_CORREIOS',
     ).sort((a, b) => {
       const dateA = new Date(a.createdAt)
       const dateB = new Date(b.createdAt)
@@ -79,7 +80,7 @@ export default async function ControlAdm() {
     Order: orderUser.Order.filter(
       (order) =>
         order.status === 'PAYMENT_CONFIRMED' &&
-        order.trackingCode === 'canceled',
+        order.orderTracking === 'CANCELED',
     ).sort((a, b) => {
       const dateA = new Date(a.createdAt)
       const dateB = new Date(b.createdAt)

@@ -24,15 +24,17 @@ export function Header() {
   const [sizeCart, setSizeCart] = useState(0)
   const { isAdm } = useContext(UserContext)
 
-  useEffect(() => {
-    const cartSavedInLocalStorage = JSON.parse(
-      localStorage.getItem('@shopping-store/cart-products') || '[]',
-    )
-    setSizeCart(cartSavedInLocalStorage.length)
-  }, [])
-
   const { status, data } = useSession()
   const router = useRouter()
+
+  useEffect(() => {
+    if (data) {
+      const cartSavedInLocalStorage = JSON.parse(
+        localStorage.getItem('@shopping-store/cart-products') || '[]',
+      )
+      setSizeCart(cartSavedInLocalStorage.length)
+    }
+  }, [data])
 
   const handleLogin = async () => {
     try {
