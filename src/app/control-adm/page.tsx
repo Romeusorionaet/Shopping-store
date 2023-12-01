@@ -9,17 +9,36 @@ import {
   UserWithOrders,
 } from './components/area-orders-of-clients'
 import { Category, Product } from '@prisma/client'
-import { getDataOrdersUsers } from '@/lib/getData/get-data-orders-users'
+import axios from 'axios'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/lib/auth'
+
+interface PropsOrdersUsers {
+  ordersUsers: UserWithOrders[]
+}
 
 export default async function ControlAdm() {
   const { propsCategories } = await getDataCatalog()
   const categories: Category[] = JSON.parse(propsCategories.categories)
 
+  const session = await getServerSession(authOptions)
+  const userId = session?.user.id
+
+  const config = {
+    headers: {
+      'X-User-ID': userId,
+    },
+  }
+
+  const data: PropsOrdersUsers = await axios
+    .get(`http://localhost:3000/api/order/orders-users`, config)
+    .then((response) => response.data)
+    .catch((err) => err)
+
+  const { ordersUsers } = data
+
   const { props } = await getDataProducts()
   const products: Product[] = JSON.parse(props.products)
-
-  const { propsOrdersUsers } = await getDataOrdersUsers()
-  const ordersUsers: UserWithOrders[] = JSON.parse(propsOrdersUsers.ordersUsers)
 
   const completedPaymentUsers = ordersUsers.map((orderUser) => ({
     ...orderUser,
