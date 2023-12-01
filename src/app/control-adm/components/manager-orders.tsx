@@ -36,7 +36,9 @@ export function ManageOrders() {
         setDataOrders(result)
       } catch (err) {
         console.log(err)
-        alert('Ocorreu um erro. Por favor, tente novamente mais tarde.')
+        console.log(
+          `Ocorreu um erro. Por favor, tente novamente mais tarde. ${err}`,
+        )
       }
     }
     fetchData()
