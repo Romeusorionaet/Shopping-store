@@ -3,6 +3,7 @@
 import { updateOrder } from '@/actions/update/order'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { OrderStatusTracking } from '@prisma/client'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
@@ -36,10 +37,10 @@ export function InsertTrackingCode({ orderId }: Props) {
   }
 
   const handleCancelOrder = async () => {
-    const orderTracking = 'CANCELED'
+    const { CANCELED } = OrderStatusTracking
 
     try {
-      await updateOrder({ orderTracking, orderId })
+      await updateOrder({ orderTracking: CANCELED, orderId })
 
       alert('Pedido cancelado')
 

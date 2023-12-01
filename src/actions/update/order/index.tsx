@@ -1,13 +1,13 @@
 'use server'
 
-import { PrismaClient } from '@prisma/client'
+import { OrderStatus, OrderStatusTracking, PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
 interface Props {
   orderId: string
-  trackingCode?: string
-  orderTracking?: string
+  trackingCode?: OrderStatus | string
+  orderTracking?: OrderStatusTracking
 }
 
 export const updateOrder = async ({
