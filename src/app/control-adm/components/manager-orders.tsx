@@ -1,10 +1,33 @@
 import { prismaClient } from '@/lib/prisma'
 import { AreaOrdersOfClients, UserWithOrders } from './area-orders-of-clients'
-import { getDataOrdersUsers } from '@/actions/get-data-orders-users'
+import { getDataOrdersUsers } from '@/lib/getData/get-data-orders-users'
+import { getDataOrders } from '@/lib/getData/get-data-orders'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/lib/auth'
+import { Order, OrderProduct, Product } from '@prisma/client'
+import { OrderItem } from '@/app/orders/components/order-item'
+import { OrderWaitingForPayment } from '@/app/orders/components/order-waiting-for-payment'
+
+interface OrderProductIncludeProduct extends OrderProduct {
+  product: Product
+}
+
+export interface OrderIncludeOrderProducts extends Order {
+  orderProducts: OrderProductIncludeProduct[]
+}
 
 export async function ManageOrders() {
-  const data = await getDataOrdersUsers()
-  // const ordersUsers: UserWithOrders[] = JSON.parse(props.ordersUsers)
+  const { props } = await getDataOrdersUsers()
+  const ordersUsers: UserWithOrders[] = JSON.parse(props.ordersUsers)
+
+  const session = await getServerSession(authOptions)
+
+  if (!session || !session.user) {
+    return <h1>Sem usuário logado</h1>
+  }
+
+  const { props: data } = await getDataOrders(session.user.id)
+  const orders: OrderIncludeOrderProducts[] = JSON.parse(data.orders)
 
   // const ordersUsers = await prismaClient.user.findMany({
   //   where: {
@@ -30,15 +53,7 @@ export async function ManageOrders() {
   //   },
   // })
 
-  if (data.message) {
-    return <p>data.message</p>
-  }
-
-  if (!data.ordersUsers) {
-    return <p>Nem um pedido foi encontrado</p>
-  }
-
-  const completedPaymentUsers = data.ordersUsers.map((orderUser) => ({
+  const completedPaymentUsers = ordersUsers.map((orderUser) => ({
     ...orderUser,
     Order: orderUser.Order.filter(
       (order) =>
@@ -53,7 +68,7 @@ export async function ManageOrders() {
     }),
   }))
 
-  const historicOfCompletedPaymentUsers = data.ordersUsers.map((orderUser) => ({
+  const historicOfCompletedPaymentUsers = ordersUsers.map((orderUser) => ({
     ...orderUser,
     Order: orderUser.Order.filter(
       (order) =>
@@ -68,21 +83,19 @@ export async function ManageOrders() {
     }),
   }))
 
-  const historicOfOrderDeliveredToClient = data.ordersUsers.map(
-    (orderUser) => ({
-      ...orderUser,
-      Order: orderUser.Order.filter(
-        (order) => order.orderTracking === 'PRODUCT_DELIVERED_TO_CLIENT',
-      ).sort((a, b) => {
-        const dateA = new Date(a.createdAt)
-        const dateB = new Date(b.createdAt)
+  const historicOfOrderDeliveredToClient = ordersUsers.map((orderUser) => ({
+    ...orderUser,
+    Order: orderUser.Order.filter(
+      (order) => order.orderTracking === 'PRODUCT_DELIVERED_TO_CLIENT',
+    ).sort((a, b) => {
+      const dateA = new Date(a.createdAt)
+      const dateB = new Date(b.createdAt)
 
-        return dateA.getTime() - dateB.getTime()
-      }),
+      return dateA.getTime() - dateB.getTime()
     }),
-  )
+  }))
 
-  const uncompletedPaymentUsers = data.ordersUsers.map((orderUser) => ({
+  const uncompletedPaymentUsers = ordersUsers.map((orderUser) => ({
     ...orderUser,
     Order: orderUser.Order.filter(
       (order) => order.status === 'WAITING_FOR_PAYMENT',
@@ -94,7 +107,7 @@ export async function ManageOrders() {
     }),
   }))
 
-  const historicOfOrdersCanceled = data.ordersUsers.map((orderUser) => ({
+  const historicOfOrdersCanceled = ordersUsers.map((orderUser) => ({
     ...orderUser,
     Order: orderUser.Order.filter(
       (order) =>
@@ -147,6 +160,26 @@ export async function ManageOrders() {
           <span className="text-sm text-zinc-300">reembolso</span>.
         </h3>
         <AreaOrdersOfClients ordersUsers={historicOfOrdersCanceled} />
+      </div>
+
+      <div>
+        <h1>Seus pedidos</h1>
+      </div>
+
+      <div className="flex flex-col gap-2 mt-10 h-96 overflow-auto scrollbar">
+        {orders && orders.length >= 1 ? (
+          orders
+            .map((order) => {
+              if (order.status === 'WAITING_FOR_PAYMENT') {
+                return <OrderWaitingForPayment key={order.id} order={order} />
+              } else {
+                return null
+              }
+            })
+            .reverse()
+        ) : (
+          <></>
+        )}
       </div>
     </div>
   )

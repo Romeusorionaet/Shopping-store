@@ -29,11 +29,21 @@ export const getDataOrdersUsers = async () => {
     })
 
     return {
-      ordersUsers,
+      props: {
+        ordersUsers: JSON.stringify(ordersUsers),
+        revalidate: 60 * 60 * 24,
+      },
     }
   } catch (err) {
     console.log(err)
 
-    return { message: 'Algo de errado não está certo.' }
+    return {
+      notFound: true,
+
+      props: {
+        ordersUsers: '[]',
+        revalidate: 0,
+      },
+    }
   }
 }
