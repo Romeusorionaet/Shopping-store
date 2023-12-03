@@ -11,7 +11,7 @@ interface PropsOrdersUsers {
 
 export function ManageOrders() {
   const [dataOrders, setDataOrders] = useState<PropsOrdersUsers | null>(null)
-
+  const [isLoading, setIsLoading] = useState(true)
   const { data } = useSession()
 
   useEffect(() => {
@@ -36,12 +36,17 @@ export function ManageOrders() {
         setDataOrders(result)
       } catch (err) {
         console.log(`Ocorreu um erro. Por favor, tente novamente mais tarde.`)
+      } finally {
+        setIsLoading(false)
       }
     }
     fetchData()
   }, [data])
 
-  console.log(dataOrders)
+  if (isLoading) {
+    return <p>Carregando...</p>
+  }
+
   if (
     !dataOrders ||
     !dataOrders.ordersUsers ||
