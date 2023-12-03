@@ -1,3 +1,5 @@
+'use server'
+
 import { prismaClient } from '@/lib/prisma'
 
 export const getDataOrdersUsers = async () => {
@@ -27,18 +29,11 @@ export const getDataOrdersUsers = async () => {
     })
 
     return {
-      propsOrdersUsers: {
-        ordersUsers: JSON.stringify(ordersUsers),
-      },
-      revalidate: 0,
+      ordersUsers,
     }
   } catch (err) {
     console.log(err)
 
-    return {
-      notFound: true,
-      propsOrdersUsers: { ordersUsers: '[]' },
-      revalidate: 0,
-    }
+    return { message: 'Algo de errado não está certo.' }
   }
 }

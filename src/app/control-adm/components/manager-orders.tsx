@@ -1,35 +1,44 @@
 import { prismaClient } from '@/lib/prisma'
 import { AreaOrdersOfClients, UserWithOrders } from './area-orders-of-clients'
-import { getDataOrdersUsers } from '@/lib/getData/get-data-orders-users'
+import { getDataOrdersUsers } from '@/actions/get-data-orders-users'
 
 export async function ManageOrders() {
-  // const { propsOrdersUsers } = await getDataOrdersUsers()
-  // const ordersUsers: UserWithOrders[] = JSON.parse(propsOrdersUsers.ordersUsers)
-  const ordersUsers = await prismaClient.user.findMany({
-    where: {
-      Order: {
-        some: {
-          id: {
-            not: undefined,
-          },
-        },
-      },
-    },
-    include: {
-      Order: {
-        include: {
-          orderProducts: {
-            include: {
-              product: true,
-            },
-          },
-        },
-      },
-      Address: true,
-    },
-  })
+  const data = await getDataOrdersUsers()
+  // const ordersUsers: UserWithOrders[] = JSON.parse(props.ordersUsers)
 
-  const completedPaymentUsers = ordersUsers.map((orderUser) => ({
+  // const ordersUsers = await prismaClient.user.findMany({
+  //   where: {
+  //     Order: {
+  //       some: {
+  //         id: {
+  //           not: undefined,
+  //         },
+  //       },
+  //     },
+  //   },
+  //   include: {
+  //     Order: {
+  //       include: {
+  //         orderProducts: {
+  //           include: {
+  //             product: true,
+  //           },
+  //         },
+  //       },
+  //     },
+  //     Address: true,
+  //   },
+  // })
+
+  if (data.message) {
+    return <p>data.message</p>
+  }
+
+  if (!data.ordersUsers) {
+    return <p>Nem um pedido foi encontrado</p>
+  }
+
+  const completedPaymentUsers = data.ordersUsers.map((orderUser) => ({
     ...orderUser,
     Order: orderUser.Order.filter(
       (order) =>
@@ -44,7 +53,7 @@ export async function ManageOrders() {
     }),
   }))
 
-  const historicOfCompletedPaymentUsers = ordersUsers.map((orderUser) => ({
+  const historicOfCompletedPaymentUsers = data.ordersUsers.map((orderUser) => ({
     ...orderUser,
     Order: orderUser.Order.filter(
       (order) =>
@@ -59,19 +68,21 @@ export async function ManageOrders() {
     }),
   }))
 
-  const historicOfOrderDeliveredToClient = ordersUsers.map((orderUser) => ({
-    ...orderUser,
-    Order: orderUser.Order.filter(
-      (order) => order.orderTracking === 'PRODUCT_DELIVERED_TO_CLIENT',
-    ).sort((a, b) => {
-      const dateA = new Date(a.createdAt)
-      const dateB = new Date(b.createdAt)
+  const historicOfOrderDeliveredToClient = data.ordersUsers.map(
+    (orderUser) => ({
+      ...orderUser,
+      Order: orderUser.Order.filter(
+        (order) => order.orderTracking === 'PRODUCT_DELIVERED_TO_CLIENT',
+      ).sort((a, b) => {
+        const dateA = new Date(a.createdAt)
+        const dateB = new Date(b.createdAt)
 
-      return dateA.getTime() - dateB.getTime()
+        return dateA.getTime() - dateB.getTime()
+      }),
     }),
-  }))
+  )
 
-  const uncompletedPaymentUsers = ordersUsers.map((orderUser) => ({
+  const uncompletedPaymentUsers = data.ordersUsers.map((orderUser) => ({
     ...orderUser,
     Order: orderUser.Order.filter(
       (order) => order.status === 'WAITING_FOR_PAYMENT',
@@ -83,7 +94,7 @@ export async function ManageOrders() {
     }),
   }))
 
-  const historicOfOrdersCanceled = ordersUsers.map((orderUser) => ({
+  const historicOfOrdersCanceled = data.ordersUsers.map((orderUser) => ({
     ...orderUser,
     Order: orderUser.Order.filter(
       (order) =>
