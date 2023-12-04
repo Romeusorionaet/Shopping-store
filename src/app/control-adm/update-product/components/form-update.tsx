@@ -61,9 +61,18 @@ export function FormUpdate({ product }: FormUpdateProps) {
   })
 
   const handleUpdateProduct = async (data: UpdateFormData) => {
-    const { basePrice, description, discountPercentage, name, quantity } = data
+    const {
+      basePrice,
+      description,
+      discountPercentage,
+      name,
+      quantity,
+      placeOfSale,
+    } = data
     const newImageUrls = imageDataProduct.map((item) => item.url)
     const newSlug = name.toLowerCase().replace(/ /g, '-')
+    const salesLocationType =
+      placeOfSale === 'Sim' ? 'ONLINE_STORE' : 'SELL_IN_REGION_ONLY'
 
     const updatedData = {
       id: product.id,
@@ -74,6 +83,7 @@ export function FormUpdate({ product }: FormUpdateProps) {
       discountPercentage,
       imageUrls: newImageUrls.length > 1 ? newImageUrls : product.imageUrls,
       quantity: Number(quantity) === 0 ? 1 : Number(quantity),
+      placeOfSale: salesLocationType,
     }
 
     try {
@@ -94,6 +104,8 @@ export function FormUpdate({ product }: FormUpdateProps) {
       console.log(err)
     }
   }
+
+  // console.log(product)
 
   return (
     <div className="space-y-8 w-full">
@@ -164,7 +176,13 @@ export function FormUpdate({ product }: FormUpdateProps) {
 
               <p className="text-xs opacity-90">Valor padrão: {'Sim'}</p>
 
-              <Input defaultValue={'Sim'} {...register('placeOfSale')} />
+              <select
+                className="p-2 rounded-md appearance-none border border-zinc-200 text-white bg-black"
+                {...register('placeOfSale')}
+              >
+                <option value="Sim">Sim</option>
+                <option value="Não">Não</option>
+              </select>
             </label>
 
             <label className="flex flex-col gap-2 mt-4">
@@ -188,7 +206,11 @@ export function FormUpdate({ product }: FormUpdateProps) {
             Atualizar
           </Button>
 
-          <Button variant={'destructive'} onClick={handleDeleteProduct}>
+          <Button
+            variant={'destructive'}
+            type="button"
+            onClick={handleDeleteProduct}
+          >
             <Trash size={28} />
           </Button>
         </div>

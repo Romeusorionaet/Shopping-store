@@ -1,18 +1,59 @@
 'use server'
 
-import { PrismaClient } from '@prisma/client'
+import { OrderStatus, OrderStatusTracking, PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
 export const deleteProduct = async (productId: string) => {
   try {
-    await prisma.product.delete({
+    const ordersProduct = await prisma.orderProduct.findMany({
       where: {
-        id: productId,
+        productId,
+      },
+      include: {
+        order: true,
       },
     })
 
-    return { message: 'Produto deletado.' }
+    const hasOrderProductWithExpectedStatus = ordersProduct.find(
+      (orderProduct) =>
+        (orderProduct.order.orderTracking === OrderStatusTracking.WAITING ||
+          orderProduct.order.orderTracking ===
+            OrderStatusTracking.PRODUCT_DELIVERED_TO_CORREIOS) &&
+        orderProduct.order.status === OrderStatus.PAYMENT_CONFIRMED,
+    )
+
+    if (!hasOrderProductWithExpectedStatus) {
+      await prisma.product.delete({
+        where: {
+          id: productId,
+        },
+      })
+
+      const countOrderProducts = await prisma.order.findUnique({
+        where: {
+          id: ordersProduct[0].orderId,
+        },
+        include: {
+          orderProducts: true,
+        },
+      })
+
+      if (countOrderProducts?.orderProducts.length === 0) {
+        await prisma.order.delete({
+          where: {
+            id: countOrderProducts.id,
+          },
+        })
+      }
+
+      return { message: 'Produto deletado.' }
+    } else {
+      return {
+        message:
+          'Error: Produto em processo com cliente, não pode ser deletado no momento.',
+      }
+    }
   } catch (err) {
     console.log(err)
     return { message: 'Error ao deletar produto.' }

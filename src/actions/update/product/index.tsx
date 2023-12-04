@@ -34,7 +34,7 @@ export const updateProduct = async ({ updatedData }: updateProdutoProps) => {
       },
     })
 
-    return { message: 'Produto atualizada.' }
+    return { message: 'Produto atualizado.' }
   } catch (err) {
     console.log(err)
     return { message: 'Error ao atualizar produto.' }
