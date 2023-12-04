@@ -68,6 +68,10 @@ export function Header() {
     router.push('/control-adm')
   }
 
+  const handleNavigateTohistoricPage = () => {
+    router.push('/historic')
+  }
+
   return (
     <header className="flex justify-between items-center rounded-none p-4 bg-amber-200 fixed z-30 w-full px-[5%]">
       <Sheet>
@@ -166,6 +170,18 @@ export function Header() {
                 size={16}
               />
               Meus pedidos
+            </Button>
+
+            <Button
+              onClick={() => handleNavigateTohistoricPage()}
+              size="icon"
+              className="group font-semibold w-full hover:bg-amber-50 gap-4 justify-start p-4 bg-transparent duration-700"
+            >
+              <BaggageClaim
+                className="group-hover:text-amber-500 duration-700"
+                size={16}
+              />
+              Histórico
             </Button>
 
             {isAdm ? (

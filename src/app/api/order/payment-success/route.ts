@@ -45,12 +45,7 @@ export const POST = async (req: Request) => {
         const productId = productSold.productId
         const quantitySold = productSold.quantity
 
-        // testar fazer a mesma compra em dois dispositivos diferentes para ver se
-        // quantity pode ficar negativo caso seu valor inicial for 1
-        // se causar erro poode haver uma solução
-        // permitir que quantity fique negativo
-
-        await prismaClient.product.update({
+        const saveProductSoldInHistoric = await prismaClient.product.update({
           where: {
             id: productId,
           },
@@ -59,6 +54,19 @@ export const POST = async (req: Request) => {
               decrement: quantitySold,
             },
           },
+        })
+
+        await prismaClient.historicOrder.createMany({
+          data: [
+            {
+              userId: order.userId,
+              name: saveProductSoldInHistoric.name,
+              quantity: quantitySold,
+              basePrice: saveProductSoldInHistoric.basePrice,
+              discountPercentage: saveProductSoldInHistoric.discountPercentage,
+              status: order.status,
+            },
+          ],
         })
       }
     }

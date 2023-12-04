@@ -1,5 +1,3 @@
-'use server'
-
 import { getServerSession } from 'next-auth'
 import { prismaClient } from '../prisma'
 import { authOptions } from '../auth'
