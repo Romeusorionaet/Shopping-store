@@ -14,6 +14,10 @@ export default async function Home() {
   const { props } = await getDataProducts()
   const products: Product[] = JSON.parse(props.products)
 
+  const productsInOffers = products
+    .filter((product) => product.discountPercentage >= 50)
+    .sort(() => Math.random() - 0.5)
+
   const filteredProductsWithDiscount = products
     .filter((product) => product.discountPercentage !== 0)
     .sort(() => Math.random() - 0.5)
@@ -44,14 +48,27 @@ export default async function Home() {
         <div className="bg-gradient-to-l from-amber-100/40 h-full w-40 max-2xl:w-28 max-sm:w-10 absolute right-0 top-0 z-10" />
       </div>
 
-      <div className="p-2 hover:bg-amber-200 duration-700 flex justify-center items-center gap-2 border border-zinc-400 w-52 mx-auto rounded-md">
-        <Link className="font-bold" href="/catalog">
-          Ver Nosso Catálogo
-        </Link>
-        <LibraryBig size={16} />
+      <div>
+        <p className="text-center mb-4">
+          Acesse o nosso catálogo para ver todos os produtos da loja!
+        </p>
+        <div className="p-2 hover:bg-amber-200 duration-700 flex justify-center items-center gap-2 border border-zinc-400 w-52 mx-auto rounded-md">
+          <Link className="font-bold" href="/catalog">
+            Ver Nosso Catálogo
+          </Link>
+          <LibraryBig size={16} />
+        </div>
       </div>
 
       <div className="px-2">
+        {productsInOffers.length !== 0 && (
+          <div>
+            <h2 className="my-4 text-lg">Super promoção</h2>
+
+            <CarouselProducts products={productsInOffers} />
+          </div>
+        )}
+
         <h2 className="my-4 text-lg">Produtos em Promoção</h2>
 
         <CarouselProducts products={filteredProductsWithDiscount} />

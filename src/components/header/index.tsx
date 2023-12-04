@@ -56,10 +56,6 @@ export function Header() {
     router.push('/')
   }
 
-  const handleNavigateToOffers = () => {
-    router.push('/offers')
-  }
-
   const handleNavigateToCatalog = () => {
     router.push('/catalog')
   }
@@ -146,18 +142,6 @@ export function Header() {
                 size={16}
               />
               Início
-            </Button>
-
-            <Button
-              onClick={handleNavigateToOffers}
-              size="icon"
-              className="group font-semibold w-full hover:bg-amber-50 gap-4 justify-start p-4 bg-transparent duration-700"
-            >
-              <Flame
-                className="group-hover:text-amber-500 duration-700"
-                size={16}
-              />
-              Super Ofertas
             </Button>
 
             <Button
