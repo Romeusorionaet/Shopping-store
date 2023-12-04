@@ -3,16 +3,8 @@ import { getDataOrdersUsers } from '@/lib/getData/get-data-orders-users'
 import { getDataOrders } from '@/lib/getData/get-data-orders'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
-import { Order, OrderProduct, Product } from '@prisma/client'
 import { OrderWaitingForPayment } from '@/app/orders/components/order-waiting-for-payment'
-
-interface OrderProductIncludeProduct extends OrderProduct {
-  product: Product
-}
-
-export interface OrderIncludeOrderProducts extends Order {
-  orderProducts: OrderProductIncludeProduct[]
-}
+import { OrderIncludeOrderProducts } from '@/app/orders/page'
 
 export async function ManageOrders() {
   const { props } = await getDataOrdersUsers()

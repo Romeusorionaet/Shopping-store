@@ -5,6 +5,10 @@ import { LibraryBig } from 'lucide-react'
 import { OfferBanner } from '@/components/offer-banner'
 import { CarouselProducts } from '@/components/carousel-products'
 import { Product } from '@prisma/client'
+import { getDataOrders } from '@/lib/getData/get-data-orders'
+import { OrderIncludeOrderProducts } from './orders/page'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/lib/auth'
 
 export default async function Home() {
   const { props } = await getDataProducts()
@@ -15,6 +19,22 @@ export default async function Home() {
     .sort(() => Math.random() - 0.5)
 
   const allProducts = products.sort(() => Math.random() - 0.5)
+
+  const session = await getServerSession(authOptions)
+
+  if (!session || !session.user) {
+    return <h1>Sem usuário logado</h1>
+  }
+
+  const { props: propsOrders } = await getDataOrders(session.user.id)
+  const orders: OrderIncludeOrderProducts[] = JSON.parse(propsOrders.orders)
+
+  const productList = orders
+    .filter((order) => order.status === 'WAITING_FOR_PAYMENT')
+    .sort(() => Math.random() - 0.5)
+    .flatMap((ordersProducts) =>
+      ordersProducts.orderProducts.map((orderProduct) => orderProduct.product),
+    )
 
   return (
     <main className="flex flex-col gap-6 overflow-hidden pb-8 max-w-[1480px] mx-auto">
@@ -36,7 +56,11 @@ export default async function Home() {
 
         <CarouselProducts products={filteredProductsWithDiscount} />
 
-        <h2 className="my-4 text-lg">Todos os Produtos</h2>
+        <h2 className="my-4 text-lg">Produtos que você se interessou</h2>
+
+        <CarouselProducts products={productList} />
+
+        <h2 className="my-4 text-lg">Produtos variados</h2>
 
         <CarouselProducts products={allProducts} />
       </div>
