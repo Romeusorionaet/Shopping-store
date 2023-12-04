@@ -61,7 +61,7 @@ export function InsertTrackingCode({ orderId }: Props) {
 
       <p className="text-sm text-zinc-300">
         Se este pedido foi reembolsado, clique no botão de{' '}
-        <strong>cancelar</strong> abaixo.
+        <strong>Reembolso</strong>.
       </p>
 
       <div className="flex justify-between">
@@ -70,7 +70,7 @@ export function InsertTrackingCode({ orderId }: Props) {
         </Button>
 
         <Button onClick={handleCancelOrder} variant="destructive">
-          Cancelar
+          Reembolso
         </Button>
       </div>
     </div>

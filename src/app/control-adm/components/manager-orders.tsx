@@ -1,11 +1,9 @@
-import { prismaClient } from '@/lib/prisma'
 import { AreaOrdersOfClients, UserWithOrders } from './area-orders-of-clients'
 import { getDataOrdersUsers } from '@/lib/getData/get-data-orders-users'
 import { getDataOrders } from '@/lib/getData/get-data-orders'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { Order, OrderProduct, Product } from '@prisma/client'
-import { OrderItem } from '@/app/orders/components/order-item'
 import { OrderWaitingForPayment } from '@/app/orders/components/order-waiting-for-payment'
 
 interface OrderProductIncludeProduct extends OrderProduct {
@@ -28,30 +26,6 @@ export async function ManageOrders() {
 
   const { props: data } = await getDataOrders(session.user.id)
   const orders: OrderIncludeOrderProducts[] = JSON.parse(data.orders)
-
-  // const ordersUsers = await prismaClient.user.findMany({
-  //   where: {
-  //     Order: {
-  //       some: {
-  //         id: {
-  //           not: undefined,
-  //         },
-  //       },
-  //     },
-  //   },
-  //   include: {
-  //     Order: {
-  //       include: {
-  //         orderProducts: {
-  //           include: {
-  //             product: true,
-  //           },
-  //         },
-  //       },
-  //     },
-  //     Address: true,
-  //   },
-  // })
 
   const completedPaymentUsers = ordersUsers.map((orderUser) => ({
     ...orderUser,
@@ -163,10 +137,11 @@ export async function ManageOrders() {
       </div>
 
       <div>
-        <h1>Seus pedidos</h1>
+        <h1>Seus pedidos não finalizados</h1>
+        <p className="opacity-80 text-sm">{session.user.email}</p>
       </div>
 
-      <div className="flex flex-col gap-2 mt-10 h-96 overflow-auto scrollbar">
+      <div className="flex flex-col gap-2 mt-10 h-96 overflow-auto scrollbar opacity-80">
         {orders && orders.length >= 1 ? (
           orders
             .map((order) => {

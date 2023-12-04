@@ -35,14 +35,15 @@ export function OrderUser({ orders, address }: OrdersProps) {
         <AccordionContent>
           <div className="flex flex-col gap-6">
             {orders.map((order) => {
-              const confirmedPaymentNoTrackingCode =
+              const isPaymentConfirmedNoTracking =
                 order.status === 'PAYMENT_CONFIRMED' &&
-                order.trackingCode === ''
+                order.trackingCode === '' &&
+                order.orderTracking !== 'CANCELED'
 
               const isOrderDeliveredToCarreios =
                 order.orderTracking === 'PRODUCT_DELIVERED_TO_CORREIOS' &&
                 order.trackingCode !== '' &&
-                order.trackingCode !== 'canceled'
+                order.trackingCode !== 'CANCELED'
 
               return (
                 <div
@@ -58,7 +59,7 @@ export function OrderUser({ orders, address }: OrdersProps) {
 
                   <div>
                     <p>
-                      Status de pagamento:{' '}
+                      Status:{' '}
                       <span className="text-sm text-zinc-300">
                         {getOrderStatus(order.orderTracking)}
                       </span>
@@ -78,7 +79,7 @@ export function OrderUser({ orders, address }: OrdersProps) {
                     </p>
                   )}
 
-                  {confirmedPaymentNoTrackingCode && (
+                  {isPaymentConfirmedNoTracking && (
                     <InsertTrackingCode orderId={order.id} />
                   )}
 

@@ -9,6 +9,6 @@ export const getOrderStatus = (
     [OrderStatusTracking.WAITING]: 'Aguardando',
     [OrderStatusTracking.CANCELED]: 'Reembolso',
     [OrderStatusTracking.PRODUCT_DELIVERED_TO_CORREIOS]: 'Entregue no correio',
-    [OrderStatusTracking.PRODUCT_DELIVERED_TO_CLIENT]: 'Entrgue ao cliente',
+    [OrderStatusTracking.PRODUCT_DELIVERED_TO_CLIENT]: 'Entregue ao cliente',
   }[orderStatus]
 }

@@ -26,11 +26,13 @@ export default async function Details({ params }: ParamsProps) {
   const product: ProductIncludeCategoryAndProducts = JSON.parse(props.product)
 
   if (!product) {
-    return null
+    return <p>Produto não encontrado</p>
   }
 
   const { totalPrice } = CalculateValueProduct(product)
   const totalPriceDividedByTwelve = totalPrice / 12
+
+  const quantity = product.quantity < 0 ? 0 : product.quantity
 
   return (
     <div className="h-screen flex flex-col justify-between pt-[4.5rem]">
@@ -40,7 +42,7 @@ export default async function Details({ params }: ParamsProps) {
         <div className="flex flex-col gap-4 2xl:w-[50%] p-4">
           <h1 className="font-bold">{product.name}</h1>
           <p>
-            Quantidade em estoque: <strong>{product.quantity}</strong>
+            Quantidade em estoque: <strong>{quantity}</strong>
           </p>
           <div>
             {product.discountPercentage !== 0 && (
