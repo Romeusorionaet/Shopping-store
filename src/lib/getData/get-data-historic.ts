@@ -11,7 +11,7 @@ export const getHistoricOrder = async (userId?: string) => {
 
       return {
         props: {
-          historic,
+          historic: JSON.stringify(historic),
         },
         revalidate: 60 * 60 * 24,
       }
@@ -20,7 +20,7 @@ export const getHistoricOrder = async (userId?: string) => {
 
       return {
         props: {
-          historic,
+          historic: JSON.stringify(historic),
         },
         revalidate: 60 * 60 * 24,
       }
@@ -32,7 +32,7 @@ export const getHistoricOrder = async (userId?: string) => {
       notFound: true,
 
       props: {
-        historic: [],
+        historic: '[]',
       },
       revalidate: 0,
     }
