@@ -1,3 +1,5 @@
+'use server'
+
 import { getServerSession } from 'next-auth'
 import { prismaClient } from '../prisma'
 import { authOptions } from '../auth'
@@ -30,7 +32,6 @@ export const getDataUser = async () => {
       revalidate: 60 * 60 * 24,
     }
   } catch (err) {
-    console.log(err)
     return {
       error: 'Something went wrong while fetching the user.',
     }

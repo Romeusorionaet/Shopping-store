@@ -2,6 +2,7 @@
 
 import { prismaClient } from '@/lib/prisma'
 import { CartProduct } from '@/providers/zustand-store'
+import { OrderStatus, OrderStatusTracking } from '@prisma/client'
 
 export const createOrder = async (
   cartProducts: CartProduct[],
@@ -30,6 +31,27 @@ export const createOrder = async (
       ', ',
     )} acabou de ser esgotado.`
     return { message: errorMessage }
+  }
+
+  const existingOrder = await prismaClient.order.findFirst({
+    where: {
+      userId,
+      status: OrderStatus.WAITING_FOR_PAYMENT,
+      orderTracking: {
+        equals: OrderStatusTracking.WAITING,
+      },
+      orderProducts: {
+        some: {
+          productId: {
+            in: cartProducts.map((product) => product.id),
+          },
+        },
+      },
+    },
+  })
+
+  if (existingOrder) {
+    return { order: existingOrder }
   }
 
   const order = await prismaClient.order.create({

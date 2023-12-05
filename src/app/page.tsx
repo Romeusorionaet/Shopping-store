@@ -26,11 +26,7 @@ export default async function Home() {
 
   const session = await getServerSession(authOptions)
 
-  if (!session || !session.user) {
-    return <h1>Sem usuário logado</h1>
-  }
-
-  const { props: propsOrders } = await getDataOrders(session.user.id)
+  const { props: propsOrders } = await getDataOrders(session?.user.id)
   const orders: OrderIncludeOrderProducts[] = JSON.parse(propsOrders.orders)
 
   const ordersNotPaymentList = orders

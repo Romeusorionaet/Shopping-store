@@ -1,7 +1,18 @@
 import { prismaClient } from '@/lib/prisma'
 
-export const getDataOrders = async (id: string) => {
+export const getDataOrders = async (id?: string) => {
   try {
+    if (!id) {
+      return {
+        notFound: true,
+
+        props: {
+          orders: '[]',
+        },
+        revalidate: 0,
+      }
+    }
+
     const orders = await prismaClient.order.findMany({
       where: {
         userId: id,

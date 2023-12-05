@@ -17,7 +17,11 @@ export default async function Orders() {
   const session = await getServerSession(authOptions)
 
   if (!session || !session.user) {
-    return <h1>Sem usuário logado</h1>
+    return (
+      <div className="flex h-screen justify-center items-center">
+        <h1>Sem usuário logado...</h1>
+      </div>
+    )
   }
 
   const { props } = await getDataOrders(session.user.id)

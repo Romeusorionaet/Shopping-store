@@ -8,7 +8,11 @@ export default async function Historic() {
   const session = await getServerSession(authOptions)
 
   if (!session || !session.user) {
-    return <h1>Sem usuário logado</h1>
+    return (
+      <div className="flex h-screen justify-center items-center">
+        <h1>Sem usuário logado...</h1>
+      </div>
+    )
   }
 
   const { props } = await getHistoricOrder(session.user.id)
