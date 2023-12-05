@@ -6,6 +6,7 @@ import { Product } from '@prisma/client'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { AddProductInCart } from '../add-product-in-cart'
 
 interface productsProps {
   products: Product[] | undefined
@@ -34,74 +35,88 @@ export function CarouselProducts({ products }: productsProps) {
 
               return (
                 <div key={product.id} className="keen-slider__slide z-20">
-                  <Link href={`/details/${product.slug}`}>
+                  <div className="group relative w-64 h-[26rem]">
                     <div
                       data-quantity={productAvailable}
-                      className="p-4 bg-amber-50/60 hover:bg-amber-100 duration-700 flex flex-col justify-center items-center gap-2 rounded-md h-full data-[quantity=true]:bg-zinc-200 data-[quantity=true]:hover:bg-zinc-300 lg:w-80 max-md:w-72 max-sm:w-52"
+                      className="data-[quantity=true]:group-hover:hidden data-[quantity=true]:hidden group-hover:flex md:hidden absolute bottom-1 left-1 w-20"
                     >
-                      <p className="text-sm">{product.name}</p>
-
-                      <div>
-                        <div>
-                          {product.placeOfSale === 'SELL_IN_REGION_ONLY' ? (
-                            <span className="absolute bottom-28 left-0 bg-zinc-100/40 p-1 rounded-md font-bold text-xs">
-                              Local
-                            </span>
-                          ) : (
-                            <span className="absolute bottom-28 left-0 bg-zinc-100/40 p-1 rounded-md font-bold text-xs text-green-500">
-                              Brasil
-                            </span>
-                          )}
+                      <AddProductInCart product={product} />
+                    </div>
+                    <Link href={`/details/${product.slug}`}>
+                      <div
+                        data-quantity={productAvailable}
+                        className="p-4 bg-amber-50/60 hover:bg-amber-100 duration-700 flex flex-col justify-center items-center gap-2 rounded-md h-full data-[quantity=true]:bg-zinc-200 data-[quantity=true]:hover:bg-zinc-300 lg:w-80 max-md:w-72 max-sm:w-52"
+                      >
+                        <div className="h-10">
+                          <p className="text-sm">{product.name}</p>
                         </div>
 
-                        {product.discountPercentage !== 0 && (
-                          <p className="text-xs line-through opacity-75">
-                            {Number(product.basePrice).toLocaleString('pt-BR', {
+                        <div className="h-10">
+                          <div>
+                            {product.placeOfSale === 'SELL_IN_REGION_ONLY' ? (
+                              <span className="absolute bottom-28 left-0 bg-zinc-100/40 p-1 rounded-md font-bold text-xs">
+                                Local
+                              </span>
+                            ) : (
+                              <span className="absolute bottom-28 left-0 bg-zinc-100/40 p-1 rounded-md font-bold text-xs text-green-500">
+                                Brasil
+                              </span>
+                            )}
+                          </div>
+
+                          {product.discountPercentage !== 0 && (
+                            <p className="text-xs line-through opacity-75">
+                              {Number(product.basePrice).toLocaleString(
+                                'pt-BR',
+                                {
+                                  style: 'currency',
+                                  currency: 'BRL',
+                                  minimumFractionDigits: 2,
+                                },
+                              )}
+                            </p>
+                          )}
+
+                          <p>
+                            {totalPrice.toLocaleString('pt-BR', {
                               style: 'currency',
                               currency: 'BRL',
                               minimumFractionDigits: 2,
                             })}
                           </p>
-                        )}
+                        </div>
 
-                        <p>
-                          {totalPrice.toLocaleString('pt-BR', {
-                            style: 'currency',
-                            currency: 'BRL',
-                            minimumFractionDigits: 2,
-                          })}
-                        </p>
-                      </div>
+                        <Image
+                          width={0}
+                          height={0}
+                          sizes="100vw"
+                          className="w-full h-52 object-contain"
+                          src={product.imageUrls[0]}
+                          alt={product.name}
+                        />
 
-                      <Image
-                        width={0}
-                        height={0}
-                        sizes="100vw"
-                        className="w-full h-52 object-contain"
-                        src={product.imageUrls[0]}
-                        alt={product.name}
-                      />
+                        <div className="flex items-center justify-between gap-2 w-full mb-4">
+                          {product.discountPercentage !== 0 && (
+                            <p>
+                              <strong>{product.discountPercentage}%</strong>{' '}
+                              Desc
+                            </p>
+                          )}
 
-                      <div className="flex items-center justify-between gap-2 w-full">
-                        {product.discountPercentage !== 0 && (
                           <p>
-                            <strong>{product.discountPercentage}%</strong> Desc
+                            Qtd: <strong>{product.quantity}</strong>
                           </p>
-                        )}
-
-                        <p>
-                          Qtd: <strong>{product.quantity}</strong>
-                        </p>
+                        </div>
                       </div>
-                    </div>
-                  </Link>
+                    </Link>
+                  </div>
                 </div>
               )
             })}
         </div>
         {instanceRef.current && verifySizeProducts && (
           <div className="flex absolute max-md:hidden top-0 w-full h-full items-center justify-between">
-            <div className="w-20 h-full bg-gradient-to-r from-amber-200/60 flex">
+            <div className="w-20 h-full flex">
               <Arrow
                 left
                 onClick={(e) =>
@@ -111,7 +126,7 @@ export function CarouselProducts({ products }: productsProps) {
               />
             </div>
 
-            <div className="w-20 h-full bg-gradient-to-l from-amber-200/60 flex">
+            <div className="w-20 h-full flex">
               <Arrow
                 onClick={(e) =>
                   e.stopPropagation() || instanceRef.current?.next()

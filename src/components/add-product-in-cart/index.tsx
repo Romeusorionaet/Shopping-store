@@ -1,16 +1,17 @@
 'use client'
 
-import { Button } from '@/components/ui/button'
 import { useCartStore } from '@/providers/zustand-store'
 import { Product } from '@prisma/client'
+import { BaggageClaim } from 'lucide-react'
 import { useSession } from 'next-auth/react'
 import { useState } from 'react'
 
 interface Props {
   product: Product
+  title?: string
 }
 
-export function AddProductInCart({ product }: Props) {
+export function AddProductInCart({ product, title }: Props) {
   const { addProductToCart } = useCartStore()
   const [quantity] = useState(1)
   const session = useSession()
@@ -29,8 +30,12 @@ export function AddProductInCart({ product }: Props) {
   }
 
   return (
-    <Button onClick={() => handleAddToProductInCart()} className="sm:w-56">
-      Adicionar no carrinho
-    </Button>
+    <button
+      onClick={() => handleAddToProductInCart()}
+      className="p-1 bg-green-200 w-full max-w-56 rounded-md flex duration-700 hover:bg-green-500 justify-center items-center gap-2"
+    >
+      {title}
+      <BaggageClaim size={28} />
+    </button>
   )
 }

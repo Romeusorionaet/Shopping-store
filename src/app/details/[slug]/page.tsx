@@ -1,10 +1,10 @@
 import { getDataUniqueProduct } from '@/lib/getData/get-data-unique-product'
-import { AddProductInCart } from '../components/add-product-in-cart'
 import { ProductImages } from '../components/product-images'
 import { CalculateValueProduct } from '@/utils/calculate-value-product'
 import { CarouselProducts } from '@/components/carousel-products'
 import { AskForProductReturn } from '../components/Ask-for-product-return'
 import { Category, Product } from '@prisma/client'
+import { AddProductInCart } from '@/components/add-product-in-cart'
 
 interface CategoryIncludeProducts extends Category {
   products: Product[]
@@ -96,7 +96,10 @@ export default async function Details({ params }: ParamsProps) {
                   Store
                 </p>
               ) : (
-                <AddProductInCart product={product} />
+                <AddProductInCart
+                  title="Adicionar ao carrinho"
+                  product={product}
+                />
               )}
             </div>
           )}
@@ -105,7 +108,7 @@ export default async function Details({ params }: ParamsProps) {
 
       <div className="p-4 space-y-8">
         {product.category.products.length !== 0 && (
-          <div>
+          <div className="space-y-6">
             <h2 className="text-lg md:text-2xl uppercase">Veja também</h2>
 
             <CarouselProducts products={product.category.products} />

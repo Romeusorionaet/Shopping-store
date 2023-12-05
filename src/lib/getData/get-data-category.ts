@@ -11,22 +11,20 @@ export const getDataCategory = async (slug: string) => {
       },
     })
 
-    if (!selectedProducts) {
-      return {
-        notFound: true,
-      }
-    }
-
     return {
       props: {
-        selectedProducts,
+        selectedProducts: JSON.stringify(selectedProducts),
       },
       revalidate: 60 * 60 * 24,
     }
-  } catch (error) {
+  } catch (err) {
+    console.log(err)
+
     return {
-      error:
-        'Something went wrong while fetching data for the selected category.',
+      notFound: true,
+      props: {
+        selectedProducts: '[]',
+      },
     }
   }
 }

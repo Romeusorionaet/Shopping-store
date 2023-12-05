@@ -2,12 +2,10 @@
 
 import {
   BaggageClaim,
-  Flame,
   Home,
   LibraryBig,
   LogIn,
   Menu,
-  ShoppingBag,
   SlidersHorizontal,
 } from 'lucide-react'
 import { Sheet, SheetContent, SheetHeader, SheetTrigger } from '../ui/sheet'
@@ -17,24 +15,14 @@ import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import { Separator } from '../ui/separator'
 import { useRouter } from 'next/navigation'
 import { Cart } from '../cart'
-import { useContext, useEffect, useState } from 'react'
+import { useContext } from 'react'
 import { UserContext } from '@/providers/user-context'
 
 export function Header() {
-  const [sizeCart, setSizeCart] = useState(0)
   const { isAdm } = useContext(UserContext)
 
   const { status, data } = useSession()
   const router = useRouter()
-
-  useEffect(() => {
-    if (data) {
-      const cartSavedInLocalStorage = JSON.parse(
-        localStorage.getItem('@shopping-store/cart-products') || '[]',
-      )
-      setSizeCart(cartSavedInLocalStorage.length)
-    }
-  }, [data])
 
   const handleLogin = async () => {
     try {
@@ -81,7 +69,7 @@ export function Header() {
             variant="outline"
             className="border-none bg-amber-200 hover:bg-white duration-700"
           >
-            <Menu />
+            <Menu size={30} />
           </Button>
         </SheetTrigger>
 
@@ -214,12 +202,9 @@ export function Header() {
           <Button
             size="icon"
             variant="outline"
-            className="border-none bg-amber-200 hover:bg-white duration-700 relative"
+            className="border-none bg-amber-200 hover:bg-white duration-700"
           >
-            <ShoppingBag size={28} />
-            <span className="bg-zinc-100/50 p-1 rounded-full w-6 absolute -top-2 -right-2">
-              {sizeCart}
-            </span>
+            <BaggageClaim size={30} />
           </Button>
         </SheetTrigger>
 
