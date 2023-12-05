@@ -1,6 +1,5 @@
 'use client'
 
-import { getOrderStatus } from '@/components/helpers/get-order-status'
 import { HistoricOrder } from '@prisma/client'
 import { Separator } from '@radix-ui/react-separator'
 import { format } from 'date-fns'
@@ -15,7 +14,7 @@ export function HistoricItem({ historic }: Props) {
   }
 
   return (
-    <div className="border-b border-zinc-400 pb-4">
+    <div className="flex gap-8 flex-wrap justify-center">
       {historic &&
         historic.map((item) => {
           const totalDiscount =
@@ -23,14 +22,21 @@ export function HistoricItem({ historic }: Props) {
           const totalPrice = Number(item.basePrice) - totalDiscount
 
           return (
-            <div key={item.id} className="space-y-2">
+            <div
+              key={item.id}
+              className="space-y-2 border-b border-zinc-400 pb-4 w-60 text-sm"
+            >
               <p>
                 Produto <strong>{item.name}</strong>
               </p>
 
+              <p>
+                Comprado em:{' '}
+                {format(new Date(item.createdAt), "d/MM/y 'às' HH:mm")}
+              </p>
+
               <div className="flex justify-between">
                 <p>Quantidade: {item.quantity}</p>
-                <p>{getOrderStatus(item.status)}</p>
               </div>
 
               <div className="flex items-center justify-between text-xs">
@@ -70,7 +76,6 @@ export function HistoricItem({ historic }: Props) {
                   })}
                 </p>
               </div>
-              {/* <p>{format(new Date(item.createdAt), "d/MM/y 'às' HH:mm")}</p> */}
             </div>
           )
         })}

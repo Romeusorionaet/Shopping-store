@@ -104,9 +104,13 @@ export default async function Details({ params }: ParamsProps) {
       </div>
 
       <div className="p-4 space-y-8">
-        <h2 className="text-lg md:text-2xl uppercase">Veja também</h2>
+        {product.category.products.length !== 0 && (
+          <div>
+            <h2 className="text-lg md:text-2xl uppercase">Veja também</h2>
 
-        <CarouselProducts products={product.category.products} />
+            <CarouselProducts products={product.category.products} />
+          </div>
+        )}
       </div>
     </div>
   )

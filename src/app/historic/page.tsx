@@ -20,6 +20,7 @@ export default async function Historic() {
 
   return (
     <div className="pt-28 p-8">
+      <h1 className="mb-20">Seu histórico de produtos comprado</h1>
       <HistoricItem historic={historic} />
     </div>
   )

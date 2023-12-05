@@ -8,10 +8,9 @@ export const APP_ROUTES = {
       '/',
       '/catalog',
       '/address',
-      '/category',
       '/details',
       '/orders',
-      '/success',
+      '/historic',
     ],
   },
 }

@@ -50,7 +50,7 @@ export const createCheckout = async (
     } = {
       items,
       back_urls: {
-        success: 'http://localhost:3000/success',
+        success: 'http://localhost:3000/orders',
         failure: 'http://localhost:3000',
       },
       auto_return: 'approved',
