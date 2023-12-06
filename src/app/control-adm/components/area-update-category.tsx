@@ -93,7 +93,7 @@ export function AreaUpdateCategory({ listOfCategory, listOfProducts }: Props) {
     <Accordion
       type="single"
       collapsible
-      className="border border-zinc-500/60 my-10 p-2 rounded-md"
+      className="border border-white/20 my-10 p-2 rounded-md"
     >
       <AccordionItem value="item-1">
         <AccordionTrigger className="flex justify-between w-full">
@@ -106,12 +106,12 @@ export function AreaUpdateCategory({ listOfCategory, listOfProducts }: Props) {
           <Input
             type="text"
             value={searchTerm}
-            className="border border-green-500 my-8"
+            className="border border-base_color_positive my-8"
             placeholder="Nome da categoria..."
             onChange={(e) => setSearchTerm(e.target.value)}
           />
 
-          <div className="flex flex-wrap justify-center gap-4 h-96 overflow-y-auto p-2 bg-zinc-200/5 scrollbar">
+          <div className="flex flex-wrap justify-center gap-4 h-96 overflow-y-auto p-2 scrollbar">
             {filteredCategory &&
               filteredCategory.map((category) => {
                 const isEditing = editingProductId === category.id
@@ -122,7 +122,7 @@ export function AreaUpdateCategory({ listOfCategory, listOfProducts }: Props) {
                 return (
                   <div
                     key={category.id}
-                    className="flex flex-col gap-4 mb-8 w-full border-b border-zinc-400 pb-8"
+                    className="flex flex-col gap-4 mb-8 w-full border-b border-white/20 pb-8"
                   >
                     <div className="h-[6rem] flex flex-1 justify-between items-center sm:justify-evenly">
                       <div className="flex items-center">
@@ -190,7 +190,7 @@ export function AreaUpdateCategory({ listOfCategory, listOfProducts }: Props) {
                       </Button>
                       <Button
                         onClick={() => handleUpdateCategory(category)}
-                        className="text-zinc-950"
+                        className="text-base_color_dark"
                       >
                         Atualizar
                       </Button>
@@ -201,7 +201,7 @@ export function AreaUpdateCategory({ listOfCategory, listOfProducts }: Props) {
                         onClick={() => {
                           setEditingProductId(category.id)
                         }}
-                        className="data-[editing=true]:bg-green-500 text-zinc-950"
+                        className="data-[editing=true]:bg-base_color_positive text-base_color_dark"
                       >
                         {isEditing ? 'Habilitado' : 'Habilitar'}
                       </Button>

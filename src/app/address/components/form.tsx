@@ -66,7 +66,7 @@ export function Form() {
     <Accordion
       type="single"
       collapsible
-      className="border border-zinc-500/60 mt-8 p-2 rounded-md max-w-[800px] mx-auto"
+      className="border border-base_color_dark/10 mt-8 p-2 rounded-md max-w-[800px] mx-auto"
     >
       <AccordionItem value="item-1">
         <AccordionTrigger>Preencher formulário</AccordionTrigger>
@@ -79,7 +79,7 @@ export function Form() {
                   type="text"
                   maxLength={30}
                   placeholder="Nome completo"
-                  className="bg-transparent border border-zinc-400"
+                  className="bg-transparent"
                   {...register('username')}
                 />
                 <FormError errors={errors.username?.message} />
@@ -91,7 +91,7 @@ export function Form() {
                   type="text"
                   maxLength={30}
                   placeholder="e-mail"
-                  className="bg-transparent border border-zinc-400"
+                  className="bg-transparent"
                   {...register('email')}
                 />
                 <FormError errors={errors.email?.message} />
@@ -103,7 +103,7 @@ export function Form() {
                   type="number"
                   maxLength={30}
                   placeholder="Número de telefone"
-                  className="bg-transparent border border-zinc-400"
+                  className="bg-transparent"
                   {...register('phoneNumber')}
                 />
                 <FormError errors={errors.username?.message} />
@@ -116,7 +116,7 @@ export function Form() {
                   inputMode="decimal"
                   id="cep"
                   placeholder="CEP"
-                  className="bg-transparent border border-zinc-400"
+                  className="bg-transparent"
                   {...register('cep')}
                 />
                 <FormError errors={errors.cep?.message} />
@@ -128,7 +128,7 @@ export function Form() {
                   type="text"
                   maxLength={30}
                   placeholder="Cidade"
-                  className="bg-transparent border border-zinc-400"
+                  className="bg-transparent"
                   {...register('city')}
                 />
                 <FormError errors={errors.city?.message} />
@@ -140,7 +140,7 @@ export function Form() {
                   type="text"
                   maxLength={2}
                   placeholder="RN"
-                  className="bg-transparent border border-zinc-400"
+                  className="bg-transparent"
                   {...register('uf')}
                 />
                 <FormError errors={errors.uf?.message} />
@@ -152,7 +152,7 @@ export function Form() {
                   type="text"
                   maxLength={30}
                   placeholder="Bairro"
-                  className="bg-transparent border border-zinc-400"
+                  className="bg-transparent"
                   {...register('neighborhood')}
                 />
                 <FormError errors={errors.neighborhood?.message} />
@@ -163,7 +163,7 @@ export function Form() {
                 <Input
                   type="text"
                   placeholder="Rua"
-                  className="bg-transparent border border-zinc-400"
+                  className="bg-transparent"
                   {...register('street')}
                 />
                 <FormError errors={errors.street?.message} />
@@ -175,7 +175,7 @@ export function Form() {
                   type="number"
                   maxLength={10}
                   placeholder="Número"
-                  className="bg-transparent border border-zinc-400"
+                  className="bg-transparent"
                   {...register('number')}
                 />
                 <FormError errors={errors.number?.message} />
@@ -187,7 +187,7 @@ export function Form() {
                   type="text"
                   maxLength={50}
                   placeholder="Complemento"
-                  className="bg-transparent border border-zinc-400"
+                  className="bg-transparent"
                   {...register('complement')}
                 />
                 <FormError errors={errors.complement?.message} />

@@ -50,7 +50,7 @@ export function CheckoutCart({ userHasAddress }: Props) {
     <Button
       data-address={userHasAddress}
       disabled={!userHasAddress}
-      className="mt-8 uppercase data-[address=false]:bg-zinc-400 data-[address=false]:cursor-not-allowed"
+      className="mt-8 uppercase data-[address=false]:bg-base_color_dark/10 data-[address=false]:cursor-not-allowed"
       onClick={handleFinishPurchaseClick}
     >
       Finalizar compra

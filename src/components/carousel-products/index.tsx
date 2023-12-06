@@ -42,7 +42,7 @@ export function CarouselProducts({ products }: productsProps) {
                     <Link href={`/details/${product.slug}`}>
                       <div
                         data-quantity={productAvailable}
-                        className="p-4 bg-amber-50/60 hover:bg-amber-100 duration-700 flex flex-col justify-center items-center gap-2 rounded-md h-full data-[quantity=true]:bg-zinc-200 data-[quantity=true]:hover:bg-zinc-300 lg:w-80 max-md:w-72 max-sm:w-52"
+                        className="p-4 bg-base_reference_card/60 hover:bg-base_reference_card_hover duration-700 flex flex-col justify-center items-center gap-2 rounded-md h-full data-[quantity=true]:bg-base_color_dark/5 data-[quantity=true]:hover:bg-base_color_dark/10 lg:w-80 max-md:w-72 max-sm:w-52"
                       >
                         <div className="h-10">
                           <p className="text-sm">{product.name}</p>
@@ -51,11 +51,11 @@ export function CarouselProducts({ products }: productsProps) {
                         <div className="h-10">
                           <div>
                             {product.placeOfSale === 'SELL_IN_REGION_ONLY' ? (
-                              <span className="absolute bottom-28 left-0 bg-zinc-100/40 p-1 rounded-md font-bold text-xs">
+                              <span className="absolute bottom-28 left-0 bg-base_color_dark/5 p-1 rounded-md font-bold text-xs">
                                 Local
                               </span>
                             ) : (
-                              <span className="absolute bottom-28 left-0 bg-zinc-100/40 p-1 rounded-md font-bold text-xs text-green-500">
+                              <span className="absolute bottom-28 left-0 bg-base_color_dark/5 p-1 rounded-md font-bold text-xs text-base_color_positive">
                                 Brasil
                               </span>
                             )}
@@ -152,7 +152,7 @@ function Arrow(props: {
   return (
     <svg
       onClick={props.onClick}
-      className={`arrow text-amber-500 opacity-60 hover:text-amber-800 duration-700 z-20 ${
+      className={`arrow text-base_detail_decoration opacity-60 hover:text-base_detail_decoration/60 duration-700 z-20 ${
         props.left ? 'arrow--left' : 'arrow--right'
       } ${disabled}`}
       xmlns="http://www.w3.org/2000/svg"

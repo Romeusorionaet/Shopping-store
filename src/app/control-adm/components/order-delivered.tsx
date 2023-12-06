@@ -22,7 +22,10 @@ export function OrderDelivered({ orderId }: Props) {
   }
 
   return (
-    <Button onClick={handleNotifyOrderDelivered} className="text-zinc-950">
+    <Button
+      onClick={handleNotifyOrderDelivered}
+      className="text-base_color_dark"
+    >
       O destinatário recebeu este produto
     </Button>
   )

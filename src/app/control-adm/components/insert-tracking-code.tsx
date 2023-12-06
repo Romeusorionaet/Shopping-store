@@ -59,13 +59,16 @@ export function InsertTrackingCode({ orderId }: Props) {
         onChange={(e) => setTrackingCode(e.target.value)}
       />
 
-      <p className="text-sm text-zinc-300">
+      <p className="text-sm text-white">
         Se este pedido foi reembolsado, clique no botão de{' '}
         <strong>Reembolso</strong>.
       </p>
 
       <div className="flex justify-between">
-        <Button onClick={handleUpdateTrackingCode} className="text-zinc-950">
+        <Button
+          onClick={handleUpdateTrackingCode}
+          className="text-base_color_dark"
+        >
           Enviar
         </Button>
 

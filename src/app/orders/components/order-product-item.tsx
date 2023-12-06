@@ -23,7 +23,7 @@ export function OrderProductItem({ orderProduct }: OrderProductItemProps) {
 
   return (
     <div className="flex items-center gap-4">
-      <div className="flex h-[77px] w-[100px] items-center justify-center rounded-lg bg-amber-50">
+      <div className="flex h-[77px] w-[100px] items-center justify-center rounded-lg bg-base_reference_card">
         <Image
           src={orderProduct.product.imageUrls[0]}
           width={0}

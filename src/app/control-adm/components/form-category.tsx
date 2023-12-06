@@ -78,7 +78,7 @@ export function FormCategory() {
     <Accordion
       type="single"
       collapsible
-      className="border border-zinc-500/60 my-10 p-2 rounded-md"
+      className="border border-white/20 my-10 p-2 rounded-md"
     >
       <AccordionItem value="item-1">
         <AccordionTrigger>Cadastrar categoria</AccordionTrigger>
@@ -98,7 +98,7 @@ export function FormCategory() {
 
               <ArrowBigRight />
 
-              <div className="border border-zinc-50/40 w-[6rem] h-[6rem]">
+              <div className="border border-white/20 w-[6rem] h-[6rem]">
                 {imageDataCategory[0].url ? (
                   <div className="flex flex-col gap-2 items-center">
                     <Image
@@ -125,7 +125,7 @@ export function FormCategory() {
               <label className="flex flex-col gap-2">
                 Nome
                 <Input
-                  className="bg-zinc-600"
+                  className="bg-white/20"
                   type="text"
                   placeholder="name"
                   {...register('name')}
@@ -135,7 +135,7 @@ export function FormCategory() {
 
               <Button
                 type="submit"
-                className="text-zinc-950 disabled:bg-zinc-400"
+                className="text-base_color_dark disabled:bg-white/20"
                 disabled={isSubmitting}
               >
                 Salvar

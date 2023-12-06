@@ -175,7 +175,7 @@ export function FormUpdate({ product }: FormUpdateProps) {
               <p className="text-xs opacity-90">Valor padrão: {'Sim'}</p>
 
               <select
-                className="p-2 rounded-md appearance-none border border-zinc-200 text-white bg-black"
+                className="p-2 rounded-md appearance-none border border-white/20 text-white bg-black"
                 {...register('placeOfSale')}
               >
                 <option value="Sim">Sim</option>
@@ -186,7 +186,7 @@ export function FormUpdate({ product }: FormUpdateProps) {
             <label className="flex flex-col gap-2 mt-4">
               Descrição
               <textarea
-                className="bg-zinc-800 w-full h-40 resize-none p-2 rounded-md scrollbar"
+                className="bg-base_color_dark/50 w-full h-40 resize-none p-2 rounded-md scrollbar"
                 defaultValue={product.description}
                 {...register('description')}
               ></textarea>
@@ -197,7 +197,7 @@ export function FormUpdate({ product }: FormUpdateProps) {
 
         <div className="flex justify-between my-4">
           <Button
-            className="text-zinc-950"
+            className="text-base_color_dark"
             disabled={isSubmitting}
             type="submit"
           >

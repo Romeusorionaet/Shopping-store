@@ -10,7 +10,7 @@ export function ProductManage({ product }: Props) {
   const { totalPrice } = CalculateValueProduct(product)
 
   return (
-    <div className="text-sm text-zinc-300 text-center bg-slate-900 p-1">
+    <div className="text-sm opacity-80 text-center bg-base_color_dark/50 p-1">
       <div className="h-[220px]">
         <Image
           width={0}

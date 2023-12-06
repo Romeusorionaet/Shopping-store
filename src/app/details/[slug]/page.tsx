@@ -54,7 +54,7 @@ export default async function Details({ params }: ParamsProps) {
                     minimumFractionDigits: 2,
                   })}
                 </p>
-                <p className="text-green-500 text-lg font-bold">
+                <p className="text-base_color_positive text-lg font-bold">
                   {product.discountPercentage}%{' '}
                   <span className="uppercase">off</span>
                 </p>
@@ -70,7 +70,7 @@ export default async function Details({ params }: ParamsProps) {
               </p>
               <p>
                 em{' '}
-                <span className="text-green-500">
+                <span className="text-base_color_positive">
                   12x R$ {totalPriceDividedByTwelve.toFixed(2)} sem juros
                 </span>
               </p>

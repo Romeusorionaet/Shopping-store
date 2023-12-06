@@ -26,7 +26,7 @@ export function OrderUser({ orders, address }: OrdersProps) {
     <Accordion
       type="single"
       collapsible
-      className="border border-zinc-500/60 p-1 rounded-md"
+      className="border border-white/20 p-1 rounded-md"
     >
       <AccordionItem value="item-1">
         <AccordionTrigger className="group flex justify-end w-full">
@@ -49,11 +49,11 @@ export function OrderUser({ orders, address }: OrdersProps) {
               return (
                 <div
                   key={order.id}
-                  className="space-y-4 bg-slate-800/50 p-2 border-b border-zinc-400/60"
+                  className="space-y-4 bg-base_color_dark/5 p-2 border-b border-white/20"
                 >
                   <div className="flex justify-between">
                     <h2 className="font-bold">Pedido</h2>
-                    <span className="text-sm text-zinc-300">
+                    <span className="text-sm opacity-80">
                       {format(new Date(order.createdAt), "d/MM/y 'às' HH:mm")}
                     </span>
                   </div>
@@ -61,7 +61,7 @@ export function OrderUser({ orders, address }: OrdersProps) {
                   <div>
                     <p>
                       Status:{' '}
-                      <span className="text-sm text-zinc-300">
+                      <span className="text-sm opacity-80">
                         {getOrderStatus(order.orderTracking)}
                       </span>
                     </p>
@@ -69,14 +69,14 @@ export function OrderUser({ orders, address }: OrdersProps) {
 
                   <div>
                     <p>Código de rastreio:</p>
-                    <p className="text-sm text-zinc-300">
+                    <p className="text-sm opacity-80">
                       #{order.trackingCode && order.trackingCode}
                     </p>
                   </div>
 
                   {order.orderTracking ===
                     OrderStatusTracking.PRODUCT_DELIVERED_TO_CLIENT && (
-                    <p className="border-x border-green-500 inline-block p-1 rounded-md">
+                    <p className="border-x border-base_color_positive inline-block p-1 rounded-md">
                       pedido entregue
                     </p>
                   )}

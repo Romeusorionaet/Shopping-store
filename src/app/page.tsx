@@ -41,16 +41,16 @@ export default async function Home() {
   return (
     <main className="flex flex-col gap-6 overflow-hidden pb-8 max-w-[1480px] mx-auto">
       <div className="relative max-w-[1480px] w-full mx-auto">
-        <div className="bg-gradient-to-r from-amber-100/40 h-full w-40 max-2xl:w-28 max-sm:w-10 absolute left-0 top-0 z-10" />
+        <div className="bg-gradient-to-r from-base_reference_card/40 h-full w-40 max-2xl:w-28 max-sm:w-10 absolute left-0 top-0 z-10" />
         <OfferBanner />
-        <div className="bg-gradient-to-l from-amber-100/40 h-full w-40 max-2xl:w-28 max-sm:w-10 absolute right-0 top-0 z-10" />
+        <div className="bg-gradient-to-l from-base_reference_card/40 h-full w-40 max-2xl:w-28 max-sm:w-10 absolute right-0 top-0 z-10" />
       </div>
 
       <div>
         <p className="text-center mb-4">
           Acesse o nosso catálogo para ver todos os produtos da loja!
         </p>
-        <div className="p-2 hover:bg-amber-200 duration-700 flex justify-center items-center gap-2 border border-zinc-400 w-52 mx-auto rounded-md">
+        <div className="p-2 hover:bg-base_one_reference_header duration-700 flex justify-center items-center gap-2 border border-base_color_dark/10 w-52 mx-auto rounded-md">
           <Link className="font-bold" href="/catalog">
             Ver Nosso Catálogo
           </Link>

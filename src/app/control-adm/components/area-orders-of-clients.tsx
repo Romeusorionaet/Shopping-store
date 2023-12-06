@@ -53,7 +53,7 @@ export function AreaOrdersOfClients({ ordersUsers }: OrdersUsersProps) {
     <Accordion
       type="single"
       collapsible
-      className="border border-zinc-500/60 my-4 p-2 rounded-md"
+      className="border border-white/20 my-4 p-2 rounded-md"
     >
       <AccordionItem value="item-1">
         <AccordionTrigger className="flex justify-between w-full">
@@ -68,11 +68,11 @@ export function AreaOrdersOfClients({ ordersUsers }: OrdersUsersProps) {
           <Input
             type="text"
             value={searchTerm}
-            className="border border-green-500 my-8"
+            className="border border-base_color_positive my-8"
             placeholder="Nome do produto..."
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-          <div className="flex flex-col gap-4 h-96 overflow-y-auto p-2 bg-zinc-200/5 scrollbar">
+          <div className="flex flex-col gap-4 h-96 overflow-y-auto p-2 bg-white/10 scrollbar">
             {filteredOrdersUsers.map((orderUser) => {
               if (orderUser.Order.length === 0) {
                 return null
@@ -88,7 +88,7 @@ export function AreaOrdersOfClients({ ordersUsers }: OrdersUsersProps) {
                       <h3 className="font-bold">{orderUser.name}</h3>
                       <span>{orderUser.Order.length} pedidos</span>
                     </div>
-                    <p className="text-sm text-zinc-300">{orderUser.email}</p>
+                    <p className="text-sm opacity-80">{orderUser.email}</p>
                   </div>
                   <OrderUser
                     orders={orderUser.Order}

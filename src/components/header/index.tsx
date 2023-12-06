@@ -67,14 +67,14 @@ export function Header() {
   }
 
   return (
-    <header className="rounded-none p-4 bg-amber-200 fixed z-30 w-full left-0">
+    <header className="rounded-none p-4 bg-base_one_reference_header fixed z-30 w-full left-0">
       <div className="flex justify-between items-center max-w-[1680px] mx-auto">
         <Sheet>
           <SheetTrigger asChild>
             <Button
               size="icon"
               variant="outline"
-              className="border-none bg-amber-200 hover:bg-white duration-700"
+              className="border-none bg-base_one_reference_header hover:bg-white duration-700"
             >
               <Menu size={30} />
             </Button>
@@ -112,7 +112,7 @@ export function Header() {
                   size="icon"
                   variant="outline"
                   onClick={handleLogin}
-                  className="font-semibold w-full gap-4 hover:bg-amber-50 hover:text-primary"
+                  className="font-semibold w-full gap-4 hover:bg-base_reference_card hover:text-primary"
                 >
                   <LogIn />
                   Fazer login
@@ -124,7 +124,7 @@ export function Header() {
                   size="icon"
                   variant="outline"
                   onClick={handleLogout}
-                  className="font-semibold w-full gap-4 hover:text-primary hover:bg-amber-50 duration-700"
+                  className="font-semibold w-full gap-4 hover:text-primary hover:bg-base_reference_card duration-700"
                 >
                   <LogIn />
                   Sair
@@ -134,10 +134,10 @@ export function Header() {
               <Button
                 onClick={() => handleNavigateToHome()}
                 size="icon"
-                className="group font-semibold w-full hover:bg-amber-50 gap-4 justify-start p-4 bg-transparent duration-700"
+                className="group font-semibold w-full hover:bg-base_reference_card gap-4 justify-start p-4 bg-transparent duration-700"
               >
                 <Home
-                  className="group-hover:text-amber-500 duration-700"
+                  className="group-hover:text-base_detail_decoration duration-700"
                   size={16}
                 />
                 Início
@@ -146,10 +146,10 @@ export function Header() {
               <Button
                 onClick={handleNavigateToCatalog}
                 size="icon"
-                className="group font-semibold w-full hover:bg-amber-50 gap-4 justify-start p-4 bg-transparent duration-700"
+                className="group font-semibold w-full hover:bg-base_base_reference_card gap-4 justify-start p-4 bg-transparent duration-700"
               >
                 <LibraryBig
-                  className="group-hover:text-amber-500 duration-700"
+                  className="group-hover:text-base_detail_decoration duration-700"
                   size={16}
                 />
                 Catálogo
@@ -158,10 +158,10 @@ export function Header() {
               <Button
                 onClick={() => handleNavigateToOrders()}
                 size="icon"
-                className="group font-semibold w-full hover:bg-amber-50 gap-4 justify-start p-4 bg-transparent duration-700"
+                className="group font-semibold w-full hover:bg-base_base_reference_card gap-4 justify-start p-4 bg-transparent duration-700"
               >
                 <BaggageClaim
-                  className="group-hover:text-amber-500 duration-700"
+                  className="group-hover:text-base_detail_decoration duration-700"
                   size={16}
                 />
                 Meus pedidos
@@ -170,10 +170,10 @@ export function Header() {
               <Button
                 onClick={() => handleNavigateToHistoric()}
                 size="icon"
-                className="group font-semibold w-full hover:bg-amber-50 gap-4 justify-start p-4 bg-transparent duration-700"
+                className="group font-semibold w-full hover:bg-base_reference_card gap-4 justify-start p-4 bg-transparent duration-700"
               >
                 <FileClock
-                  className="group-hover:text-amber-500 duration-700"
+                  className="group-hover:text-base_detail_decoration duration-700"
                   size={16}
                 />
                 Histórico
@@ -182,10 +182,10 @@ export function Header() {
               <Button
                 onClick={() => handleNavigateToAddress()}
                 size="icon"
-                className="group font-semibold w-full hover:bg-amber-50 gap-4 justify-start p-4 bg-transparent duration-700"
+                className="group font-semibold w-full hover:50 gap-4 justify-start p-4 bg-transparent duration-700"
               >
                 <BookUser
-                  className="group-hover:text-amber-500 duration-700"
+                  className="group-hover:text-base_detail_decoration duration-700"
                   size={16}
                 />
                 Endereço de entrega
@@ -195,10 +195,10 @@ export function Header() {
                 <Button
                   onClick={() => handleNavigateToRegisterProducts()}
                   size="icon"
-                  className="group font-semibold w-full hover:bg-amber-50 gap-4 justify-start p-4 bg-transparent duration-700"
+                  className="group font-semibold w-full hover:bg-base_reference_card gap-4 justify-start p-4 bg-transparent duration-700"
                 >
                   <SlidersHorizontal
-                    className="group-hover:text-amber-500 duration-700"
+                    className="group-hover:text-base_detail_decoration duration-700"
                     size={16}
                   />
                   Controlar produtos
@@ -222,7 +222,7 @@ export function Header() {
             <Button
               size="icon"
               variant="outline"
-              className="border-none bg-amber-200 hover:bg-white duration-700"
+              className="border-none bg-base_one_reference_header hover:bg-white duration-700"
             >
               <BaggageClaim size={30} />
             </Button>

@@ -118,7 +118,7 @@ export function FormProduct({ listOfCategory }: Props) {
     <Accordion
       type="single"
       collapsible
-      className="border border-zinc-500/60 my-10 p-2 rounded-md"
+      className="border border-white/20 my-10 p-2 rounded-md"
     >
       <AccordionItem value="item-1">
         <AccordionTrigger>Cadastrar produto</AccordionTrigger>
@@ -139,7 +139,7 @@ export function FormProduct({ listOfCategory }: Props) {
 
               <ArrowBigDown />
 
-              <div className="border border-zinc-50/40 flex flex-wrap gap-8 justify-center p-2 pb-10">
+              <div className="border border-white/20 flex flex-wrap gap-8 justify-center p-2 pb-10">
                 {imageDataProducts[0].url ? (
                   imageDataProducts.map((item) => {
                     return (
@@ -175,7 +175,7 @@ export function FormProduct({ listOfCategory }: Props) {
               <label className="flex flex-col gap-2">
                 Escolha a categoria do produto
                 <select
-                  className="p-2 rounded-md appearance-none border border-zinc-200 text-white bg-black"
+                  className="p-2 rounded-md appearance-none border border-white/20 text-white bg-black"
                   {...register('category')}
                   onChange={(e) => setCategoryId(e.target.value)}
                 >
@@ -184,7 +184,7 @@ export function FormProduct({ listOfCategory }: Props) {
                     listOfCategory.map((value, index) => {
                       return (
                         <option
-                          className="bg-zinc-900"
+                          className="bg-base_color_dark"
                           key={index}
                           value={value.id}
                         >
@@ -249,7 +249,7 @@ export function FormProduct({ listOfCategory }: Props) {
                 <p className="text-xs opacity-90">Valor padrão: {'Sim'}</p>
 
                 <select
-                  className="p-2 rounded-md appearance-none border border-zinc-200 text-white bg-black"
+                  className="p-2 rounded-md appearance-none border border-white/20 text-white bg-black"
                   {...register('placeOfSale')}
                   onChange={(e) => setCategoryId(e.target.value)}
                 >
@@ -261,7 +261,7 @@ export function FormProduct({ listOfCategory }: Props) {
               <label className="flex flex-col gap-2">
                 Descrição
                 <textarea
-                  className="bg-zinc-800 h-40 resize-none p-2 rounded-md"
+                  className="bg-base_color_dark h-40 resize-none p-2 rounded-md"
                   maxLength={200}
                   placeholder="Descrição do produto..."
                   {...register('description')}
@@ -271,7 +271,7 @@ export function FormProduct({ listOfCategory }: Props) {
 
               <Button
                 type="submit"
-                className="text-zinc-950 disabled:bg-zinc-400"
+                className="text-base_color_dark disabled:bg-white/20"
                 disabled={isSubmitting}
               >
                 Salvar

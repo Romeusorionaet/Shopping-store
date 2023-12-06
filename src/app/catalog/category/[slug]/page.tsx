@@ -51,18 +51,18 @@ export default async function Category({ params }: ParamsProps) {
                   <Link href={`/details/${product.slug}`}>
                     <div
                       data-quantity={productAvailable}
-                      className="p-4 bg-amber-50/60 hover:bg-amber-100 duration-700 flex flex-col justify-center items-center gap-2 rounded-md h-full data-[quantity=true]:bg-zinc-200 data-[quantity=true]:hover:bg-zinc-300"
+                      className="p-4 bg-base_reference_card/60 hover:bg-base_reference_card_hover duration-700 flex flex-col justify-center items-center gap-2 rounded-md h-full data-[quantity=true]:bg-base_color_dark/5 data-[quantity=true]:hover:bg-base_color_dark/10"
                     >
                       <p className="text-sm">{product.name}</p>
 
                       <div>
                         <div>
                           {product.placeOfSale === 'SELL_IN_REGION_ONLY' ? (
-                            <span className="absolute bottom-28 left-0 bg-zinc-100/40 p-1 rounded-md font-bold text-xs">
+                            <span className="absolute bottom-28 left-0 bg-base_color_dark/5 p-1 rounded-tr-md font-bold text-xs">
                               Local
                             </span>
                           ) : (
-                            <span className="absolute bottom-28 left-0 bg-zinc-100/40 p-1 rounded-md font-bold text-xs text-green-500">
+                            <span className="absolute bottom-28 left-0 bg-base_color_dark/5 p-1 rounded-tr-md font-bold text-xs text-base_color_positive">
                               Brasil
                             </span>
                           )}

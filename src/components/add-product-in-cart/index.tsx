@@ -32,7 +32,7 @@ export function AddProductInCart({ product, title }: Props) {
   return (
     <button
       onClick={() => handleAddToProductInCart()}
-      className="p-1 bg-green-200 w-full max-w-56 rounded-md flex duration-700 hover:bg-green-500 justify-center items-center gap-2"
+      className="p-1 bg-base_color_positive/60 w-full max-w-56 rounded-md flex duration-700 hover:bg-base_color_positive justify-center items-center gap-2"
     >
       {title}
       <BaggageClaim size={28} />

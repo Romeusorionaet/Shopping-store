@@ -15,6 +15,7 @@ module.exports = {
         '2xl': '1400px',
       },
     },
+
     extend: {
       colors: {
         border: 'hsl(var(--border))',
@@ -22,6 +23,13 @@ module.exports = {
         ring: 'hsl(var(--ring))',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
+        base_one_reference_header: 'rgb(253 230 138)',
+        base_reference_card: 'rgb(255 251 235)',
+        base_reference_card_hover: 'rgb(254 243 199)',
+        base_detail_decoration: 'rgb(245 158 11)',
+        base_color_negative: 'rgb(239 68 68)',
+        base_color_positive: 'rgb(34 197 94)',
+        base_color_dark: 'rgb(9 9 11)',
         primary: {
           DEFAULT: 'hsl(var(--primary))',
           foreground: 'hsl(var(--primary-foreground))',

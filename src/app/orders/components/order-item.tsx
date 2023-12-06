@@ -58,14 +58,16 @@ export function OrderItem({ order }: OrderProductProps) {
             {order.orderTracking === OrderStatusTracking.CANCELED ? (
               <p className="text-xs opacity-60">
                 pedido cancelado: Este pedido foi{' '}
-                <span className="text-red-500">cancelado</span> por motivos de
-                reembolso.
+                <span className="text-base_color_negative">cancelado</span> por
+                motivos de reembolso.
               </p>
             ) : order.trackingCode !== '' ? (
               <p className="text-xs opacity-60">
                 Copie este código de restreio e clique em &quot;
-                <span className="text-green-500">Acompanhar pedido</span>&quot;
-                no botão abaixo:
+                <span className="text-base_color_positive">
+                  Acompanhar pedido
+                </span>
+                &quot; no botão abaixo:
                 <strong> {order.trackingCode}</strong>
               </p>
             ) : (
@@ -85,11 +87,11 @@ export function OrderItem({ order }: OrderProductProps) {
               <div className="font-bold">
                 <p>Status</p>
                 {order.orderTracking === OrderStatusTracking.CANCELED ? (
-                  <p className="text-red-500">
+                  <p className="text-base_color_negative">
                     {getOrderStatus(order.orderTracking)}
                   </p>
                 ) : (
-                  <p className="text-green-500">
+                  <p className="text-base_color_positive">
                     {getOrderStatus(order.status)}
                   </p>
                 )}
@@ -166,7 +168,7 @@ export function OrderItem({ order }: OrderProductProps) {
             <div>
               <Button
                 disabled={isProductDeliveredToCorreios}
-                className="bg-green-500 p-2 rounded-md sm:w-56"
+                className="bg-base_color_positive p-2 rounded-md sm:w-56"
                 onClick={handleNavigateToCorreiosPage}
               >
                 Acompanhar pedido

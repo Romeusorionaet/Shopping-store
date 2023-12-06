@@ -16,7 +16,7 @@ export default async function ControlAdm() {
 
   return (
     <main className="p-4 max-w-[800px] mx-auto">
-      <h1 className="my-6 text-center text-xl font-bold text-amber-500">
+      <h1 className="my-6 text-center text-xl font-bold text-base_detail_decoration">
         Controle de estoque
       </h1>
 
@@ -33,7 +33,7 @@ export default async function ControlAdm() {
 
       {products && <AreaUpdateProduct listOfProducts={products} />}
 
-      <h2 className="my-6 text-center text-xl font-bold text-green-500">
+      <h2 className="my-6 text-center text-xl font-bold text-base_color_positive">
         Gerenciar pedidos
       </h2>
 

@@ -12,13 +12,17 @@ export default function LayoutAdm({ children }: Props) {
 
   if (!isAdm) {
     return (
-      <div className="bg-zinc-950 h-screen flex flex-col items-center justify-center">
-        <p className="text-red-500 uppercase text-xl">Acesso negado!</p>
+      <div className="bg-base_color_dark h-screen flex flex-col items-center justify-center">
+        <p className="text-base_color_negative uppercase text-xl">
+          Acesso negado!
+        </p>
       </div>
     )
   }
 
   return (
-    <div className="bg-slate-950 text-white pt-28 min-h-screen">{children}</div>
+    <div className="bg-base_color_dark text-white pt-28 min-h-screen">
+      {children}
+    </div>
   )
 }

@@ -12,7 +12,7 @@ export function HistoricItem({ historic }: Props) {
   if (historic.length === 0) {
     return (
       <div className="flex h-screen justify-center items-center">
-        <div className="border border-zinc-400 p-4 rounded-md">
+        <div className="border border-white/20 p-4 rounded-md">
           <h1>Sem registro de compras...</h1>
         </div>
       </div>
@@ -30,7 +30,7 @@ export function HistoricItem({ historic }: Props) {
           return (
             <div
               key={item.id}
-              className="space-y-2 border-b border-zinc-400 pb-4 w-60 text-sm"
+              className="space-y-2 border-b border-white/20 pb-4 w-60 text-sm"
             >
               <p>
                 Produto <strong>{item.name}</strong>

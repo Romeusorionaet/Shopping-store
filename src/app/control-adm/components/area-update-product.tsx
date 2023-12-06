@@ -27,7 +27,7 @@ export function AreaUpdateProduct({ listOfProducts }: Props) {
     <Accordion
       type="single"
       collapsible
-      className="border border-zinc-500/60 my-10 p-2 rounded-md"
+      className="border border-white/20 my-10 p-2 rounded-md"
     >
       <AccordionItem value="item-1">
         <AccordionTrigger className="flex justify-between w-full">
@@ -40,12 +40,12 @@ export function AreaUpdateProduct({ listOfProducts }: Props) {
           <Input
             type="text"
             value={searchTerm}
-            className="border border-green-500 my-8"
+            className="border border-base_color_positive my-8"
             placeholder="Nome do produto..."
             onChange={(e) => setSearchTerm(e.target.value)}
           />
 
-          <div className="flex flex-col gap-4 h-96 overflow-y-auto p-2 bg-zinc-200/5 scrollbar">
+          <div className="flex flex-col gap-4 h-96 overflow-y-auto p-2 scrollbar">
             {filteredProducts.map((product) => {
               return (
                 <div
@@ -76,7 +76,7 @@ export function AreaUpdateProduct({ listOfProducts }: Props) {
                     </p>
 
                     <Link
-                      className="border bg-amber-100 hover:bg-amber-200 duration-700 p-2 rounded-md text-zinc-950 text-center w-32"
+                      className="border bg-base_reference_card_hover hover:bg-base_one_reference_header duration-700 p-2 rounded-md text-base_color_dark text-center w-32"
                       href={`/control-adm/update-product/${product.slug}`}
                     >
                       Iniciar edição

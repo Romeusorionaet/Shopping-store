@@ -95,39 +95,53 @@ export async function ManageOrders() {
     <div className="space-y-10">
       <div>
         <h3>
-          Pedidos <strong className="text-green-500">pago</strong>,{' '}
-          <span className="text-sm text-zinc-300">preparar para entrega</span>
+          Pedidos <strong className="text-base_color_positive">pago</strong>{' '}
+          <span className="text-sm">
+            {'('}preparar para entrega{')'}
+          </span>
         </h3>
         <AreaOrdersOfClients ordersUsers={completedPaymentUsers} />
       </div>
 
       <div>
         <h3>
-          Histórico de Pedidos <strong className="text-green-500">pago</strong>,{' '}
-          <span className="text-sm text-zinc-300">a caminho</span>.
+          Histórico de Pedidos{' '}
+          <strong className="text-base_color_positive">pago</strong>,{' '}
+          <span className="text-sm">
+            {'('}a caminho{')'}
+          </span>
+          .
         </h3>
         <AreaOrdersOfClients ordersUsers={historicOfCompletedPaymentUsers} />
       </div>
 
       <div>
         <h3>
-          Pedidos <strong className="text-green-500">entregue</strong>
+          Pedidos <strong className="text-base_color_positive">entregue</strong>
         </h3>
         <AreaOrdersOfClients ordersUsers={historicOfOrderDeliveredToClient} />
       </div>
 
       <div>
         <h3>
-          Pedidos <strong className="text-red-500">pendente</strong>,{' '}
-          <span className="text-sm text-zinc-300">desistente</span>.
+          Pedidos <strong className="text-base_color_negative">pendente</strong>
+          ,{' '}
+          <span className="text-sm">
+            {'('}desistente{')'}
+          </span>
+          .
         </h3>
         <AreaOrdersOfClients ordersUsers={uncompletedPaymentUsers} />
       </div>
 
       <div>
         <h3>
-          Pedidos <strong className="text-red-500">cancelado</strong>,{' '}
-          <span className="text-sm text-zinc-300">reembolso</span>.
+          Pedidos{' '}
+          <strong className="text-base_color_negative">cancelado</strong>,{' '}
+          <span className="text-sm">
+            {'('}reembolso{')'}
+          </span>
+          .
         </h3>
         <AreaOrdersOfClients ordersUsers={historicOfOrdersCanceled} />
       </div>

@@ -32,10 +32,10 @@ export function ProductImages({ imageUrls, name }: ProductImagesProps) {
         {imageUrls.map((imageUrl) => (
           <button
             key={imageUrl}
-            className={`flex h-[100px] w-full items-center justify-center rounded-lg bg-amber-50/60 hover:bg-amber-100 duration-700
+            className={`flex h-[100px] w-full items-center justify-center rounded-lg bg-base_reference_card/60 hover:bg-base_reference_card_hover duration-700
                 ${
                   imageUrl === currentImage &&
-                  'border-2 border-solid border-amber-300 bg-amber-100'
+                  'border-2 border-solid border-base_detail_decoration bg-base_reference_card_hover'
                 }
             `}
             onClick={() => handleImageClick(imageUrl)}
