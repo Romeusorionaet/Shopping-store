@@ -3,7 +3,7 @@ import { getDataOrders } from '@/lib/getData/get-data-orders'
 import { getServerSession } from 'next-auth'
 import { OrderItem } from './components/order-item'
 import { OrderWaitingForPayment } from './components/order-waiting-for-payment'
-import { Order, OrderProduct, Product } from '@prisma/client'
+import { Order, OrderProduct, OrderStatus, Product } from '@prisma/client'
 
 interface OrderProductIncludeProduct extends OrderProduct {
   product: Product
@@ -36,7 +36,7 @@ export default async function Orders() {
       <div className="flex flex-col justify-center mt-4">
         {orders && orders.length >= 1 ? (
           orders.map((order) => {
-            if (order.status === 'PAYMENT_CONFIRMED') {
+            if (order.status === OrderStatus.PAYMENT_CONFIRMED) {
               return <OrderItem key={order.id} order={order} />
             } else {
               return null
@@ -53,7 +53,7 @@ export default async function Orders() {
         {orders && orders.length >= 1 ? (
           orders
             .map((order) => {
-              if (order.status === 'WAITING_FOR_PAYMENT') {
+              if (order.status === OrderStatus.WAITING_FOR_PAYMENT) {
                 return <OrderWaitingForPayment key={order.id} order={order} />
               } else {
                 return null

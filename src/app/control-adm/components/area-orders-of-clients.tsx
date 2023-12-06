@@ -1,7 +1,7 @@
 'use client'
 
 import { Input } from '@/components/ui/input'
-import { Address, OrderProduct, Product } from '@prisma/client'
+import { Address, OrderProduct, Product, Order } from '@prisma/client'
 import {
   Accordion,
   AccordionContent,
@@ -15,14 +15,7 @@ export interface OrderProducts extends OrderProduct {
   product: Product
 }
 
-export interface OrderProps {
-  id: string
-  status: string
-  userId: string
-  createdAt: Date
-  updatedAt: Date
-  trackingCode: string
-  orderTracking: string
+export interface OrderProps extends Order {
   orderProducts: OrderProducts[]
 }
 

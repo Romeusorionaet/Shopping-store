@@ -23,7 +23,7 @@ export const updateOrder = async ({
         },
         data: {
           trackingCode,
-          orderTracking: 'PRODUCT_DELIVERED_TO_CORREIOS',
+          orderTracking: OrderStatusTracking.PRODUCT_DELIVERED_TO_CORREIOS,
         },
       })
 

@@ -7,7 +7,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion'
-import { Prisma } from '@prisma/client'
+import { OrderStatusTracking, Prisma } from '@prisma/client'
 import { format } from 'date-fns'
 import { getOrderStatus } from '../../../components/helpers/get-order-status'
 import { Button } from '@/components/ui/button'
@@ -40,8 +40,8 @@ export function OrderItem({ order }: OrderProductProps) {
   })
 
   const isProductDeliveredToCorreios =
-    order.orderTracking !== 'PRODUCT_DELIVERED_TO_CORREIOS' ||
-    order.trackingCode === 'canceled'
+    order.orderTracking !== OrderStatusTracking.PRODUCT_DELIVERED_TO_CORREIOS ||
+    order.trackingCode === OrderStatusTracking.CANCELED
 
   const handleNavigateToCorreiosPage = () => {
     open('https://www.correios.com.br/')
@@ -55,7 +55,7 @@ export function OrderItem({ order }: OrderProductProps) {
             <p className="text-sm font-bold uppercase">
               Pedido com {order.orderProducts.length} produto(s)
             </p>
-            {order.orderTracking === 'CANCELED' ? (
+            {order.orderTracking === OrderStatusTracking.CANCELED ? (
               <p className="text-xs opacity-60">
                 pedido cancelado: Este pedido foi{' '}
                 <span className="text-red-500">cancelado</span> por motivos de
@@ -84,7 +84,7 @@ export function OrderItem({ order }: OrderProductProps) {
             <div className="flex items-center justify-between">
               <div className="font-bold">
                 <p>Status</p>
-                {order.orderTracking === 'CANCELED' ? (
+                {order.orderTracking === OrderStatusTracking.CANCELED ? (
                   <p className="text-red-500">
                     {getOrderStatus(order.orderTracking)}
                   </p>

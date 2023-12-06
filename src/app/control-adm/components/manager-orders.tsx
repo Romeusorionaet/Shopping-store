@@ -5,6 +5,7 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { OrderWaitingForPayment } from '@/app/orders/components/order-waiting-for-payment'
 import { OrderIncludeOrderProducts } from '@/app/orders/page'
+import { OrderStatus, OrderStatusTracking } from '@prisma/client'
 
 export async function ManageOrders() {
   const { props } = await getDataOrdersUsers()
@@ -13,7 +14,11 @@ export async function ManageOrders() {
   const session = await getServerSession(authOptions)
 
   if (!session || !session.user) {
-    return <h1>Sem usuário logado</h1>
+    return (
+      <div className="flex h-screen justify-center items-center">
+        <h1>Sem usuário logado...</h1>
+      </div>
+    )
   }
 
   const { props: data } = await getDataOrders(session.user.id)
@@ -23,9 +28,9 @@ export async function ManageOrders() {
     ...orderUser,
     Order: orderUser.Order.filter(
       (order) =>
-        order.status === 'PAYMENT_CONFIRMED' &&
+        order.status === OrderStatus.PAYMENT_CONFIRMED &&
         order.trackingCode === '' &&
-        order.orderTracking === 'WAITING',
+        order.orderTracking === OrderStatusTracking.WAITING,
     ).sort((a, b) => {
       const dateA = new Date(a.createdAt)
       const dateB = new Date(b.createdAt)
@@ -38,9 +43,10 @@ export async function ManageOrders() {
     ...orderUser,
     Order: orderUser.Order.filter(
       (order) =>
-        order.status === 'PAYMENT_CONFIRMED' &&
+        order.status === OrderStatus.PAYMENT_CONFIRMED &&
         order.trackingCode !== '' &&
-        order.orderTracking === 'PRODUCT_DELIVERED_TO_CORREIOS',
+        order.orderTracking ===
+          OrderStatusTracking.PRODUCT_DELIVERED_TO_CORREIOS,
     ).sort((a, b) => {
       const dateA = new Date(a.createdAt)
       const dateB = new Date(b.createdAt)
@@ -52,7 +58,8 @@ export async function ManageOrders() {
   const historicOfOrderDeliveredToClient = ordersUsers.map((orderUser) => ({
     ...orderUser,
     Order: orderUser.Order.filter(
-      (order) => order.orderTracking === 'PRODUCT_DELIVERED_TO_CLIENT',
+      (order) =>
+        order.orderTracking === OrderStatusTracking.PRODUCT_DELIVERED_TO_CLIENT,
     ).sort((a, b) => {
       const dateA = new Date(a.createdAt)
       const dateB = new Date(b.createdAt)
@@ -64,7 +71,7 @@ export async function ManageOrders() {
   const uncompletedPaymentUsers = ordersUsers.map((orderUser) => ({
     ...orderUser,
     Order: orderUser.Order.filter(
-      (order) => order.status === 'WAITING_FOR_PAYMENT',
+      (order) => order.status === OrderStatus.WAITING_FOR_PAYMENT,
     ).sort((a, b) => {
       const dateA = new Date(a.createdAt)
       const dateB = new Date(b.createdAt)
@@ -77,8 +84,8 @@ export async function ManageOrders() {
     ...orderUser,
     Order: orderUser.Order.filter(
       (order) =>
-        order.status === 'PAYMENT_CONFIRMED' &&
-        order.orderTracking === 'CANCELED',
+        order.status === OrderStatus.PAYMENT_CONFIRMED &&
+        order.orderTracking === OrderStatusTracking.CANCELED,
     ).sort((a, b) => {
       const dateA = new Date(a.createdAt)
       const dateB = new Date(b.createdAt)

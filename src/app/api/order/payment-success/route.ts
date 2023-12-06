@@ -1,4 +1,5 @@
 import { prismaClient } from '@/lib/prisma'
+import { OrderStatus } from '@prisma/client'
 import axios from 'axios'
 import { NextResponse } from 'next/server'
 
@@ -35,7 +36,7 @@ export const POST = async (req: Request) => {
           orderProducts: true,
         },
         data: {
-          status: 'PAYMENT_CONFIRMED',
+          status: OrderStatus.PAYMENT_CONFIRMED,
         },
       })
 

@@ -27,6 +27,7 @@ const addressFormSchema = z.object({
   neighborhood: z.string().min(1, 'Este campo é obrigatório.'),
   number: z.string().min(1, 'Este campo é obrigatório.'),
   complement: z.string().min(1, 'Este campo é obrigatório.'),
+  userId: z.string(),
 })
 
 export type AddressFormData = z.infer<typeof addressFormSchema>
@@ -46,13 +47,14 @@ export function Form() {
 
   async function handleAddressForm(data: AddressFormData) {
     if (!userId) {
-      return
+      return null
     }
+
+    data.userId = userId
 
     try {
       await createAddress({
         dataAddress: data,
-        userId,
       })
     } catch (err) {
       console.log(err)

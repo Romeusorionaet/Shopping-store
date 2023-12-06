@@ -10,7 +10,7 @@ import { OrderProps } from './area-orders-of-clients'
 import { getOrderStatus } from '@/components/helpers/get-order-status'
 import { InsertTrackingCode } from './insert-tracking-code'
 import { format } from 'date-fns'
-import { Address } from '@prisma/client'
+import { Address, OrderStatus, OrderStatusTracking } from '@prisma/client'
 import { SavedUserAddress } from '@/components/saved-user-address'
 import { OrderDelivered } from './order-delivered'
 
@@ -36,14 +36,15 @@ export function OrderUser({ orders, address }: OrdersProps) {
           <div className="flex flex-col gap-6">
             {orders.map((order) => {
               const isPaymentConfirmedNoTracking =
-                order.status === 'PAYMENT_CONFIRMED' &&
+                order.status === OrderStatus.PAYMENT_CONFIRMED &&
                 order.trackingCode === '' &&
-                order.orderTracking !== 'CANCELED'
+                order.orderTracking !== OrderStatusTracking.CANCELED
 
               const isOrderDeliveredToCarreios =
-                order.orderTracking === 'PRODUCT_DELIVERED_TO_CORREIOS' &&
+                order.orderTracking ===
+                  OrderStatusTracking.PRODUCT_DELIVERED_TO_CORREIOS &&
                 order.trackingCode !== '' &&
-                order.trackingCode !== 'CANCELED'
+                order.trackingCode !== OrderStatusTracking.CANCELED
 
               return (
                 <div
@@ -73,7 +74,8 @@ export function OrderUser({ orders, address }: OrdersProps) {
                     </p>
                   </div>
 
-                  {order.orderTracking === 'PRODUCT_DELIVERED_TO_CLIENT' && (
+                  {order.orderTracking ===
+                    OrderStatusTracking.PRODUCT_DELIVERED_TO_CLIENT && (
                     <p className="border-x border-green-500 inline-block p-1 rounded-md">
                       pedido entregue
                     </p>

@@ -10,7 +10,11 @@ export default async function Address() {
   const userId = session?.user.id
 
   if (!userId) {
-    return <h1 className="text-center pt-28">Faça login na sua conta</h1>
+    return (
+      <div className="flex h-screen justify-center items-center">
+        <h1>Sem usuário logado...</h1>
+      </div>
+    )
   }
   const { props } = await getDataAddress(userId)
 

@@ -17,6 +17,14 @@ export function CheckoutCart({ userHasAddress }: Props) {
 
   const navigate = useRouter()
 
+  if (!data) {
+    return (
+      <div className="flex h-screen justify-center items-center">
+        <h1>Sem usuário logado...</h1>
+      </div>
+    )
+  }
+
   const handleFinishPurchaseClick = async () => {
     try {
       if (cart.length === 0) {
@@ -24,7 +32,7 @@ export function CheckoutCart({ userHasAddress }: Props) {
         navigate.push('/')
         return
       }
-      const dataOrder = await createOrder(cart, (data?.user as any).id)
+      const dataOrder = await createOrder(cart, data.user.id)
 
       if (!dataOrder.order) {
         alert(dataOrder.message)

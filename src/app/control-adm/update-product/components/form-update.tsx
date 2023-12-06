@@ -105,8 +105,6 @@ export function FormUpdate({ product }: FormUpdateProps) {
     }
   }
 
-  // console.log(product)
-
   return (
     <div className="space-y-8 w-full">
       <div className="flex flex-col items-center justify-center gap-8">

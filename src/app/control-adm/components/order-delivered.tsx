@@ -11,10 +11,8 @@ export function OrderDelivered({ orderId }: Props) {
   const navigate = useRouter()
 
   const handleNotifyOrderDelivered = async () => {
-    const { PRODUCT_DELIVERED_TO_CLIENT } = OrderStatusTracking
-
     const result = await updateOrder({
-      orderTracking: PRODUCT_DELIVERED_TO_CLIENT,
+      orderTracking: OrderStatusTracking.PRODUCT_DELIVERED_TO_CLIENT,
       orderId,
     })
     alert(result.message)
