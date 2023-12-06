@@ -6,6 +6,7 @@ import { authOptions } from '@/lib/auth'
 import { OrderWaitingForPayment } from '@/app/orders/components/order-waiting-for-payment'
 import { OrderIncludeOrderProducts } from '@/app/orders/page'
 import { OrderStatus, OrderStatusTracking } from '@prisma/client'
+import { NoUserMessage } from '@/components/no-user-message'
 
 export async function ManageOrders() {
   const { props } = await getDataOrdersUsers()
@@ -14,11 +15,7 @@ export async function ManageOrders() {
   const session = await getServerSession(authOptions)
 
   if (!session || !session.user) {
-    return (
-      <div className="flex h-screen justify-center items-center">
-        <h1>Sem usuário logado...</h1>
-      </div>
-    )
+    return <NoUserMessage />
   }
 
   const { props: data } = await getDataOrders(session.user.id)

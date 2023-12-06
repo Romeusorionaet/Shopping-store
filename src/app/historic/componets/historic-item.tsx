@@ -10,7 +10,13 @@ interface Props {
 
 export function HistoricItem({ historic }: Props) {
   if (historic.length === 0) {
-    return <p>Não há registro de compras.</p>
+    return (
+      <div className="flex h-screen justify-center items-center">
+        <div className="border border-zinc-400 p-4 rounded-md">
+          <h1>Sem registro de compras...</h1>
+        </div>
+      </div>
+    )
   }
 
   return (

@@ -4,17 +4,14 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { SavedUserAddress } from '@/components/saved-user-address'
 import { CheckoutCart } from './components/checkout-cart'
+import { NoUserMessage } from '@/components/no-user-message'
 
 export default async function Address() {
   const session = await getServerSession(authOptions)
   const userId = session?.user.id
 
   if (!userId) {
-    return (
-      <div className="flex h-screen justify-center items-center">
-        <h1>Sem usuário logado...</h1>
-      </div>
-    )
+    return <NoUserMessage />
   }
   const { props } = await getDataAddress(userId)
 
@@ -37,7 +34,7 @@ export default async function Address() {
 
       <Form />
 
-      <div className="flex justify-end">
+      <div className="flex justify-end max-w-[800px] mx-auto">
         <CheckoutCart userHasAddress={userHasAddress} />
       </div>
     </div>

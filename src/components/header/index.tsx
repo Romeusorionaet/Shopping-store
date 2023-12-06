@@ -2,6 +2,8 @@
 
 import {
   BaggageClaim,
+  BookUser,
+  FileClock,
   Home,
   LibraryBig,
   LogIn,
@@ -40,7 +42,7 @@ export function Header() {
     }
   }
 
-  const handleNavigateToHomePage = () => {
+  const handleNavigateToHome = () => {
     router.push('/')
   }
 
@@ -48,7 +50,7 @@ export function Header() {
     router.push('/catalog')
   }
 
-  const handleNavigateToOrdersPage = () => {
+  const handleNavigateToOrders = () => {
     router.push('/orders')
   }
 
@@ -56,166 +58,185 @@ export function Header() {
     router.push('/control-adm')
   }
 
-  const handleNavigateTohistoricPage = () => {
+  const handleNavigateToHistoric = () => {
     router.push('/historic')
   }
 
+  const handleNavigateToAddress = () => {
+    router.push('/address')
+  }
+
   return (
-    <header className="flex justify-between items-center rounded-none p-4 bg-amber-200 fixed z-30 w-full px-[5%]">
-      <Sheet>
-        <SheetTrigger asChild>
-          <Button
-            size="icon"
-            variant="outline"
-            className="border-none bg-amber-200 hover:bg-white duration-700"
-          >
-            <Menu size={30} />
-          </Button>
-        </SheetTrigger>
+    <header className="rounded-none p-4 bg-amber-200 fixed z-30 w-full left-0">
+      <div className="flex justify-between items-center max-w-[1680px] mx-auto">
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button
+              size="icon"
+              variant="outline"
+              className="border-none bg-amber-200 hover:bg-white duration-700"
+            >
+              <Menu size={30} />
+            </Button>
+          </SheetTrigger>
 
-        <SheetContent side="left">
-          <SheetHeader className="text-left text-lg font-bold">
-            Menu
-          </SheetHeader>
+          <SheetContent side="left">
+            <SheetHeader className="text-left text-lg font-bold">
+              Menu
+            </SheetHeader>
 
-          {status === 'authenticated' && data?.user && (
-            <div className="flex flex-col">
-              <div className="flex items-center gap-2 py-4">
-                <Avatar>
-                  <AvatarFallback>
-                    {data.user.name?.[0].toUpperCase()}
-                  </AvatarFallback>
+            {status === 'authenticated' && data?.user && (
+              <div className="flex flex-col">
+                <div className="flex items-center gap-2 py-4">
+                  <Avatar>
+                    <AvatarFallback>
+                      {data.user.name?.[0].toUpperCase()}
+                    </AvatarFallback>
 
-                  {data.user.image && <AvatarImage src={data.user.image} />}
-                </Avatar>
+                    {data.user.image && <AvatarImage src={data.user.image} />}
+                  </Avatar>
 
-                <div className="flex flex-col">
-                  <p className="font-medium">{data.user.name}</p>
-                  <p className="text-sm opacity-75">Boas compras!</p>
+                  <div className="flex flex-col">
+                    <p className="font-medium">{data.user.name}</p>
+                    <p className="text-sm opacity-75">Boas compras!</p>
+                  </div>
                 </div>
+
+                <Separator className="opacity-20" />
               </div>
-
-              <Separator className="opacity-20" />
-            </div>
-          )}
-
-          <div className="mt-10 flex flex-col justify-start gap-8">
-            {status === 'unauthenticated' && (
-              <Button
-                size="icon"
-                variant="outline"
-                onClick={handleLogin}
-                className="font-semibold w-full gap-4 hover:bg-amber-50 hover:text-primary"
-              >
-                <LogIn />
-                Fazer login
-              </Button>
             )}
 
-            {status === 'authenticated' && (
+            <div className="mt-10 flex flex-col justify-start gap-8">
+              {status === 'unauthenticated' && (
+                <Button
+                  size="icon"
+                  variant="outline"
+                  onClick={handleLogin}
+                  className="font-semibold w-full gap-4 hover:bg-amber-50 hover:text-primary"
+                >
+                  <LogIn />
+                  Fazer login
+                </Button>
+              )}
+
+              {status === 'authenticated' && (
+                <Button
+                  size="icon"
+                  variant="outline"
+                  onClick={handleLogout}
+                  className="font-semibold w-full gap-4 hover:text-primary hover:bg-amber-50 duration-700"
+                >
+                  <LogIn />
+                  Sair
+                </Button>
+              )}
+
               <Button
-                size="icon"
-                variant="outline"
-                onClick={handleLogout}
-                className="font-semibold w-full gap-4 hover:text-primary hover:bg-amber-50 duration-700"
-              >
-                <LogIn />
-                Sair
-              </Button>
-            )}
-
-            <Button
-              onClick={() => handleNavigateToHomePage()}
-              size="icon"
-              className="group font-semibold w-full hover:bg-amber-50 gap-4 justify-start p-4 bg-transparent duration-700"
-            >
-              <Home
-                className="group-hover:text-amber-500 duration-700"
-                size={16}
-              />
-              Início
-            </Button>
-
-            <Button
-              onClick={handleNavigateToCatalog}
-              size="icon"
-              className="group font-semibold w-full hover:bg-amber-50 gap-4 justify-start p-4 bg-transparent duration-700"
-            >
-              <LibraryBig
-                className="group-hover:text-amber-500 duration-700"
-                size={16}
-              />
-              Catálogo
-            </Button>
-
-            <Button
-              onClick={() => handleNavigateToOrdersPage()}
-              size="icon"
-              className="group font-semibold w-full hover:bg-amber-50 gap-4 justify-start p-4 bg-transparent duration-700"
-            >
-              <BaggageClaim
-                className="group-hover:text-amber-500 duration-700"
-                size={16}
-              />
-              Meus pedidos
-            </Button>
-
-            <Button
-              onClick={() => handleNavigateTohistoricPage()}
-              size="icon"
-              className="group font-semibold w-full hover:bg-amber-50 gap-4 justify-start p-4 bg-transparent duration-700"
-            >
-              <BaggageClaim
-                className="group-hover:text-amber-500 duration-700"
-                size={16}
-              />
-              Histórico
-            </Button>
-
-            {isAdm ? (
-              <Button
-                onClick={() => handleNavigateToRegisterProducts()}
+                onClick={() => handleNavigateToHome()}
                 size="icon"
                 className="group font-semibold w-full hover:bg-amber-50 gap-4 justify-start p-4 bg-transparent duration-700"
               >
-                <SlidersHorizontal
+                <Home
                   className="group-hover:text-amber-500 duration-700"
                   size={16}
                 />
-                Controlar produtos
+                Início
               </Button>
-            ) : (
-              <></>
-            )}
-          </div>
-        </SheetContent>
-      </Sheet>
 
-      <h1
-        onClick={handleNavigateToHomePage}
-        className="text-2xl font-bold cursor-pointer"
-      >
-        Shopping Store
-      </h1>
-      <Sheet>
-        <SheetTrigger asChild>
-          <Button
-            size="icon"
-            variant="outline"
-            className="border-none bg-amber-200 hover:bg-white duration-700"
-          >
-            <BaggageClaim size={30} />
-          </Button>
-        </SheetTrigger>
+              <Button
+                onClick={handleNavigateToCatalog}
+                size="icon"
+                className="group font-semibold w-full hover:bg-amber-50 gap-4 justify-start p-4 bg-transparent duration-700"
+              >
+                <LibraryBig
+                  className="group-hover:text-amber-500 duration-700"
+                  size={16}
+                />
+                Catálogo
+              </Button>
 
-        <SheetContent>
-          <SheetHeader className="text-left text-lg font-bold">
-            Carrinho
-          </SheetHeader>
+              <Button
+                onClick={() => handleNavigateToOrders()}
+                size="icon"
+                className="group font-semibold w-full hover:bg-amber-50 gap-4 justify-start p-4 bg-transparent duration-700"
+              >
+                <BaggageClaim
+                  className="group-hover:text-amber-500 duration-700"
+                  size={16}
+                />
+                Meus pedidos
+              </Button>
 
-          <Cart />
-        </SheetContent>
-      </Sheet>
+              <Button
+                onClick={() => handleNavigateToHistoric()}
+                size="icon"
+                className="group font-semibold w-full hover:bg-amber-50 gap-4 justify-start p-4 bg-transparent duration-700"
+              >
+                <FileClock
+                  className="group-hover:text-amber-500 duration-700"
+                  size={16}
+                />
+                Histórico
+              </Button>
+
+              <Button
+                onClick={() => handleNavigateToAddress()}
+                size="icon"
+                className="group font-semibold w-full hover:bg-amber-50 gap-4 justify-start p-4 bg-transparent duration-700"
+              >
+                <BookUser
+                  className="group-hover:text-amber-500 duration-700"
+                  size={16}
+                />
+                Endereço de entrega
+              </Button>
+
+              {isAdm ? (
+                <Button
+                  onClick={() => handleNavigateToRegisterProducts()}
+                  size="icon"
+                  className="group font-semibold w-full hover:bg-amber-50 gap-4 justify-start p-4 bg-transparent duration-700"
+                >
+                  <SlidersHorizontal
+                    className="group-hover:text-amber-500 duration-700"
+                    size={16}
+                  />
+                  Controlar produtos
+                </Button>
+              ) : (
+                <></>
+              )}
+            </div>
+          </SheetContent>
+        </Sheet>
+
+        <h1
+          onClick={handleNavigateToHome}
+          className="text-2xl font-bold cursor-pointer"
+        >
+          Shopping Store
+        </h1>
+
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button
+              size="icon"
+              variant="outline"
+              className="border-none bg-amber-200 hover:bg-white duration-700"
+            >
+              <BaggageClaim size={30} />
+            </Button>
+          </SheetTrigger>
+
+          <SheetContent>
+            <SheetHeader className="text-left text-lg font-bold">
+              Carrinho
+            </SheetHeader>
+
+            <Cart />
+          </SheetContent>
+        </Sheet>
+      </div>
     </header>
   )
 }

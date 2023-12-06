@@ -8,7 +8,7 @@ export function SavedUserAddress({
   userAddress: OmitIdAndUserId<AddressFormData>
 }) {
   return (
-    <div className="mt-4 flex flex-col gap-1 opacity-80 bg-blue-200/40 p-1 rounded-md">
+    <div className="mt-4 flex flex-col gap-1 opacity-80 bg-blue-200/20 p-1 rounded-md">
       <h2 className="font-bold">Endereço de entrega</h2>
 
       <div className="mt-2 text-sm">

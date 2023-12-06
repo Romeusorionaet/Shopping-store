@@ -6,6 +6,7 @@ import { useSession } from 'next-auth/react'
 import { useCartStore } from '@/providers/zustand-store'
 import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
+import { NoUserMessage } from '@/components/no-user-message'
 
 interface Props {
   userHasAddress: boolean
@@ -18,11 +19,7 @@ export function CheckoutCart({ userHasAddress }: Props) {
   const navigate = useRouter()
 
   if (!data) {
-    return (
-      <div className="flex h-screen justify-center items-center">
-        <h1>Sem usuário logado...</h1>
-      </div>
-    )
+    return <NoUserMessage />
   }
 
   const handleFinishPurchaseClick = async () => {
@@ -53,7 +50,7 @@ export function CheckoutCart({ userHasAddress }: Props) {
     <Button
       data-address={userHasAddress}
       disabled={!userHasAddress}
-      className="mt-8 uppercase data-[address=false]:bg-zinc-400"
+      className="mt-8 uppercase data-[address=false]:bg-zinc-400 data-[address=false]:cursor-not-allowed"
       onClick={handleFinishPurchaseClick}
     >
       Finalizar compra

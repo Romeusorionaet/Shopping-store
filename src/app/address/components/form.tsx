@@ -66,7 +66,7 @@ export function Form() {
     <Accordion
       type="single"
       collapsible
-      className="border border-zinc-500/60 mt-8 p-2 rounded-md"
+      className="border border-zinc-500/60 mt-8 p-2 rounded-md max-w-[800px] mx-auto"
     >
       <AccordionItem value="item-1">
         <AccordionTrigger>Preencher formulário</AccordionTrigger>

@@ -22,10 +22,7 @@ export function CarouselProducts({ products }: productsProps) {
   const verifySizeProducts = products.length >= 4
 
   return (
-    <div
-      ref={sliderRef}
-      className="keen-slider w-full max-w-[1400px] mx-auto px-4"
-    >
+    <div ref={sliderRef} className="keen-slider w-full px-4">
       <div className="relative">
         <div className="overflow-hidden flex">
           {products &&
@@ -35,7 +32,7 @@ export function CarouselProducts({ products }: productsProps) {
 
               return (
                 <div key={product.id} className="keen-slider__slide z-20">
-                  <div className="group relative w-64 h-[26rem]">
+                  <div className="group relative h-[26rem]">
                     <div
                       data-quantity={productAvailable}
                       className="data-[quantity=true]:group-hover:hidden data-[quantity=true]:hidden group-hover:flex md:hidden absolute bottom-1 left-1 w-20"

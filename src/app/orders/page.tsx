@@ -4,6 +4,7 @@ import { getServerSession } from 'next-auth'
 import { OrderItem } from './components/order-item'
 import { OrderWaitingForPayment } from './components/order-waiting-for-payment'
 import { Order, OrderProduct, OrderStatus, Product } from '@prisma/client'
+import { NoUserMessage } from '@/components/no-user-message'
 
 interface OrderProductIncludeProduct extends OrderProduct {
   product: Product
@@ -17,18 +18,14 @@ export default async function Orders() {
   const session = await getServerSession(authOptions)
 
   if (!session || !session.user) {
-    return (
-      <div className="flex h-screen justify-center items-center">
-        <h1>Sem usuário logado...</h1>
-      </div>
-    )
+    return <NoUserMessage />
   }
 
   const { props } = await getDataOrders(session.user.id)
   const orders: OrderIncludeOrderProducts[] = JSON.parse(props.orders)
 
   return (
-    <div className="pt-28 p-4 max-w-[800px] mx-auto">
+    <div className="pt-28 p-4">
       <div>
         <h1>Seus pedidos</h1>
       </div>
