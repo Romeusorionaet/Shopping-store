@@ -9,6 +9,7 @@ import { getDataOrders } from '@/lib/getData/get-data-orders'
 import { OrderIncludeOrderProducts } from './orders/page'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
+import { SearchProduct } from '@/components/search-product'
 
 export default async function Home() {
   const { props } = await getDataProducts()
@@ -59,6 +60,12 @@ export default async function Home() {
       </div>
 
       <div className="px-2">
+        <h2 className="my-4 text-lg">Todos os produtos</h2>
+
+        <SearchProduct products={products} />
+      </div>
+
+      <div className="px-2">
         {productsInOffers.length !== 0 && (
           <div>
             <h2 className="my-4 text-lg">Super promoção</h2>
@@ -80,12 +87,6 @@ export default async function Home() {
             <CarouselProducts products={ordersNotPaymentList} />
           </div>
         )}
-
-        <div>
-          <h2 className="my-4 text-lg">Produtos variados</h2>
-
-          <CarouselProducts products={allProducts} />
-        </div>
       </div>
     </main>
   )
