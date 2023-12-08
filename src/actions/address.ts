@@ -14,14 +14,14 @@ interface Props {
     username: string
     phoneNumber: string
     email: string
-    userId: string
   }
+  userId: string
 }
 
-export const createAddress = async ({ dataAddress }: Props) => {
+export const createAddress = async ({ dataAddress, userId }: Props) => {
   const existingAddress = await prismaClient.address.findFirst({
     where: {
-      userId: dataAddress.userId,
+      userId,
     },
   })
 
@@ -43,11 +43,11 @@ export const createAddress = async ({ dataAddress }: Props) => {
         email: dataAddress.email,
       },
     })
-    return updatedAddress
+    return { updatedAddress, message: 'Seu endereço foi atualizado' }
   } else {
     const newAddress = await prismaClient.address.create({
       data: {
-        userId: dataAddress.userId,
+        userId,
         cep: dataAddress.cep,
         city: dataAddress.city,
         uf: dataAddress.uf,
@@ -60,6 +60,6 @@ export const createAddress = async ({ dataAddress }: Props) => {
         email: dataAddress.email,
       },
     })
-    return newAddress
+    return { newAddress, message: 'Seu endereço foi salvo' }
   }
 }

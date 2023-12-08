@@ -7,7 +7,6 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { createAddress } from '@/actions/address'
 import { useSession } from 'next-auth/react'
-import { useRouter } from 'next/navigation'
 import { FormError } from '@/components/form/form-error'
 import {
   Accordion,
@@ -15,6 +14,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@radix-ui/react-accordion'
+import { useNotification } from '@/hooks/use-notifications'
 
 const addressFormSchema = z.object({
   username: z.string().min(1, 'Este campo é obrigatório.'),
@@ -27,7 +27,6 @@ const addressFormSchema = z.object({
   neighborhood: z.string().min(1, 'Este campo é obrigatório.'),
   number: z.string().min(1, 'Este campo é obrigatório.'),
   complement: z.string().min(1, 'Este campo é obrigatório.'),
-  userId: z.string(),
 })
 
 export type AddressFormData = z.infer<typeof addressFormSchema>
@@ -36,30 +35,34 @@ export function Form() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm<AddressFormData>({
     resolver: zodResolver(addressFormSchema),
   })
 
+  const { notifySuccess, notifyError } = useNotification()
+
   const { data } = useSession()
   const userId = data?.user.id
-  const router = useRouter()
+
+  const emailDefault = data?.user.email ? data.user.email : ''
 
   async function handleAddressForm(data: AddressFormData) {
     if (!userId) {
       return null
     }
 
-    data.userId = userId
-
     try {
-      await createAddress({
+      const result = await createAddress({
         dataAddress: data,
+        userId,
       })
+      reset()
+      notifySuccess(result.message)
     } catch (err) {
-      console.log(err)
+      notifyError('Tente novamente mais tarde')
     }
-    router.refresh()
   }
 
   return (
@@ -78,7 +81,7 @@ export function Form() {
                 <Input
                   type="text"
                   maxLength={30}
-                  placeholder="Nome completo"
+                  placeholder="nome sobrenome"
                   className="bg-transparent"
                   {...register('username')}
                 />
@@ -90,8 +93,9 @@ export function Form() {
                 <Input
                   type="text"
                   maxLength={30}
-                  placeholder="e-mail"
+                  placeholder="usuario@gmail.com"
                   className="bg-transparent"
+                  defaultValue={emailDefault}
                   {...register('email')}
                 />
                 <FormError errors={errors.email?.message} />
@@ -115,7 +119,7 @@ export function Form() {
                   type="number"
                   inputMode="decimal"
                   id="cep"
-                  placeholder="CEP"
+                  placeholder="59190000"
                   className="bg-transparent"
                   {...register('cep')}
                 />
@@ -127,7 +131,7 @@ export function Form() {
                 <Input
                   type="text"
                   maxLength={30}
-                  placeholder="Cidade"
+                  placeholder="Canguaretama"
                   className="bg-transparent"
                   {...register('city')}
                 />
@@ -151,7 +155,7 @@ export function Form() {
                 <Input
                   type="text"
                   maxLength={30}
-                  placeholder="Bairro"
+                  placeholder="Nome do seu Bairro"
                   className="bg-transparent"
                   {...register('neighborhood')}
                 />
@@ -162,7 +166,7 @@ export function Form() {
                 Rua
                 <Input
                   type="text"
-                  placeholder="Rua"
+                  placeholder="Nome da sua Rua"
                   className="bg-transparent"
                   {...register('street')}
                 />
@@ -174,7 +178,7 @@ export function Form() {
                 <Input
                   type="number"
                   maxLength={10}
-                  placeholder="Número"
+                  placeholder="Número da casa"
                   className="bg-transparent"
                   {...register('number')}
                 />
@@ -186,7 +190,7 @@ export function Form() {
                 <Input
                   type="text"
                   maxLength={50}
-                  placeholder="Complemento"
+                  placeholder="Próximo ao ???"
                   className="bg-transparent"
                   {...register('complement')}
                 />

@@ -44,7 +44,7 @@ export function useSlickCarousel() {
     initialSlide: 0,
     autoplay: true,
     speed: 2000,
-    autoplaySpeed: 6000,
+    autoplaySpeed: 3000,
     cssEase: 'linear',
   }
 

@@ -9,6 +9,7 @@ import { extractRouterConfig } from 'uploadthing/server'
 import { ourFileRouter } from './api/uploadthing/core'
 import Script from 'next/script'
 import { UserContextProvider } from '@/providers/user-context'
+import { ToastContainer } from 'react-toastify'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -34,6 +35,7 @@ export default async function RootLayout({
             {children}
           </AuthProvider>
         </UserContextProvider>
+        <ToastContainer position={'bottom-left'} />
       </body>
     </html>
   )

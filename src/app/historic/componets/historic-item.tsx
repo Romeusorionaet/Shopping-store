@@ -11,16 +11,16 @@ interface Props {
 export function HistoricItem({ historic }: Props) {
   if (historic.length === 0) {
     return (
-      <div className="flex h-screen justify-center items-center">
+      <div className="flex h-screen justify-center items-start">
         <div className="border border-white/20 p-4 rounded-md">
-          <h1>Sem registro de compras...</h1>
+          <p className="opacity-80">Sem registro de compras...</p>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="flex gap-8 flex-wrap justify-center">
+    <div className="flex gap-8 flex-wrap justify-center mt-20">
       {historic &&
         historic.map((item) => {
           const totalDiscount =

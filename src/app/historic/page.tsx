@@ -16,8 +16,11 @@ export default async function Historic() {
   const historic: HistoricOrder[] = JSON.parse(props.historic)
 
   return (
-    <div className="pt-28">
-      <h1 className="mb-20">Seu histórico de produtos comprado</h1>
+    <div className="pt-28 px-4">
+      <h1>Histórico de produtos comprado</h1>
+
+      <hr className="mt-2 opacity-20" />
+
       <HistoricItem historic={historic} />
     </div>
   )

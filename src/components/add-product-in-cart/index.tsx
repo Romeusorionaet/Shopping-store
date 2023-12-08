@@ -1,5 +1,6 @@
 'use client'
 
+import { useNotification } from '@/hooks/use-notifications'
 import { useCartStore } from '@/providers/zustand-store'
 import { Product } from '@prisma/client'
 import { BaggageClaim } from 'lucide-react'
@@ -16,17 +17,20 @@ export function AddProductInCart({ product, title }: Props) {
   const [quantity] = useState(1)
   const session = useSession()
 
+  const { notifyError, notifySuccess } = useNotification()
+
   const handleAddToProductInCart = () => {
     const user = session.data?.user
 
     if (!user) {
-      alert('Faça login na sua conta.')
+      notifyError('Faça login na sua conta.')
       return
     }
 
     const quantityInStock = product.quantity
 
     addProductToCart({ ...product, quantity, quantityInStock })
+    notifySuccess('Produto adicionado!')
   }
 
   return (
