@@ -8,7 +8,11 @@ import { CartItem } from './cart-item'
 import { NoUserMessage } from '../no-user-message'
 import { ShippingCalculatorAccordion } from '../shipping-calculator-accordion'
 
-export function Cart() {
+interface Props {
+  handleNavigateTo: (route: string) => void
+}
+
+export function Cart({ handleNavigateTo }: Props) {
   const { cart } = useCartStore()
   const { subtotal, totalDiscount, total } = calculateCartAllValues(cart)
   const navigate = useRouter()
@@ -24,7 +28,7 @@ export function Cart() {
       alert('faça login na sua conta')
       navigate.push('/')
     } else {
-      navigate.push('/address')
+      handleNavigateTo('/address')
     }
   }
 

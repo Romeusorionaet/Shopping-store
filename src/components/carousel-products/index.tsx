@@ -38,7 +38,7 @@ export function CarouselProducts({ products }: productsProps) {
 
   return (
     <div className="relative">
-      {products.length > 2 && (
+      {products.length > 3 && (
         <ArrowControlLeft
           sizeList={sizeList}
           onClick={() => slider.current?.slickPrev()}
@@ -127,7 +127,7 @@ export function CarouselProducts({ products }: productsProps) {
           })}
       </Slider>
 
-      {products.length > 2 && (
+      {products.length > 3 && (
         <ArrowControlRight
           sizeList={sizeList}
           onClick={() => slider.current?.slickNext()}

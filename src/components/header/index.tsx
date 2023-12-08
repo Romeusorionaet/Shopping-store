@@ -17,11 +17,14 @@ import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import { Separator } from '../ui/separator'
 import { useRouter } from 'next/navigation'
 import { Cart } from '../cart'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { UserContext } from '@/providers/user-context'
 
 export function Header() {
   const { isAdm } = useContext(UserContext)
+
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isCartOpen, setIsCartOpen] = useState(false)
 
   const { status, data } = useSession()
   const router = useRouter()
@@ -42,34 +45,20 @@ export function Header() {
     }
   }
 
-  const handleNavigateToHome = () => {
-    router.push('/')
-  }
-
-  const handleNavigateToCatalog = () => {
-    router.push('/catalog')
-  }
-
-  const handleNavigateToOrders = () => {
-    router.push('/orders')
-  }
-
-  const handleNavigateToRegisterProducts = () => {
-    router.push('/control-adm')
-  }
-
-  const handleNavigateToHistoric = () => {
-    router.push('/historic')
-  }
-
-  const handleNavigateToAddress = () => {
-    router.push('/address')
+  const handleNavigateTo = (route: string) => {
+    setIsMenuOpen(false)
+    setIsCartOpen(false)
+    router.push(route)
   }
 
   return (
     <header className="rounded-none p-4 bg-base_one_reference_header fixed z-30 w-full left-0">
       <div className="flex justify-between items-center max-w-[1680px] mx-auto">
-        <Sheet>
+        <Sheet
+          modal={false}
+          open={isMenuOpen}
+          onOpenChange={(open) => setIsMenuOpen(open)}
+        >
           <SheetTrigger asChild>
             <Button
               size="icon"
@@ -132,7 +121,7 @@ export function Header() {
               )}
 
               <Button
-                onClick={() => handleNavigateToHome()}
+                onClick={() => handleNavigateTo('/')}
                 size="icon"
                 className="group font-semibold w-full hover:bg-base_reference_card gap-4 justify-start p-4 bg-transparent duration-700"
               >
@@ -144,7 +133,7 @@ export function Header() {
               </Button>
 
               <Button
-                onClick={handleNavigateToCatalog}
+                onClick={() => handleNavigateTo('/catalog')}
                 size="icon"
                 className="group font-semibold w-full hover:bg-base_base_reference_card gap-4 justify-start p-4 bg-transparent duration-700"
               >
@@ -156,7 +145,7 @@ export function Header() {
               </Button>
 
               <Button
-                onClick={() => handleNavigateToOrders()}
+                onClick={() => handleNavigateTo('/orders')}
                 size="icon"
                 className="group font-semibold w-full hover:bg-base_base_reference_card gap-4 justify-start p-4 bg-transparent duration-700"
               >
@@ -168,7 +157,7 @@ export function Header() {
               </Button>
 
               <Button
-                onClick={() => handleNavigateToHistoric()}
+                onClick={() => handleNavigateTo('/historic')}
                 size="icon"
                 className="group font-semibold w-full hover:bg-base_reference_card gap-4 justify-start p-4 bg-transparent duration-700"
               >
@@ -180,7 +169,7 @@ export function Header() {
               </Button>
 
               <Button
-                onClick={() => handleNavigateToAddress()}
+                onClick={() => handleNavigateTo('/address')}
                 size="icon"
                 className="group font-semibold w-full hover:50 gap-4 justify-start p-4 bg-transparent duration-700"
               >
@@ -193,7 +182,7 @@ export function Header() {
 
               {isAdm ? (
                 <Button
-                  onClick={() => handleNavigateToRegisterProducts()}
+                  onClick={() => handleNavigateTo('/control-adm')}
                   size="icon"
                   className="group font-semibold w-full hover:bg-base_reference_card gap-4 justify-start p-4 bg-transparent duration-700"
                 >
@@ -211,13 +200,13 @@ export function Header() {
         </Sheet>
 
         <h1
-          onClick={handleNavigateToHome}
+          onClick={() => handleNavigateTo('/')}
           className="text-2xl font-bold cursor-pointer"
         >
           Shopping Store
         </h1>
 
-        <Sheet>
+        <Sheet open={isCartOpen} onOpenChange={(open) => setIsCartOpen(open)}>
           <SheetTrigger asChild>
             <Button
               size="icon"
@@ -233,7 +222,7 @@ export function Header() {
               Carrinho
             </SheetHeader>
 
-            <Cart />
+            <Cart handleNavigateTo={handleNavigateTo} />
           </SheetContent>
         </Sheet>
       </div>

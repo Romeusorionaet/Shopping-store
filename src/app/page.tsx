@@ -62,7 +62,7 @@ export default async function Home() {
       <div className="px-2">
         <h2 className="my-4 text-lg">Todos os produtos</h2>
 
-        <SearchProduct products={products} />
+        <SearchProduct products={allProducts} />
       </div>
 
       <div className="px-2">
