@@ -6,7 +6,7 @@ import { useSession } from 'next-auth/react'
 import { useCartStore } from '@/providers/zustand-store'
 import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
-import { NoUserMessage } from '@/components/no-user-message'
+import ClipLoader from 'react-spinners/ClipLoader'
 
 interface Props {
   userHasAddress: boolean
@@ -19,7 +19,11 @@ export function CheckoutCart({ userHasAddress }: Props) {
   const navigate = useRouter()
 
   if (!data) {
-    return <NoUserMessage />
+    return (
+      <div className="mt-10">
+        <ClipLoader color="#000" loading={!data} size={35} />
+      </div>
+    )
   }
 
   const handleFinishPurchaseClick = async () => {
