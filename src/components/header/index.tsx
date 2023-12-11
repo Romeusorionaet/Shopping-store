@@ -3,7 +3,6 @@
 import {
   BaggageClaim,
   BookUser,
-  FileClock,
   Home,
   LibraryBig,
   LogIn,
@@ -154,18 +153,6 @@ export function Header() {
                   size={16}
                 />
                 Meus pedidos
-              </Button>
-
-              <Button
-                onClick={() => handleNavigateTo('/historic')}
-                size="icon"
-                className="group font-semibold w-full hover:bg-base_reference_card gap-4 justify-start p-4 bg-transparent duration-700"
-              >
-                <FileClock
-                  className="group-hover:text-base_detail_decoration duration-700"
-                  size={16}
-                />
-                Histórico
               </Button>
 
               <Button

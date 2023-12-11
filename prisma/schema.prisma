@@ -86,17 +86,6 @@ model OrderProduct {
   quantity           Int
 }
 
-model HistoricOrder {
-  id                 String   @id @default(uuid())
-  userId             String
-  name               String
-  basePrice          Decimal  @db.Decimal(8, 2)
-  discountPercentage Int
-  quantity           Int
-  status             String
-  createdAt          DateTime @default(now())
-}
-
 model Address {
   id           String @id @default(uuid())
   cep          String

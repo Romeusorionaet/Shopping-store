@@ -46,7 +46,7 @@ export const POST = async (req: Request) => {
         const productId = productSold.productId
         const quantitySold = productSold.quantity
 
-        const saveProductSoldInHistoric = await prismaClient.product.update({
+        await prismaClient.product.update({
           where: {
             id: productId,
           },
@@ -55,19 +55,6 @@ export const POST = async (req: Request) => {
               decrement: quantitySold,
             },
           },
-        })
-
-        await prismaClient.historicOrder.createMany({
-          data: [
-            {
-              userId: order.userId,
-              name: saveProductSoldInHistoric.name,
-              quantity: quantitySold,
-              basePrice: saveProductSoldInHistoric.basePrice,
-              discountPercentage: saveProductSoldInHistoric.discountPercentage,
-              status: order.status,
-            },
-          ],
         })
       }
     }
