@@ -4,16 +4,20 @@ import Link from 'next/link'
 import { LibraryBig } from 'lucide-react'
 import { OfferBanner } from '@/components/offer-banner'
 import { CarouselProducts } from '@/components/carousel-products'
-import { OrderStatus, Product } from '@prisma/client'
+import { Category, OrderStatus, Product } from '@prisma/client'
 import { getDataOrders } from '@/lib/getData/get-data-orders'
 import { OrderIncludeOrderProducts } from './orders/page'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { SearchProduct } from '@/components/search-product'
 
+export interface ProductsWithCategory extends Product {
+  category: Category
+}
+
 export default async function Home() {
   const { props } = await getDataProducts()
-  const products: Product[] = JSON.parse(props.products)
+  const products: ProductsWithCategory[] = JSON.parse(props.products)
 
   const productsInOffers = products
     .filter((product) => product.discountPercentage >= 50)

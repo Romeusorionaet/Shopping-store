@@ -2,7 +2,11 @@ import { prismaClient } from '@/lib/prisma'
 
 export const getDataProducts = async () => {
   try {
-    const products = await prismaClient.product.findMany({})
+    const products = await prismaClient.product.findMany({
+      include: {
+        category: true,
+      },
+    })
 
     return {
       props: {

@@ -5,19 +5,23 @@ import { Input } from '../ui/input'
 import { useState } from 'react'
 import { CarouselProducts } from '../carousel-products'
 import { Search } from 'lucide-react'
+import { ProductsWithCategory } from '@/app/page'
 
 interface Props {
-  products: Product[]
+  products: ProductsWithCategory[]
 }
 
 export function SearchProduct({ products }: Props) {
   const [filteredProducts, setFilteredProducts] = useState<Product[]>(products)
-  const [searchTerm, setSearchTerm] = useState<string>('')
+  const [searchItem, setSearchItem] = useState<string>('')
 
   const handleSearch = (searchValue: string) => {
-    setSearchTerm(searchValue)
-    const filtered = products.filter((product) =>
-      product.name.toLowerCase().includes(searchValue.toLowerCase()),
+    setSearchItem(searchValue)
+
+    const filtered = products.filter(
+      (product) =>
+        product.name.toLowerCase().includes(searchValue.toLowerCase()) ||
+        product.category.name.toLowerCase().includes(searchValue.toLowerCase()),
     )
     setFilteredProducts(filtered)
   }
@@ -29,12 +33,19 @@ export function SearchProduct({ products }: Props) {
         <Input
           className="bg-base_color_dark/5 px-14 w-full "
           onChange={(e) => handleSearch(e.target.value)}
-          value={searchTerm}
-          placeholder="Nome de algum produto"
+          value={searchItem}
+          placeholder="Pesquise por nome ou categoria"
         />
       </div>
 
-      <CarouselProducts products={filteredProducts} />
+      {filteredProducts.length === 0 ? (
+        <p className="text-center">
+          O produto <strong>{searchItem}</strong> não está disponível. Verifique
+          se o nome está correto.
+        </p>
+      ) : (
+        <CarouselProducts products={filteredProducts} />
+      )}
     </div>
   )
 }
