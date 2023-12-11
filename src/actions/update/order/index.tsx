@@ -1,6 +1,11 @@
 'use server'
 
-import { OrderStatus, OrderStatusTracking, PrismaClient } from '@prisma/client'
+import {
+  Address,
+  OrderStatus,
+  OrderStatusTracking,
+  PrismaClient,
+} from '@prisma/client'
 
 const prisma = new PrismaClient()
 
@@ -8,15 +13,33 @@ interface Props {
   orderId: string
   trackingCode?: OrderStatus | string
   orderTracking?: OrderStatusTracking
+  userAddress?: Address
 }
 
 export const updateOrder = async ({
   orderId,
   trackingCode,
   orderTracking,
+  userAddress,
 }: Props) => {
   try {
-    if (trackingCode) {
+    if (trackingCode && userAddress) {
+      await prisma.orderAddress.createMany({
+        data: {
+          orderId,
+          cep: userAddress.cep,
+          city: userAddress.city,
+          complement: userAddress.complement,
+          email: userAddress.email,
+          neighborhood: userAddress.neighborhood,
+          number: userAddress.number,
+          phoneNumber: userAddress.phoneNumber,
+          street: userAddress.street,
+          uf: userAddress.uf,
+          username: userAddress.username,
+        },
+      })
+
       await prisma.order.update({
         where: {
           id: orderId,

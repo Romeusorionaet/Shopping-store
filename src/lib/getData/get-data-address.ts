@@ -11,6 +11,9 @@ export const getDataAddress = async (userId: string) => {
     if (!userAddress) {
       return {
         notFound: true,
+        props: {
+          userAddress: {},
+        },
       }
     }
 
@@ -20,9 +23,13 @@ export const getDataAddress = async (userId: string) => {
       },
       revalidate: 60 * 60 * 24,
     }
-  } catch (error) {
+  } catch (err) {
+    console.log(err)
     return {
-      error: 'Something went wrong while fetching the user address.',
+      notFound: true,
+      props: {
+        userAddress: {},
+      },
     }
   }
 }

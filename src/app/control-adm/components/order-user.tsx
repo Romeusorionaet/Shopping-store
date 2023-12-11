@@ -11,8 +11,9 @@ import { getOrderStatus } from '@/components/helpers/get-order-status'
 import { InsertTrackingCode } from './insert-tracking-code'
 import { format } from 'date-fns'
 import { Address, OrderStatus, OrderStatusTracking } from '@prisma/client'
-import { SavedUserAddress } from '@/components/saved-user-address'
 import { OrderDelivered } from './order-delivered'
+import { ChangeableAddressInformation } from '@/components/changeable-address-information'
+import { FixedAddressInformation } from './fixed-address-information'
 
 interface OrdersProps {
   orders: OrderProps[]
@@ -20,7 +21,7 @@ interface OrdersProps {
 }
 
 export function OrderUser({ orders, address }: OrdersProps) {
-  const [userAddress] = address
+  const [userAddressSaved] = address
 
   return (
     <Accordion
@@ -82,14 +83,23 @@ export function OrderUser({ orders, address }: OrdersProps) {
                   )}
 
                   {isPaymentConfirmedNoTracking && (
-                    <InsertTrackingCode orderId={order.id} />
+                    <InsertTrackingCode
+                      orderId={order.id}
+                      userAddress={userAddressSaved}
+                    />
                   )}
 
                   {isOrderDeliveredToCarreios && (
                     <OrderDelivered orderId={order.id} />
                   )}
 
-                  <SavedUserAddress userAddress={userAddress} />
+                  {order.orderAddress.length !== 0 ? (
+                    <FixedAddressInformation
+                      orderAddress={order.orderAddress}
+                    />
+                  ) : (
+                    <ChangeableAddressInformation address={userAddressSaved} />
+                  )}
 
                   <OrderProducts ordersProducts={order.orderProducts} />
                 </div>

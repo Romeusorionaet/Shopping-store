@@ -23,6 +23,7 @@ export const getDataOrders = async (id?: string) => {
             product: true,
           },
         },
+        orderAddress: true,
       },
     })
 

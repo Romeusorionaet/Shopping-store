@@ -1,7 +1,13 @@
 'use client'
 
 import { Input } from '@/components/ui/input'
-import { Address, OrderProduct, Product, Order } from '@prisma/client'
+import {
+  Address,
+  OrderProduct,
+  Product,
+  Order,
+  OrderAddress,
+} from '@prisma/client'
 import {
   Accordion,
   AccordionContent,
@@ -17,6 +23,7 @@ export interface OrderProducts extends OrderProduct {
 
 export interface OrderProps extends Order {
   orderProducts: OrderProducts[]
+  orderAddress: OrderAddress[]
 }
 
 export interface UserWithOrders {
@@ -77,6 +84,8 @@ export function AreaOrdersOfClients({ ordersUsers }: OrdersUsersProps) {
               if (orderUser.Order.length === 0) {
                 return null
               }
+
+              // console.log(orderUser.Order[0].orderAddress)
 
               return (
                 <div

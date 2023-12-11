@@ -3,27 +3,28 @@
 import { updateOrder } from '@/actions/update/order'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { OrderStatusTracking } from '@prisma/client'
+import { Address, OrderStatusTracking } from '@prisma/client'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 interface Props {
   orderId: string
+  userAddress: Address
 }
 
-export function InsertTrackingCode({ orderId }: Props) {
+export function InsertTrackingCode({ orderId, userAddress }: Props) {
   const [trackingCode, setTrackingCode] = useState('')
 
   const navigate = useRouter()
 
-  const handleUpdateTrackingCode = async () => {
+  const handleUpdateDataOrder = async () => {
     if (!trackingCode) {
       alert('Insira o código.')
       return
     }
 
     try {
-      const result = await updateOrder({ trackingCode, orderId })
+      const result = await updateOrder({ trackingCode, orderId, userAddress })
 
       alert(result.message)
 
@@ -43,6 +44,8 @@ export function InsertTrackingCode({ orderId }: Props) {
       await updateOrder({ orderTracking: CANCELED, orderId })
 
       alert('Pedido cancelado')
+
+      setTrackingCode('')
 
       navigate.push('/control-adm')
       navigate.refresh()
@@ -66,7 +69,7 @@ export function InsertTrackingCode({ orderId }: Props) {
 
       <div className="flex justify-between">
         <Button
-          onClick={handleUpdateTrackingCode}
+          onClick={handleUpdateDataOrder}
           className="text-base_color_dark"
         >
           Enviar

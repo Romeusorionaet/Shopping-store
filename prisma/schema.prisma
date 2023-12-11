@@ -43,6 +43,24 @@ model Order {
   trackingCode  String              @default("")
   orderTracking OrderStatusTracking @default(WAITING)
   orderProducts OrderProduct[]
+  orderAddress  OrderAddress[]
+}
+
+model OrderAddress {
+  id           String @id @default(uuid())
+  cep          String
+  city         String
+  uf           String
+  street       String
+  neighborhood String
+  number       String
+  complement   String
+  username     String
+  phoneNumber  String
+  email        String
+
+  order   Order  @relation(fields: [orderId], references: [id])
+  orderId String
 }
 
 enum OrderStatus {

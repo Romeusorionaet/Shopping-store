@@ -22,6 +22,7 @@ export const getDataOrdersUsers = async () => {
                 product: true,
               },
             },
+            orderAddress: true,
           },
         },
         Address: true,
