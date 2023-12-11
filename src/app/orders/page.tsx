@@ -3,7 +3,13 @@ import { getDataOrders } from '@/lib/getData/get-data-orders'
 import { getServerSession } from 'next-auth'
 import { OrderItem } from './components/order-item'
 import { OrderWaitingForPayment } from './components/order-waiting-for-payment'
-import { Order, OrderProduct, OrderStatus, Product } from '@prisma/client'
+import {
+  Order,
+  OrderAddress,
+  OrderProduct,
+  OrderStatus,
+  Product,
+} from '@prisma/client'
 import { NoUserMessage } from '@/components/no-user-message'
 
 interface OrderProductIncludeProduct extends OrderProduct {
@@ -12,6 +18,7 @@ interface OrderProductIncludeProduct extends OrderProduct {
 
 export interface OrderIncludeOrderProducts extends Order {
   orderProducts: OrderProductIncludeProduct[]
+  orderAddress: OrderAddress[]
 }
 
 export default async function Orders() {

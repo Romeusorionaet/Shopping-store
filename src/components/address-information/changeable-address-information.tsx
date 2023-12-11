@@ -1,11 +1,28 @@
-import { OrderAddress } from '@prisma/client'
+import { Address } from '@prisma/client'
+import Link from 'next/link'
 
 interface Props {
-  orderAddress: OrderAddress[]
+  address: Address | null
 }
 
-export function FixedAddressInformation({ orderAddress }: Props) {
-  const address = orderAddress[0]
+export function ChangeableAddressInformation({ address }: Props) {
+  if (!address) {
+    return (
+      <div className="border border-white/20 p-4 rounded-md">
+        <p>
+          Não podemos exibir os dados do endereço temporário no momento. No
+          entanto, seus dados estão salvos. Isso pode ter ocorrido se você
+          limpou os cookies do seu navegador ou acessou por um navegador
+          diferente. Se deseja visualizar o endereço temporário, por favor,
+          envie novamente o formulário de endereço. Você pode realizar
+          alterações desejadas até 5 dias após a confirmação da entrega.
+        </p>
+        <Link className="text-blue-500" href="/address">
+          Endereço de entrega.
+        </Link>
+      </div>
+    )
+  }
 
   return (
     <div className="mt-4 flex flex-col gap-1 opacity-80 bg-blue-200/20 p-1 rounded-md">

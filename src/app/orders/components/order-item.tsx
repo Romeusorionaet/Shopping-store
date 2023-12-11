@@ -7,23 +7,25 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion'
-import { OrderStatusTracking, Prisma } from '@prisma/client'
+import { Address, OrderStatus, OrderStatusTracking } from '@prisma/client'
 import { format } from 'date-fns'
 import { getOrderStatus } from '../../../components/helpers/get-order-status'
 import { Button } from '@/components/ui/button'
 import { OrderProductItem } from './order-product-item'
+import { FixedAddressInformation } from '@/components/address-information/fixed-address-information'
+import { OrderIncludeOrderProducts } from '../page'
+import { ChangeableAddressInformation } from '@/components/address-information/changeable-address-information'
+import { useEffect, useState } from 'react'
+import { getAddressFromCookies } from '@/utils/get-address-from-cookies'
+import Link from 'next/link'
 
 export interface OrderProductProps {
-  order: Prisma.OrderGetPayload<{
-    include: {
-      orderProducts: {
-        include: { product: true }
-      }
-    }
-  }>
+  order: OrderIncludeOrderProducts
 }
 
 export function OrderItem({ order }: OrderProductProps) {
+  const [userAddressSaved, setUserAddressSaved] = useState<Address | null>(null)
+
   const { orderProducts } = order
   let subtotal = 0
   let totalDiscount = 0
@@ -46,6 +48,13 @@ export function OrderItem({ order }: OrderProductProps) {
   const handleNavigateToCorreiosPage = () => {
     open('https://www.correios.com.br/')
   }
+
+  useEffect(() => {
+    const addressFromLocalStorage = getAddressFromCookies()
+    if (addressFromLocalStorage) {
+      setUserAddressSaved(addressFromLocalStorage)
+    }
+  }, [])
 
   return (
     <Accordion type="single" className="w-full" collapsible>
@@ -164,6 +173,23 @@ export function OrderItem({ order }: OrderProductProps) {
                 </p>
               </div>
             </div>
+
+            {order.orderAddress.length !== 0 ? (
+              <FixedAddressInformation orderAddress={order.orderAddress} />
+            ) : order.orderTracking === OrderStatusTracking.CANCELED ? (
+              <></>
+            ) : (
+              <div>
+                <p>
+                  O endereço pode ser editado enquanto o pedido está
+                  <strong> Aguardando</strong>.{' '}
+                  <Link className="text-blue-500" href="/address">
+                    Enditar.
+                  </Link>
+                </p>
+                <ChangeableAddressInformation address={userAddressSaved} />
+              </div>
+            )}
 
             <div>
               <Button

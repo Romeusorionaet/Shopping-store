@@ -11,8 +11,8 @@ import { getOrderStatus } from '@/components/helpers/get-order-status'
 import { format } from 'date-fns'
 import { Address, OrderStatus, OrderStatusTracking } from '@prisma/client'
 import { OrderDelivered } from '../order-management/order-delivered'
-import { ChangeableAddressInformation } from '@/components/changeable-address-information'
-import { FixedAddressInformation } from '../fixed-address-information'
+import { ChangeableAddressInformation } from '@/components/address-information/changeable-address-information'
+import { FixedAddressInformation } from '../../../../components/address-information/fixed-address-information'
 import { UpdateOrder } from './update-order'
 
 interface OrdersProps {

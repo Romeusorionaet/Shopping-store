@@ -18,7 +18,9 @@ import { useNotification } from '@/hooks/use-notifications'
 import { Address } from '@prisma/client'
 import { CheckoutCart } from './checkout-cart'
 import { useEffect, useState } from 'react'
-import { ChangeableAddressInformation } from '@/components/changeable-address-information'
+import { ChangeableAddressInformation } from '@/components/address-information/changeable-address-information'
+import Cookies from 'js-cookie'
+import { getAddressFromCookies } from '@/utils/get-address-from-cookies'
 
 const addressFormSchema = z.object({
   username: z.string().min(1, 'Este campo é obrigatório.'),
@@ -34,18 +36,6 @@ const addressFormSchema = z.object({
 })
 
 export type AddressFormData = z.infer<typeof addressFormSchema>
-
-function getAddressFromLocalStorage() {
-  if (typeof window === 'undefined') {
-    return null
-  }
-
-  const addressData = window.localStorage.getItem('@shopping-store/address')
-  if (addressData) {
-    return JSON.parse(addressData)
-  }
-  return null
-}
 
 export function FormAddress() {
   const {
@@ -77,18 +67,19 @@ export function FormAddress() {
       })
 
       if (result.newAddress) {
-        localStorage.setItem(
+        Cookies.set(
           '@shopping-store/address',
           JSON.stringify(result.newAddress),
         )
       } else if (result.updatedAddress) {
-        localStorage.setItem(
+        Cookies.set(
           '@shopping-store/address',
           JSON.stringify(result.updatedAddress),
         )
       }
 
       reset()
+      window.location.reload()
       notifySuccess(result.message)
     } catch (err) {
       notifyError('Tente novamente mais tarde')
@@ -96,15 +87,13 @@ export function FormAddress() {
   }
 
   useEffect(() => {
-    const addressFromLocalStorage = getAddressFromLocalStorage()
-    if (addressFromLocalStorage) {
-      setUserAddressSaved(addressFromLocalStorage)
+    const addressFromCookies = getAddressFromCookies()
+    if (addressFromCookies) {
+      setUserAddressSaved(addressFromCookies)
     }
   }, [])
 
   const userHasAddress = !!userAddressSaved
-
-  // console.log(userAddressSaved)
 
   return (
     <div>

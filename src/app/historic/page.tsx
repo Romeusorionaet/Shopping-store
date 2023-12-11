@@ -17,7 +17,7 @@ export default async function Historic() {
 
   return (
     <div className="pt-28 px-4">
-      <h1>Histórico de produtos comprado</h1>
+      <h1>Histórico de produtos comprado ou reembolsado</h1>
 
       <hr className="mt-2 opacity-20" />
 
