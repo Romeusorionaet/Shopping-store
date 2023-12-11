@@ -15,7 +15,7 @@ import {
   AccordionTrigger,
 } from '@radix-ui/react-accordion'
 import { useMemo, useState } from 'react'
-import { OrderUser } from './order-user'
+import { OrderUser } from '../order-management/order-user'
 
 export interface OrderProducts extends OrderProduct {
   product: Product
@@ -84,8 +84,6 @@ export function AreaOrdersOfClients({ ordersUsers }: OrdersUsersProps) {
               if (orderUser.Order.length === 0) {
                 return null
               }
-
-              // console.log(orderUser.Order[0].orderAddress)
 
               return (
                 <div

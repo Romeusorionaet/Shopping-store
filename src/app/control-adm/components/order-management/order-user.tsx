@@ -5,15 +5,15 @@ import {
   AccordionTrigger,
 } from '@radix-ui/react-accordion'
 import { ArrowBigDown } from 'lucide-react'
-import { OrderProducts } from './order-products'
-import { OrderProps } from './area-orders-of-clients'
+import { OrderProducts } from '../order-management/order-products'
+import { OrderProps } from '../area-management/area-orders-of-clients'
 import { getOrderStatus } from '@/components/helpers/get-order-status'
-import { InsertTrackingCode } from './insert-tracking-code'
 import { format } from 'date-fns'
 import { Address, OrderStatus, OrderStatusTracking } from '@prisma/client'
-import { OrderDelivered } from './order-delivered'
+import { OrderDelivered } from '../order-management/order-delivered'
 import { ChangeableAddressInformation } from '@/components/changeable-address-information'
-import { FixedAddressInformation } from './fixed-address-information'
+import { FixedAddressInformation } from '../fixed-address-information'
+import { UpdateOrder } from './update-order'
 
 interface OrdersProps {
   orders: OrderProps[]
@@ -83,7 +83,7 @@ export function OrderUser({ orders, address }: OrdersProps) {
                   )}
 
                   {isPaymentConfirmedNoTracking && (
-                    <InsertTrackingCode
+                    <UpdateOrder
                       orderId={order.id}
                       userAddress={userAddressSaved}
                     />

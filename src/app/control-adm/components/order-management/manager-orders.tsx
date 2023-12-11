@@ -1,4 +1,3 @@
-import { AreaOrdersOfClients, UserWithOrders } from './area-orders-of-clients'
 import { getDataOrdersUsers } from '@/lib/getData/get-data-orders-users'
 import { getDataOrders } from '@/lib/getData/get-data-orders'
 import { getServerSession } from 'next-auth'
@@ -7,6 +6,10 @@ import { OrderWaitingForPayment } from '@/app/orders/components/order-waiting-fo
 import { OrderStatus, OrderStatusTracking } from '@prisma/client'
 import { NoUserMessage } from '@/components/no-user-message'
 import { OrderIncludeOrderProducts } from '@/app/orders/page'
+import {
+  AreaOrdersOfClients,
+  UserWithOrders,
+} from '../area-management/area-orders-of-clients'
 
 export async function ManageOrders() {
   const { props } = await getDataOrdersUsers()

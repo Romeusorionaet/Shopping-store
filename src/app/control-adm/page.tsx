@@ -1,11 +1,11 @@
-import { FormCategory } from './components/form-category'
+import { FormCategory } from './components/forms-register/form-category'
 import { getDataCatalog } from '@/lib/getData/get-data-catalog'
-import { FormProduct } from './components/form-products'
-import { AreaUpdateCategory } from './components/area-update-category'
+import { FormProduct } from './components/forms-register/form-products'
+import { AreaUpdateCategory } from './components/area-management/area-update-category'
 import { getDataProducts } from '@/lib/getData/get-data-products'
-import { AreaUpdateProduct } from './components/area-update-product'
 import { Category, Product } from '@prisma/client'
-import { ManageOrders } from './components/manager-orders'
+import { ManageOrders } from './components/order-management/manager-orders'
+import { AreaUpdateProduct } from './components/area-management/area-update-product'
 
 export default async function ControlAdm() {
   const { propsCategories } = await getDataCatalog()

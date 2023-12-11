@@ -1,5 +1,5 @@
-import { OrderProducts } from './area-orders-of-clients'
-import { ProductManage } from './product-manage'
+import { OrderProducts } from '../area-management/area-orders-of-clients'
+import { ProductManage } from '../product-manage'
 
 interface Props {
   ordersProducts: OrderProducts[]

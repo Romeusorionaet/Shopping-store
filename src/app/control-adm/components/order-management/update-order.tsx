@@ -12,7 +12,7 @@ interface Props {
   userAddress: Address
 }
 
-export function InsertTrackingCode({ orderId, userAddress }: Props) {
+export function UpdateOrder({ orderId, userAddress }: Props) {
   const [trackingCode, setTrackingCode] = useState('')
 
   const navigate = useRouter()
