@@ -54,13 +54,34 @@ export const updateOrder = async ({
     }
 
     if (orderTracking) {
-      await prisma.order.update({
+      const order = await prisma.order.update({
         where: {
           id: orderId,
         },
         data: {
           orderTracking,
         },
+        include: {
+          orderProducts: {
+            include: {
+              product: true,
+            },
+          },
+        },
+      })
+
+      const userOrdersHistoricData = order.orderProducts.map((item) => ({
+        userId: order.userId,
+        name: item.product.name,
+        basePrice: item.product.basePrice,
+        discountPercentage: item.product.discountPercentage,
+        quantity: item.quantity,
+        imageUrl: item.product.imageUrls[0],
+        createdAt: order.createdAt,
+      }))
+
+      await prisma.userOrdersHistoric.createMany({
+        data: userOrdersHistoricData,
       })
 
       return {
