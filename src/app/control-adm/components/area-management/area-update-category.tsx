@@ -12,9 +12,11 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@radix-ui/react-accordion'
-import { ArrowBigRight, Trash } from 'lucide-react'
+import { ArrowBigRight } from 'lucide-react'
 import Image from 'next/image'
 import { useState } from 'react'
+import { DialogConfirmOrNot } from '../dialog-confirm-or-not'
+import { useNotification } from '@/hooks/use-notifications'
 
 interface ImageDataProps {
   name: string
@@ -49,19 +51,27 @@ export function AreaUpdateCategory({ listOfCategory, listOfProducts }: Props) {
   const [newCategoryName, setNewCategoryName] = useState('')
   const [editingProductId, setEditingProductId] = useState('')
 
+  const { notifySuccess, notifyError } = useNotification()
+
   const filteredCategory = listOfCategory.filter((category) =>
     category.name.toLowerCase().includes(searchTerm.toLowerCase()),
   )
 
   const handleDeleteCategory = async (categoryId: string) => {
-    alert(
-      'Todos os produtos registrado nessa categoria irão ser deletados, deseja continuar?',
-    )
     try {
       const result = await deleteCategory(categoryId)
-      alert(result?.message)
+
+      if (result.messageSuccess) {
+        notifySuccess(result.messageSuccess)
+
+        setTimeout(() => {
+          window.location.reload()
+        }, 2000)
+      } else {
+        notifyError(String(result.messageError))
+      }
     } catch (err) {
-      console.error(err)
+      notifyError(String(err))
     }
   }
 
@@ -182,12 +192,10 @@ export function AreaUpdateCategory({ listOfCategory, listOfProducts }: Props) {
                     </div>
 
                     <div className="flex gap-6 text-sm">
-                      <Button
-                        variant={'destructive'}
-                        onClick={() => handleDeleteCategory(category.id)}
-                      >
-                        <Trash size={28} />
-                      </Button>
+                      <DialogConfirmOrNot
+                        onConfirm={() => handleDeleteCategory(category.id)}
+                      />
+
                       <Button
                         onClick={() => handleUpdateCategory(category)}
                         className="text-base_color_dark"
@@ -201,7 +209,7 @@ export function AreaUpdateCategory({ listOfCategory, listOfProducts }: Props) {
                         onClick={() => {
                           setEditingProductId(category.id)
                         }}
-                        className="data-[editing=true]:bg-base_color_positive text-base_color_dark"
+                        className="data-[editing=true]:bg-base_color_positive hover:text-base_color_dark"
                       >
                         {isEditing ? 'Habilitado' : 'Habilitar'}
                       </Button>
