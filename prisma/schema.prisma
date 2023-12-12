@@ -36,7 +36,7 @@ model Product {
 model Order {
   id            String              @id @default(uuid())
   userId        String
-  user          User                @relation(fields: [userId], references: [id])
+  user          User                @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt     DateTime            @default(now())
   updatedAt     DateTime            @default(now()) @updatedAt
   status        OrderStatus         @default(WAITING_FOR_PAYMENT)
@@ -59,7 +59,7 @@ model OrderAddress {
   phoneNumber  String
   email        String
 
-  order   Order  @relation(fields: [orderId], references: [id])
+  order   Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
   orderId String
 }
 
