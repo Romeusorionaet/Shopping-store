@@ -52,20 +52,23 @@ export function CarouselProducts({ products }: productsProps) {
             const productAvailable = product.quantity <= 0
 
             return (
-              <div key={product.id} className="group relative h-[26rem] z-20">
+              <div
+                key={product.id}
+                className="group relative md:h-[26rem] h-72 z-20"
+              >
                 <div
                   data-quantity={productAvailable}
-                  className="data-[quantity=true]:group-hover:hidden data-[quantity=true]:hidden group-hover:flex md:hidden absolute bottom-1 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-20"
+                  className="data-[quantity=true]:group-hover:hidden data-[quantity=true]:hidden group-hover:flex md:hidden absolute bottom-1 left-1/2 transform -translate-x-1/2 w-full"
                 >
                   <AddProductInCart product={product} />
                 </div>
                 <Link href={`/details/${product.slug}`}>
                   <div
                     data-quantity={productAvailable}
-                    className="p-4 bg-base_reference_card/60 hover:bg-base_reference_card_hover duration-700 flex flex-col justify-center items-center gap-2 rounded-md h-full data-[quantity=true]:bg-base_color_dark/5 data-[quantity=true]:hover:bg-base_color_dark/10 "
+                    className="md:p-4 p-1 bg-base_reference_card/60 hover:bg-base_reference_card_hover duration-700 flex flex-col justify-center items-center md:gap-2 gap-1 rounded-md md:h-full data-[quantity=true]:bg-base_color_dark/5 data-[quantity=true]:hover:bg-base_color_dark/10"
                   >
-                    <div className="h-10">
-                      <p className="text-sm">{product.name}</p>
+                    <div className="h-10 text-center">
+                      <p className="md:text-sm text-xs">{product.name}</p>
                     </div>
 
                     <div className="h-10">
@@ -91,7 +94,7 @@ export function CarouselProducts({ products }: productsProps) {
                         </p>
                       )}
 
-                      <p>
+                      <p className="text-sm">
                         {totalPrice.toLocaleString('pt-BR', {
                           style: 'currency',
                           currency: 'BRL',
@@ -100,16 +103,18 @@ export function CarouselProducts({ products }: productsProps) {
                       </p>
                     </div>
 
-                    <Image
-                      width={0}
-                      height={0}
-                      sizes="100vw"
-                      className="w-full h-52 object-contain"
-                      src={product.imageUrls[0]}
-                      alt={product.name}
-                    />
+                    <div>
+                      <Image
+                        width={0}
+                        height={0}
+                        sizes="100vw"
+                        className="w-full md:h-52 h-32 object-contain"
+                        src={product.imageUrls[0]}
+                        alt={product.name}
+                      />
+                    </div>
 
-                    <div className="flex items-center justify-between gap-2 w-full mb-4">
+                    <div className="flex items-center justify-between gap-2 w-full mb-4 max-md:text-xs">
                       {product.discountPercentage !== 0 && (
                         <p>
                           <strong>{product.discountPercentage}%</strong> Desc

@@ -20,16 +20,14 @@ export function useSlickCarousel() {
       {
         breakpoint: 600,
         settings: {
-          slidesToShow: 1.5,
-          slidesToScroll: 1.5,
+          slidesToShow: 2.2,
           initialSlide: 2,
         },
       },
       {
-        breakpoint: 480,
+        breakpoint: 300,
         settings: {
-          slidesToShow: 1.2,
-          slidesToScroll: 1,
+          slidesToShow: 1.1,
         },
       },
     ],
