@@ -1,6 +1,9 @@
 -- CreateEnum
 CREATE TYPE "OrderStatus" AS ENUM ('WAITING_FOR_PAYMENT', 'PAYMENT_CONFIRMED');
 
+-- CreateEnum
+CREATE TYPE "OrderStatusTracking" AS ENUM ('WAITING', 'CANCELED', 'PRODUCT_DELIVERED_TO_CORREIOS', 'PRODUCT_DELIVERED_TO_CLIENT');
+
 -- CreateTable
 CREATE TABLE "Category" (
     "id" TEXT NOT NULL,
@@ -21,7 +24,7 @@ CREATE TABLE "Product" (
     "imageUrls" TEXT[],
     "categoryId" TEXT NOT NULL,
     "quantity" INTEGER NOT NULL DEFAULT 1,
-    "placeOfSale" TEXT NOT NULL DEFAULT 'onlineStore',
+    "placeOfSale" TEXT NOT NULL DEFAULT 'ONLINE_STORE',
     "discountPercentage" INTEGER NOT NULL DEFAULT 0,
 
     CONSTRAINT "Product_pkey" PRIMARY KEY ("id")
@@ -34,8 +37,28 @@ CREATE TABLE "Order" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "status" "OrderStatus" NOT NULL DEFAULT 'WAITING_FOR_PAYMENT',
+    "trackingCode" TEXT NOT NULL DEFAULT '',
+    "orderTracking" "OrderStatusTracking" NOT NULL DEFAULT 'WAITING',
 
     CONSTRAINT "Order_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "OrderAddress" (
+    "id" TEXT NOT NULL,
+    "cep" TEXT NOT NULL,
+    "city" TEXT NOT NULL,
+    "uf" TEXT NOT NULL,
+    "street" TEXT NOT NULL,
+    "neighborhood" TEXT NOT NULL,
+    "number" TEXT NOT NULL,
+    "complement" TEXT NOT NULL,
+    "username" TEXT NOT NULL,
+    "phoneNumber" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "orderId" TEXT NOT NULL,
+
+    CONSTRAINT "OrderAddress_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -48,6 +71,31 @@ CREATE TABLE "OrderProduct" (
     "quantity" INTEGER NOT NULL,
 
     CONSTRAINT "OrderProduct_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "UserOrdersHistoric" (
+    "id" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "basePrice" DECIMAL(8,2) NOT NULL,
+    "discountPercentage" INTEGER NOT NULL,
+    "quantity" INTEGER NOT NULL,
+    "imageUrl" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL,
+    "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "cep" TEXT NOT NULL,
+    "city" TEXT NOT NULL,
+    "uf" TEXT NOT NULL,
+    "street" TEXT NOT NULL,
+    "neighborhood" TEXT NOT NULL,
+    "number" TEXT NOT NULL,
+    "complement" TEXT NOT NULL,
+    "username" TEXT NOT NULL,
+    "phoneNumber" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+
+    CONSTRAINT "UserOrdersHistoric_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -102,8 +150,8 @@ CREATE TABLE "User" (
     "name" TEXT,
     "email" TEXT,
     "emailVerified" TIMESTAMP(3),
-    "image" TEXT,
     "isAdm" BOOLEAN NOT NULL DEFAULT false,
+    "image" TEXT,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
@@ -142,10 +190,13 @@ CREATE UNIQUE INDEX "VerificationToken_identifier_token_key" ON "VerificationTok
 ALTER TABLE "Product" ADD CONSTRAINT "Product_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES "Category"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Order" ADD CONSTRAINT "Order_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Order" ADD CONSTRAINT "Order_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "OrderProduct" ADD CONSTRAINT "OrderProduct_productId_fkey" FOREIGN KEY ("productId") REFERENCES "Product"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "OrderAddress" ADD CONSTRAINT "OrderAddress_orderId_fkey" FOREIGN KEY ("orderId") REFERENCES "Order"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "OrderProduct" ADD CONSTRAINT "OrderProduct_productId_fkey" FOREIGN KEY ("productId") REFERENCES "Product"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "OrderProduct" ADD CONSTRAINT "OrderProduct_orderId_fkey" FOREIGN KEY ("orderId") REFERENCES "Order"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

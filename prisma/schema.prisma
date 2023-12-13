@@ -86,6 +86,29 @@ model OrderProduct {
   quantity           Int
 }
 
+model UserOrdersHistoric {
+  id                 String   @id @default(uuid())
+  userId             String
+  name               String
+  basePrice          Decimal  @db.Decimal(8, 2)
+  discountPercentage Int
+  quantity           Int
+  imageUrl           String
+  createdAt          DateTime
+  updatedAt          DateTime @default(now())
+
+  cep          String
+  city         String
+  uf           String
+  street       String
+  neighborhood String
+  number       String
+  complement   String
+  username     String
+  phoneNumber  String
+  email        String
+}
+
 model Address {
   id           String @id @default(uuid())
   cep          String

@@ -67,6 +67,7 @@ export const updateOrder = async ({
               product: true,
             },
           },
+          orderAddress: true,
         },
       })
 
@@ -78,6 +79,16 @@ export const updateOrder = async ({
         quantity: item.quantity,
         imageUrl: item.product.imageUrls[0],
         createdAt: order.createdAt,
+        cep: order.orderAddress[0].cep,
+        city: order.orderAddress[0].city,
+        complement: order.orderAddress[0].complement,
+        email: order.orderAddress[0].email,
+        neighborhood: order.orderAddress[0].neighborhood,
+        number: order.orderAddress[0].number,
+        phoneNumber: order.orderAddress[0].phoneNumber,
+        street: order.orderAddress[0].street,
+        uf: order.orderAddress[0].uf,
+        username: order.orderAddress[0].username,
       }))
 
       await prisma.userOrdersHistoric.createMany({

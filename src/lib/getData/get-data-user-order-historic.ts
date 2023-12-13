@@ -27,7 +27,7 @@ export const getUserOrdersHistoric = async (userId?: string) => {
     }
   } catch (err) {
     console.log(err)
-
+    console.log('oioi')
     return {
       notFound: true,
 

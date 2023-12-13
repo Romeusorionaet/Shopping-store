@@ -16,6 +16,8 @@ export function HistoricItem({ historic }: Props) {
     return dateB.getTime() - dateA.getTime()
   })
 
+  console.log('irwm', historic)
+
   if (sortedHistoric.length === 0) {
     return (
       <div className="flex h-screen justify-center items-start">
@@ -116,6 +118,46 @@ export function HistoricItem({ historic }: Props) {
                   minimumFractionDigits: 2,
                 })}
               </p>
+            </div>
+
+            <div>
+              <h2>Endereço:</h2>
+
+              {/* <div>
+                <p>
+                  <span className="font-bold">Nome</span>: {historic.username}
+                </p>
+                <p>
+                  <span className="font-bold">Email</span>: {historic.email}
+                </p>
+                <p>
+                  <span className="font-bold">Contanto</span>:{' '}
+                  {address.phoneNumber}
+                </p>
+                <p>
+                  <span className="font-bold">CEP</span>: {historic.cep}
+                </p>
+                <p>
+                  <span className="font-bold">Cidade</span>: {historic.city}
+                </p>
+                <p>
+                  <span className="font-bold">UF</span>: {historic.uf}
+                </p>
+                <p>
+                  <span className="font-bold">Bairro</span>:{' '}
+                  {historic.neighborhood}
+                </p>
+                <p>
+                  <span className="font-bold">Rua</span>: {historic.street}
+                </p>
+                <p>
+                  <span className="font-bold">Número</span>: {historic.number}
+                </p>
+                <p>
+                  <span className="font-bold">Complemento</span>:{' '}
+                  {historic.complement}
+                </p>
+              </div> */}
             </div>
           </div>
         )
