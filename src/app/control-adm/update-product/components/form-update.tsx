@@ -11,9 +11,9 @@ import { updateProduct } from '@/actions/update/product'
 import { useRouter } from 'next/navigation'
 import { deleteProduct } from '@/actions/delete/product'
 import { Trash } from 'lucide-react'
-import { ProductImages } from '@/app/details/components/product-images'
 import { Button } from '@/components/ui/button'
 import { UploadButton } from '@/utils/generate-components'
+import { ProductImages } from '@/app/(shop)/details/components/product-images'
 
 interface FormUpdateProps {
   product: Product

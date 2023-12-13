@@ -1,13 +1,13 @@
 'use client'
 
 import Image from 'next/image'
-import banner from '../../assets/banner/bannerExemplo.webp'
+import banner from '@/assets/banner/bannerExemplo.webp'
 import { useSlickCarousel } from '@/hooks/use-slick-carousel'
-import '../../styles/slide-slick/slick.css'
-import '../../styles/slide-slick/slick-theme.css'
+import '@/styles/slide-slick/slick-theme.css'
+import '@/styles/slide-slick/slick.css'
 import Slider from 'react-slick'
 import { useRef } from 'react'
-import { CustomSlider } from '../carousel-products'
+import { CustomSlider } from '@/components/carousel-products'
 
 export function OfferBanner() {
   const { carouselAutoPlay } = useSlickCarousel()

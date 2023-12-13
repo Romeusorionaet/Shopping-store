@@ -2,14 +2,14 @@ import { getDataProducts } from '@/lib/getData/get-data-products'
 import Link from 'next/link'
 
 import { LibraryBig } from 'lucide-react'
-import { OfferBanner } from '@/components/offer-banner'
 import { CarouselProducts } from '@/components/carousel-products'
 import { Category, OrderStatus, Product } from '@prisma/client'
 import { getDataOrders } from '@/lib/getData/get-data-orders'
-import { OrderIncludeOrderProducts } from './orders/page'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { SearchProduct } from '@/components/search-product'
+import { OfferBanner } from '@/components/offer-banner'
+import { OrderIncludeOrderProducts } from './orders/page'
 
 export interface ProductsWithCategory extends Product {
   category: Category

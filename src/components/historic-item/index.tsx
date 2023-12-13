@@ -16,8 +16,6 @@ export function HistoricItem({ historic }: Props) {
     return dateB.getTime() - dateA.getTime()
   })
 
-  console.log('irwm', historic)
-
   if (sortedHistoric.length === 0) {
     return (
       <div className="flex h-screen justify-center items-start">

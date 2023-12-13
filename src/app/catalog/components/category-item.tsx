@@ -6,7 +6,7 @@ interface CategoryItemProps {
   category: Category
 }
 
-const CategoryItem = ({ category }: CategoryItemProps) => {
+export default function CategoryItem({ category }: CategoryItemProps) {
   return (
     <Link href={`/catalog/category/${category.slug}`}>
       <div className="flex flex-col items-center justify-center gap-2 w-60 rounded-lg py-2 bg-base_reference_card/60 hover:bg-base_reference_card_hover duration-700">
@@ -23,5 +23,3 @@ const CategoryItem = ({ category }: CategoryItemProps) => {
     </Link>
   )
 }
-
-export default CategoryItem

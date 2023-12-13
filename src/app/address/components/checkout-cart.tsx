@@ -1,5 +1,3 @@
-'use client'
-
 import { createOrder } from '@/actions/order'
 import { createCheckout } from '@/actions/checkout'
 import { useSession } from 'next-auth/react'

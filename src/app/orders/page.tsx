@@ -37,8 +37,6 @@ export default async function Orders() {
   const { props: userHistoric } = await getUserOrdersHistoric(session.user.id)
   const historic: UserOrdersHistoric[] = JSON.parse(userHistoric.historic)
 
-  console.log(historic)
-
   return (
     <div className="pt-28 p-4">
       <div className="border-b border-base_color_dark">

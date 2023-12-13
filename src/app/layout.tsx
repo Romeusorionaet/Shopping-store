@@ -1,15 +1,15 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import '../styles/globals.css'
+import '@/styles/globals.css'
 import { AuthProvider } from '@/providers/auth'
-import '../styles/scrollbar.css'
+import '@/styles/scrollbar.css'
 import { Header } from '@/components/header'
 import { NextSSRPlugin } from '@uploadthing/react/next-ssr-plugin'
 import { extractRouterConfig } from 'uploadthing/server'
-import { ourFileRouter } from './api/uploadthing/core'
 import Script from 'next/script'
 import { UserContextProvider } from '@/providers/user-context'
 import { ToastContainer } from 'react-toastify'
+import { ourFileRouter } from './api/uploadthing/core'
 
 const inter = Inter({ subsets: ['latin'] })
 
