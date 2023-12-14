@@ -50,7 +50,7 @@ export const updateOrder = async ({
         },
       })
 
-      return { message: 'Código inserido com sucesso!' }
+      return { messageSuccess: 'Código inserido com sucesso' }
     }
 
     if (orderTracking) {
@@ -96,13 +96,11 @@ export const updateOrder = async ({
       })
 
       return {
-        message: 'Este pedido agora está na seção Pedidos Entregues.',
+        messageSuccess: 'Este pedido agora está na seção Pedidos Entregues',
       }
     }
-
-    return { message: 'Nada foi feito.' }
   } catch (err) {
     console.log(err)
-    return { message: 'Error ao inserir código' }
+    return { messageError: 'Error ao inserir código' }
   }
 }

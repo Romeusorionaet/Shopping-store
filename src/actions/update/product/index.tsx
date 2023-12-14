@@ -34,9 +34,9 @@ export const updateProduct = async ({ updatedData }: updateProdutoProps) => {
       },
     })
 
-    return { message: 'Produto atualizado.' }
+    return { messageSuccess: 'Produto atualizado' }
   } catch (err) {
     console.log(err)
-    return { message: 'Error ao atualizar produto.' }
+    return { messageError: 'Error ao atualizar produto' }
   }
 }

@@ -31,10 +31,10 @@ export const createCategory = async ({ dataCategory }: Props) => {
         },
       })
 
-      return { message: 'Categoria criado.' }
+      return { messageSuccess: 'Categoria criado' }
     }
   } catch (err) {
     console.log(err)
-    return { message: 'Error ao criar categoria.' }
+    return { messageError: 'Error ao criar categoria' }
   }
 }

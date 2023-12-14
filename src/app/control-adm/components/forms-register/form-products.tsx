@@ -18,6 +18,7 @@ import {
 import { Button } from '@/components/ui/button'
 import '@uploadthing/react/styles.css'
 import { UploadButton } from '@/utils/generate-components'
+import { useNotification } from '@/hooks/use-notifications'
 
 interface ImageDataProps {
   name: string
@@ -61,6 +62,8 @@ export function FormProduct({ listOfCategory }: Props) {
     { name: '', url: '' },
   ])
 
+  const { notifyError, notifySuccess } = useNotification()
+
   const [categoryId, setCategoryId] = useState('')
 
   const {
@@ -87,7 +90,7 @@ export function FormProduct({ listOfCategory }: Props) {
       placeOfSale === 'Sim' ? 'ONLINE_STORE' : 'SELL_IN_REGION_ONLY'
 
     if (imageDataProducts.length !== 4) {
-      alert('É importante que tenha 4 imagens para o seu produto.')
+      notifyError('É importante que tenha 4 imagens para o seu produto')
       return
     }
 
@@ -108,7 +111,12 @@ export function FormProduct({ listOfCategory }: Props) {
     try {
       const result = await createProduct({ dataProduct })
       reset()
-      alert(result?.message)
+
+      if (result.messageSuccess) {
+        notifySuccess(result.messageSuccess)
+      } else if (result.messageError) {
+        notifyError(result.messageError)
+      }
     } catch (err) {
       console.log(err)
     }
@@ -129,11 +137,11 @@ export function FormProduct({ listOfCategory }: Props) {
                 endpoint="imageShoppingStore"
                 onClientUploadComplete={(res) => {
                   res && setImageDataProducts(res)
-                  alert('Imagem da categoria salva no banco Uploadthing!')
+                  notifySuccess('Imagem da categoria salva')
                 }}
                 onUploadError={(error: Error) => {
                   console.log('Error', error)
-                  alert(`ERROR! ${error.message}`)
+                  notifyError(`ERROR! ${error.message}`)
                 }}
               />
 

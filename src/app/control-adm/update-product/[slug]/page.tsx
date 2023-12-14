@@ -1,6 +1,6 @@
 import { getDataUniqueProduct } from '@/lib/getData/get-data-unique-product'
 import { FormUpdate } from '../components/form-update'
-import { ProductIncludeCategoryAndProducts } from '@/app/(shop)/details/[slug]/page'
+import { ProductIncludeCategoryAndProducts } from '@/app/details/[slug]/page'
 
 interface ParamsProps {
   params: {

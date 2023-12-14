@@ -24,12 +24,7 @@ export function Cart({ handleNavigateTo }: Props) {
   }
 
   const handleNavigateToAddressPage = () => {
-    if (!user) {
-      alert('faça login na sua conta')
-      navigate.push('/')
-    } else {
-      handleNavigateTo('/address')
-    }
+    handleNavigateTo('/address')
   }
 
   return (
@@ -43,9 +38,7 @@ export function Cart({ handleNavigateTo }: Props) {
               <CartItem key={product.id} product={product} />
             ))
           ) : (
-            <p className="text-center font-semibold">
-              Carrinho vazio. Vamos fazer compras?
-            </p>
+            <p className="text-center font-semibold">Carrinho vazio.</p>
           )}
         </div>
       </div>

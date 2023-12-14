@@ -30,7 +30,7 @@ export function AddProductInCart({ product, title }: Props) {
     const quantityInStock = product.quantity
 
     addProductToCart({ ...product, quantity, quantityInStock })
-    notifySuccess('Produto adicionado!')
+    notifySuccess('Adicionado ao carrinho!')
   }
 
   return (

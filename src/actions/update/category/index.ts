@@ -26,9 +26,9 @@ export const updateCategory = async ({ updatedData }: updateCategoryProps) => {
       },
     })
 
-    return { message: 'Categoria atualizada.' }
+    return { messageSuccess: 'Categoria atualizada.' }
   } catch (err) {
     console.log(err)
-    return { message: 'Error ao atualizar categoria.' }
+    return { messageError: 'Error ao atualizar categoria.' }
   }
 }

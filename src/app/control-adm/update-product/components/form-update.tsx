@@ -13,7 +13,8 @@ import { deleteProduct } from '@/actions/delete/product'
 import { Trash } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { UploadButton } from '@/utils/generate-components'
-import { ProductImages } from '@/app/(shop)/details/components/product-images'
+import { ProductImages } from '@/app/details/components/product-images'
+import { useNotification } from '@/hooks/use-notifications'
 
 interface FormUpdateProps {
   product: Product
@@ -51,6 +52,7 @@ export function FormUpdate({ product }: FormUpdateProps) {
   )
 
   const navigate = useRouter()
+  const { notifyError, notifySuccess, notifyWarning } = useNotification()
 
   const {
     register,
@@ -89,7 +91,12 @@ export function FormUpdate({ product }: FormUpdateProps) {
     try {
       const result = await updateProduct({ updatedData })
       navigate.push('/control-adm')
-      alert(result.message)
+
+      if (result.messageSuccess) {
+        notifySuccess(result.messageSuccess)
+      } else if (result.messageError) {
+        notifyError(result.messageError)
+      }
     } catch (err) {
       console.log(err)
     }
@@ -99,7 +106,20 @@ export function FormUpdate({ product }: FormUpdateProps) {
     try {
       const result = await deleteProduct(product.id)
       navigate.push('/control-adm')
-      alert(result.message)
+
+      switch (true) {
+        case !!result?.messageSuccess:
+          notifySuccess(result.messageSuccess)
+          break
+        case !!result?.messageError:
+          notifyError(result.messageError)
+          break
+        case !!result?.messageWarning:
+          notifyWarning(result.messageWarning)
+          break
+        default:
+          break
+      }
     } catch (err) {
       console.log(err)
     }
@@ -121,10 +141,10 @@ export function FormUpdate({ product }: FormUpdateProps) {
           endpoint="imageShoppingStore"
           onClientUploadComplete={(res) => {
             res && setImageDataProduct(res)
-            alert('Imagens da categoria salva no banco Uploadthing!')
+            notifySuccess('Imagens da categoria salva')
           }}
           onUploadError={(error: Error) => {
-            alert(`ERROR! ${error.message}`)
+            notifyError(`ERROR! ${error.message}`)
           }}
         />
       </div>

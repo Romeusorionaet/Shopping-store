@@ -17,6 +17,7 @@ import {
 } from '@radix-ui/react-accordion'
 import { Button } from '@/components/ui/button'
 import { UploadButton } from '@/utils/generate-components'
+import { useNotification } from '@/hooks/use-notifications'
 
 interface ImageDataProps {
   name: string
@@ -39,6 +40,8 @@ export function FormCategory() {
     { name: '', url: '' },
   ])
 
+  const { notifyError, notifySuccess } = useNotification()
+
   const {
     register,
     handleSubmit,
@@ -52,7 +55,7 @@ export function FormCategory() {
     const { name } = data
 
     if (imageDataCategory[0].url === '') {
-      alert('Escolha uma imagem que represente a categoria.')
+      notifyError('Escolha uma imagem que represente a categoria')
       return
     }
 
@@ -66,7 +69,13 @@ export function FormCategory() {
 
     try {
       const result = await createCategory({ dataCategory })
-      alert(result?.message)
+
+      if (result.messageSuccess) {
+        notifySuccess(result.messageSuccess)
+      } else if (result.messageError) {
+        notifyError(result.messageError)
+      }
+
       reset()
       setImageDataCategory([{ name: '', url: '' }])
     } catch (err) {
@@ -89,10 +98,10 @@ export function FormCategory() {
                 endpoint="imageShoppingStore"
                 onClientUploadComplete={(res) => {
                   res && setImageDataCategory(res)
-                  alert('Imagem da categoria salva no banco Uploadthing!')
+                  notifySuccess('Imagem da categoria salva')
                 }}
                 onUploadError={(error: Error) => {
-                  alert(`ERROR! ${error.message}`)
+                  notifyError(`ERROR! ${error.message}`)
                 }}
               />
 
@@ -122,7 +131,7 @@ export function FormCategory() {
             </div>
 
             <div className="flex flex-col my-4">
-              <label className="flex flex-col gap-2">
+              <label className="flex flex-col gap-2 mb-4">
                 Nome
                 <Input
                   className="bg-white/20"

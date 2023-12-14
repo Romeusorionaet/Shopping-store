@@ -47,15 +47,15 @@ export const deleteProduct = async (productId: string) => {
         })
       }
 
-      return { message: 'Produto deletado.' }
+      return { messageSuccess: 'Produto deletado' }
     } else {
       return {
-        message:
-          'Error: Produto em processo com cliente, não pode ser deletado no momento.',
+        messageWarning:
+          'Produto em processo com cliente, não pode ser deletado no momento',
       }
     }
   } catch (err) {
     console.log(err)
-    return { message: 'Error ao deletar produto.' }
+    return { messageError: 'Error ao deletar produto' }
   }
 }

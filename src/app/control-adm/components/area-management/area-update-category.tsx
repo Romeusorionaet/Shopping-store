@@ -51,7 +51,7 @@ export function AreaUpdateCategory({ listOfCategory, listOfProducts }: Props) {
   const [newCategoryName, setNewCategoryName] = useState('')
   const [editingProductId, setEditingProductId] = useState('')
 
-  const { notifySuccess, notifyError } = useNotification()
+  const { notifySuccess, notifyError, notifyWarning } = useNotification()
 
   const filteredCategory = listOfCategory.filter((category) =>
     category.name.toLowerCase().includes(searchTerm.toLowerCase()),
@@ -67,8 +67,8 @@ export function AreaUpdateCategory({ listOfCategory, listOfProducts }: Props) {
         setTimeout(() => {
           window.location.reload()
         }, 2000)
-      } else {
-        notifyError(String(result.messageError))
+      } else if (result.messageError) {
+        notifyError(result.messageError)
       }
     } catch (err) {
       notifyError(String(err))
@@ -90,9 +90,14 @@ export function AreaUpdateCategory({ listOfCategory, listOfProducts }: Props) {
         }
 
         const result = await updateCategory({ updatedData })
-        alert(result?.message)
+
+        if (result.messageSuccess) {
+          notifySuccess(result.messageSuccess)
+        } else if (result.messageError) {
+          notifyError(result.messageError)
+        }
       } else {
-        alert('Este produto não esta habilidato para edição.')
+        notifyWarning('Este produto não está habilidato para edição.')
       }
     } catch (err) {
       console.log(err)
@@ -141,12 +146,10 @@ export function AreaUpdateCategory({ listOfCategory, listOfProducts }: Props) {
                           onClientUploadComplete={(res) => {
                             res && setImageDataCategory(res)
                             setIdFile(category.id)
-                            alert(
-                              'Imagem da categoria salva no banco Uploadthing!',
-                            )
+                            notifySuccess('Imagem da categoria salva')
                           }}
                           onUploadError={(error: Error) => {
-                            alert(`ERROR! ${error.message}`)
+                            notifyError(`ERROR! ${error.message}`)
                           }}
                         />
                         <ArrowBigRight />

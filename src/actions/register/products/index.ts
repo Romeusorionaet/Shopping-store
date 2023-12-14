@@ -40,10 +40,10 @@ export const createProduct = async ({ dataProduct }: Props) => {
       await prisma.product.createMany({
         data: dataProduct,
       })
-      return { message: 'Produto registrado.' }
+      return { messageSuccess: 'Produto registrado' }
     }
   } catch (err) {
     console.log(err)
-    return { message: 'Error ao registrar produto' }
+    return { messageError: 'Error ao registrar produto' }
   }
 }

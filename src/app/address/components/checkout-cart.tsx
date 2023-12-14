@@ -5,6 +5,7 @@ import { useCartStore } from '@/providers/zustand-store'
 import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
 import ClipLoader from 'react-spinners/ClipLoader'
+import { useNotification } from '@/hooks/use-notifications'
 
 interface Props {
   userHasAddress: boolean
@@ -13,6 +14,7 @@ interface Props {
 export function CheckoutCart({ userHasAddress }: Props) {
   const { cart } = useCartStore()
   const { data } = useSession()
+  const { notifyWarning, notifyError } = useNotification()
 
   const navigate = useRouter()
 
@@ -27,14 +29,14 @@ export function CheckoutCart({ userHasAddress }: Props) {
   const handleFinishPurchaseClick = async () => {
     try {
       if (cart.length === 0) {
-        alert('Carrinho vazio!')
+        notifyWarning('Carrinho vazio')
         navigate.push('/')
         return
       }
       const dataOrder = await createOrder(cart, data.user.id)
 
       if (!dataOrder.order) {
-        alert(dataOrder.message)
+        notifyError(dataOrder.message)
         return
       }
 

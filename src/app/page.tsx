@@ -1,7 +1,7 @@
 import { getDataProducts } from '@/lib/getData/get-data-products'
 import Link from 'next/link'
 
-import { LibraryBig } from 'lucide-react'
+import { LibraryBig, PackageX } from 'lucide-react'
 import { CarouselProducts } from '@/components/carousel-products'
 import { Category, OrderStatus, Product } from '@prisma/client'
 import { getDataOrders } from '@/lib/getData/get-data-orders'
@@ -10,6 +10,7 @@ import { authOptions } from '@/lib/auth'
 import { SearchProduct } from '@/components/search-product'
 import { OfferBanner } from '@/components/offer-banner'
 import { OrderIncludeOrderProducts } from './orders/page'
+import { NoProductRegistrationMessage } from '@/components/no-product-registration-message'
 
 export interface ProductsWithCategory extends Product {
   category: Category
@@ -18,6 +19,10 @@ export interface ProductsWithCategory extends Product {
 export default async function Home() {
   const { props } = await getDataProducts()
   const products: ProductsWithCategory[] = JSON.parse(props.products)
+
+  if (products.length === 0) {
+    return <NoProductRegistrationMessage />
+  }
 
   const productsInOffers = products
     .filter((product) => product.discountPercentage >= 50)
@@ -71,25 +76,29 @@ export default async function Home() {
 
       <div className="px-2">
         {productsInOffers.length !== 0 && (
-          <div>
+          <>
             <h2 className="my-4 text-lg">Super promoção</h2>
 
             <CarouselProducts products={productsInOffers} />
-          </div>
+          </>
         )}
 
         <div>
-          <h2 className="my-4 text-lg">Produtos em Promoção</h2>
+          {filteredProductsWithDiscount.length !== 0 && (
+            <>
+              <h2 className="my-4 text-lg">Produtos em Promoção</h2>
 
-          <CarouselProducts products={filteredProductsWithDiscount} />
+              <CarouselProducts products={filteredProductsWithDiscount} />
+            </>
+          )}
         </div>
 
         {ordersNotPaymentList.length !== 0 && (
-          <div>
+          <>
             <h2 className="my-4 text-lg">Produtos que você se interessou</h2>
 
             <CarouselProducts products={ordersNotPaymentList} />
-          </div>
+          </>
         )}
       </div>
     </main>

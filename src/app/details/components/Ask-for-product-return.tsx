@@ -1,6 +1,7 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
+import { useNotification } from '@/hooks/use-notifications'
 import { useState } from 'react'
 
 interface Props {
@@ -11,10 +12,11 @@ export function AskForProductReturn({ productName }: Props) {
   const [message, setMessage] = useState(
     `Olá, tenho interesse no produto ${productName}`,
   )
+  const { notifyWarning } = useNotification()
 
   const handleSendMenssage = () => {
     if (!message) {
-      alert('escreva algo')
+      notifyWarning('Escreva algo')
       return
     }
 

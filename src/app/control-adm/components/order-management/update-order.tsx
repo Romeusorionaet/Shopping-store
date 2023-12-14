@@ -3,6 +3,7 @@
 import { updateOrder } from '@/actions/update/order'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { useNotification } from '@/hooks/use-notifications'
 import { Address, OrderStatusTracking } from '@prisma/client'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
@@ -16,17 +17,22 @@ export function UpdateOrder({ orderId, userAddress }: Props) {
   const [trackingCode, setTrackingCode] = useState('')
 
   const navigate = useRouter()
+  const { notifyError, notifySuccess } = useNotification()
 
   const handleUpdateDataOrder = async () => {
     if (!trackingCode) {
-      alert('Insira o código.')
+      notifyError('Insira o código')
       return
     }
 
     try {
       const result = await updateOrder({ trackingCode, orderId, userAddress })
 
-      alert(result.message)
+      if (result?.messageSuccess) {
+        notifySuccess(result.messageSuccess)
+      } else if (result?.messageError) {
+        notifyError(result.messageError)
+      }
 
       setTrackingCode('')
 
@@ -43,7 +49,7 @@ export function UpdateOrder({ orderId, userAddress }: Props) {
     try {
       await updateOrder({ orderTracking: CANCELED, orderId })
 
-      alert('Pedido cancelado')
+      notifyError('Pedido cancelado')
 
       setTrackingCode('')
 

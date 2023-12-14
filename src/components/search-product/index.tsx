@@ -5,7 +5,7 @@ import { Input } from '../ui/input'
 import { useState } from 'react'
 import { CarouselProducts } from '../carousel-products'
 import { Search } from 'lucide-react'
-import { ProductsWithCategory } from '@/app/(home)/page'
+import { ProductsWithCategory } from '@/app/page'
 
 interface Props {
   products: ProductsWithCategory[]

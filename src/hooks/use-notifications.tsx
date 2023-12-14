@@ -10,8 +10,13 @@ export function useNotification() {
     toast.success(message)
   }
 
+  const notifyWarning = (message: string) => {
+    toast.warning(message)
+  }
+
   return {
     notifyError,
     notifySuccess,
+    notifyWarning,
   }
 }
