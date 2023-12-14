@@ -35,11 +35,11 @@ export default async function Details({ params }: ParamsProps) {
   const quantity = product.quantity < 0 ? 0 : product.quantity
 
   return (
-    <div className="h-screen flex flex-col justify-between pt-[4.5rem]">
-      <div className="flex max-md:flex-col gap-8 justify-center items-center md:items-start my-8">
+    <div className="flex h-screen flex-col justify-between pt-[4.5rem]">
+      <div className="my-8 flex items-center justify-center gap-8 max-md:flex-col md:items-start">
         <ProductImages imageUrls={product.imageUrls} name={product.name} />
 
-        <div className="flex flex-col gap-4 2xl:w-[50%] p-4">
+        <div className="flex flex-col gap-4 p-4 2xl:w-[50%]">
           <h1 className="font-bold">{product.name}</h1>
           <p>
             Quantidade em estoque: <strong>{quantity}</strong>
@@ -54,7 +54,7 @@ export default async function Details({ params }: ParamsProps) {
                     minimumFractionDigits: 2,
                   })}
                 </p>
-                <p className="text-base_color_positive text-lg font-bold">
+                <p className="text-lg font-bold text-base_color_positive">
                   {product.discountPercentage}%{' '}
                   <span className="uppercase">off</span>
                 </p>
@@ -106,10 +106,10 @@ export default async function Details({ params }: ParamsProps) {
         </div>
       </div>
 
-      <div className="p-4 space-y-8">
+      <div className="space-y-8 p-4">
         {product.category.products.length !== 0 && (
           <div className="space-y-6">
-            <h2 className="text-lg md:text-2xl uppercase">Veja também</h2>
+            <h2 className="text-lg uppercase md:text-2xl">Veja também</h2>
 
             <CarouselProducts products={product.category.products} />
           </div>

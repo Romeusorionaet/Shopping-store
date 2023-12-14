@@ -151,10 +151,10 @@ export async function ManageOrders() {
 
       <div>
         <h1>Seus pedidos não finalizados</h1>
-        <p className="opacity-80 text-sm">{session.user.email}</p>
+        <p className="text-sm opacity-80">{session.user.email}</p>
       </div>
 
-      <div className="flex flex-col gap-2 mt-10 h-96 overflow-auto scrollbar opacity-80">
+      <div className="scrollbar mt-10 flex h-96 flex-col gap-2 overflow-auto opacity-80">
         {orders && orders.length >= 1 ? (
           orders
             .map((order) => {

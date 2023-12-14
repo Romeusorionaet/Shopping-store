@@ -126,13 +126,13 @@ export function FormProduct({ listOfCategory }: Props) {
     <Accordion
       type="single"
       collapsible
-      className="border border-white/20 my-10 p-2 rounded-md"
+      className="my-10 rounded-md border border-white/20 p-2"
     >
       <AccordionItem value="item-1">
         <AccordionTrigger>Cadastrar produto</AccordionTrigger>
         <AccordionContent className="mt-6">
           <form method="post" onSubmit={handleSubmit(handleRegisterProduct)}>
-            <div className="flex flex-col gap-2 justify-around items-center">
+            <div className="flex flex-col items-center justify-around gap-2">
               <UploadButton
                 endpoint="imageShoppingStore"
                 onClientUploadComplete={(res) => {
@@ -147,13 +147,13 @@ export function FormProduct({ listOfCategory }: Props) {
 
               <ArrowBigDown />
 
-              <div className="border border-white/20 flex flex-wrap gap-8 justify-center p-2 pb-10">
+              <div className="flex flex-wrap justify-center gap-8 border border-white/20 p-2 pb-10">
                 {imageDataProducts[0].url ? (
                   imageDataProducts.map((item) => {
                     return (
                       <div
                         key={item.name}
-                        className="flex flex-col gap-2 items-center w-[6rem] h-[6rem]"
+                        className="flex h-[6rem] w-[6rem] flex-col items-center gap-2"
                       >
                         {item.url && (
                           <Image
@@ -172,18 +172,18 @@ export function FormProduct({ listOfCategory }: Props) {
                     )
                   })
                 ) : (
-                  <div className="flex justify-center items-center h-full">
-                    <p className="opacity-50 text-xs">sem imagem</p>
+                  <div className="flex h-full items-center justify-center">
+                    <p className="text-xs opacity-50">sem imagem</p>
                   </div>
                 )}
               </div>
             </div>
 
-            <div className="flex flex-col space-y-4 mt-10">
+            <div className="mt-10 flex flex-col space-y-4">
               <label className="flex flex-col gap-2">
                 Escolha a categoria do produto
                 <select
-                  className="p-2 rounded-md appearance-none border border-white/20 text-white bg-black"
+                  className="appearance-none rounded-md border border-white/20 bg-black p-2 text-white"
                   {...register('category')}
                   onChange={(e) => setCategoryId(e.target.value)}
                 >
@@ -251,13 +251,13 @@ export function FormProduct({ listOfCategory }: Props) {
                 <Input placeholder="1" {...register('quantity')} />
               </label>
 
-              <label className="flex flex-col gap-2 mt-2">
+              <label className="mt-2 flex flex-col gap-2">
                 <span>Faz entrega deste produto para todo Brasil?</span>
 
                 <p className="text-xs opacity-90">Valor padrão: {'Sim'}</p>
 
                 <select
-                  className="p-2 rounded-md appearance-none border border-white/20 text-white bg-black"
+                  className="appearance-none rounded-md border border-white/20 bg-black p-2 text-white"
                   {...register('placeOfSale')}
                   onChange={(e) => setCategoryId(e.target.value)}
                 >
@@ -269,7 +269,7 @@ export function FormProduct({ listOfCategory }: Props) {
               <label className="flex flex-col gap-2">
                 Descrição
                 <textarea
-                  className="bg-base_color_dark h-40 resize-none p-2 rounded-md"
+                  className="h-40 resize-none rounded-md bg-base_color_dark p-2"
                   maxLength={200}
                   placeholder="Descrição do produto..."
                   {...register('description')}

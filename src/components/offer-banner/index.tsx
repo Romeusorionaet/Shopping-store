@@ -27,12 +27,12 @@ export function OfferBanner() {
       <Slider ref={slider} {...carouselAutoPlay}>
         {listBanner.map((item) => {
           return (
-            <div key={item.id} className="md:h-[30rem] h-80 cursor-pointer">
+            <div key={item.id} className="h-80 cursor-pointer md:h-[30rem]">
               <Image
                 width={0}
                 height={0}
                 sizes="100vw"
-                className="object-fill w-full h-full rounded-b-md"
+                className="h-full w-full rounded-b-md object-fill"
                 src={item.img}
                 alt={item.name}
               />

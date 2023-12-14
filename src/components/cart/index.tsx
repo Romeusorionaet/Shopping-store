@@ -2,7 +2,6 @@ import { Separator } from '../ui/separator'
 import { Button } from '../ui/button'
 import { useCartStore } from '@/providers/zustand-store'
 import { calculateCartAllValues } from '@/utils/calculate-cart-all-values'
-import { useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 import { CartItem } from './cart-item'
 import { NoUserMessage } from '../no-user-message'
@@ -15,7 +14,6 @@ interface Props {
 export function Cart({ handleNavigateTo }: Props) {
   const { cart } = useCartStore()
   const { subtotal, totalDiscount, total } = calculateCartAllValues(cart)
-  const navigate = useRouter()
   const { data } = useSession()
   const user = data?.user
 
@@ -29,7 +27,7 @@ export function Cart({ handleNavigateTo }: Props) {
 
   return (
     <div className="flex h-full flex-col gap-6 pb-2">
-      <div className="flex h-full flex-col gap-5 overflow-y-auto mt-10">
+      <div className="mt-10 flex h-full flex-col gap-5 overflow-y-auto">
         <div className="flex h-full flex-col gap-8">
           <ShippingCalculatorAccordion />
 

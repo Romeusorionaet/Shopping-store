@@ -1,7 +1,7 @@
 import { getDataProducts } from '@/lib/getData/get-data-products'
 import Link from 'next/link'
 
-import { LibraryBig, PackageX } from 'lucide-react'
+import { LibraryBig } from 'lucide-react'
 import { CarouselProducts } from '@/components/carousel-products'
 import { Category, OrderStatus, Product } from '@prisma/client'
 import { getDataOrders } from '@/lib/getData/get-data-orders'
@@ -49,18 +49,18 @@ export default async function Home() {
     .sort(() => Math.random() - 0.5)
 
   return (
-    <main className="flex flex-col gap-6 overflow-hidden pb-8 max-w-[1480px] mx-auto">
-      <div className="relative max-w-[1480px] w-full mx-auto">
-        <div className="bg-gradient-to-r from-base_reference_card/40 h-full w-40 max-2xl:w-28 max-sm:w-10 absolute left-0 top-0 z-10" />
+    <main className="mx-auto flex max-w-[1480px] flex-col gap-6 overflow-hidden pb-8">
+      <div className="relative mx-auto w-full max-w-[1480px]">
+        <div className="absolute left-0 top-0 z-10 h-full w-40 bg-gradient-to-r from-base_reference_card/40 max-2xl:w-28 max-sm:w-10" />
         <OfferBanner />
-        <div className="bg-gradient-to-l from-base_reference_card/40 h-full w-40 max-2xl:w-28 max-sm:w-10 absolute right-0 top-0 z-10" />
+        <div className="absolute right-0 top-0 z-10 h-full w-40 bg-gradient-to-l from-base_reference_card/40 max-2xl:w-28 max-sm:w-10" />
       </div>
 
       <div>
-        <p className="text-center mb-4">
+        <p className="mb-4 text-center">
           Acesse o nosso catálogo para ver todos os produtos da loja!
         </p>
-        <div className="p-2 hover:bg-base_one_reference_header duration-700 flex justify-center items-center gap-2 border border-base_color_dark/10 w-52 mx-auto rounded-md">
+        <div className="mx-auto flex w-52 items-center justify-center gap-2 rounded-md border border-base_color_dark/10 p-2 duration-700 hover:bg-base_one_reference_header">
           <Link className="font-bold" href="/catalog">
             Ver Nosso Catálogo
           </Link>

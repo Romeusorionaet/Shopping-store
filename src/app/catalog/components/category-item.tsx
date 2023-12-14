@@ -9,12 +9,12 @@ interface CategoryItemProps {
 export default function CategoryItem({ category }: CategoryItemProps) {
   return (
     <Link href={`/catalog/category/${category.slug}`}>
-      <div className="flex flex-col items-center justify-center gap-2 w-60 rounded-lg py-2 bg-base_reference_card/60 hover:bg-base_reference_card_hover duration-700">
+      <div className="flex w-60 flex-col items-center justify-center gap-2 rounded-lg bg-base_reference_card/60 py-2 duration-700 hover:bg-base_reference_card_hover">
         <Image
           width={0}
           height={0}
           sizes="100vw"
-          className="w-full h-52 object-contain"
+          className="h-52 w-full object-contain"
           src={category.imageUrl}
           alt={category.name}
         />

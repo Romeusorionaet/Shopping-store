@@ -30,7 +30,7 @@ export function DialogConfirmOrNot({ onConfirm }: DialogConfirmProps) {
     <Dialog open={isOpen}>
       <DialogTrigger
         onClick={() => setIsOpen(true)}
-        className="bg-base_color_negative/70 p-1 rounded-md hover:bg-base_color_negative duration-700"
+        className="rounded-md bg-base_color_negative/70 p-1 duration-700 hover:bg-base_color_negative"
       >
         <Trash size={28} />
       </DialogTrigger>
@@ -45,7 +45,7 @@ export function DialogConfirmOrNot({ onConfirm }: DialogConfirmProps) {
         </p>
 
         <DialogFooter>
-          <div className="flex gap-8 justify-between">
+          <div className="flex justify-between gap-8">
             <Button onClick={handleCancel}>Cancelar</Button>
             <Button onClick={handleConfirmation}>Confirmar</Button>
           </div>

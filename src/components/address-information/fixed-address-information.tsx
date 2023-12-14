@@ -8,7 +8,7 @@ export function FixedAddressInformation({ orderAddress }: Props) {
   const address = orderAddress[0]
 
   return (
-    <div className="mt-4 flex flex-col gap-1 opacity-80 bg-blue-200/20 p-1 rounded-md">
+    <div className="mt-4 flex flex-col gap-1 rounded-md bg-blue-200/20 p-1 opacity-80">
       <div>
         <h2 className="font-bold">Endereço de entrega:</h2>
         <p>

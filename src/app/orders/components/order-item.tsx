@@ -7,7 +7,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion'
-import { Address, OrderStatus, OrderStatusTracking } from '@prisma/client'
+import { Address, OrderStatusTracking } from '@prisma/client'
 import { format } from 'date-fns'
 import { getOrderStatus } from '../../../components/helpers/get-order-status'
 import { Button } from '@/components/ui/button'
@@ -60,7 +60,7 @@ export function OrderItem({ order }: OrderProductProps) {
     <Accordion type="single" className="w-full" collapsible>
       <AccordionItem value={order.id}>
         <AccordionTrigger>
-          <div className="flex flex-col gap-1 my-4 text-start">
+          <div className="my-4 flex flex-col gap-1 text-start">
             <p className="text-sm font-bold uppercase">
               Pedido com {order.orderProducts.length} produto(s)
             </p>
@@ -194,7 +194,7 @@ export function OrderItem({ order }: OrderProductProps) {
             <div>
               <Button
                 disabled={isProductDeliveredToCorreios}
-                className="bg-base_color_positive p-2 rounded-md sm:w-56"
+                className="rounded-md bg-base_color_positive p-2 sm:w-56"
                 onClick={handleNavigateToCorreiosPage}
               >
                 Acompanhar pedido

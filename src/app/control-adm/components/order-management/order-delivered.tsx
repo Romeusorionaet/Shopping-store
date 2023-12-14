@@ -18,9 +18,9 @@ export function OrderDelivered({ orderId }: Props) {
       orderId,
     })
 
-    if (result.messageSuccess) {
+    if (result?.messageSuccess) {
       notifySuccess(result.messageSuccess)
-    } else if (result.messageError) {
+    } else if (result?.messageError) {
       notifyError(result.messageError)
     }
 

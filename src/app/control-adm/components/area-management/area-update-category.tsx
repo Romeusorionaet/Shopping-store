@@ -108,12 +108,12 @@ export function AreaUpdateCategory({ listOfCategory, listOfProducts }: Props) {
     <Accordion
       type="single"
       collapsible
-      className="border border-white/20 my-10 p-2 rounded-md"
+      className="my-10 rounded-md border border-white/20 p-2"
     >
       <AccordionItem value="item-1">
-        <AccordionTrigger className="flex justify-between w-full">
+        <AccordionTrigger className="flex w-full justify-between">
           <p>Atualizar categoria</p>
-          <span className="font-bold border border-white p-1 rounded-full w-8">
+          <span className="w-8 rounded-full border border-white p-1 font-bold">
             {listOfCategory.length}
           </span>
         </AccordionTrigger>
@@ -121,12 +121,12 @@ export function AreaUpdateCategory({ listOfCategory, listOfProducts }: Props) {
           <Input
             type="text"
             value={searchTerm}
-            className="border border-base_color_positive my-8"
+            className="my-8 border border-base_color_positive"
             placeholder="Nome da categoria..."
             onChange={(e) => setSearchTerm(e.target.value)}
           />
 
-          <div className="flex flex-wrap justify-center gap-4 h-96 overflow-y-auto p-2 scrollbar">
+          <div className="scrollbar flex h-96 flex-wrap justify-center gap-4 overflow-y-auto p-2">
             {filteredCategory &&
               filteredCategory.map((category) => {
                 const isEditing = editingProductId === category.id
@@ -137,9 +137,9 @@ export function AreaUpdateCategory({ listOfCategory, listOfProducts }: Props) {
                 return (
                   <div
                     key={category.id}
-                    className="flex flex-col gap-4 mb-8 w-full border-b border-white/20 pb-8"
+                    className="mb-8 flex w-full flex-col gap-4 border-b border-white/20 pb-8"
                   >
-                    <div className="h-[6rem] flex flex-1 justify-between items-center sm:justify-evenly">
+                    <div className="flex h-[6rem] flex-1 items-center justify-between sm:justify-evenly">
                       <div className="flex items-center">
                         <UploadButton
                           endpoint="imageShoppingStore"
@@ -172,7 +172,7 @@ export function AreaUpdateCategory({ listOfCategory, listOfProducts }: Props) {
                             width={0}
                             height={0}
                             sizes="100vw"
-                            className="w-full h-28 object-contain"
+                            className="h-28 w-full object-contain"
                             src={category.imageUrl}
                             alt={category.name}
                           />
@@ -212,7 +212,7 @@ export function AreaUpdateCategory({ listOfCategory, listOfProducts }: Props) {
                         onClick={() => {
                           setEditingProductId(category.id)
                         }}
-                        className="data-[editing=true]:bg-base_color_positive hover:text-base_color_dark"
+                        className="hover:text-base_color_dark data-[editing=true]:bg-base_color_positive"
                       >
                         {isEditing ? 'Habilitado' : 'Habilitar'}
                       </Button>

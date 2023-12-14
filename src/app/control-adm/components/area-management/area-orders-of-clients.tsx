@@ -60,13 +60,13 @@ export function AreaOrdersOfClients({ ordersUsers }: OrdersUsersProps) {
     <Accordion
       type="single"
       collapsible
-      className="border border-white/20 my-4 p-2 rounded-md"
+      className="my-4 rounded-md border border-white/20 p-2"
     >
       <AccordionItem value="item-1">
-        <AccordionTrigger className="flex justify-between w-full">
+        <AccordionTrigger className="flex w-full justify-between">
           <p>Todos os pedidos</p>
           {hasOrders && (
-            <span className="font-bold border border-white p-1 rounded-full w-8">
+            <span className="w-8 rounded-full border border-white p-1 font-bold">
               {ordersSize}
             </span>
           )}
@@ -75,11 +75,11 @@ export function AreaOrdersOfClients({ ordersUsers }: OrdersUsersProps) {
           <Input
             type="text"
             value={searchTerm}
-            className="border border-base_color_positive my-8"
+            className="my-8 border border-base_color_positive"
             placeholder="Nome do produto..."
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-          <div className="flex flex-col gap-4 h-96 overflow-y-auto p-2 bg-white/10 scrollbar">
+          <div className="scrollbar flex h-96 flex-col gap-4 overflow-y-auto bg-white/10 p-2">
             {filteredOrdersUsers.map((orderUser) => {
               if (orderUser.Order.length === 0) {
                 return null
@@ -87,7 +87,7 @@ export function AreaOrdersOfClients({ ordersUsers }: OrdersUsersProps) {
 
               return (
                 <div
-                  className="border-b border-white pb-4 flex justify-between gap-4 flex-col"
+                  className="flex flex-col justify-between gap-4 border-b border-white pb-4"
                   key={orderUser.id}
                 >
                   <div className="flex flex-col">

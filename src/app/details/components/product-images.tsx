@@ -16,8 +16,8 @@ export function ProductImages({ imageUrls, name }: ProductImagesProps) {
   }
 
   return (
-    <div className="flex lg:flex-row-reverse max-lg:flex-col items-center lg:items-start max-md:gap-4 md:h-[31rem] md:w-3/5 md:min-w-[50%]">
-      <div className="flex h-[380px] w-full max-w-[80%] mx-auto items-center justify-center  duration-700 md:h-5/6 rounded-md p-1">
+    <div className="flex items-center max-lg:flex-col max-md:gap-4 md:h-[31rem] md:w-3/5 md:min-w-[50%] lg:flex-row-reverse lg:items-start">
+      <div className="mx-auto flex h-[380px] w-full max-w-[80%] items-center justify-center  rounded-md p-1 duration-700 md:h-5/6">
         <Image
           src={currentImage}
           alt={name}
@@ -28,11 +28,11 @@ export function ProductImages({ imageUrls, name }: ProductImagesProps) {
         />
       </div>
 
-      <div className="flex lg:flex-col gap-2 px-2">
+      <div className="flex gap-2 px-2 lg:flex-col">
         {imageUrls.map((imageUrl) => (
           <button
             key={imageUrl}
-            className={`flex h-[100px] w-full items-center justify-center rounded-lg bg-base_reference_card/60 hover:bg-base_reference_card_hover duration-700
+            className={`flex h-[100px] w-full items-center justify-center rounded-lg bg-base_reference_card/60 duration-700 hover:bg-base_reference_card_hover
                 ${
                   imageUrl === currentImage &&
                   'border-2 border-solid border-base_detail_decoration bg-base_reference_card_hover'
@@ -46,7 +46,7 @@ export function ProductImages({ imageUrls, name }: ProductImagesProps) {
               height={0}
               width={0}
               sizes="100vw"
-              className="h-auto w-auto max-h-[70%] max-w-[80%] md:max-h-[40%] md:max-w-[50%]"
+              className="h-auto max-h-[70%] w-auto max-w-[80%] md:max-h-[40%] md:max-w-[50%]"
             />
           </button>
         ))}

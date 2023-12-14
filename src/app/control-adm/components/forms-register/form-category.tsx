@@ -87,13 +87,13 @@ export function FormCategory() {
     <Accordion
       type="single"
       collapsible
-      className="border border-white/20 my-10 p-2 rounded-md"
+      className="my-10 rounded-md border border-white/20 p-2"
     >
       <AccordionItem value="item-1">
         <AccordionTrigger>Cadastrar categoria</AccordionTrigger>
         <AccordionContent className="mt-6">
           <form method="post" onSubmit={handleSubmit(handleRegisterProduct)}>
-            <div className="flex justify-around items-center">
+            <div className="flex items-center justify-around">
               <UploadButton
                 endpoint="imageShoppingStore"
                 onClientUploadComplete={(res) => {
@@ -107,9 +107,9 @@ export function FormCategory() {
 
               <ArrowBigRight />
 
-              <div className="border border-white/20 w-[6rem] h-[6rem]">
+              <div className="h-[6rem] w-[6rem] border border-white/20">
                 {imageDataCategory[0].url ? (
-                  <div className="flex flex-col gap-2 items-center">
+                  <div className="flex flex-col items-center gap-2">
                     <Image
                       width={0}
                       height={0}
@@ -123,15 +123,15 @@ export function FormCategory() {
                     </p>
                   </div>
                 ) : (
-                  <div className="flex justify-center items-center h-full">
-                    <p className="opacity-50 text-xs text-center">sem imagem</p>
+                  <div className="flex h-full items-center justify-center">
+                    <p className="text-center text-xs opacity-50">sem imagem</p>
                   </div>
                 )}
               </div>
             </div>
 
-            <div className="flex flex-col my-4">
-              <label className="flex flex-col gap-2 mb-4">
+            <div className="my-4 flex flex-col">
+              <label className="mb-4 flex flex-col gap-2">
                 Nome
                 <Input
                   className="bg-white/20"

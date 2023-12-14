@@ -16,17 +16,26 @@ import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import { Separator } from '../ui/separator'
 import { useRouter } from 'next/navigation'
 import { Cart } from '../cart'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { UserContext } from '@/providers/user-context'
+import { useCartStore } from '@/providers/zustand-store'
 
 export function Header() {
   const { isAdm } = useContext(UserContext)
+  const { cart } = useCartStore()
 
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isCartOpen, setIsCartOpen] = useState(false)
 
   const { status, data } = useSession()
   const router = useRouter()
+
+  const [clientRendered, setClientRendered] = useState(false)
+
+  useEffect(() => {
+    // For resolve warning about difference value between server side and client side
+    setClientRendered(true)
+  }, [])
 
   const handleLogin = async () => {
     try {
@@ -51,21 +60,18 @@ export function Header() {
   }
 
   return (
-    <header className="rounded-none p-4 bg-base_one_reference_header fixed z-30 w-full left-0">
-      <div className="flex justify-between items-center max-w-[1680px] mx-auto">
+    <header className="fixed left-0 z-30 w-full rounded-none bg-base_one_reference_header p-4">
+      <div className="mx-auto flex max-w-[1680px] items-center justify-between">
         <Sheet
           modal={false}
           open={isMenuOpen}
           onOpenChange={(open) => setIsMenuOpen(open)}
         >
-          <SheetTrigger asChild>
-            <Button
-              size="icon"
-              variant="outline"
-              className="border-none bg-base_one_reference_header hover:bg-white duration-700"
-            >
-              <Menu size={30} />
-            </Button>
+          <SheetTrigger
+            asChild
+            className="border-none bg-base_one_reference_header duration-700 hover:bg-white"
+          >
+            <Menu size={30} />
           </SheetTrigger>
 
           <SheetContent side="left">
@@ -100,7 +106,7 @@ export function Header() {
                   size="icon"
                   variant="outline"
                   onClick={handleLogin}
-                  className="font-semibold w-full gap-4 hover:bg-base_reference_card hover:text-primary"
+                  className="w-full gap-4 font-semibold hover:bg-base_reference_card hover:text-primary"
                 >
                   <LogIn />
                   Fazer login
@@ -112,7 +118,7 @@ export function Header() {
                   size="icon"
                   variant="outline"
                   onClick={handleLogout}
-                  className="font-semibold w-full gap-4 hover:text-primary hover:bg-base_reference_card duration-700"
+                  className="w-full gap-4 font-semibold duration-700 hover:bg-base_reference_card hover:text-primary"
                 >
                   <LogIn />
                   Sair
@@ -122,10 +128,10 @@ export function Header() {
               <Button
                 onClick={() => handleNavigateTo('/')}
                 size="icon"
-                className="group font-semibold w-full hover:bg-base_reference_card gap-4 justify-start p-4 bg-transparent duration-700"
+                className="group w-full justify-start gap-4 bg-transparent p-4 font-semibold duration-700 hover:bg-base_reference_card"
               >
                 <Home
-                  className="group-hover:text-base_detail_decoration duration-700"
+                  className="duration-700 group-hover:text-base_detail_decoration"
                   size={16}
                 />
                 Início
@@ -134,10 +140,10 @@ export function Header() {
               <Button
                 onClick={() => handleNavigateTo('/catalog')}
                 size="icon"
-                className="group font-semibold w-full hover:bg-base_base_reference_card gap-4 justify-start p-4 bg-transparent duration-700"
+                className="hover:bg-base_base_reference_card group w-full justify-start gap-4 bg-transparent p-4 font-semibold duration-700"
               >
                 <LibraryBig
-                  className="group-hover:text-base_detail_decoration duration-700"
+                  className="duration-700 group-hover:text-base_detail_decoration"
                   size={16}
                 />
                 Catálogo
@@ -146,10 +152,10 @@ export function Header() {
               <Button
                 onClick={() => handleNavigateTo('/orders')}
                 size="icon"
-                className="group font-semibold w-full hover:bg-base_base_reference_card gap-4 justify-start p-4 bg-transparent duration-700"
+                className="hover:bg-base_base_reference_card group w-full justify-start gap-4 bg-transparent p-4 font-semibold duration-700"
               >
                 <BaggageClaim
-                  className="group-hover:text-base_detail_decoration duration-700"
+                  className="duration-700 group-hover:text-base_detail_decoration"
                   size={16}
                 />
                 Meus pedidos
@@ -158,10 +164,10 @@ export function Header() {
               <Button
                 onClick={() => handleNavigateTo('/address')}
                 size="icon"
-                className="group font-semibold w-full hover:50 gap-4 justify-start p-4 bg-transparent duration-700"
+                className="hover:50 group w-full justify-start gap-4 bg-transparent p-4 font-semibold duration-700"
               >
                 <BookUser
-                  className="group-hover:text-base_detail_decoration duration-700"
+                  className="duration-700 group-hover:text-base_detail_decoration"
                   size={16}
                 />
                 Endereço de entrega
@@ -171,10 +177,10 @@ export function Header() {
                 <Button
                   onClick={() => handleNavigateTo('/control-adm')}
                   size="icon"
-                  className="group font-semibold w-full hover:bg-base_reference_card gap-4 justify-start p-4 bg-transparent duration-700"
+                  className="group w-full justify-start gap-4 bg-transparent p-4 font-semibold duration-700 hover:bg-base_reference_card"
                 >
                   <SlidersHorizontal
-                    className="group-hover:text-base_detail_decoration duration-700"
+                    className="duration-700 group-hover:text-base_detail_decoration"
                     size={16}
                   />
                   Controlar produtos
@@ -188,20 +194,21 @@ export function Header() {
 
         <h1
           onClick={() => handleNavigateTo('/')}
-          className="text-2xl font-bold cursor-pointer"
+          className="cursor-pointer text-2xl font-bold"
         >
           Shopping Store
         </h1>
 
         <Sheet open={isCartOpen} onOpenChange={(open) => setIsCartOpen(open)}>
           <SheetTrigger asChild>
-            <Button
-              size="icon"
-              variant="outline"
-              className="border-none bg-base_one_reference_header hover:bg-white duration-700"
-            >
+            <div className="relative border-none bg-base_one_reference_header duration-700 hover:bg-white">
               <BaggageClaim size={30} />
-            </Button>
+              {clientRendered && cart.length !== 0 && (
+                <div className="absolute -right-2 -top-2 flex h-6 w-6 items-center justify-center rounded-full bg-red-500 p-1 text-white">
+                  <p>{clientRendered && cart.length}</p>
+                </div>
+              )}
+            </div>
           </SheetTrigger>
 
           <SheetContent>

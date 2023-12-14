@@ -27,12 +27,12 @@ export function AreaUpdateProduct({ listOfProducts }: Props) {
     <Accordion
       type="single"
       collapsible
-      className="border border-white/20 my-10 p-2 rounded-md"
+      className="my-10 rounded-md border border-white/20 p-2"
     >
       <AccordionItem value="item-1">
-        <AccordionTrigger className="flex justify-between w-full">
+        <AccordionTrigger className="flex w-full justify-between">
           <p>Atualizar produto</p>{' '}
-          <span className="font-bold border border-white p-1 rounded-full w-8">
+          <span className="w-8 rounded-full border border-white p-1 font-bold">
             {listOfProducts.length}
           </span>
         </AccordionTrigger>
@@ -40,19 +40,19 @@ export function AreaUpdateProduct({ listOfProducts }: Props) {
           <Input
             type="text"
             value={searchTerm}
-            className="border border-base_color_positive my-8"
+            className="my-8 border border-base_color_positive"
             placeholder="Nome do produto..."
             onChange={(e) => setSearchTerm(e.target.value)}
           />
 
-          <div className="flex flex-col gap-4 h-96 overflow-y-auto p-2 scrollbar">
+          <div className="scrollbar flex h-96 flex-col gap-4 overflow-y-auto p-2">
             {filteredProducts.map((product) => {
               return (
                 <div
-                  className="border-b border-white pb-4 flex justify-between gap-4"
+                  className="flex justify-between gap-4 border-b border-white pb-4"
                   key={product.id}
                 >
-                  <div className="space-y-2 w-full max-w-[50%] max-sm:text-sm flex flex-col justify-center">
+                  <div className="flex w-full max-w-[50%] flex-col justify-center space-y-2 max-sm:text-sm">
                     <h3 className="font-bold">{product.name}</h3>
                     <p>
                       Valor R${' '}
@@ -76,7 +76,7 @@ export function AreaUpdateProduct({ listOfProducts }: Props) {
                     </p>
 
                     <Link
-                      className="border bg-base_reference_card_hover hover:bg-base_one_reference_header duration-700 p-2 rounded-md text-base_color_dark text-center w-32"
+                      className="w-32 rounded-md border bg-base_reference_card_hover p-2 text-center text-base_color_dark duration-700 hover:bg-base_one_reference_header"
                       href={`/control-adm/update-product/${product.slug}`}
                     >
                       Iniciar edição

@@ -27,7 +27,7 @@ export default async function RootLayout({
     <html lang="en">
       <Script src="https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js"></Script>
       <Script src="https://www.mercadopago.com/v1/security.js"></Script>
-      <body className={`${inter.className} max-w-[1680px] mx-auto`}>
+      <body className={`${inter.className} mx-auto max-w-[1680px]`}>
         <UserContextProvider>
           <AuthProvider>
             <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
@@ -35,7 +35,11 @@ export default async function RootLayout({
             {children}
           </AuthProvider>
         </UserContextProvider>
-        <ToastContainer position={'bottom-left'} />
+        <ToastContainer
+          autoClose={2000}
+          position={'bottom-left'}
+          theme="dark"
+        />
       </body>
     </html>
   )

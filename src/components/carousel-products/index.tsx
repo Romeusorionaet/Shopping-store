@@ -54,31 +54,31 @@ export function CarouselProducts({ products }: productsProps) {
             return (
               <div
                 key={product.id}
-                className="group relative md:h-[26rem] h-72 z-20"
+                className="group relative z-20 h-72 md:h-[26rem]"
               >
                 <div
                   data-quantity={productAvailable}
-                  className="data-[quantity=true]:group-hover:hidden data-[quantity=true]:hidden group-hover:flex md:hidden absolute bottom-1 left-1/2 transform -translate-x-1/2 w-full"
+                  className="absolute bottom-1 left-1/2 w-full -translate-x-1/2 transform group-hover:flex data-[quantity=true]:hidden data-[quantity=true]:group-hover:hidden md:hidden"
                 >
                   <AddProductInCart product={product} />
                 </div>
                 <Link href={`/details/${product.slug}`}>
                   <div
                     data-quantity={productAvailable}
-                    className="md:p-4 p-1 bg-base_reference_card/60 hover:bg-base_reference_card_hover duration-700 flex flex-col justify-center items-center md:gap-2 gap-1 rounded-md md:h-full data-[quantity=true]:bg-base_color_dark/5 data-[quantity=true]:hover:bg-base_color_dark/10"
+                    className="flex flex-col items-center justify-center gap-1 rounded-md bg-base_reference_card/60 p-1 duration-700 hover:bg-base_reference_card_hover data-[quantity=true]:bg-base_color_dark/5 data-[quantity=true]:hover:bg-base_color_dark/10 md:h-full md:gap-2 md:p-4"
                   >
                     <div className="h-10 text-center">
-                      <p className="md:text-sm text-xs">{product.name}</p>
+                      <p className="text-xs md:text-sm">{product.name}</p>
                     </div>
 
                     <div className="h-10">
                       <div>
                         {product.placeOfSale === 'SELL_IN_REGION_ONLY' ? (
-                          <span className="absolute bottom-28 left-0 bg-base_color_dark/5 p-1 rounded-md font-bold text-xs">
+                          <span className="absolute bottom-28 left-0 rounded-md bg-base_color_dark/5 p-1 text-xs font-bold">
                             Local
                           </span>
                         ) : (
-                          <span className="absolute bottom-28 left-0 bg-base_color_dark/5 p-1 rounded-md font-bold text-xs text-base_color_positive">
+                          <span className="absolute bottom-28 left-0 rounded-md bg-base_color_dark/5 p-1 text-xs font-bold text-base_color_positive">
                             Brasil
                           </span>
                         )}
@@ -108,13 +108,13 @@ export function CarouselProducts({ products }: productsProps) {
                         width={0}
                         height={0}
                         sizes="100vw"
-                        className="w-full md:h-52 h-32 object-contain"
+                        className="h-32 w-full object-contain md:h-52"
                         src={product.imageUrls[0]}
                         alt={product.name}
                       />
                     </div>
 
-                    <div className="flex items-center justify-between gap-2 w-full mb-4 max-md:text-xs">
+                    <div className="mb-4 flex w-full items-center justify-between gap-2 max-md:text-xs">
                       {product.discountPercentage !== 0 && (
                         <p>
                           <strong>{product.discountPercentage}%</strong> Desc

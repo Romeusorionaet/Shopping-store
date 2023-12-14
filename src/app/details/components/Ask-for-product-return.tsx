@@ -38,7 +38,7 @@ export function AskForProductReturn({ productName }: Props) {
       <textarea
         defaultValue={`Olá, tenho interesse no produto ${productName}`}
         onChange={(e) => setMessage(e.target.value)}
-        className="resize-none w-full border border-white/20 p-2 rounded-md"
+        className="w-full resize-none rounded-md border border-white/20 p-2"
       ></textarea>
       <Button onClick={handleSendMenssage}>
         Pedir retorno do produto ao estoque

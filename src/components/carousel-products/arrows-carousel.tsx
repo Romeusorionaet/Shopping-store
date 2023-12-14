@@ -7,7 +7,7 @@ interface Props {
 
 export function ArrowControlLeft({ sizeList, onClick }: Props) {
   return (
-    <div className="absolute left-0 top-0 h-full z-20 flex justify-center items-center p-2 max-md:hidden">
+    <div className="absolute left-0 top-0 z-20 flex h-full items-center justify-center p-2 max-md:hidden">
       <button
         data-list={sizeList}
         onClick={onClick}
@@ -15,7 +15,7 @@ export function ArrowControlLeft({ sizeList, onClick }: Props) {
       >
         <ChevronLeft
           size={60}
-          className="bg-base_color_dark/20 hover:bg-base_color_dark duration-700 text-white rounded-full"
+          className="rounded-full bg-base_color_dark/20 text-white duration-700 hover:bg-base_color_dark"
         />
       </button>
     </div>
@@ -24,7 +24,7 @@ export function ArrowControlLeft({ sizeList, onClick }: Props) {
 
 export function ArrowControlRight({ sizeList, onClick }: Props) {
   return (
-    <div className="absolute right-0 top-0 h-full z-20 flex justify-center items-center p-2 max-md:hidden">
+    <div className="absolute right-0 top-0 z-20 flex h-full items-center justify-center p-2 max-md:hidden">
       <button
         data-list={sizeList}
         onClick={onClick}
@@ -32,7 +32,7 @@ export function ArrowControlRight({ sizeList, onClick }: Props) {
       >
         <ChevronRight
           size={60}
-          className="bg-base_color_dark/20 hover:bg-base_color_dark duration-700 text-white rounded-full"
+          className="rounded-full bg-base_color_dark/20 text-white duration-700 hover:bg-base_color_dark"
         />
       </button>
     </div>

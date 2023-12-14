@@ -30,8 +30,8 @@ export function CartItem({ product }: CartItemProps) {
   }
 
   return (
-    <div className="flex flex-col gap-2 items-center justify-between">
-      <p className="text-xs whitespace-nowrap">{product.name}</p>
+    <div className="flex flex-col items-center justify-between gap-2">
+      <p className="whitespace-nowrap text-xs">{product.name}</p>
 
       <div className="flex gap-1">
         <div className="flex w-[40%] items-center justify-center rounded-md">
@@ -42,7 +42,7 @@ export function CartItem({ product }: CartItemProps) {
               height={0}
               sizes="100vw"
               alt={product.name}
-              className="w-full h-full"
+              className="h-full w-full"
             />
           </Link>
         </div>

@@ -15,7 +15,7 @@ export default async function ControlAdm() {
   const products: Product[] = JSON.parse(props.products)
 
   return (
-    <main className="p-4 max-w-[800px] mx-auto">
+    <main className="mx-auto max-w-[800px] p-4">
       <h1 className="my-6 text-center text-xl font-bold text-base_detail_decoration">
         Controle de estoque
       </h1>

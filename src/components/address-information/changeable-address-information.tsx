@@ -8,7 +8,7 @@ interface Props {
 export function ChangeableAddressInformation({ address }: Props) {
   if (!address) {
     return (
-      <div className="border border-white/20 p-4 rounded-md">
+      <div className="rounded-md border border-white/20 p-4">
         <p>
           Não podemos exibir os dados do endereço temporário no momento. No
           entanto, seus dados estão salvos. Isso pode ter ocorrido se você
@@ -25,7 +25,7 @@ export function ChangeableAddressInformation({ address }: Props) {
   }
 
   return (
-    <div className="mt-4 flex flex-col gap-1 opacity-80 bg-blue-200/20 p-1 rounded-md">
+    <div className="mt-4 flex flex-col gap-1 rounded-md bg-blue-200/20 p-1 opacity-80">
       <h2 className="font-bold">Endereço de entrega</h2>
 
       <div className="mt-2 text-sm">

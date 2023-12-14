@@ -126,7 +126,7 @@ export function FormUpdate({ product }: FormUpdateProps) {
   }
 
   return (
-    <div className="space-y-8 w-full">
+    <div className="w-full space-y-8">
       <div className="flex flex-col items-center justify-center gap-8">
         {imageDataProduct[0].url ? (
           <ProductImages
@@ -189,13 +189,13 @@ export function FormUpdate({ product }: FormUpdateProps) {
               />
             </label>
 
-            <label className="flex flex-col gap-2 mt-2">
+            <label className="mt-2 flex flex-col gap-2">
               <span>Faz entrega deste produto para todo Brasil?</span>
 
               <p className="text-xs opacity-90">Valor padrão: {'Sim'}</p>
 
               <select
-                className="p-2 rounded-md appearance-none border border-white/20 text-white bg-black"
+                className="appearance-none rounded-md border border-white/20 bg-black p-2 text-white"
                 {...register('placeOfSale')}
               >
                 <option value="Sim">Sim</option>
@@ -203,10 +203,10 @@ export function FormUpdate({ product }: FormUpdateProps) {
               </select>
             </label>
 
-            <label className="flex flex-col gap-2 mt-4">
+            <label className="mt-4 flex flex-col gap-2">
               Descrição
               <textarea
-                className="bg-base_color_dark/50 w-full h-40 resize-none p-2 rounded-md scrollbar"
+                className="scrollbar h-40 w-full resize-none rounded-md bg-base_color_dark/50 p-2"
                 defaultValue={product.description}
                 {...register('description')}
               ></textarea>
@@ -215,7 +215,7 @@ export function FormUpdate({ product }: FormUpdateProps) {
           </div>
         </div>
 
-        <div className="flex justify-between my-4">
+        <div className="my-4 flex justify-between">
           <Button
             className="text-base_color_dark"
             disabled={isSubmitting}

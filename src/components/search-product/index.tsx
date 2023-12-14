@@ -27,11 +27,11 @@ export function SearchProduct({ products }: Props) {
   }
 
   return (
-    <div className="space-y-8 mx-auto">
-      <div className="max-w-2xl relative mx-auto px-4">
-        <Search className="absolute top-2 left-8 text-base_color_dark/20" />
+    <div className="mx-auto space-y-8">
+      <div className="relative mx-auto max-w-2xl px-4">
+        <Search className="absolute left-8 top-2 text-base_color_dark/20" />
         <Input
-          className="bg-base_color_dark/5 px-14 w-full "
+          className="w-full bg-base_color_dark/5 px-14 "
           onChange={(e) => handleSearch(e.target.value)}
           value={searchItem}
           placeholder="Pesquise por nome ou categoria"

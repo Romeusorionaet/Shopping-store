@@ -18,8 +18,8 @@ export function HistoricItem({ historic }: Props) {
 
   if (sortedHistoric.length === 0) {
     return (
-      <div className="flex h-screen justify-center items-start">
-        <div className="border border-white/20 p-4 rounded-md">
+      <div className="flex h-screen items-start justify-center">
+        <div className="rounded-md border border-white/20 p-4">
           <p className="opacity-80">Sem registro de compras...</p>
         </div>
       </div>
@@ -27,7 +27,7 @@ export function HistoricItem({ historic }: Props) {
   }
 
   return (
-    <div className="flex gap-8 flex-wrap justify-center mt-20">
+    <div className="mt-20 flex flex-wrap justify-center gap-8">
       {sortedHistoric.map((item) => {
         const totalDiscount =
           Number(item.basePrice) * (item.discountPercentage / 100)
@@ -36,7 +36,7 @@ export function HistoricItem({ historic }: Props) {
         return (
           <div
             key={item.id}
-            className="space-y-2 border-b border-base_color_dark/20 pb-4 w-60 text-sm"
+            className="w-60 space-y-2 border-b border-base_color_dark/20 pb-4 text-sm"
           >
             <div>
               {' '}
@@ -44,7 +44,7 @@ export function HistoricItem({ historic }: Props) {
                 width={0}
                 height={0}
                 sizes="100vw"
-                className="w-full h-52 object-contain"
+                className="h-52 w-full object-contain"
                 src={item.imageUrl}
                 alt={item.name}
               />

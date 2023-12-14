@@ -23,7 +23,7 @@ export default async function Category({ params }: ParamsProps) {
 
   if (selectedProducts.products.length === 0) {
     return (
-      <div className="flex h-screen justify-center items-center p-2">
+      <div className="flex h-screen items-center justify-center p-2">
         <h1>Não há produtos registrado para esta categoria...</h1>
       </div>
     )
@@ -31,9 +31,9 @@ export default async function Category({ params }: ParamsProps) {
 
   return (
     <div className="py-[8.5rem] text-center">
-      <h1 className="font-bold text-2xl">{slug}</h1>
+      <h1 className="text-2xl font-bold">{slug}</h1>
 
-      <div className="flex flex-wrap gap-8 justify-center my-8">
+      <div className="my-8 flex flex-wrap justify-center gap-8">
         {selectedProducts.products &&
           selectedProducts.products.map((product) => {
             const { totalPrice } = CalculateValueProduct(product)
@@ -41,28 +41,28 @@ export default async function Category({ params }: ParamsProps) {
 
             return (
               <div key={product.id}>
-                <div className="group relative w-64 h-96">
+                <div className="group relative h-96 w-64">
                   <div
                     data-quantity={productAvailable}
-                    className="data-[quantity=true]:group-hover:hidden data-[quantity=true]:hidden group-hover:flex md:hidden absolute bottom-1 left-1 w-20"
+                    className="absolute bottom-1 left-1 w-20 group-hover:flex data-[quantity=true]:hidden data-[quantity=true]:group-hover:hidden md:hidden"
                   >
                     <AddProductInCart product={product} />
                   </div>
                   <Link href={`/details/${product.slug}`}>
                     <div
                       data-quantity={productAvailable}
-                      className="p-4 bg-base_reference_card/60 hover:bg-base_reference_card_hover duration-700 flex flex-col justify-center items-center gap-2 rounded-md h-full data-[quantity=true]:bg-base_color_dark/5 data-[quantity=true]:hover:bg-base_color_dark/10"
+                      className="flex h-full flex-col items-center justify-center gap-2 rounded-md bg-base_reference_card/60 p-4 duration-700 hover:bg-base_reference_card_hover data-[quantity=true]:bg-base_color_dark/5 data-[quantity=true]:hover:bg-base_color_dark/10"
                     >
                       <p className="text-sm">{product.name}</p>
 
                       <div>
                         <div>
                           {product.placeOfSale === 'SELL_IN_REGION_ONLY' ? (
-                            <span className="absolute bottom-28 left-0 bg-base_color_dark/5 p-1 rounded-tr-md font-bold text-xs">
+                            <span className="absolute bottom-28 left-0 rounded-tr-md bg-base_color_dark/5 p-1 text-xs font-bold">
                               Local
                             </span>
                           ) : (
-                            <span className="absolute bottom-28 left-0 bg-base_color_dark/5 p-1 rounded-tr-md font-bold text-xs text-base_color_positive">
+                            <span className="absolute bottom-28 left-0 rounded-tr-md bg-base_color_dark/5 p-1 text-xs font-bold text-base_color_positive">
                               Brasil
                             </span>
                           )}
@@ -91,12 +91,12 @@ export default async function Category({ params }: ParamsProps) {
                         width={0}
                         height={0}
                         sizes="100vw"
-                        className="w-full h-52 object-contain"
+                        className="h-52 w-full object-contain"
                         src={product.imageUrls[0]}
                         alt={product.name}
                       />
 
-                      <div className="flex items-center justify-between gap-2 w-full mb-4">
+                      <div className="mb-4 flex w-full items-center justify-between gap-2">
                         {product.discountPercentage !== 0 && (
                           <p>
                             <strong>{product.discountPercentage}%</strong> Desc

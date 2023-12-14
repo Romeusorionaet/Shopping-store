@@ -38,12 +38,12 @@ export default async function Orders() {
   const historic: UserOrdersHistoric[] = JSON.parse(userHistoric.historic)
 
   return (
-    <div className="pt-28 p-4">
+    <div className="p-4 pt-28">
       <div className="border-b border-base_color_dark">
         <h1 className="font-bold">Seus pedidos</h1>
       </div>
 
-      <div className="flex flex-col justify-center mt-4">
+      <div className="mt-4 flex flex-col justify-center">
         <h2 className="text-lg">Pedidos em andamento:</h2>
         {orders && orders.length >= 1 ? (
           orders.map((order) => {
@@ -51,26 +51,26 @@ export default async function Orders() {
               return <OrderItem key={order.id} order={order} />
             } else {
               return (
-                <p key={order.id} className="text-center mt-10 opacity-80">
+                <p key={order.id} className="mt-10 text-center opacity-80">
                   Vazio
                 </p>
               )
             }
           })
         ) : (
-          <p className="text-center mt-10 opacity-80">Vazio</p>
+          <p className="mt-10 text-center opacity-80">Vazio</p>
         )}
       </div>
 
       <div className="mt-10">
         <h2 className="mb-4 text-lg">Pedidos entregue:</h2>
 
-        <div className="h-80 overflow-auto scrollbar border border-base_color_dark/20 lg:h-[50rem]">
+        <div className="scrollbar h-80 overflow-auto border border-base_color_dark/20 lg:h-[50rem]">
           <HistoricItem historic={historic} />
         </div>
       </div>
 
-      <div className="flex flex-col gap-2 mt-10 h-96 overflow-auto scrollbar">
+      <div className="scrollbar mt-10 flex h-96 flex-col gap-2 overflow-auto">
         <h2 className="text-lg">Pedidos não finalizados</h2>
         <p className="text-sm">
           Se tiver alguma dúvida sobre um produto que não tenha comprado,
@@ -78,7 +78,7 @@ export default async function Orders() {
           (84) 981127596
         </p>
 
-        <div className="border border-base_color_dark/20 p-2 mt-4">
+        <div className="mt-4 border border-base_color_dark/20 p-2">
           {orders && orders.length >= 1 ? (
             orders
               .map((order) => {

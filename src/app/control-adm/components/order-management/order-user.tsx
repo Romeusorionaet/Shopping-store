@@ -27,11 +27,11 @@ export function OrderUser({ orders, address }: OrdersProps) {
     <Accordion
       type="single"
       collapsible
-      className="border border-white/20 p-1 rounded-md"
+      className="rounded-md border border-white/20 p-1"
     >
       <AccordionItem value="item-1">
-        <AccordionTrigger className="group flex justify-end w-full">
-          <ArrowBigDown className="group-data-[state=open]:rotate-180 duration-700" />
+        <AccordionTrigger className="group flex w-full justify-end">
+          <ArrowBigDown className="duration-700 group-data-[state=open]:rotate-180" />
         </AccordionTrigger>
         <AccordionContent>
           <div className="flex flex-col gap-6">
@@ -50,7 +50,7 @@ export function OrderUser({ orders, address }: OrdersProps) {
               return (
                 <div
                   key={order.id}
-                  className="space-y-4 bg-base_color_dark/5 p-2 border-b border-white/20"
+                  className="space-y-4 border-b border-white/20 bg-base_color_dark/5 p-2"
                 >
                   <div className="flex justify-between">
                     <h2 className="font-bold">Pedido</h2>
@@ -77,7 +77,7 @@ export function OrderUser({ orders, address }: OrdersProps) {
 
                   {order.orderTracking ===
                     OrderStatusTracking.PRODUCT_DELIVERED_TO_CLIENT && (
-                    <p className="border-x border-base_color_positive inline-block p-1 rounded-md">
+                    <p className="inline-block rounded-md border-x border-base_color_positive p-1">
                       pedido entregue
                     </p>
                   )}

@@ -108,7 +108,7 @@ export function FormAddress() {
       <Accordion
         type="single"
         collapsible
-        className="border border-base_color_dark/10 mt-8 p-2 rounded-md max-w-[800px] mx-auto"
+        className="mx-auto mt-8 max-w-[800px] rounded-md border border-base_color_dark/10 p-2"
       >
         <AccordionItem value="item-1">
           <AccordionTrigger>Preencher formulário</AccordionTrigger>
@@ -249,7 +249,7 @@ export function FormAddress() {
         </AccordionItem>
       </Accordion>
 
-      <div className="flex justify-end max-w-[800px] mx-auto">
+      <div className="mx-auto flex max-w-[800px] justify-end">
         <CheckoutCart userHasAddress={userHasAddress} />
       </div>
     </div>
