@@ -4,6 +4,9 @@ CREATE TYPE "OrderStatus" AS ENUM ('WAITING_FOR_PAYMENT', 'PAYMENT_CONFIRMED');
 -- CreateEnum
 CREATE TYPE "OrderStatusTracking" AS ENUM ('WAITING', 'CANCELED', 'PRODUCT_DELIVERED_TO_CORREIOS', 'PRODUCT_DELIVERED_TO_CLIENT');
 
+-- CreateEnum
+CREATE TYPE "ModeOfSale" AS ENUM ('SELL_IN_REGION_ONLY', 'ONLINE_STORE');
+
 -- CreateTable
 CREATE TABLE "Category" (
     "id" TEXT NOT NULL,
@@ -24,8 +27,12 @@ CREATE TABLE "Product" (
     "imageUrls" TEXT[],
     "categoryId" TEXT NOT NULL,
     "quantity" INTEGER NOT NULL DEFAULT 1,
-    "placeOfSale" TEXT NOT NULL DEFAULT 'ONLINE_STORE',
     "discountPercentage" INTEGER NOT NULL DEFAULT 0,
+    "weight" INTEGER,
+    "height" INTEGER,
+    "width" INTEGER,
+    "color" TEXT,
+    "placeOfSale" "ModeOfSale" NOT NULL DEFAULT 'ONLINE_STORE',
 
     CONSTRAINT "Product_pkey" PRIMARY KEY ("id")
 );
@@ -36,8 +43,8 @@ CREATE TABLE "Order" (
     "userId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "status" "OrderStatus" NOT NULL DEFAULT 'WAITING_FOR_PAYMENT',
     "trackingCode" TEXT NOT NULL DEFAULT '',
+    "status" "OrderStatus" NOT NULL DEFAULT 'WAITING_FOR_PAYMENT',
     "orderTracking" "OrderStatusTracking" NOT NULL DEFAULT 'WAITING',
 
     CONSTRAINT "Order_pkey" PRIMARY KEY ("id")
@@ -196,10 +203,10 @@ ALTER TABLE "Order" ADD CONSTRAINT "Order_userId_fkey" FOREIGN KEY ("userId") RE
 ALTER TABLE "OrderAddress" ADD CONSTRAINT "OrderAddress_orderId_fkey" FOREIGN KEY ("orderId") REFERENCES "Order"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "OrderProduct" ADD CONSTRAINT "OrderProduct_productId_fkey" FOREIGN KEY ("productId") REFERENCES "Product"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "OrderProduct" ADD CONSTRAINT "OrderProduct_orderId_fkey" FOREIGN KEY ("orderId") REFERENCES "Order"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "OrderProduct" ADD CONSTRAINT "OrderProduct_orderId_fkey" FOREIGN KEY ("orderId") REFERENCES "Order"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "OrderProduct" ADD CONSTRAINT "OrderProduct_productId_fkey" FOREIGN KEY ("productId") REFERENCES "Product"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Address" ADD CONSTRAINT "Address_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

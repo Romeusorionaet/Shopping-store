@@ -1,7 +1,7 @@
 'use client'
 
 import { CalculateValueProduct } from '@/utils/calculate-value-product'
-import { Product } from '@prisma/client'
+import { ModeOfSale, Product } from '@prisma/client'
 import Image from 'next/image'
 import Link from 'next/link'
 import { AddProductInCart } from '../add-product-in-cart'
@@ -73,7 +73,8 @@ export function CarouselProducts({ products }: productsProps) {
 
                     <div className="h-10">
                       <div>
-                        {product.placeOfSale === 'SELL_IN_REGION_ONLY' ? (
+                        {product.placeOfSale ===
+                        ModeOfSale.SELL_IN_REGION_ONLY ? (
                           <span className="absolute bottom-28 left-0 rounded-md bg-base_color_dark/5 p-1 text-xs font-bold">
                             Local
                           </span>

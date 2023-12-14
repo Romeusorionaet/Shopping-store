@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -10,38 +7,62 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum OrderStatus {
+  WAITING_FOR_PAYMENT
+  PAYMENT_CONFIRMED
+}
+
+enum OrderStatusTracking {
+  WAITING
+  CANCELED
+  PRODUCT_DELIVERED_TO_CORREIOS
+  PRODUCT_DELIVERED_TO_CLIENT
+}
+
+enum ModeOfSale {
+  SELL_IN_REGION_ONLY
+  ONLINE_STORE
+}
+
 model Category {
-  id       String    @id @default(uuid())
+  id       String @id @default(uuid())
   name     String
   slug     String
   imageUrl String
+
   products Product[]
 }
 
 model Product {
-  id                 String         @id @default(uuid())
+  id                 String     @id @default(uuid())
   name               String
   slug               String
-  description        String
-  basePrice          Decimal        @db.Decimal(8, 2)
+  description        String     @db.Text
+  basePrice          Decimal    @db.Decimal(8, 2)
   imageUrls          String[]
   categoryId         String
-  quantity           Int            @default(1)
-  placeOfSale        String         @default("ONLINE_STORE")
-  category           Category       @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-  discountPercentage Int            @default(0)
-  OrderProduct       OrderProduct[]
+  quantity           Int        @default(1)
+  discountPercentage Int        @default(0)
+  weight             Int?
+  height             Int?
+  width              Int?
+  color              String?
+  placeOfSale        ModeOfSale @default(ONLINE_STORE)
+
+  category     Category       @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  OrderProduct OrderProduct[]
 }
 
 model Order {
   id            String              @id @default(uuid())
   userId        String
-  user          User                @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt     DateTime            @default(now())
   updatedAt     DateTime            @default(now()) @updatedAt
-  status        OrderStatus         @default(WAITING_FOR_PAYMENT)
   trackingCode  String              @default("")
+  status        OrderStatus         @default(WAITING_FOR_PAYMENT)
   orderTracking OrderStatusTracking @default(WAITING)
+
+  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
   orderProducts OrderProduct[]
   orderAddress  OrderAddress[]
 }
@@ -63,27 +84,16 @@ model OrderAddress {
   orderId String
 }
 
-enum OrderStatus {
-  WAITING_FOR_PAYMENT
-  PAYMENT_CONFIRMED
-}
-
-enum OrderStatusTracking {
-  WAITING
-  CANCELED
-  PRODUCT_DELIVERED_TO_CORREIOS
-  PRODUCT_DELIVERED_TO_CLIENT
-}
-
 model OrderProduct {
   id                 String  @id @default(uuid())
   productId          String
-  product            Product @relation(fields: [productId], references: [id], onDelete: Cascade)
   orderId            String
-  order              Order   @relation(fields: [orderId], references: [id])
   basePrice          Decimal @db.Decimal(8, 2)
   discountPercentage Int     @default(0)
   quantity           Int
+
+  order   Order   @relation(fields: [orderId], references: [id])
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 }
 
 model UserOrdersHistoric {
@@ -150,7 +160,8 @@ model Session {
   sessionToken String   @unique
   userId       String
   expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model User {
@@ -160,10 +171,11 @@ model User {
   emailVerified DateTime?
   isAdm         Boolean   @default(false)
   image         String?
-  accounts      Account[]
-  sessions      Session[]
-  Order         Order[]
-  Address       Address[]
+
+  accounts Account[]
+  sessions Session[]
+  Order    Order[]
+  Address  Address[]
 }
 
 model AdmPassword {

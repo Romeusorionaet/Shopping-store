@@ -5,7 +5,9 @@
     width: 2px;
   }
 
-  .scrollbar::-webkit-scrollbar-thumb {
-    background: white;
-  }
+.scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, white, black, white); 
+}
+
+
 }

@@ -21,7 +21,6 @@ export function useSlickCarousel() {
         breakpoint: 600,
         settings: {
           slidesToShow: 2.2,
-          initialSlide: 2,
         },
       },
       {

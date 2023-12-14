@@ -27,7 +27,7 @@ export default async function RootLayout({
     <html lang="en">
       <Script src="https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js"></Script>
       <Script src="https://www.mercadopago.com/v1/security.js"></Script>
-      <body className={`${inter.className} mx-auto max-w-[1680px]`}>
+      <body className={`${inter.className} mx-auto max-w-[1680px] antialiased`}>
         <UserContextProvider>
           <AuthProvider>
             <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />

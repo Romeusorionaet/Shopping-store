@@ -2,7 +2,7 @@
 
 import { Input } from '@/components/ui/input'
 import { useForm } from 'react-hook-form'
-import { Product } from '@prisma/client'
+import { ModeOfSale, Product } from '@prisma/client'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FormError } from '@/components/form/form-error'
@@ -10,7 +10,7 @@ import { useState } from 'react'
 import { updateProduct } from '@/actions/update/product'
 import { useRouter } from 'next/navigation'
 import { deleteProduct } from '@/actions/delete/product'
-import { Trash } from 'lucide-react'
+import { DollarSign, Percent, Trash } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { UploadButton } from '@/utils/generate-components'
 import { ProductImages } from '@/app/details/components/product-images'
@@ -74,7 +74,9 @@ export function FormUpdate({ product }: FormUpdateProps) {
     const newImageUrls = imageDataProduct.map((item) => item.url)
     const newSlug = name.toLowerCase().replace(/ /g, '-')
     const salesLocationType =
-      placeOfSale === 'Sim' ? 'ONLINE_STORE' : 'SELL_IN_REGION_ONLY'
+      placeOfSale === 'Sim'
+        ? ModeOfSale.ONLINE_STORE
+        : ModeOfSale.SELL_IN_REGION_ONLY
 
     const updatedData = {
       id: product.id,
@@ -159,7 +161,9 @@ export function FormUpdate({ product }: FormUpdateProps) {
 
           <div>
             <label className="flex flex-col gap-2">
-              Preço base
+              <div className="flex items-center gap-2">
+                <span>Preço base</span> <DollarSign size={20} color="#00FF00" />
+              </div>
               <Input
                 defaultValue={Number(product.basePrice)}
                 {...register('basePrice')}
@@ -168,7 +172,10 @@ export function FormUpdate({ product }: FormUpdateProps) {
             </label>
 
             <label className="flex flex-col gap-2">
-              Disconto
+              <div className="flex items-center gap-2">
+                <span>Desconto</span>
+                <Percent size={20} color="#00FF00" />
+              </div>
               <Input
                 defaultValue={product.discountPercentage}
                 {...register('discountPercentage')}
@@ -206,7 +213,7 @@ export function FormUpdate({ product }: FormUpdateProps) {
             <label className="mt-4 flex flex-col gap-2">
               Descrição
               <textarea
-                className="scrollbar h-40 w-full resize-none rounded-md bg-base_color_dark/50 p-2"
+                className="scrollbar h-60 w-full resize-none rounded-md bg-base_color_dark/50 p-2"
                 defaultValue={product.description}
                 {...register('description')}
               ></textarea>

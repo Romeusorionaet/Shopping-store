@@ -3,7 +3,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { CalculateValueProduct } from '@/utils/calculate-value-product'
 import { AddProductInCart } from '@/components/add-product-in-cart'
-import { Product } from '@prisma/client'
+import { ModeOfSale, Product } from '@prisma/client'
 
 interface SelectedProducts {
   products: Product[]
@@ -57,7 +57,8 @@ export default async function Category({ params }: ParamsProps) {
 
                       <div>
                         <div>
-                          {product.placeOfSale === 'SELL_IN_REGION_ONLY' ? (
+                          {product.placeOfSale ===
+                          ModeOfSale.SELL_IN_REGION_ONLY ? (
                             <span className="absolute bottom-28 left-0 rounded-tr-md bg-base_color_dark/5 p-1 text-xs font-bold">
                               Local
                             </span>

@@ -3,8 +3,9 @@ import { ProductImages } from '../components/product-images'
 import { CalculateValueProduct } from '@/utils/calculate-value-product'
 import { CarouselProducts } from '@/components/carousel-products'
 import { AskForProductReturn } from '../components/Ask-for-product-return'
-import { Category, Product } from '@prisma/client'
+import { Category, ModeOfSale, Product } from '@prisma/client'
 import { AddProductInCart } from '@/components/add-product-in-cart'
+import { PackageX } from 'lucide-react'
 
 interface CategoryIncludeProducts extends Category {
   products: Product[]
@@ -26,7 +27,12 @@ export default async function Details({ params }: ParamsProps) {
   const product: ProductIncludeCategoryAndProducts = JSON.parse(props.product)
 
   if (!product) {
-    return <p>Produto não encontrado</p>
+    return (
+      <div className="flex h-screen flex-col items-center justify-center gap-4 p-4">
+        <PackageX size={44} />
+        <p>Produto não encontrado.</p>
+      </div>
+    )
   }
 
   const { totalPrice } = CalculateValueProduct(product)
@@ -78,7 +84,11 @@ export default async function Details({ params }: ParamsProps) {
           </div>
 
           <p className="text-xl">Descrição:</p>
-          <p>{product.description}</p>
+          <div className="scrollbar h-96 overflow-auto border border-base_color_dark/20 p-1">
+            <pre className="whitespace-pre-wrap font-sans">
+              {product.description}
+            </pre>
+          </div>
 
           {product.quantity <= 0 ? (
             <div className="space-y-4">
@@ -90,7 +100,7 @@ export default async function Details({ params }: ParamsProps) {
             </div>
           ) : (
             <div>
-              {product.placeOfSale !== 'ONLINE_STORE' ? (
+              {product.placeOfSale !== ModeOfSale.ONLINE_STORE ? (
                 <p>
                   Não fazemos a entrega deste produto. Retirar na loja Shopping
                   Store
@@ -107,7 +117,7 @@ export default async function Details({ params }: ParamsProps) {
       </div>
 
       <div className="space-y-8 p-4">
-        {product.category.products.length !== 0 && (
+        {product.category?.products.length !== 0 && (
           <div className="space-y-6">
             <h2 className="text-lg uppercase md:text-2xl">Veja também</h2>
 

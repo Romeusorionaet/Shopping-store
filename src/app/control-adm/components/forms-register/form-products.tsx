@@ -19,6 +19,7 @@ import { Button } from '@/components/ui/button'
 import '@uploadthing/react/styles.css'
 import { UploadButton } from '@/utils/generate-components'
 import { useNotification } from '@/hooks/use-notifications'
+import { ModeOfSale } from '@prisma/client'
 
 interface ImageDataProps {
   name: string
@@ -87,7 +88,9 @@ export function FormProduct({ listOfCategory }: Props) {
     const newSlug = name.toLowerCase().replace(/ /g, '-')
 
     const salesLocationType =
-      placeOfSale === 'Sim' ? 'ONLINE_STORE' : 'SELL_IN_REGION_ONLY'
+      placeOfSale === 'Sim'
+        ? ModeOfSale.ONLINE_STORE
+        : ModeOfSale.SELL_IN_REGION_ONLY
 
     if (imageDataProducts.length !== 4) {
       notifyError('É importante que tenha 4 imagens para o seu produto')
