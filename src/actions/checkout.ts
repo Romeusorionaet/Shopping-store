@@ -50,8 +50,8 @@ export const createCheckout = async (
     } = {
       items,
       back_urls: {
-        success: 'http://localhost:3000/orders',
-        failure: 'http://localhost:3000',
+        success: 'https://shopping-store-kappa.vercel.app/orders',
+        failure: 'https://shopping-store-kappa.vercel.app',
       },
       auto_return: 'approved',
       external_reference: orderId,

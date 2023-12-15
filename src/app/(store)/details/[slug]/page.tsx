@@ -6,6 +6,9 @@ import { AskForProductReturn } from '../components/Ask-for-product-return'
 import { Category, ModeOfSale, Product } from '@prisma/client'
 import { AddProductInCart } from '@/components/add-product-in-cart'
 import { PackageX } from 'lucide-react'
+// import { generateMetadata } from '@/utils/generate-metadata'
+
+import { Metadata, ResolvingMetadata } from 'next'
 
 interface CategoryIncludeProducts extends Category {
   products: Product[]
@@ -18,6 +21,22 @@ export interface ProductIncludeCategoryAndProducts extends Product {
 interface ParamsProps {
   params: {
     slug: string
+  }
+}
+
+interface ParamsMetadataProps {
+  params: {
+    slug: string
+  }
+}
+
+export async function generateMetadata({
+  params,
+}: ParamsMetadataProps): Promise<Metadata> {
+  const { slug } = params
+
+  return {
+    title: slug,
   }
 }
 
