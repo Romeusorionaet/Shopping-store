@@ -15,11 +15,11 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   creator: 'Romeu soares Developer Full-Stack.',
+  title: 'Shopping-store.',
+  description: 'A shopping-store é uma loja online de vendas de produtos.',
   openGraph: {
-    title: 'Shopping-store.',
-    description: 'A shopping-store é uma loja online de vendas de produtos.',
-    url: 'https://shopping-store-kappa.vercel.app',
     siteName: 'Shopping-store',
+    url: 'https://shopping-store-kappa.vercel.app',
     images: [
       {
         url: 'https://www.masqueteclas.com/wp-content/uploads/2015/11/NL-5-Imagen1-gd.jpg',
