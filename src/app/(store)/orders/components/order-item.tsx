@@ -9,7 +9,6 @@ import {
 } from '@/components/ui/accordion'
 import { Address, OrderStatusTracking } from '@prisma/client'
 import { format } from 'date-fns'
-import { getOrderStatus } from '../../../components/helpers/get-order-status'
 import { Button } from '@/components/ui/button'
 import { OrderProductItem } from './order-product-item'
 import { FixedAddressInformation } from '@/components/address-information/fixed-address-information'
@@ -18,6 +17,7 @@ import { ChangeableAddressInformation } from '@/components/address-information/c
 import { useEffect, useState } from 'react'
 import { getAddressFromCookies } from '@/utils/get-address-from-cookies'
 import Link from 'next/link'
+import { getOrderStatus } from '@/components/helpers/get-order-status'
 
 export interface OrderProductProps {
   order: OrderIncludeOrderProducts

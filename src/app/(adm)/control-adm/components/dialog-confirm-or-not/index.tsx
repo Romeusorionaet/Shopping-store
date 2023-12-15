@@ -26,6 +26,8 @@ export function DialogConfirmOrNot({ onConfirm }: DialogConfirmProps) {
     setIsOpen(false)
   }
 
+  // fazer uso desse componente
+
   return (
     <Dialog open={isOpen}>
       <DialogTrigger

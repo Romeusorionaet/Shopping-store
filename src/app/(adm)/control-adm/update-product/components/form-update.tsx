@@ -13,8 +13,8 @@ import { deleteProduct } from '@/actions/delete/product'
 import { DollarSign, Percent, Trash } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { UploadButton } from '@/utils/generate-components'
-import { ProductImages } from '@/app/details/components/product-images'
 import { useNotification } from '@/hooks/use-notifications'
+import { ProductImages } from '@/app/(store)/details/components/product-images'
 
 interface FormUpdateProps {
   product: Product

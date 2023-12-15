@@ -9,8 +9,8 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { SearchProduct } from '@/components/search-product'
 import { OfferBanner } from '@/components/offer-banner'
-import { OrderIncludeOrderProducts } from './orders/page'
 import { NoProductRegistrationMessage } from '@/components/no-product-registration-message'
+import { OrderIncludeOrderProducts } from '../orders/page'
 
 export interface ProductsWithCategory extends Product {
   category: Category

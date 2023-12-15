@@ -2,14 +2,14 @@ import { getDataOrdersUsers } from '@/lib/getData/get-data-orders-users'
 import { getDataOrders } from '@/lib/getData/get-data-orders'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
-import { OrderWaitingForPayment } from '@/app/orders/components/order-waiting-for-payment'
 import { OrderStatus, OrderStatusTracking } from '@prisma/client'
 import { NoUserMessage } from '@/components/no-user-message'
-import { OrderIncludeOrderProducts } from '@/app/orders/page'
 import {
   AreaOrdersOfClients,
   UserWithOrders,
 } from '../area-management/area-orders-of-clients'
+import { OrderWaitingForPayment } from '@/app/(store)/orders/components/order-waiting-for-payment'
+import { OrderIncludeOrderProducts } from '@/app/(store)/orders/page'
 
 export async function ManageOrders() {
   const { props } = await getDataOrdersUsers()
