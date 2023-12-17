@@ -178,9 +178,10 @@ model User {
   Address  Address[]
 }
 
-model AdmPassword {
-  id       String @id @default(uuid())
-  password String
+model AdmAccessKey {
+  id     String  @id @default(uuid())
+  admKey String
+  token  String? @db.Text
 }
 
 model VerificationToken {

@@ -19,6 +19,8 @@ import { Cart } from '../cart'
 import { useContext, useEffect, useState } from 'react'
 import { UserContext } from '@/providers/user-context'
 import { useCartStore } from '@/providers/zustand-store'
+import { checkIsPrivateRoute } from '@/utils/check-is-private-route'
+import { DialogLoginAdm } from '../dialog-login-adm'
 
 export function Header() {
   const { isAdm } = useContext(UserContext)
@@ -26,6 +28,7 @@ export function Header() {
 
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isCartOpen, setIsCartOpen] = useState(false)
+  const [isDialogOpen, setIsDialogOpen] = useState<boolean | undefined>(false)
 
   const { status, data } = useSession()
   const router = useRouter()
@@ -53,14 +56,25 @@ export function Header() {
     }
   }
 
+  const handleCancel = () => {
+    setIsDialogOpen(false)
+  }
+
   const handleNavigateTo = (route: string) => {
-    setIsMenuOpen(false)
-    setIsCartOpen(false)
-    router.push(route)
+    const isPrivateRoute = checkIsPrivateRoute(route)
+
+    if (isPrivateRoute) {
+      setIsDialogOpen(true)
+    } else {
+      setIsMenuOpen(false)
+      setIsCartOpen(false)
+      router.push(route)
+    }
   }
 
   return (
     <header className="fixed left-0 z-30 w-full rounded-none bg-base_one_reference_header p-4">
+      <DialogLoginAdm handleCancel={handleCancel} isDialogOpen={isDialogOpen} />
       <div className="mx-auto flex max-w-[1680px] items-center justify-between">
         <Sheet
           modal={false}

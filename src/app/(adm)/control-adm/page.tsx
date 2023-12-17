@@ -16,9 +16,11 @@ export default async function ControlAdm() {
 
   return (
     <main className="mx-auto max-w-[800px] p-4">
-      <h1 className="my-6 text-center text-xl font-bold text-base_detail_decoration">
+      <h1 className="mb-10">Área privado</h1>
+
+      <h2 className="my-6 text-center text-xl font-bold text-base_detail_decoration">
         Controle de estoque
-      </h1>
+      </h2>
 
       <FormCategory />
 

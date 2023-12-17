@@ -9,5 +9,6 @@ declare namespace NodeJS {
     UPLOADTHING_APP_ID: string
     MERCADOPAGO_PUBLIC_KEY: string
     MERCADOPAGO_ACCESS_TOKEN: string
+    JWT_SECRET_KEY_ADM: string
   }
 }
