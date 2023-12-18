@@ -2,6 +2,7 @@
 
 import { UserContext } from '@/providers/user-context'
 import { useContext } from 'react'
+import Cookies from 'js-cookie'
 
 interface Props {
   children: React.ReactNode
@@ -9,8 +10,9 @@ interface Props {
 
 export default function LayoutAdm({ children }: Props) {
   const { isAdm } = useContext(UserContext)
+  const token = Cookies.get('@shopping-store/accessToken')
 
-  if (!isAdm) {
+  if (!isAdm || !token) {
     return (
       <div className="flex h-screen flex-col items-center justify-center bg-base_color_dark">
         <p className="text-xl uppercase text-base_color_negative">

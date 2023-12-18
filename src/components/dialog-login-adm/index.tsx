@@ -30,9 +30,15 @@ export function DialogLoginAdm({ isDialogOpen, handleCancel }: Props) {
 
   const handleLogin = async () => {
     try {
+      if (!password) {
+        notifyError('Campo vazio')
+        return
+      }
+
       const response = await verificationAdm(password)
 
       if (response?.messageError) {
+        setPassword('')
         notifyError(response.messageError)
       }
 
@@ -40,6 +46,7 @@ export function DialogLoginAdm({ isDialogOpen, handleCancel }: Props) {
         Cookies.set('@shopping-store/accessToken', response.token, {
           expires: 1 / 24,
         })
+        handleCancel()
         navigate.push('/control-adm')
       }
     } catch (error) {
@@ -56,10 +63,11 @@ export function DialogLoginAdm({ isDialogOpen, handleCancel }: Props) {
 
         <p>Apenas administrador tem acesso a essa tela.</p>
 
-        <DialogFooter>
+        <DialogFooter className="flex flex-col gap-4">
           <Input
             className="text-white"
             placeholder="***"
+            value={password}
             onChange={handlePasswordChange}
           />
           <div className="flex justify-between gap-8">

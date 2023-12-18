@@ -7,6 +7,7 @@ import { Category, ModeOfSale, Product } from '@prisma/client'
 import { AddProductInCart } from '@/components/add-product-in-cart'
 import { PackageX } from 'lucide-react'
 import { Metadata } from 'next'
+import { metadata } from '@/app/layout'
 
 interface CategoryIncludeProducts extends Category {
   products: Product[]
@@ -29,6 +30,18 @@ export async function generateMetadata({
 
   return {
     title: slug,
+    openGraph: {
+      siteName: metadata.openGraph?.siteName,
+      url: `${metadata.openGraph?.url}/details/${slug}`,
+      images: [
+        {
+          url: 'https://wallpaperaccess.com/full/1496239.jpg',
+          width: 1000,
+          height: 1000,
+          alt: 'My custom alt',
+        },
+      ],
+    },
   }
 }
 

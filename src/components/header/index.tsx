@@ -30,10 +30,15 @@ export function Header() {
   const [isCartOpen, setIsCartOpen] = useState(false)
   const [isDialogOpen, setIsDialogOpen] = useState<boolean | undefined>(false)
 
+  const [clientRendered, setClientRendered] = useState(false)
+
   const { status, data } = useSession()
   const router = useRouter()
 
-  const [clientRendered, setClientRendered] = useState(false)
+  const conditionForShowSizeCart =
+    clientRendered && cart.length !== 0 && data?.user
+
+  const userIsAuthenticated = status === 'unauthenticated'
 
   useEffect(() => {
     // For resolve warning about difference value between server side and client side
@@ -93,7 +98,7 @@ export function Header() {
               Menu
             </SheetHeader>
 
-            {status === 'authenticated' && data?.user && (
+            {!userIsAuthenticated && data?.user && (
               <div className="flex flex-col">
                 <div className="flex items-center gap-2 py-4">
                   <Avatar>
@@ -115,7 +120,7 @@ export function Header() {
             )}
 
             <div className="mt-10 flex flex-col justify-start gap-8">
-              {status === 'unauthenticated' && (
+              {userIsAuthenticated && (
                 <Button
                   size="icon"
                   variant="outline"
@@ -127,7 +132,7 @@ export function Header() {
                 </Button>
               )}
 
-              {status === 'authenticated' && (
+              {!userIsAuthenticated && (
                 <Button
                   size="icon"
                   variant="outline"
@@ -217,7 +222,7 @@ export function Header() {
           <SheetTrigger asChild>
             <div className="relative border-none bg-base_one_reference_header duration-700 hover:bg-white">
               <BaggageClaim size={30} />
-              {clientRendered && cart.length !== 0 && (
+              {conditionForShowSizeCart && (
                 <div className="absolute -right-2 -top-2 flex h-6 w-6 items-center justify-center rounded-full bg-red-500 p-1 text-white">
                   <p>{clientRendered && cart.length}</p>
                 </div>
