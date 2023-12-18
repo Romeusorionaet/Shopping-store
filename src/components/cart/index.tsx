@@ -5,7 +5,6 @@ import { calculateCartAllValues } from '@/utils/calculate-cart-all-values'
 import { useSession } from 'next-auth/react'
 import { CartItem } from './cart-item'
 import { NoUserMessage } from '../no-user-message'
-import { ShippingCalculatorAccordion } from '../shipping-calculator-accordion'
 
 interface Props {
   handleNavigateTo: (route: string) => void
@@ -29,8 +28,6 @@ export function Cart({ handleNavigateTo }: Props) {
     <div className="flex h-full flex-col gap-6 pb-2">
       <div className="mt-10 flex h-full flex-col gap-5 overflow-y-auto">
         <div className="flex h-full flex-col gap-8">
-          <ShippingCalculatorAccordion />
-
           {cart.length > 0 ? (
             cart.map((product) => (
               <CartItem key={product.id} product={product} />

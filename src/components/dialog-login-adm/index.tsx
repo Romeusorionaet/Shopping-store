@@ -58,7 +58,7 @@ export function DialogLoginAdm({ isDialogOpen, handleCancel }: Props) {
     <Dialog open={isDialogOpen}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Insira sua senha</DialogTitle>
+          <DialogTitle>Insira sua chave</DialogTitle>
         </DialogHeader>
 
         <p>Apenas administrador tem acesso a essa tela.</p>
