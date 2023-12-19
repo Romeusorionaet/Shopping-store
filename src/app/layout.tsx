@@ -16,7 +16,10 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
   metadataBase: new URL('https://shopping-store-kappa.vercel.app'),
   creator: 'Romeu soares Developer Full-Stack.',
-  title: 'Shopping-store.',
+  title: {
+    template: '%s | Shopping-store',
+    absolute: 'Shopping-store',
+  },
   description: 'A shopping-store é uma loja online de vendas de produtos.',
   openGraph: {
     images: [
@@ -24,12 +27,6 @@ export const metadata: Metadata = {
         url: 'https://www.masqueteclas.com/wp-content/uploads/2015/11/NL-5-Imagen1-gd.jpg',
         width: 700,
         height: 700,
-      },
-      {
-        url: 'https://wallpaperaccess.com/full/1496239.jpg',
-        width: 1000,
-        height: 1000,
-        alt: 'My custom alt',
       },
     ],
     locale: 'pt-br',

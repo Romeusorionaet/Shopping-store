@@ -80,7 +80,7 @@ export function Header() {
   return (
     <header className="fixed left-0 z-30 w-full rounded-none bg-base_one_reference_header p-4">
       <DialogLoginAdm handleCancel={handleCancel} isDialogOpen={isDialogOpen} />
-      <div className="mx-auto flex max-w-[1680px] items-center justify-between">
+      <div className="mx-auto flex max-w-[1550px] items-center justify-between md:px-10">
         <Sheet
           modal={false}
           open={isMenuOpen}
@@ -98,115 +98,123 @@ export function Header() {
               Menu
             </SheetHeader>
 
-            {!userIsAuthenticated && data?.user && (
-              <div className="flex flex-col">
-                <div className="flex items-center gap-2 py-4">
-                  <Avatar>
-                    <AvatarFallback>
-                      {data.user.name?.[0].toUpperCase()}
-                    </AvatarFallback>
-
-                    {data.user.image && <AvatarImage src={data.user.image} />}
-                  </Avatar>
-
-                  <div className="flex flex-col">
-                    <p className="font-medium">{data.user.name}</p>
-                    <p className="text-sm opacity-75">Boas compras!</p>
-                  </div>
-                </div>
-
-                <Separator className="opacity-20" />
-              </div>
-            )}
-
-            <div className="mt-10 flex flex-col justify-start gap-8">
-              {userIsAuthenticated && (
+            <div className="mt-10 flex h-full flex-col justify-between gap-8 pb-14 md:pb-16">
+              <div className="flex flex-col justify-start gap-4 md:gap-8">
                 <Button
-                  size="icon"
-                  variant="outline"
-                  onClick={handleLogin}
-                  className="w-full gap-4 font-semibold hover:bg-base_reference_card hover:text-primary"
-                >
-                  <LogIn />
-                  Fazer login
-                </Button>
-              )}
-
-              {!userIsAuthenticated && (
-                <Button
-                  size="icon"
-                  variant="outline"
-                  onClick={handleLogout}
-                  className="w-full gap-4 font-semibold duration-700 hover:bg-base_reference_card hover:text-primary"
-                >
-                  <LogIn />
-                  Sair
-                </Button>
-              )}
-
-              <Button
-                onClick={() => handleNavigateTo('/')}
-                size="icon"
-                className="group w-full justify-start gap-4 bg-transparent p-4 font-semibold duration-700 hover:bg-base_reference_card"
-              >
-                <Home
-                  className="duration-700 group-hover:text-base_detail_decoration"
-                  size={16}
-                />
-                Início
-              </Button>
-
-              <Button
-                onClick={() => handleNavigateTo('/catalog')}
-                size="icon"
-                className="hover:bg-base_base_reference_card group w-full justify-start gap-4 bg-transparent p-4 font-semibold duration-700"
-              >
-                <LibraryBig
-                  className="duration-700 group-hover:text-base_detail_decoration"
-                  size={16}
-                />
-                Catálogo
-              </Button>
-
-              <Button
-                onClick={() => handleNavigateTo('/orders')}
-                size="icon"
-                className="hover:bg-base_base_reference_card group w-full justify-start gap-4 bg-transparent p-4 font-semibold duration-700"
-              >
-                <BaggageClaim
-                  className="duration-700 group-hover:text-base_detail_decoration"
-                  size={16}
-                />
-                Meus pedidos
-              </Button>
-
-              <Button
-                onClick={() => handleNavigateTo('/address')}
-                size="icon"
-                className="hover:50 group w-full justify-start gap-4 bg-transparent p-4 font-semibold duration-700"
-              >
-                <BookUser
-                  className="duration-700 group-hover:text-base_detail_decoration"
-                  size={16}
-                />
-                Endereço de entrega
-              </Button>
-
-              {isAdm ? (
-                <Button
-                  onClick={() => handleNavigateTo('/control-adm')}
+                  onClick={() => handleNavigateTo('/')}
                   size="icon"
                   className="group w-full justify-start gap-4 bg-transparent p-4 font-semibold duration-700 hover:bg-base_reference_card"
                 >
-                  <SlidersHorizontal
+                  <Home
                     className="duration-700 group-hover:text-base_detail_decoration"
-                    size={16}
+                    size={26}
                   />
-                  Controlar produtos
+                  Início
                 </Button>
-              ) : (
-                <></>
-              )}
+
+                <Button
+                  onClick={() => handleNavigateTo('/catalog')}
+                  size="icon"
+                  className="hover:bg-base_base_reference_card group w-full justify-start gap-4 bg-transparent p-4 font-semibold duration-700"
+                >
+                  <LibraryBig
+                    className="duration-700 group-hover:text-base_detail_decoration"
+                    size={26}
+                  />
+                  Catálogo
+                </Button>
+
+                <Button
+                  onClick={() => handleNavigateTo('/orders')}
+                  size="icon"
+                  className="hover:bg-base_base_reference_card group w-full justify-start gap-4 bg-transparent p-4 font-semibold duration-700"
+                >
+                  <BaggageClaim
+                    className="duration-700 group-hover:text-base_detail_decoration"
+                    size={26}
+                  />
+                  Meus pedidos
+                </Button>
+
+                <Button
+                  onClick={() => handleNavigateTo('/address')}
+                  size="icon"
+                  className="hover:50 group w-full justify-start gap-4 bg-transparent p-4 font-semibold duration-700"
+                >
+                  <BookUser
+                    className="duration-700 group-hover:text-base_detail_decoration"
+                    size={26}
+                  />
+                  Endereço de entrega
+                </Button>
+
+                <>
+                  {isAdm ? (
+                    <Button
+                      onClick={() => handleNavigateTo('/control-adm')}
+                      size="icon"
+                      className="group w-full justify-start gap-4 bg-transparent p-4 font-semibold duration-700 hover:bg-base_reference_card"
+                    >
+                      <SlidersHorizontal
+                        className="duration-700 group-hover:text-base_detail_decoration"
+                        size={26}
+                      />
+                      Controlar produtos
+                    </Button>
+                  ) : (
+                    <></>
+                  )}
+                </>
+              </div>
+
+              <div className="flex flex-col items-center justify-center">
+                <>
+                  {userIsAuthenticated ? (
+                    <Button
+                      size="icon"
+                      variant="outline"
+                      onClick={handleLogin}
+                      className="w-full gap-4 font-semibold hover:bg-base_reference_card hover:text-primary"
+                    >
+                      <LogIn />
+                      Fazer login
+                    </Button>
+                  ) : (
+                    <Button
+                      size="icon"
+                      variant="outline"
+                      onClick={handleLogout}
+                      className="w-full gap-4 font-semibold duration-700 hover:bg-base_reference_card hover:text-primary"
+                    >
+                      <LogIn size={26} />
+                      Sair
+                    </Button>
+                  )}
+                </>
+
+                <>
+                  {!userIsAuthenticated && data?.user && (
+                    <div className="flex flex-col">
+                      <div className="flex items-center gap-2 py-4">
+                        <Avatar>
+                          <AvatarFallback>
+                            {data.user.name?.[0].toUpperCase()}
+                          </AvatarFallback>
+
+                          {data.user.image && (
+                            <AvatarImage src={data.user.image} />
+                          )}
+                        </Avatar>
+
+                        <div className="flex flex-col">
+                          <p className="font-medium">{data.user.name}</p>
+                          <p className="text-sm opacity-75">Boas compras!</p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </>
+              </div>
             </div>
           </SheetContent>
         </Sheet>

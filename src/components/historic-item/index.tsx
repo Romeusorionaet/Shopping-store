@@ -39,7 +39,6 @@ export function HistoricItem({ historic }: Props) {
             className="w-60 space-y-2 border-b border-base_color_dark/20 pb-4 text-sm"
           >
             <div>
-              {' '}
               <Image
                 width={0}
                 height={0}
@@ -121,41 +120,43 @@ export function HistoricItem({ historic }: Props) {
             <div>
               <h2>Endereço:</h2>
 
-              {/* <div>
+              <div>
                 <p>
-                  <span className="font-bold">Nome</span>: {historic.username}
+                  <span className="font-bold">Nome</span>:{' '}
+                  {historic[0].username}
                 </p>
                 <p>
-                  <span className="font-bold">Email</span>: {historic.email}
+                  <span className="font-bold">Email</span>: {historic[0].email}
                 </p>
                 <p>
                   <span className="font-bold">Contanto</span>:{' '}
-                  {address.phoneNumber}
+                  {historic[0].phoneNumber}
                 </p>
                 <p>
-                  <span className="font-bold">CEP</span>: {historic.cep}
+                  <span className="font-bold">CEP</span>: {historic[0].cep}
                 </p>
                 <p>
-                  <span className="font-bold">Cidade</span>: {historic.city}
+                  <span className="font-bold">Cidade</span>: {historic[0].city}
                 </p>
                 <p>
-                  <span className="font-bold">UF</span>: {historic.uf}
+                  <span className="font-bold">UF</span>: {historic[0].uf}
                 </p>
                 <p>
                   <span className="font-bold">Bairro</span>:{' '}
-                  {historic.neighborhood}
+                  {historic[0].neighborhood}
                 </p>
                 <p>
-                  <span className="font-bold">Rua</span>: {historic.street}
+                  <span className="font-bold">Rua</span>: {historic[0].street}
                 </p>
                 <p>
-                  <span className="font-bold">Número</span>: {historic.number}
+                  <span className="font-bold">Número</span>:{' '}
+                  {historic[0].number}
                 </p>
                 <p>
                   <span className="font-bold">Complemento</span>:{' '}
-                  {historic.complement}
+                  {historic[0].complement}
                 </p>
-              </div> */}
+              </div>
             </div>
           </div>
         )
