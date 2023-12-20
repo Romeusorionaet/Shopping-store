@@ -25,7 +25,7 @@ export function Cart({ handleNavigateTo }: Props) {
   }
 
   return (
-    <div className="flex h-full flex-col gap-6 pb-2">
+    <div className="flex h-full flex-col gap-6 pb-4">
       <div className="mt-10 flex h-full flex-col gap-5 overflow-y-auto">
         <div className="flex h-full flex-col gap-8">
           {cart.length > 0 ? (
@@ -80,7 +80,11 @@ export function Cart({ handleNavigateTo }: Props) {
             </p>
           </div>
 
-          <Button onClick={handleNavigateToAddressPage}>
+          <Button
+            variant="outline"
+            className="w-full gap-4 font-semibold duration-700 hover:bg-base_reference_card hover:text-primary"
+            onClick={handleNavigateToAddressPage}
+          >
             Dados de entrega
           </Button>
         </div>

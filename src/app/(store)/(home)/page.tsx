@@ -49,7 +49,7 @@ export default async function Home() {
     .sort(() => Math.random() - 0.5)
 
   return (
-    <main className="mx-auto flex max-w-[1480px] flex-col gap-6 overflow-hidden pb-8">
+    <main className="mx-auto flex max-w-[1480px] flex-col gap-4 overflow-hidden pb-8">
       <div className="relative mx-auto w-full max-w-[1480px]">
         <div className="absolute left-0 top-0 z-10 h-full w-40 bg-gradient-to-r from-base_reference_card/40 max-2xl:w-28 max-sm:w-10" />
         <OfferBanner />
@@ -60,7 +60,7 @@ export default async function Home() {
         <p className="mb-4 text-center">
           Acesse o nosso catálogo para ver todos os produtos da loja!
         </p>
-        <div className="mx-auto flex w-52 items-center justify-center gap-2 rounded-md border border-base_color_dark/10 p-2 duration-700 hover:bg-base_one_reference_header">
+        <div className="mx-auto flex w-52 items-center justify-center gap-2 rounded-md border border-base_color_dark/10 p-2 duration-700 hover:bg-base_reference_card">
           <Link className="font-bold" href="/catalog">
             Ver Nosso Catálogo
           </Link>
@@ -68,37 +68,39 @@ export default async function Home() {
         </div>
       </div>
 
-      <div className="px-2">
+      <div className="bg-white p-2">
         <h2 className="my-4 text-lg">Todos os produtos</h2>
 
         <SearchProduct products={allProducts} />
       </div>
 
-      <div className="px-2">
+      <div>
         {productsInOffers.length !== 0 && (
-          <>
+          <div className="bg-white p-2">
             <h2 className="my-4 text-lg">Super promoção</h2>
 
             <CarouselProducts products={productsInOffers} />
-          </>
+          </div>
         )}
+      </div>
 
-        <div>
-          {filteredProductsWithDiscount.length !== 0 && (
-            <>
-              <h2 className="my-4 text-lg">Produtos em Promoção</h2>
+      <div>
+        {filteredProductsWithDiscount.length !== 0 && (
+          <div className="bg-white p-2">
+            <h2 className="my-4 text-lg">Produtos em Promoção</h2>
 
-              <CarouselProducts products={filteredProductsWithDiscount} />
-            </>
-          )}
-        </div>
+            <CarouselProducts products={filteredProductsWithDiscount} />
+          </div>
+        )}
+      </div>
 
+      <div>
         {ordersNotPaymentList.length !== 0 && (
-          <>
+          <div className="bg-white p-2">
             <h2 className="my-4 text-lg">Produtos que você se interessou</h2>
 
             <CarouselProducts products={ordersNotPaymentList} />
-          </>
+          </div>
         )}
       </div>
     </main>

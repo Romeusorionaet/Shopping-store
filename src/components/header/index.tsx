@@ -13,7 +13,6 @@ import { Sheet, SheetContent, SheetHeader, SheetTrigger } from '../ui/sheet'
 import { signIn, signOut, useSession } from 'next-auth/react'
 import { Button } from '../ui/button'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
-import { Separator } from '../ui/separator'
 import { useRouter } from 'next/navigation'
 import { Cart } from '../cart'
 import { useContext, useEffect, useState } from 'react'
@@ -78,7 +77,7 @@ export function Header() {
   }
 
   return (
-    <header className="fixed left-0 z-30 w-full rounded-none bg-base_one_reference_header p-4">
+    <header className="fixed left-0 z-30 w-full rounded-none bg-base_one_reference_header p-4 text-foreground">
       <DialogLoginAdm handleCancel={handleCancel} isDialogOpen={isDialogOpen} />
       <div className="mx-auto flex max-w-[1550px] items-center justify-between md:px-10">
         <Sheet
@@ -86,14 +85,14 @@ export function Header() {
           open={isMenuOpen}
           onOpenChange={(open) => setIsMenuOpen(open)}
         >
-          <SheetTrigger
-            asChild
-            className="border-none bg-base_one_reference_header duration-700 hover:bg-white"
-          >
+          <SheetTrigger asChild className="border-none duration-700">
             <Menu size={30} />
           </SheetTrigger>
 
-          <SheetContent side="left">
+          <SheetContent
+            side="left"
+            className="bg-base_one_reference_header text-foreground"
+          >
             <SheetHeader className="text-left text-lg font-bold">
               Menu
             </SheetHeader>
@@ -101,48 +100,52 @@ export function Header() {
             <div className="mt-10 flex h-full flex-col justify-between gap-8 pb-14 md:pb-16">
               <div className="flex flex-col justify-start gap-4 md:gap-8">
                 <Button
+                  variant="secondary"
                   onClick={() => handleNavigateTo('/')}
                   size="icon"
-                  className="group w-full justify-start gap-4 bg-transparent p-4 font-semibold duration-700 hover:bg-base_reference_card"
+                  className="group w-full justify-start gap-4 bg-transparent p-4 font-semibold duration-700"
                 >
                   <Home
-                    className="duration-700 group-hover:text-base_detail_decoration"
+                    className="duration-700 group-hover:scale-110"
                     size={26}
                   />
                   Início
                 </Button>
 
                 <Button
+                  variant="secondary"
                   onClick={() => handleNavigateTo('/catalog')}
                   size="icon"
-                  className="hover:bg-base_base_reference_card group w-full justify-start gap-4 bg-transparent p-4 font-semibold duration-700"
+                  className="group w-full justify-start gap-4 bg-transparent p-4 font-semibold duration-700"
                 >
                   <LibraryBig
-                    className="duration-700 group-hover:text-base_detail_decoration"
+                    className="duration-700 group-hover:scale-110"
                     size={26}
                   />
                   Catálogo
                 </Button>
 
                 <Button
+                  variant="secondary"
                   onClick={() => handleNavigateTo('/orders')}
                   size="icon"
-                  className="hover:bg-base_base_reference_card group w-full justify-start gap-4 bg-transparent p-4 font-semibold duration-700"
+                  className="group w-full justify-start gap-4 bg-transparent p-4 font-semibold duration-700"
                 >
                   <BaggageClaim
-                    className="duration-700 group-hover:text-base_detail_decoration"
+                    className="duration-700 group-hover:scale-110"
                     size={26}
                   />
                   Meus pedidos
                 </Button>
 
                 <Button
+                  variant="secondary"
                   onClick={() => handleNavigateTo('/address')}
                   size="icon"
-                  className="hover:50 group w-full justify-start gap-4 bg-transparent p-4 font-semibold duration-700"
+                  className="group w-full justify-start gap-4 bg-transparent p-4 font-semibold duration-700"
                 >
                   <BookUser
-                    className="duration-700 group-hover:text-base_detail_decoration"
+                    className="duration-700 group-hover:scale-110"
                     size={26}
                   />
                   Endereço de entrega
@@ -151,12 +154,13 @@ export function Header() {
                 <>
                   {isAdm ? (
                     <Button
+                      variant="secondary"
                       onClick={() => handleNavigateTo('/control-adm')}
                       size="icon"
-                      className="group w-full justify-start gap-4 bg-transparent p-4 font-semibold duration-700 hover:bg-base_reference_card"
+                      className="group w-full justify-start gap-4 bg-transparent p-4 font-semibold duration-700"
                     >
                       <SlidersHorizontal
-                        className="duration-700 group-hover:text-base_detail_decoration"
+                        className="duration-700 group-hover:scale-110"
                         size={26}
                       />
                       Controlar produtos
@@ -228,7 +232,7 @@ export function Header() {
 
         <Sheet open={isCartOpen} onOpenChange={(open) => setIsCartOpen(open)}>
           <SheetTrigger asChild>
-            <div className="relative border-none bg-base_one_reference_header duration-700 hover:bg-white">
+            <div className="relative border-none bg-base_one_reference_header duration-700">
               <BaggageClaim size={30} />
               {conditionForShowSizeCart && (
                 <div className="absolute -right-2 -top-2 flex h-6 w-6 items-center justify-center rounded-full bg-red-500 p-1 text-white">
@@ -238,7 +242,7 @@ export function Header() {
             </div>
           </SheetTrigger>
 
-          <SheetContent>
+          <SheetContent className="bg-base_one_reference_header text-foreground">
             <SheetHeader className="text-left text-lg font-bold">
               Carrinho
             </SheetHeader>

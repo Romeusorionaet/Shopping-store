@@ -23,7 +23,7 @@ module.exports = {
         ring: 'hsl(var(--ring))',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
-        base_one_reference_header: 'rgb(253 230 138)',
+        base_one_reference_header: '#374151',
         base_reference_card: 'rgb(255 251 235)',
         base_reference_card_hover: 'rgb(254 243 199)',
         base_detail_decoration: 'rgb(245 158 11)',

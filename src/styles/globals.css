@@ -5,7 +5,7 @@
 @layer base {
   :root {
     --background: 0 0% 92.9%;
-    --foreground: 0 0% 20%;
+    --foreground: 0 0% 80%;
 
     --card: 0 0% 4%;
     --card-foreground: 0 0% 92.9%;
@@ -41,7 +41,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground h-full;
+    @apply bg-background text-base_color_dark h-full;
   }
   h1 {
     @apply text-xl;

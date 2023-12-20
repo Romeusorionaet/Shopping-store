@@ -65,7 +65,7 @@ export function CarouselProducts({ products }: productsProps) {
                 <Link href={`/details/${product.slug}`}>
                   <div
                     data-quantity={productAvailable}
-                    className="flex flex-col items-center justify-center gap-1 rounded-md bg-base_reference_card/60 p-1 duration-700 hover:bg-base_reference_card_hover data-[quantity=true]:bg-base_color_dark/5 data-[quantity=true]:hover:bg-base_color_dark/10 md:h-full md:gap-2 md:p-4"
+                    className="flex flex-col items-center justify-center gap-1 rounded-md bg-base_reference_card p-1 duration-700 hover:bg-base_reference_card_hover data-[quantity=true]:bg-base_color_dark/5 data-[quantity=true]:hover:bg-base_color_dark/10 md:h-full md:gap-2 md:p-4"
                   >
                     <div className="h-10 text-center">
                       <p className="text-xs md:text-sm">{product.name}</p>
