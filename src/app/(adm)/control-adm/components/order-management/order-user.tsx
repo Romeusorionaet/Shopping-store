@@ -1,113 +1,113 @@
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@radix-ui/react-accordion'
-import { ArrowBigDown } from 'lucide-react'
-import { OrderProducts } from '../order-management/order-products'
-import { OrderProps } from '../area-management/area-orders-of-clients'
-import { getOrderStatus } from '@/components/helpers/get-order-status'
-import { format } from 'date-fns'
-import { Address, OrderStatus, OrderStatusTracking } from '@prisma/client'
-import { OrderDelivered } from '../order-management/order-delivered'
-import { ChangeableAddressInformation } from '@/components/address-information/changeable-address-information'
-import { UpdateOrder } from './update-order'
-import { FixedAddressInformation } from '@/components/address-information/fixed-address-information'
+// import {
+//   Accordion,
+//   AccordionContent,
+//   AccordionItem,
+//   AccordionTrigger,
+// } from '@radix-ui/react-accordion'
+// import { ArrowBigDown } from 'lucide-react'
+// import { OrderProducts } from '../order-management/order-products'
+// import { OrderProps } from '../area-management/area-orders-of-clients'
+// import { getOrderStatus } from '@/components/helpers/get-order-status'
+// import { format } from 'date-fns'
+// import { Address, OrderStatus, OrderStatusTracking } from '@prisma/client'
+// import { OrderDelivered } from '../order-management/order-delivered'
+// import { ChangeableAddressInformation } from '@/components/address-information/changeable-address-information'
+// import { UpdateOrder } from './update-order'
+// import { FixedAddressInformation } from '@/components/address-information/fixed-address-information'
 
-interface OrdersProps {
-  orders: OrderProps[]
-  address: Address[]
-}
+// interface OrdersProps {
+//   orders: OrderProps[]
+//   address: Address[]
+// }
 
-export function OrderUser({ orders, address }: OrdersProps) {
-  const [userAddressSaved] = address
+// export function OrderUser({ orders, address }: OrdersProps) {
+//   const [userAddressSaved] = address
 
-  return (
-    <Accordion
-      type="single"
-      collapsible
-      className="rounded-md border border-white/20 p-1"
-    >
-      <AccordionItem value="item-1">
-        <AccordionTrigger className="group flex w-full justify-end">
-          <ArrowBigDown className="duration-700 group-data-[state=open]:rotate-180" />
-        </AccordionTrigger>
-        <AccordionContent>
-          <div className="flex flex-col gap-6">
-            {orders.map((order) => {
-              const isPaymentConfirmedNoTracking =
-                order.status === OrderStatus.PAYMENT_CONFIRMED &&
-                order.trackingCode === '' &&
-                order.orderTracking !== OrderStatusTracking.CANCELED
+//   return (
+//     <Accordion
+//       type="single"
+//       collapsible
+//       className="rounded-md border border-white/20 p-1"
+//     >
+//       <AccordionItem value="item-1">
+//         <AccordionTrigger className="group flex w-full justify-end">
+//           <ArrowBigDown className="duration-700 group-data-[state=open]:rotate-180" />
+//         </AccordionTrigger>
+//         <AccordionContent>
+//           <div className="flex flex-col gap-6">
+//             {orders.map((order) => {
+//               const isPaymentConfirmedNoTracking =
+//                 order.status === OrderStatus.PAYMENT_CONFIRMED &&
+//                 order.trackingCode === '' &&
+//                 order.orderTracking !== OrderStatusTracking.CANCELED
 
-              const isOrderDeliveredToCarreios =
-                order.orderTracking ===
-                  OrderStatusTracking.PRODUCT_DELIVERED_TO_CORREIOS &&
-                order.trackingCode !== '' &&
-                order.trackingCode !== OrderStatusTracking.CANCELED
+//               const isOrderDeliveredToCarreios =
+//                 order.orderTracking ===
+//                   OrderStatusTracking.PRODUCT_DELIVERED_TO_CORREIOS &&
+//                 order.trackingCode !== '' &&
+//                 order.trackingCode !== OrderStatusTracking.CANCELED
 
-              return (
-                <div
-                  key={order.id}
-                  className="space-y-4 border-b border-white/20 bg-base_color_dark/5 p-2"
-                >
-                  <div className="flex justify-between">
-                    <h2 className="font-bold">Pedido</h2>
-                    <span className="text-sm opacity-80">
-                      {format(new Date(order.createdAt), "d/MM/y 'às' HH:mm")}
-                    </span>
-                  </div>
+//               return (
+//                 <div
+//                   key={order.id}
+//                   className="space-y-4 border-b border-white/20 bg-base_color_dark/5 p-2"
+//                 >
+//                   <div className="flex justify-between">
+//                     <h2 className="font-bold">Pedido</h2>
+//                     <span className="text-sm opacity-80">
+//                       {format(new Date(order.createdAt), "d/MM/y 'às' HH:mm")}
+//                     </span>
+//                   </div>
 
-                  <div>
-                    <p>
-                      Status:{' '}
-                      <span className="text-sm opacity-80">
-                        {getOrderStatus(order.orderTracking)}
-                      </span>
-                    </p>
-                  </div>
+//                   <div>
+//                     <p>
+//                       Status:{' '}
+//                       <span className="text-sm opacity-80">
+//                         {getOrderStatus(order.orderTracking)}
+//                       </span>
+//                     </p>
+//                   </div>
 
-                  <div>
-                    <p>Código de rastreio:</p>
-                    <p className="text-sm opacity-80">
-                      #{order.trackingCode && order.trackingCode}
-                    </p>
-                  </div>
+//                   <div>
+//                     <p>Código de rastreio:</p>
+//                     <p className="text-sm opacity-80">
+//                       #{order.trackingCode && order.trackingCode}
+//                     </p>
+//                   </div>
 
-                  {order.orderTracking ===
-                    OrderStatusTracking.PRODUCT_DELIVERED_TO_CLIENT && (
-                    <p className="inline-block rounded-md border-x border-base_color_positive p-1">
-                      pedido entregue
-                    </p>
-                  )}
+//                   {order.orderTracking ===
+//                     OrderStatusTracking.PRODUCT_DELIVERED_TO_CLIENT && (
+//                     <p className="inline-block rounded-md border-x border-base_color_positive p-1">
+//                       pedido entregue
+//                     </p>
+//                   )}
 
-                  {isPaymentConfirmedNoTracking && (
-                    <UpdateOrder
-                      orderId={order.id}
-                      userAddress={userAddressSaved}
-                    />
-                  )}
+//                   {isPaymentConfirmedNoTracking && (
+//                     <UpdateOrder
+//                       orderId={order.id}
+//                       userAddress={userAddressSaved}
+//                     />
+//                   )}
 
-                  {isOrderDeliveredToCarreios && (
-                    <OrderDelivered orderId={order.id} />
-                  )}
+//                   {isOrderDeliveredToCarreios && (
+//                     <OrderDelivered orderId={order.id} />
+//                   )}
 
-                  {order.orderAddress.length !== 0 ? (
-                    <FixedAddressInformation
-                      orderAddress={order.orderAddress}
-                    />
-                  ) : (
-                    <ChangeableAddressInformation address={userAddressSaved} />
-                  )}
+//                   {order.orderAddress.length !== 0 ? (
+//                     <FixedAddressInformation
+//                       orderAddress={order.orderAddress}
+//                     />
+//                   ) : (
+//                     <ChangeableAddressInformation address={userAddressSaved} />
+//                   )}
 
-                  <OrderProducts ordersProducts={order.orderProducts} />
-                </div>
-              )
-            })}
-          </div>
-        </AccordionContent>
-      </AccordionItem>
-    </Accordion>
-  )
-}
+//                   <OrderProducts ordersProducts={order.orderProducts} />
+//                 </div>
+//               )
+//             })}
+//           </div>
+//         </AccordionContent>
+//       </AccordionItem>
+//     </Accordion>
+//   )
+// }

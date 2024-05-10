@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useState } from 'react'
 import { FormError } from '@/components/form/form-error'
 import { Input } from '@/components/ui/input'
-import { createCategory } from '@/actions/register/category'
+// import { createCategory } from '@/actions/register/category'
 import Image from 'next/image'
 import { ArrowBigRight } from 'lucide-react'
 import {
@@ -68,13 +68,13 @@ export function FormCategory() {
     }
 
     try {
-      const result = await createCategory({ dataCategory })
+      // const result = await createCategory({ dataCategory })
 
-      if (result.messageSuccess) {
-        notifySuccess(result.messageSuccess)
-      } else if (result.messageError) {
-        notifyError(result.messageError)
-      }
+      // if (result.messageSuccess) {
+      //   notifySuccess(result.messageSuccess)
+      // } else if (result.messageError) {
+      //   notifyError(result.messageError)
+      // }
 
       reset()
       setImageDataCategory([{ name: '', url: '' }])

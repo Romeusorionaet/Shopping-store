@@ -1,16 +1,17 @@
 'use client'
 
-import { updateOrder } from '@/actions/update/order'
+// import { updateOrder } from '@/actions/update/order'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useNotification } from '@/hooks/use-notifications'
-import { Address, OrderStatusTracking } from '@prisma/client'
+// import { Address, OrderStatusTracking } from '@prisma/client'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 interface Props {
   orderId: string
-  userAddress: Address
+  // userAddress: Address
+  userAddress: any
 }
 
 export function UpdateOrder({ orderId, userAddress }: Props) {
@@ -26,13 +27,13 @@ export function UpdateOrder({ orderId, userAddress }: Props) {
     }
 
     try {
-      const result = await updateOrder({ trackingCode, orderId, userAddress })
+      // const result = await updateOrder({ trackingCode, orderId, userAddress })
 
-      if (result?.messageSuccess) {
-        notifySuccess(result.messageSuccess)
-      } else if (result?.messageError) {
-        notifyError(result.messageError)
-      }
+      // if (result?.messageSuccess) {
+      //   notifySuccess(result.messageSuccess)
+      // } else if (result?.messageError) {
+      //   notifyError(result.messageError)
+      // }
 
       setTrackingCode('')
 
@@ -44,10 +45,10 @@ export function UpdateOrder({ orderId, userAddress }: Props) {
   }
 
   const handleCancelOrder = async () => {
-    const { CANCELED } = OrderStatusTracking
+    // const { CANCELED } = OrderStatusTracking
 
     try {
-      await updateOrder({ orderTracking: CANCELED, orderId })
+      // await updateOrder({ orderTracking: CANCELED, orderId })
 
       notifyError('Pedido cancelado')
 

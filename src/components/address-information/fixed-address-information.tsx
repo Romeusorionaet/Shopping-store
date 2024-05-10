@@ -1,10 +1,10 @@
-import { OrderAddress } from '@prisma/client'
+// import { OrderAddress } from '@prisma/client'
 
-interface Props {
-  orderAddress: OrderAddress[]
-}
+// interface Props {
+//   orderAddress: OrderAddress[]
+// }
 
-export function FixedAddressInformation({ orderAddress }: Props) {
+export function FixedAddressInformation({ orderAddress }: any) {
   const address = orderAddress[0]
 
   return (

@@ -7,31 +7,32 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion'
-import { Address, OrderStatusTracking } from '@prisma/client'
+// import { Address, OrderStatusTracking } from '@prisma/client'
 import { format } from 'date-fns'
 import { Button } from '@/components/ui/button'
 import { OrderProductItem } from './order-product-item'
 import { FixedAddressInformation } from '@/components/address-information/fixed-address-information'
-import { OrderIncludeOrderProducts } from '../page'
+// import { OrderIncludeOrderProducts } from '../page'
 import { ChangeableAddressInformation } from '@/components/address-information/changeable-address-information'
 import { useEffect, useState } from 'react'
 import { getAddressFromCookies } from '@/utils/get-address-from-cookies'
 import Link from 'next/link'
-import { getOrderStatus } from '@/components/helpers/get-order-status'
+// import { getOrderStatus } from '@/components/helpers/get-order-status'
 
 export interface OrderProductProps {
-  order: OrderIncludeOrderProducts
+  // order: OrderIncludeOrderProducts
+  order: any
 }
 
 export function OrderItem({ order }: OrderProductProps) {
-  const [userAddressSaved, setUserAddressSaved] = useState<Address | null>(null)
+  // const [userAddressSaved, setUserAddressSaved] = useState<Address | null>(null)
 
   const { orderProducts } = order
   let subtotal = 0
   let totalDiscount = 0
   let total = 0
 
-  orderProducts.forEach((item) => {
+  orderProducts.forEach((item: any) => {
     const currentTotalDiscount =
       Number(item.basePrice) * (item.discountPercentage / 100) * item.quantity
     const currentTotalPrice =
@@ -41,9 +42,9 @@ export function OrderItem({ order }: OrderProductProps) {
     total += currentTotalPrice
   })
 
-  const isProductDeliveredToCorreios =
-    order.orderTracking !== OrderStatusTracking.PRODUCT_DELIVERED_TO_CORREIOS ||
-    order.trackingCode === OrderStatusTracking.CANCELED
+  // const isProductDeliveredToCorreios =
+  //   order.orderTracking !== OrderStatusTracking.PRODUCT_DELIVERED_TO_CORREIOS ||
+  //   order.trackingCode === OrderStatusTracking.CANCELED
 
   const handleNavigateToCorreiosPage = () => {
     open('https://www.correios.com.br/')
@@ -52,7 +53,7 @@ export function OrderItem({ order }: OrderProductProps) {
   useEffect(() => {
     const addressFromLocalStorage = getAddressFromCookies()
     if (addressFromLocalStorage) {
-      setUserAddressSaved(addressFromLocalStorage)
+      // setUserAddressSaved(addressFromLocalStorage)
     }
   }, [])
 
@@ -64,7 +65,7 @@ export function OrderItem({ order }: OrderProductProps) {
             <p className="text-sm font-bold uppercase">
               Pedido com {order.orderProducts.length} produto(s)
             </p>
-            {order.orderTracking === OrderStatusTracking.CANCELED ? (
+            {/* {order.orderTracking === OrderStatusTracking.CANCELED ? (
               <p className="text-xs opacity-60">
                 pedido cancelado: Este pedido foi{' '}
                 <span className="text-base_color_negative">cancelado</span> por
@@ -86,7 +87,7 @@ export function OrderItem({ order }: OrderProductProps) {
                 dos Correios. Assim que despachado, você receberá o código de
                 rastreamento para acompanhar a entrega.
               </p>
-            )}
+            )} */}
           </div>
         </AccordionTrigger>
 
@@ -95,7 +96,7 @@ export function OrderItem({ order }: OrderProductProps) {
             <div className="flex items-center justify-between">
               <div className="font-bold">
                 <p>Status</p>
-                {order.orderTracking === OrderStatusTracking.CANCELED ? (
+                {/* {order.orderTracking === OrderStatusTracking.CANCELED ? (
                   <p className="text-base_color_negative">
                     {getOrderStatus(order.orderTracking)}
                   </p>
@@ -103,7 +104,7 @@ export function OrderItem({ order }: OrderProductProps) {
                   <p className="text-base_color_positive">
                     {getOrderStatus(order.status)}
                   </p>
-                )}
+                )} */}
               </div>
 
               <div>
@@ -112,18 +113,18 @@ export function OrderItem({ order }: OrderProductProps) {
                   {format(new Date(order.createdAt), "d/MM/y 'às' HH:mm")}
                 </p>
                 <p>
-                  <strong>{getOrderStatus(order.orderTracking)}</strong>:
+                  {/* <strong>{getOrderStatus(order.orderTracking)}</strong>: */}
                 </p>
                 <p> {format(new Date(order.updatedAt), "d/MM/y 'às' HH:mm")}</p>
               </div>
             </div>
 
-            {order.orderProducts.map((orderProduct) => (
+            {/* {order.orderProducts.map((orderProduct) => (
               <OrderProductItem
                 key={orderProduct.id}
                 orderProduct={orderProduct}
               />
-            ))}
+            ))} */}
 
             <div className="flex w-full flex-col gap-1 text-xs">
               <Separator />
@@ -174,7 +175,7 @@ export function OrderItem({ order }: OrderProductProps) {
               </div>
             </div>
 
-            {order.orderAddress.length !== 0 ? (
+            {/* {order.orderAddress.length !== 0 ? (
               <FixedAddressInformation orderAddress={order.orderAddress} />
             ) : order.orderTracking === OrderStatusTracking.CANCELED ? (
               <></>
@@ -189,11 +190,11 @@ export function OrderItem({ order }: OrderProductProps) {
                 </p>
                 <ChangeableAddressInformation address={userAddressSaved} />
               </div>
-            )}
+            )} */}
 
             <div>
               <Button
-                disabled={isProductDeliveredToCorreios}
+                // disabled={isProductDeliveredToCorreios}
                 className="rounded-md bg-base_color_positive p-2 sm:w-56"
                 onClick={handleNavigateToCorreiosPage}
               >

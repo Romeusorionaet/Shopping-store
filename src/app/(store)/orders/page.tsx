@@ -1,41 +1,38 @@
-import { authOptions } from '@/lib/auth'
 import { getDataOrders } from '@/lib/getData/get-data-orders'
 import { getServerSession } from 'next-auth'
 import { OrderItem } from './components/order-item'
 import { OrderWaitingForPayment } from './components/order-waiting-for-payment'
-import {
-  Order,
-  OrderAddress,
-  OrderProduct,
-  OrderStatus,
-  Product,
-  UserOrdersHistoric,
-} from '@prisma/client'
+// import {
+//   Order,
+//   OrderAddress,
+//   OrderProduct,
+//   OrderStatus,
+//   Product,
+//   UserOrdersHistoric,
+// } from '@prisma/client'
 import { NoUserMessage } from '@/components/no-user-message'
 import { getUserOrdersHistoric } from '@/lib/getData/get-data-user-order-historic'
 import { HistoricItem } from '@/components/historic-item'
 
-interface OrderProductIncludeProduct extends OrderProduct {
-  product: Product
-}
+// interface OrderProductIncludeProduct extends OrderProduct {
+//   product: Product
+// }
 
-export interface OrderIncludeOrderProducts extends Order {
-  orderProducts: OrderProductIncludeProduct[]
-  orderAddress: OrderAddress[]
-}
+// export interface OrderIncludeOrderProducts extends Order {
+//   orderProducts: OrderProductIncludeProduct[]
+//   orderAddress: OrderAddress[]
+// }
 
 export default async function Orders() {
-  const session = await getServerSession(authOptions)
+  // if (!session || !session.user) {
+  //   return <NoUserMessage />
+  // }
 
-  if (!session || !session.user) {
-    return <NoUserMessage />
-  }
+  // const { props } = await getDataOrders(session.user.id)
+  // const orders: OrderIncludeOrderProducts[] = JSON.parse(props.orders)
 
-  const { props } = await getDataOrders(session.user.id)
-  const orders: OrderIncludeOrderProducts[] = JSON.parse(props.orders)
-
-  const { props: userHistoric } = await getUserOrdersHistoric(session.user.id)
-  const historic: UserOrdersHistoric[] = JSON.parse(userHistoric.historic)
+  // const { props: userHistoric } = await getUserOrdersHistoric(session.user.id)
+  // const historic: UserOrdersHistoric[] = JSON.parse(userHistoric.historic)
 
   return (
     <div className="p-4 pt-28">
@@ -45,7 +42,7 @@ export default async function Orders() {
 
       <div className="mt-4 flex flex-col justify-center">
         <h2 className="text-lg">Pedidos em andamento:</h2>
-        {orders && orders.length >= 1 ? (
+        {/* {orders && orders.length >= 1 ? (
           orders.map((order) => {
             if (order.status === OrderStatus.PAYMENT_CONFIRMED) {
               return <OrderItem key={order.id} order={order} />
@@ -59,14 +56,14 @@ export default async function Orders() {
           })
         ) : (
           <p className="mt-10 text-center opacity-80">Vazio</p>
-        )}
+        )} */}
       </div>
 
       <div className="mt-10">
         <h2 className="mb-4 text-lg">Pedidos entregue:</h2>
 
         <div className="scrollbar h-80 overflow-auto border border-base_color_dark/20 lg:h-[50rem]">
-          <HistoricItem historic={historic} />
+          {/* <HistoricItem historic={historic} /> */}
         </div>
       </div>
 
@@ -79,7 +76,7 @@ export default async function Orders() {
         </p>
 
         <div className="mt-4 border border-base_color_dark/20 p-2">
-          {orders && orders.length >= 1 ? (
+          {/* {orders && orders.length >= 1 ? (
             orders
               .map((order) => {
                 if (order.status === OrderStatus.WAITING_FOR_PAYMENT) {
@@ -91,7 +88,7 @@ export default async function Orders() {
               .reverse()
           ) : (
             <></>
-          )}
+          )} */}
         </div>
       </div>
     </div>

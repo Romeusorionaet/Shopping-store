@@ -1,33 +1,30 @@
 'use server'
 
-import { getServerSession } from 'next-auth'
-import { prismaClient } from '../prisma'
-import { authOptions } from '../auth'
+import { api } from '../api'
 
-export const getDataUser = async () => {
+interface ProfileProps {
+  id: string
+  username: string
+  email: string
+  createAt: string
+  updateAt: string
+}
+
+export const getDataUser = async (accessToken: string | undefined) => {
   try {
-    const session = await getServerSession(authOptions)
-    const userId = session?.user.id
-
-    if (!userId) {
-      return {
-        props: {
-          isAdm: false,
-        },
-      }
-    }
-
-    const user = await prismaClient.user.findUnique({
-      where: {
-        id: userId,
+    const response = await api.get('/buyer/profile', {
+      headers: {
+        // Authorization: `Bearer ${accessToken}`,
+        'Content-Type': 'application/json',
       },
+      withCredentials: true,
     })
 
-    const isAdm = user?.isAdm
+    const profile: ProfileProps = response.data.profile
 
     return {
       props: {
-        isAdm,
+        profile,
       },
       revalidate: 60 * 60 * 24,
     }

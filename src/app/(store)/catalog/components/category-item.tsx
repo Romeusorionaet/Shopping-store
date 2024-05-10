@@ -1,9 +1,10 @@
-import { Category } from '@prisma/client'
+// import { Category } from '@prisma/client'
 import Link from 'next/link'
 import Image from 'next/image'
 
 interface CategoryItemProps {
-  category: Category
+  // category: Category
+  category: any
 }
 
 export default function CategoryItem({ category }: CategoryItemProps) {

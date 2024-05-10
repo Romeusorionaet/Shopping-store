@@ -1,33 +1,33 @@
 import Image from 'next/image'
 import { Button } from '../ui/button'
 import { ArrowLeftIcon, ArrowRightIcon, TrashIcon } from 'lucide-react'
-import { CartProduct, useCartStore } from '@/providers/zustand-store'
+// import { CartProduct, useCartStore } from '@/providers/zustand-store'
 import Link from 'next/link'
 
-interface CartItemProps {
-  product: CartProduct
-}
+// interface CartItemProps {
+//   product: CartProduct
+// }
 
-export function CartItem({ product }: CartItemProps) {
-  const {
-    decreaseProductQuantity,
-    increaseProductQuantity,
-    removeProductFromCart,
-  } = useCartStore()
+export function CartItem({ product }: any) {
+  // const {
+  //   decreaseProductQuantity,
+  //   increaseProductQuantity,
+  //   removeProductFromCart,
+  // } = useCartStore()
 
   const basePrice = Number(product.basePrice) * product.quantity
 
-  const handleDecreaseProductQuantityClick = () => {
-    decreaseProductQuantity(product.id)
-  }
+  // const handleDecreaseProductQuantityClick = () => {
+  //   decreaseProductQuantity(product.id)
+  // }
 
-  const handleIncreaseProductQuantityClick = () => {
-    increaseProductQuantity(product.id)
-  }
+  // const handleIncreaseProductQuantityClick = () => {
+  //   increaseProductQuantity(product.id)
+  // }
 
-  const handleRemoveProductClick = () => {
-    removeProductFromCart(product.id)
-  }
+  // const handleRemoveProductClick = () => {
+  //   removeProductFromCart(product.id)
+  // }
 
   return (
     <div className="flex flex-col items-center justify-between gap-2">
@@ -74,7 +74,7 @@ export function CartItem({ product }: CartItemProps) {
               size="icon"
               variant="outline"
               className="h-6 w-6"
-              onClick={handleDecreaseProductQuantityClick}
+              // onClick={handleDecreaseProductQuantityClick}
             >
               <ArrowLeftIcon size={16} />
             </Button>
@@ -85,7 +85,7 @@ export function CartItem({ product }: CartItemProps) {
               size="icon"
               variant="outline"
               className="h-6 w-6"
-              onClick={handleIncreaseProductQuantityClick}
+              // onClick={handleIncreaseProductQuantityClick}
             >
               <ArrowRightIcon size={16} />
             </Button>
@@ -94,7 +94,7 @@ export function CartItem({ product }: CartItemProps) {
         <Button
           size="icon"
           variant={'destructive'}
-          onClick={handleRemoveProductClick}
+          // onClick={handleRemoveProductClick}
         >
           <TrashIcon size={22} />
         </Button>

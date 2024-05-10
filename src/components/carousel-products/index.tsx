@@ -1,7 +1,7 @@
 'use client'
 
 import { CalculateValueProduct } from '@/utils/calculate-value-product'
-import { ModeOfSale, Product } from '@prisma/client'
+// import { ModeOfSale, Product } from '@prisma/client'
 import Image from 'next/image'
 import Link from 'next/link'
 import { AddProductInCart } from '../add-product-in-cart'
@@ -16,11 +16,11 @@ export interface CustomSlider extends Slider {
   slickNext: () => void
 }
 
-interface productsProps {
-  products: Product[] | undefined
-}
+// interface productsProps {
+//   products: Product[] | undefined
+// }
 
-export function CarouselProducts({ products }: productsProps) {
+export function CarouselProducts({ products }: any) {
   const slider = useRef<CustomSlider>(null)
   const { carouselResponsive } = useSlickCarousel()
 
@@ -47,7 +47,7 @@ export function CarouselProducts({ products }: productsProps) {
 
       <Slider key={sliderKey} ref={slider} {...carouselResponsive}>
         {products &&
-          products.map((product) => {
+          products.map((product: any) => {
             const { totalPrice } = CalculateValueProduct(product)
             const productAvailable = product.quantity <= 0
 
@@ -73,7 +73,7 @@ export function CarouselProducts({ products }: productsProps) {
 
                     <div className="h-10">
                       <div>
-                        {product.placeOfSale ===
+                        {/* {product.placeOfSale ===
                         ModeOfSale.SELL_IN_REGION_ONLY ? (
                           <span className="absolute bottom-28 left-0 rounded-md bg-base_color_dark/5 p-1 text-xs font-bold">
                             Local
@@ -82,7 +82,7 @@ export function CarouselProducts({ products }: productsProps) {
                           <span className="absolute bottom-28 left-0 rounded-md bg-base_color_dark/5 p-1 text-xs font-bold text-base_color_positive">
                             Brasil
                           </span>
-                        )}
+                        )} */}
                       </div>
 
                       {product.discountPercentage !== 0 && (

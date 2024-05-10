@@ -1,9 +1,10 @@
 import { CalculateValueProduct } from '@/utils/calculate-value-product'
-import { Product } from '@prisma/client'
+// import { Product } from '@prisma/client'
 import Image from 'next/image'
 
 interface Props {
-  product: Product
+  // product: Product
+  product: any
 }
 
 export function ProductManage({ product }: Props) {

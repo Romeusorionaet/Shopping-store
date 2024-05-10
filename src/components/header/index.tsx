@@ -10,20 +10,23 @@ import {
   SlidersHorizontal,
 } from 'lucide-react'
 import { Sheet, SheetContent, SheetHeader, SheetTrigger } from '../ui/sheet'
-import { signIn, signOut, useSession } from 'next-auth/react'
 import { Button } from '../ui/button'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import { useRouter } from 'next/navigation'
 import { Cart } from '../cart'
 import { useContext, useEffect, useState } from 'react'
 import { UserContext } from '@/providers/user-context'
-import { useCartStore } from '@/providers/zustand-store'
+// import { useCartStore } from '@/providers/zustand-store'
 import { checkIsPrivateRoute } from '@/utils/check-is-private-route'
 import { DialogLoginAdm } from '../dialog-login-adm'
+import { getGoogleOAuthURL } from '@/lib/auth'
+import Cookies from 'js-cookie'
+import { api } from '@/lib/api'
 
 export function Header() {
-  const { isAdm } = useContext(UserContext)
-  const { cart } = useCartStore()
+  const { profile } = useContext(UserContext)
+  const isAdm = false // por enquanto
+  // const { cart } = useCartStore()
 
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isCartOpen, setIsCartOpen] = useState(false)
@@ -31,22 +34,21 @@ export function Header() {
 
   const [clientRendered, setClientRendered] = useState(false)
 
-  const { status, data } = useSession()
   const router = useRouter()
 
-  const conditionForShowSizeCart =
-    clientRendered && cart.length !== 0 && data?.user
+  // const conditionForShowSizeCart =
+  //   clientRendered && cart.length !== 0 && profile.id
 
-  const userIsAuthenticated = status === 'unauthenticated'
+  console.log(profile)
 
   useEffect(() => {
-    // For resolve warning about difference value between server side and client side
+    // hydrate
     setClientRendered(true)
   }, [])
 
   const handleLogin = async () => {
     try {
-      await signIn()
+      window.open(getGoogleOAuthURL())
     } catch (err) {
       console.log(err)
     }
@@ -54,7 +56,15 @@ export function Header() {
 
   const handleLogout = async () => {
     try {
-      await signOut()
+      Cookies.remove('@shopping-store/AT.2.0')
+      Cookies.remove('@shopping-store/RT.2.0')
+
+      api.post('/auth/user/signUp', {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        id: profile?.id,
+      })
     } catch (err) {
       console.log(err)
     }
@@ -173,7 +183,7 @@ export function Header() {
 
               <div className="flex flex-col items-center justify-center">
                 <>
-                  {userIsAuthenticated ? (
+                  {!profile.id ? (
                     <Button
                       size="icon"
                       variant="outline"
@@ -197,25 +207,27 @@ export function Header() {
                 </>
 
                 <>
-                  {!userIsAuthenticated && data?.user && (
+                  {profile.id ? (
                     <div className="flex flex-col">
                       <div className="flex items-center gap-2 py-4">
                         <Avatar>
                           <AvatarFallback>
-                            {data.user.name?.[0].toUpperCase()}
+                            {profile.username.toUpperCase()}
                           </AvatarFallback>
 
-                          {data.user.image && (
+                          {/* {data.user.image && (
                             <AvatarImage src={data.user.image} />
-                          )}
+                          )} */}
                         </Avatar>
 
                         <div className="flex flex-col">
-                          <p className="font-medium">{data.user.name}</p>
+                          <p className="font-medium">{profile.username}</p>
                           <p className="text-sm opacity-75">Boas compras!</p>
                         </div>
                       </div>
                     </div>
+                  ) : (
+                    <></>
                   )}
                 </>
               </div>
@@ -234,11 +246,11 @@ export function Header() {
           <SheetTrigger asChild>
             <div className="relative border-none bg-base_one_reference_header duration-700">
               <BaggageClaim size={30} />
-              {conditionForShowSizeCart && (
+              {/* {conditionForShowSizeCart && (
                 <div className="absolute -right-2 -top-2 flex h-6 w-6 items-center justify-center rounded-full bg-red-500 p-1 text-white">
                   <p>{clientRendered && cart.length}</p>
                 </div>
-              )}
+              )} */}
             </div>
           </SheetTrigger>
 

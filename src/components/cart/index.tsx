@@ -1,6 +1,6 @@
 import { Separator } from '../ui/separator'
 import { Button } from '../ui/button'
-import { useCartStore } from '@/providers/zustand-store'
+// import { useCartStore } from '@/providers/zustand-store'
 import { calculateCartAllValues } from '@/utils/calculate-cart-all-values'
 import { useSession } from 'next-auth/react'
 import { CartItem } from './cart-item'
@@ -11,8 +11,8 @@ interface Props {
 }
 
 export function Cart({ handleNavigateTo }: Props) {
-  const { cart } = useCartStore()
-  const { subtotal, totalDiscount, total } = calculateCartAllValues(cart)
+  // const { cart } = useCartStore()
+  // const { subtotal, totalDiscount, total } = calculateCartAllValues(cart)
   const { data } = useSession()
   const user = data?.user
 
@@ -20,25 +20,25 @@ export function Cart({ handleNavigateTo }: Props) {
     return <NoUserMessage />
   }
 
-  const handleNavigateToAddressPage = () => {
-    handleNavigateTo('/address')
-  }
+  // const handleNavigateToAddressPage = () => {
+  //   handleNavigateTo('/address')
+  // }
 
   return (
     <div className="flex h-full flex-col gap-6 pb-4">
       <div className="mt-10 flex h-full flex-col gap-5 overflow-y-auto">
         <div className="flex h-full flex-col gap-8">
-          {cart.length > 0 ? (
+          {/* {cart.length > 0 ? (
             cart.map((product) => (
               <CartItem key={product.id} product={product} />
             ))
           ) : (
             <p className="text-center font-semibold">Carrinho vazio.</p>
-          )}
+          )} */}
         </div>
       </div>
 
-      {cart.length > 0 && (
+      {/* {cart.length > 0 && (
         <div className="flex flex-col gap-3">
           <Separator className="opacity-20" />
 
@@ -88,7 +88,7 @@ export function Cart({ handleNavigateTo }: Props) {
             Dados de entrega
           </Button>
         </div>
-      )}
+      )} */}
     </div>
   )
 }

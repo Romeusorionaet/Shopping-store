@@ -1,7 +1,7 @@
-import { createOrder } from '@/actions/order'
+// import { createOrder } from '@/actions/order'
 import { createCheckout } from '@/actions/checkout'
 import { useSession } from 'next-auth/react'
-import { useCartStore } from '@/providers/zustand-store'
+// import { useCartStore } from '@/providers/zustand-store'
 import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
 import ClipLoader from 'react-spinners/ClipLoader'
@@ -12,7 +12,7 @@ interface Props {
 }
 
 export function CheckoutCart({ userHasAddress }: Props) {
-  const { cart } = useCartStore()
+  // const { cart } = useCartStore()
   const { data } = useSession()
   const { notifyWarning, notifyError } = useNotification()
 
@@ -28,23 +28,20 @@ export function CheckoutCart({ userHasAddress }: Props) {
 
   const handleFinishPurchaseClick = async () => {
     try {
-      if (cart.length === 0) {
-        notifyWarning('Carrinho vazio')
-        navigate.push('/')
-        return
-      }
-      const dataOrder = await createOrder(cart, data.user.id)
-
-      if (!dataOrder.order) {
-        notifyError(dataOrder.message)
-        return
-      }
-
-      const initPointUrl = await createCheckout(cart, dataOrder.order.id)
-
-      if (initPointUrl) {
-        window.open(initPointUrl, '_blank')
-      }
+      // if (cart.length === 0) {
+      //   notifyWarning('Carrinho vazio')
+      //   navigate.push('/')
+      //   return
+      // }
+      // const dataOrder = await createOrder(cart, data.user.id)
+      // if (!dataOrder.order) {
+      //   notifyError(dataOrder.message)
+      //   return
+      // }
+      // const initPointUrl = await createCheckout(cart, dataOrder.order.id)
+      // if (initPointUrl) {
+      //   window.open(initPointUrl, '_blank')
+      // }
     } catch (err) {
       console.log(err)
     }

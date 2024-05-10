@@ -7,7 +7,7 @@ import { useState } from 'react'
 import { FormError } from '@/components/form/form-error'
 import { Input } from '@/components/ui/input'
 import Image from 'next/image'
-import { createProduct } from '@/actions/register/products'
+// import { createProduct } from '@/actions/register/products'
 import { ArrowBigDown, DollarSign, Percent } from 'lucide-react'
 import {
   Accordion,
@@ -19,7 +19,7 @@ import { Button } from '@/components/ui/button'
 import '@uploadthing/react/styles.css'
 import { UploadButton } from '@/utils/generate-components'
 import { useNotification } from '@/hooks/use-notifications'
-import { ModeOfSale } from '@prisma/client'
+// import { ModeOfSale } from '@prisma/client'
 
 interface ImageDataProps {
   name: string
@@ -87,10 +87,10 @@ export function FormProduct({ listOfCategory }: Props) {
     } = data
     const newSlug = name.toLowerCase().replace(/ /g, '-')
 
-    const salesLocationType =
-      placeOfSale === 'Sim'
-        ? ModeOfSale.ONLINE_STORE
-        : ModeOfSale.SELL_IN_REGION_ONLY
+    // const salesLocationType =
+    //   placeOfSale === 'Sim'
+    //     ? ModeOfSale.ONLINE_STORE
+    //     : ModeOfSale.SELL_IN_REGION_ONLY
 
     if (imageDataProducts.length !== 4) {
       notifyError('É importante que tenha 4 imagens para o seu produto')
@@ -108,18 +108,18 @@ export function FormProduct({ listOfCategory }: Props) {
       categoryId,
       discountPercentage: parseFloat(discountPercentage),
       quantity: Number(quantity) === 0 ? 1 : Number(quantity),
-      placeOfSale: salesLocationType,
+      // placeOfSale: salesLocationType,
     }
 
     try {
-      const result = await createProduct({ dataProduct })
+      // const result = await createProduct({ dataProduct })
       reset()
 
-      if (result.messageSuccess) {
-        notifySuccess(result.messageSuccess)
-      } else if (result.messageError) {
-        notifyError(result.messageError)
-      }
+      // if (result.messageSuccess) {
+      //   notifySuccess(result.messageSuccess)
+      // } else if (result.messageError) {
+      //   notifyError(result.messageError)
+      // }
     } catch (err) {
       console.log(err)
     }

@@ -18,7 +18,7 @@ export function OrderWaitingForPayment({ order }: OrderProductProps) {
     <div className="text-xs">
       <p>
         Compra não finalizada.
-        {order.orderProducts.map((product) => (
+        {order.orderProducts.map((product: any) => (
           <strong key={product.id}> ({product.product.name}), </strong>
         ))}
       </p>

@@ -1,41 +1,18 @@
-import GoogleProvider, { GoogleProfile } from 'next-auth/providers/google'
-import { PrismaAdapter } from '@auth/prisma-adapter'
-import { AuthOptions } from 'next-auth'
-import { prismaClient } from './prisma'
+export function getGoogleOAuthURL() {
+  const rootUrl = 'https://accounts.google.com/o/oauth2/v2/auth'
 
-export const authOptions: AuthOptions = {
-  adapter: PrismaAdapter(prismaClient),
-  providers: [
-    GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET_ID,
-      authorization: {
-        params: {
-          prompt: 'consent',
-          access_type: 'offline',
-          response_type: 'code',
-        },
-      },
-      profile(profile: GoogleProfile) {
-        return {
-          id: profile.sub,
-          name: profile.name,
-          email: profile.email,
-          image: profile.picture,
-        }
-      },
-    }),
-  ],
-  callbacks: {
-    async session({ session, user }) {
-      session.user = { ...session.user, id: user.id } as {
-        id: string
-        name: string
-        email: string
-        image: string
-      }
-
-      return session
-    },
-  },
+  const options = {
+    redirect_uri: 'http://localhost:3333/auth/register/oauth-google/callback',
+    client_id:
+      '581486127159-kv2ul4b30dpj1blp9na91rqf6974pba0.apps.googleusercontent.com',
+    access_type: 'offline',
+    response_type: 'code',
+    prompt: 'consent',
+    scope: [
+      'https://www.googleapis.com/auth/userinfo.profile',
+      'https://www.googleapis.com/auth/userinfo.email',
+    ].join(' '),
+  }
+  const qs = new URLSearchParams(options)
+  return `${rootUrl}?${qs.toString()}`
 }

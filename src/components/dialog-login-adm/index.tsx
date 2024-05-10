@@ -8,7 +8,6 @@ import {
 } from '@/components/ui/dialog'
 import { Input } from '../ui/input'
 import { useState } from 'react'
-import { verificationAdm } from '@/actions/verification-adm'
 import { useNotification } from '@/hooks/use-notifications'
 import { useRouter } from 'next/navigation'
 import Cookies from 'js-cookie'
@@ -35,20 +34,20 @@ export function DialogLoginAdm({ isDialogOpen, handleCancel }: Props) {
         return
       }
 
-      const response = await verificationAdm(password)
+      // const response = await verificationAdm(password)
 
-      if (response?.messageError) {
-        setPassword('')
-        notifyError(response.messageError)
-      }
+      // if (response?.messageError) {
+      //   setPassword('')
+      //   notifyError(response.messageError)
+      // }
 
-      if (response?.token) {
-        Cookies.set('@shopping-store/accessToken', response.token, {
-          expires: 1 / 24,
-        })
-        handleCancel()
-        navigate.push('/control-adm')
-      }
+      // if (response?.token) {
+      //   Cookies.set('@shopping-store/accessToken', response.token, {
+      //     expires: 1 / 24,
+      //   })
+      //   handleCancel()
+      //   navigate.push('/control-adm')
+      // }
     } catch (error) {
       console.error('Erro ao autenticar')
     }

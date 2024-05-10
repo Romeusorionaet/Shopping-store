@@ -1,4 +1,4 @@
-import { prismaClient } from '@/lib/prisma'
+// import { prismaClient } from '@/lib/prisma'
 import { OrderStatusTracking } from '@prisma/client'
 
 export const getDataOrders = async (id?: string) => {
@@ -14,26 +14,26 @@ export const getDataOrders = async (id?: string) => {
       }
     }
 
-    const orders = await prismaClient.order.findMany({
-      where: {
-        userId: id,
-        NOT: {
-          orderTracking: OrderStatusTracking.PRODUCT_DELIVERED_TO_CLIENT,
-        },
-      },
-      include: {
-        orderProducts: {
-          include: {
-            product: true,
-          },
-        },
-        orderAddress: true,
-      },
-    })
+    // const orders = await prismaClient.order.findMany({
+    //   where: {
+    //     userId: id,
+    //     NOT: {
+    //       orderTracking: OrderStatusTracking.PRODUCT_DELIVERED_TO_CLIENT,
+    //     },
+    //   },
+    //   include: {
+    //     orderProducts: {
+    //       include: {
+    //         product: true,
+    //       },
+    //     },
+    //     orderAddress: true,
+    //   },
+    // })
 
     return {
       props: {
-        orders: JSON.stringify(orders),
+        // orders: JSON.stringify(orders),
       },
       revalidate: 60 * 60 * 24,
     }

@@ -1,6 +1,6 @@
 import { getDataUniqueProduct } from '@/lib/getData/get-data-unique-product'
 import { FormUpdate } from '../components/form-update'
-import { ProductIncludeCategoryAndProducts } from '@/app/(store)/details/[slug]/page'
+// import { ProductIncludeCategoryAndProducts } from '@/app/(store)/details/[slug]/page'
 
 interface ParamsProps {
   params: {
@@ -12,7 +12,7 @@ export default async function UpdateProduct({ params }: ParamsProps) {
   const { slug } = params
 
   const { props } = await getDataUniqueProduct(slug)
-  const product: ProductIncludeCategoryAndProducts = JSON.parse(props.product)
+  // const product: ProductIncludeCategoryAndProducts = JSON.parse(props.product)
 
   return (
     <div className="mx-auto max-w-[800px] p-4">
@@ -21,7 +21,7 @@ export default async function UpdateProduct({ params }: ParamsProps) {
       </h1>
 
       <div className="my-8 flex flex-col flex-wrap items-center justify-center gap-8">
-        {product && <FormUpdate product={product} />}
+        {/* {product && <FormUpdate product={product} />} */}
       </div>
     </div>
   )

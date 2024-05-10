@@ -1,98 +1,97 @@
 import { getDataOrdersUsers } from '@/lib/getData/get-data-orders-users'
 import { getDataOrders } from '@/lib/getData/get-data-orders'
 import { getServerSession } from 'next-auth'
-import { authOptions } from '@/lib/auth'
-import { OrderStatus, OrderStatusTracking } from '@prisma/client'
+// import { OrderStatus, OrderStatusTracking } from '@prisma/client'
 import { NoUserMessage } from '@/components/no-user-message'
-import {
-  AreaOrdersOfClients,
-  UserWithOrders,
-} from '../area-management/area-orders-of-clients'
+// import {
+//   AreaOrdersOfClients,
+//   UserWithOrders,
+// } from '../area-management/area-orders-of-clients'
 import { OrderWaitingForPayment } from '@/app/(store)/orders/components/order-waiting-for-payment'
-import { OrderIncludeOrderProducts } from '@/app/(store)/orders/page'
+// import { OrderIncludeOrderProducts } from '@/app/(store)/orders/page'
 
 export async function ManageOrders() {
   const { props } = await getDataOrdersUsers()
-  const ordersUsers: UserWithOrders[] = JSON.parse(props.ordersUsers)
+  // const ordersUsers: UserWithOrders[] = JSON.parse(props.ordersUsers)
 
-  const session = await getServerSession(authOptions)
+  // const session = await getServerSession(authOptions)
 
-  if (!session || !session.user) {
-    return <NoUserMessage />
-  }
+  // if (!session || !session.user) {
+  //   return <NoUserMessage />
+  // }
 
-  const { props: data } = await getDataOrders(session.user.id)
-  const orders: OrderIncludeOrderProducts[] = JSON.parse(data.orders)
+  // const { props: data } = await getDataOrders(session.user.id)
+  // const orders: OrderIncludeOrderProducts[] = JSON.parse(data.orders)
 
-  const completedPaymentUsers = ordersUsers.map((orderUser) => ({
-    ...orderUser,
-    Order: orderUser.Order.filter(
-      (order) =>
-        order.status === OrderStatus.PAYMENT_CONFIRMED &&
-        order.trackingCode === '' &&
-        order.orderTracking === OrderStatusTracking.WAITING,
-    ).sort((a, b) => {
-      const dateA = new Date(a.createdAt)
-      const dateB = new Date(b.createdAt)
+  // const completedPaymentUsers = ordersUsers.map((orderUser) => ({
+  //   ...orderUser,
+  //   Order: orderUser.Order.filter(
+  //     (order) =>
+  //       order.status === OrderStatus.PAYMENT_CONFIRMED &&
+  //       order.trackingCode === '' &&
+  //       order.orderTracking === OrderStatusTracking.WAITING,
+  //   ).sort((a, b) => {
+  //     const dateA = new Date(a.createdAt)
+  //     const dateB = new Date(b.createdAt)
 
-      return dateA.getTime() - dateB.getTime()
-    }),
-  }))
+  //     return dateA.getTime() - dateB.getTime()
+  //   }),
+  // }))
 
-  const historicOfCompletedPaymentUsers = ordersUsers.map((orderUser) => ({
-    ...orderUser,
-    Order: orderUser.Order.filter(
-      (order) =>
-        order.status === OrderStatus.PAYMENT_CONFIRMED &&
-        order.trackingCode !== '' &&
-        order.orderTracking ===
-          OrderStatusTracking.PRODUCT_DELIVERED_TO_CORREIOS,
-    ).sort((a, b) => {
-      const dateA = new Date(a.createdAt)
-      const dateB = new Date(b.createdAt)
+  // const historicOfCompletedPaymentUsers = ordersUsers.map((orderUser) => ({
+  //   ...orderUser,
+  //   Order: orderUser.Order.filter(
+  //     (order) =>
+  //       order.status === OrderStatus.PAYMENT_CONFIRMED &&
+  //       order.trackingCode !== '' &&
+  //       order.orderTracking ===
+  //         OrderStatusTracking.PRODUCT_DELIVERED_TO_CORREIOS,
+  //   ).sort((a, b) => {
+  //     const dateA = new Date(a.createdAt)
+  //     const dateB = new Date(b.createdAt)
 
-      return dateA.getTime() - dateB.getTime()
-    }),
-  }))
+  //     return dateA.getTime() - dateB.getTime()
+  //   }),
+  // }))
 
-  const historicOfOrderDeliveredToClient = ordersUsers.map((orderUser) => ({
-    ...orderUser,
-    Order: orderUser.Order.filter(
-      (order) =>
-        order.orderTracking === OrderStatusTracking.PRODUCT_DELIVERED_TO_CLIENT,
-    ).sort((a, b) => {
-      const dateA = new Date(a.createdAt)
-      const dateB = new Date(b.createdAt)
+  // const historicOfOrderDeliveredToClient = ordersUsers.map((orderUser) => ({
+  //   ...orderUser,
+  //   Order: orderUser.Order.filter(
+  //     (order) =>
+  //       order.orderTracking === OrderStatusTracking.PRODUCT_DELIVERED_TO_CLIENT,
+  //   ).sort((a, b) => {
+  //     const dateA = new Date(a.createdAt)
+  //     const dateB = new Date(b.createdAt)
 
-      return dateA.getTime() - dateB.getTime()
-    }),
-  }))
+  //     return dateA.getTime() - dateB.getTime()
+  //   }),
+  // }))
 
-  const uncompletedPaymentUsers = ordersUsers.map((orderUser) => ({
-    ...orderUser,
-    Order: orderUser.Order.filter(
-      (order) => order.status === OrderStatus.WAITING_FOR_PAYMENT,
-    ).sort((a, b) => {
-      const dateA = new Date(a.createdAt)
-      const dateB = new Date(b.createdAt)
+  // const uncompletedPaymentUsers = ordersUsers.map((orderUser) => ({
+  //   ...orderUser,
+  //   Order: orderUser.Order.filter(
+  //     (order) => order.status === OrderStatus.WAITING_FOR_PAYMENT,
+  //   ).sort((a, b) => {
+  //     const dateA = new Date(a.createdAt)
+  //     const dateB = new Date(b.createdAt)
 
-      return dateB.getTime() - dateA.getTime()
-    }),
-  }))
+  //     return dateB.getTime() - dateA.getTime()
+  //   }),
+  // }))
 
-  const historicOfOrdersCanceled = ordersUsers.map((orderUser) => ({
-    ...orderUser,
-    Order: orderUser.Order.filter(
-      (order) =>
-        order.status === OrderStatus.PAYMENT_CONFIRMED &&
-        order.orderTracking === OrderStatusTracking.CANCELED,
-    ).sort((a, b) => {
-      const dateA = new Date(a.createdAt)
-      const dateB = new Date(b.createdAt)
+  // const historicOfOrdersCanceled = ordersUsers.map((orderUser) => ({
+  //   ...orderUser,
+  //   Order: orderUser.Order.filter(
+  //     (order) =>
+  //       order.status === OrderStatus.PAYMENT_CONFIRMED &&
+  //       order.orderTracking === OrderStatusTracking.CANCELED,
+  //   ).sort((a, b) => {
+  //     const dateA = new Date(a.createdAt)
+  //     const dateB = new Date(b.createdAt)
 
-      return dateA.getTime() - dateB.getTime()
-    }),
-  }))
+  //     return dateA.getTime() - dateB.getTime()
+  //   }),
+  // }))
 
   return (
     <div className="space-y-10">
@@ -103,7 +102,7 @@ export async function ManageOrders() {
             {'('}preparar para entrega{')'}
           </span>
         </h3>
-        <AreaOrdersOfClients ordersUsers={completedPaymentUsers} />
+        {/* <AreaOrdersOfClients ordersUsers={completedPaymentUsers} /> */}
       </div>
 
       <div>
@@ -115,14 +114,14 @@ export async function ManageOrders() {
           </span>
           .
         </h3>
-        <AreaOrdersOfClients ordersUsers={historicOfCompletedPaymentUsers} />
+        {/* <AreaOrdersOfClients ordersUsers={historicOfCompletedPaymentUsers} /> */}
       </div>
 
       <div>
         <h3>
           Pedidos <strong className="text-base_color_positive">entregue</strong>
         </h3>
-        <AreaOrdersOfClients ordersUsers={historicOfOrderDeliveredToClient} />
+        {/* <AreaOrdersOfClients ordersUsers={historicOfOrderDeliveredToClient} /> */}
       </div>
 
       <div>
@@ -134,7 +133,7 @@ export async function ManageOrders() {
           </span>
           .
         </h3>
-        <AreaOrdersOfClients ordersUsers={uncompletedPaymentUsers} />
+        {/* <AreaOrdersOfClients ordersUsers={uncompletedPaymentUsers} /> */}
       </div>
 
       <div>
@@ -146,15 +145,15 @@ export async function ManageOrders() {
           </span>
           .
         </h3>
-        <AreaOrdersOfClients ordersUsers={historicOfOrdersCanceled} />
+        {/* <AreaOrdersOfClients ordersUsers={historicOfOrdersCanceled} /> */}
       </div>
 
       <div>
         <h1>Seus pedidos não finalizados</h1>
-        <p className="text-sm opacity-80">{session.user.email}</p>
+        {/* <p className="text-sm opacity-80">{session.user.email}</p> */}
       </div>
 
-      <div className="scrollbar mt-10 flex h-96 flex-col gap-2 overflow-auto opacity-80">
+      {/* <div className="scrollbar mt-10 flex h-96 flex-col gap-2 overflow-auto opacity-80">
         {orders && orders.length >= 1 ? (
           orders
             .map((order) => {
@@ -168,7 +167,7 @@ export async function ManageOrders() {
         ) : (
           <></>
         )}
-      </div>
+      </div> */}
     </div>
   )
 }

@@ -1,16 +1,16 @@
 'use client'
 
-import { UserOrdersHistoric } from '@prisma/client'
+// import { UserOrdersHistoric } from '@prisma/client'
 import { Separator } from '@radix-ui/react-separator'
 import { format } from 'date-fns'
 import Image from 'next/image'
 
-interface Props {
-  historic: UserOrdersHistoric[]
-}
+// interface Props {
+//   historic: UserOrdersHistoric[]
+// }
 
-export function HistoricItem({ historic }: Props) {
-  const sortedHistoric = historic.sort((a, b) => {
+export function HistoricItem({ historic }: any) {
+  const sortedHistoric = historic.sort((a: any, b: any) => {
     const dateA = new Date(a.createdAt)
     const dateB = new Date(b.createdAt)
     return dateB.getTime() - dateA.getTime()
@@ -28,7 +28,7 @@ export function HistoricItem({ historic }: Props) {
 
   return (
     <div className="mt-20 flex flex-wrap justify-center gap-8">
-      {sortedHistoric.map((item) => {
+      {sortedHistoric.map((item: any) => {
         const totalDiscount =
           Number(item.basePrice) * (item.discountPercentage / 100)
         const totalPrice = Number(item.basePrice) - totalDiscount

@@ -1,7 +1,7 @@
 'use client'
 
 import { Input } from '@/components/ui/input'
-import { Product } from '@prisma/client'
+// import { Product } from '@prisma/client'
 import {
   Accordion,
   AccordionContent,
@@ -13,13 +13,14 @@ import Image from 'next/image'
 import { useState } from 'react'
 
 interface Props {
-  listOfProducts: Product[]
+  // listOfProducts: Product[]
+  listOfProducts: any
 }
 
 export function AreaUpdateProduct({ listOfProducts }: Props) {
   const [searchTerm, setSearchTerm] = useState('')
 
-  const filteredProducts = listOfProducts.filter((product) =>
+  const filteredProducts = listOfProducts.filter((product: any) =>
     product.name.toLowerCase().includes(searchTerm.toLowerCase()),
   )
 
@@ -46,7 +47,7 @@ export function AreaUpdateProduct({ listOfProducts }: Props) {
           />
 
           <div className="scrollbar flex h-96 flex-col gap-4 overflow-y-auto p-2">
-            {filteredProducts.map((product) => {
+            {filteredProducts.map((product: any) => {
               return (
                 <div
                   className="flex justify-between gap-4 border-b border-white pb-4"

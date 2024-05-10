@@ -1,11 +1,11 @@
 'use client'
 
-import { deleteCategory } from '@/actions/delete/category'
-import { updateCategory } from '@/actions/update/category'
+// import { deleteCategory } from '@/actions/delete/category'
+// import { updateCategory } from '@/actions/update/category'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { UploadButton } from '@/utils/generate-components'
-import { Product } from '@prisma/client'
+// import { Product } from '@prisma/client'
 import {
   Accordion,
   AccordionContent,
@@ -37,7 +37,8 @@ interface Props {
     slug: string
     imageUrl: string
   }[]
-  listOfProducts: Product[]
+  // listOfProducts: Product[]
+  listOfProducts: any
 }
 
 export function AreaUpdateCategory({ listOfCategory, listOfProducts }: Props) {
@@ -58,21 +59,19 @@ export function AreaUpdateCategory({ listOfCategory, listOfProducts }: Props) {
   )
 
   const handleDeleteCategory = async (categoryId: string) => {
-    try {
-      const result = await deleteCategory(categoryId)
-
-      if (result.messageSuccess) {
-        notifySuccess(result.messageSuccess)
-
-        setTimeout(() => {
-          window.location.reload()
-        }, 2000)
-      } else if (result.messageError) {
-        notifyError(result.messageError)
-      }
-    } catch (err) {
-      notifyError(String(err))
-    }
+    // try {
+    //   const result = await deleteCategory(categoryId)
+    //   if (result.messageSuccess) {
+    //     notifySuccess(result.messageSuccess)
+    //     setTimeout(() => {
+    //       window.location.reload()
+    //     }, 2000)
+    //   } else if (result.messageError) {
+    //     notifyError(result.messageError)
+    //   }
+    // } catch (err) {
+    //   notifyError(String(err))
+    // }
   }
 
   const handleUpdateCategory = async (dataUpdate: DataUpdateProps) => {
@@ -89,13 +88,13 @@ export function AreaUpdateCategory({ listOfCategory, listOfProducts }: Props) {
           imageUrl: imageDataCategory[0].url || dataUpdate.imageUrl,
         }
 
-        const result = await updateCategory({ updatedData })
+        // const result = await updateCategory({ updatedData })
 
-        if (result.messageSuccess) {
-          notifySuccess(result.messageSuccess)
-        } else if (result.messageError) {
-          notifyError(result.messageError)
-        }
+        // if (result.messageSuccess) {
+        //   notifySuccess(result.messageSuccess)
+        // } else if (result.messageError) {
+        //   notifyError(result.messageError)
+        // }
       } else {
         notifyWarning('Este produto não está habilidato para edição.')
       }
@@ -131,7 +130,7 @@ export function AreaUpdateCategory({ listOfCategory, listOfProducts }: Props) {
               filteredCategory.map((category) => {
                 const isEditing = editingProductId === category.id
                 const filteredProductsForEachCategories = listOfProducts.filter(
-                  (product) => product.categoryId === category.id,
+                  (product: any) => product.categoryId === category.id,
                 )
 
                 return (

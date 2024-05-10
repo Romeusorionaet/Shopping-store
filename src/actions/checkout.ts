@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 'use server'
 
-import { CartProduct } from '@/providers/zustand-store'
+// import { CartProduct } from '@/providers/zustand-store'
 import mercadopago from 'mercadopago'
 
 type PreferenceItem = {
@@ -27,11 +27,12 @@ const truncateDescription = (
 }
 
 export const createCheckout = async (
-  products: CartProduct[],
+  // products: CartProduct[],
+  products: any,
   orderId: string,
 ) => {
   try {
-    const items: PreferenceItem[] = products.map((product) => ({
+    const items: PreferenceItem[] = products.map((product: any) => ({
       title: product.name,
       unit_price: 0.01, // Number(product.totalPrice),
       currency_id: 'BRL',

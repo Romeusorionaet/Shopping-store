@@ -3,10 +3,11 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { CalculateValueProduct } from '@/utils/calculate-value-product'
 import { AddProductInCart } from '@/components/add-product-in-cart'
-import { ModeOfSale, Product } from '@prisma/client'
+// import { ModeOfSale, Product } from '@prisma/client'
 
 interface SelectedProducts {
-  products: Product[]
+  // products: Product[]
+  products: any
 }
 
 interface ParamsProps {
@@ -19,23 +20,23 @@ export default async function Category({ params }: ParamsProps) {
   const { slug } = params
   const { props } = await getDataCategory(slug)
 
-  const selectedProducts: SelectedProducts = JSON.parse(props.selectedProducts)
+  // const selectedProducts: SelectedProducts = JSON.parse(props.selectedProducts)
 
-  if (selectedProducts.products.length === 0) {
-    return (
-      <div className="flex h-screen items-center justify-center p-2">
-        <h1>Não há produtos registrado para esta categoria...</h1>
-      </div>
-    )
-  }
+  // if (selectedProducts.products.length === 0) {
+  //   return (
+  //     <div className="flex h-screen items-center justify-center p-2">
+  //       <h1>Não há produtos registrado para esta categoria...</h1>
+  //     </div>
+  //   )
+  // }
 
   return (
     <div className="py-[8.5rem] text-center">
       <h1 className="text-2xl font-bold">{slug}</h1>
 
-      <div className="my-8 flex flex-wrap justify-center gap-8">
+      {/* <div className="my-8 flex flex-wrap justify-center gap-8">
         {selectedProducts.products &&
-          selectedProducts.products.map((product) => {
+          selectedProducts.products.map((product: any) => {
             const { totalPrice } = CalculateValueProduct(product)
             const productAvailable = product.quantity <= 0
 
@@ -114,7 +115,7 @@ export default async function Category({ params }: ParamsProps) {
               </div>
             )
           })}
-      </div>
+      </div> */}
     </div>
   )
 }

@@ -1,7 +1,5 @@
 'use client'
 
-import { UserContext } from '@/providers/user-context'
-import { useContext } from 'react'
 import Cookies from 'js-cookie'
 
 interface Props {
@@ -9,7 +7,7 @@ interface Props {
 }
 
 export default function LayoutAdm({ children }: Props) {
-  const { isAdm } = useContext(UserContext)
+  const isAdm = false // por enquanto
   const token = Cookies.get('@shopping-store/accessToken')
 
   if (!isAdm || !token) {

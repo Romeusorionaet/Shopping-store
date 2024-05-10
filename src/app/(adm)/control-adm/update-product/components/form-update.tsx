@@ -2,14 +2,14 @@
 
 import { Input } from '@/components/ui/input'
 import { useForm } from 'react-hook-form'
-import { ModeOfSale, Product } from '@prisma/client'
+// import { ModeOfSale, Product } from '@prisma/client'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FormError } from '@/components/form/form-error'
 import { useState } from 'react'
-import { updateProduct } from '@/actions/update/product'
+// import { updateProduct } from '@/actions/update/product'
 import { useRouter } from 'next/navigation'
-import { deleteProduct } from '@/actions/delete/product'
+// import { deleteProduct } from '@/actions/delete/product'
 import { DollarSign, Percent, Trash } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { UploadButton } from '@/utils/generate-components'
@@ -17,7 +17,8 @@ import { useNotification } from '@/hooks/use-notifications'
 import { ProductImages } from '@/app/(store)/details/components/product-images'
 
 interface FormUpdateProps {
-  product: Product
+  // product: Product
+  product: any
 }
 
 interface ImageDataProps {
@@ -73,10 +74,10 @@ export function FormUpdate({ product }: FormUpdateProps) {
     } = data
     const newImageUrls = imageDataProduct.map((item) => item.url)
     const newSlug = name.toLowerCase().replace(/ /g, '-')
-    const salesLocationType =
-      placeOfSale === 'Sim'
-        ? ModeOfSale.ONLINE_STORE
-        : ModeOfSale.SELL_IN_REGION_ONLY
+    // const salesLocationType =
+    //   placeOfSale === 'Sim'
+    //     ? ModeOfSale.ONLINE_STORE
+    //     : ModeOfSale.SELL_IN_REGION_ONLY
 
     const updatedData = {
       id: product.id,
@@ -87,18 +88,18 @@ export function FormUpdate({ product }: FormUpdateProps) {
       discountPercentage,
       imageUrls: newImageUrls.length > 1 ? newImageUrls : product.imageUrls,
       quantity: Number(quantity) === 0 ? 1 : Number(quantity),
-      placeOfSale: salesLocationType,
+      // placeOfSale: salesLocationType,
     }
 
     try {
-      const result = await updateProduct({ updatedData })
+      // const result = await updateProduct({ updatedData })
       navigate.push('/control-adm')
 
-      if (result.messageSuccess) {
-        notifySuccess(result.messageSuccess)
-      } else if (result.messageError) {
-        notifyError(result.messageError)
-      }
+      // if (result.messageSuccess) {
+      //   notifySuccess(result.messageSuccess)
+      // } else if (result.messageError) {
+      //   notifyError(result.messageError)
+      // }
     } catch (err) {
       console.log(err)
     }
@@ -106,22 +107,22 @@ export function FormUpdate({ product }: FormUpdateProps) {
 
   const handleDeleteProduct = async () => {
     try {
-      const result = await deleteProduct(product.id)
+      // const result = await deleteProduct(product.id)
       navigate.push('/control-adm')
 
-      switch (true) {
-        case !!result?.messageSuccess:
-          notifySuccess(result.messageSuccess)
-          break
-        case !!result?.messageError:
-          notifyError(result.messageError)
-          break
-        case !!result?.messageWarning:
-          notifyWarning(result.messageWarning)
-          break
-        default:
-          break
-      }
+      // switch (true) {
+      //   case !!result?.messageSuccess:
+      //     notifySuccess(result.messageSuccess)
+      //     break
+      //   case !!result?.messageError:
+      //     notifyError(result.messageError)
+      //     break
+      //   case !!result?.messageWarning:
+      //     notifyWarning(result.messageWarning)
+      //     break
+      //   default:
+      //     break
+      // }
     } catch (err) {
       console.log(err)
     }

@@ -1,11 +1,11 @@
-import { CartProduct } from '@/providers/zustand-store'
+// import { CartProduct } from '@/providers/zustand-store'
 
-export function calculateCartAllValues(cart: CartProduct[]) {
+export function calculateCartAllValues(cart: any) {
   let subtotal = 0
   let totalDiscount = 0
   let total = 0
 
-  cart.forEach((item) => {
+  cart.forEach((item: any) => {
     const currentTotalDiscount =
       Number(item.basePrice) * (item.discountPercentage / 100) * item.quantity
     const currentTotalPrice =

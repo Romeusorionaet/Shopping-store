@@ -1,15 +1,15 @@
-import { Prisma } from '@prisma/client'
+// import { Prisma } from '@prisma/client'
 import Image from 'next/image'
 
-interface OrderProductItemProps {
-  orderProduct: Prisma.OrderProductGetPayload<{
-    include: {
-      product: true
-    }
-  }>
-}
+// interface OrderProductItemProps {
+//   orderProduct: Prisma.OrderProductGetPayload<{
+//     include: {
+//       product: true
+//     }
+//   }>
+// }
 
-export function OrderProductItem({ orderProduct }: OrderProductItemProps) {
+export function OrderProductItem({ orderProduct }: any) {
   let total = 0
 
   const currentTotalDiscount =

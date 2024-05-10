@@ -3,19 +3,19 @@ import { ProductImages } from '../components/product-images'
 import { CalculateValueProduct } from '@/utils/calculate-value-product'
 import { CarouselProducts } from '@/components/carousel-products'
 import { AskForProductReturn } from '../components/Ask-for-product-return'
-import { Category, ModeOfSale, Product } from '@prisma/client'
+// import { Category, ModeOfSale, Product } from '@prisma/client'
 import { AddProductInCart } from '@/components/add-product-in-cart'
 import { PackageX } from 'lucide-react'
 import { Metadata } from 'next'
 import { metadata } from '@/app/layout'
 
-interface CategoryIncludeProducts extends Category {
-  products: Product[]
-}
+// interface CategoryIncludeProducts extends Category {
+//   products: Product[]
+// }
 
-export interface ProductIncludeCategoryAndProducts extends Product {
-  category: CategoryIncludeProducts
-}
+// export interface ProductIncludeCategoryAndProducts extends Product {
+//   category: CategoryIncludeProducts
+// }
 
 interface ParamsProps {
   params: {
@@ -48,33 +48,31 @@ export async function generateMetadata({
 export default async function Details({ params }: ParamsProps) {
   const { slug } = params
   const { props } = await getDataUniqueProduct(slug)
-  const product: ProductIncludeCategoryAndProducts = JSON.parse(props.product)
+  // const product: ProductIncludeCategoryAndProducts = JSON.parse(props.product)
 
-  if (!product) {
-    return (
-      <div className="flex h-screen flex-col items-center justify-center gap-4 p-4">
-        <PackageX size={44} />
-        <p>Produto não encontrado.</p>
-      </div>
-    )
-  }
+  // if (!product) {
+  //   return (
+  //     <div className="flex h-screen flex-col items-center justify-center gap-4 p-4">
+  //       <PackageX size={44} />
+  //       <p>Produto não encontrado.</p>
+  //     </div>
+  //   )
+  // }
 
-  const { totalPrice } = CalculateValueProduct(product)
-  const totalPriceDividedByTwelve = totalPrice / 12
+  // const { totalPrice } = CalculateValueProduct(product)
+  // const totalPriceDividedByTwelve = totalPrice / 12
 
-  const quantity = product.quantity < 0 ? 0 : product.quantity
+  // const quantity = product.quantity < 0 ? 0 : product.quantity
 
   return (
     <div className="flex h-screen flex-col justify-between pt-[4.5rem]">
       <div className="my-8 flex items-center justify-center gap-8 max-md:flex-col md:items-start">
-        <ProductImages imageUrls={product.imageUrls} name={product.name} />
+        {/* <ProductImages imageUrls={product.imageUrls} name={product.name} /> */}
 
         <div className="flex flex-col gap-4 p-4 2xl:w-[50%]">
-          <h1 className="font-bold">{product.name}</h1>
-          <p>
-            Quantidade em estoque: <strong>{quantity}</strong>
-          </p>
-          <div>
+          {/* <h1 className="font-bold">{product.name}</h1> */}
+          <p>{/* Quantidade em estoque: <strong>{quantity}</strong> */}</p>
+          {/* <div>
             {product.discountPercentage !== 0 && (
               <div className="flex gap-8">
                 <p className="line-through opacity-75">
@@ -105,16 +103,16 @@ export default async function Details({ params }: ParamsProps) {
                 </span>
               </p>
             </div>
-          </div>
+          </div> */}
 
           <p className="text-xl">Descrição:</p>
           <div className="scrollbar h-96 overflow-auto border border-base_color_dark/20 p-1">
             <pre className="whitespace-pre-wrap font-sans">
-              {product.description}
+              {/* {product.description} */}
             </pre>
           </div>
 
-          {product.quantity <= 0 ? (
+          {/* {product.quantity <= 0 ? (
             <div className="space-y-4">
               <p>
                 Não temos mais este produto no momento. Por favor mande sua
@@ -136,18 +134,18 @@ export default async function Details({ params }: ParamsProps) {
                 />
               )}
             </div>
-          )}
+          )} */}
         </div>
       </div>
 
       <div className="space-y-8 p-4">
-        {product.category?.products.length !== 0 && (
+        {/* {product.category?.products.length !== 0 && (
           <div className="space-y-6">
             <h2 className="text-lg uppercase md:text-2xl">Veja também</h2>
 
             <CarouselProducts products={product.category.products} />
           </div>
-        )}
+        )} */}
       </div>
     </div>
   )

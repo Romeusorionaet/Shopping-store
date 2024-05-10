@@ -1,14 +1,14 @@
-import { OrderProducts } from '../area-management/area-orders-of-clients'
+// import { OrderProducts } from '../area-management/area-orders-of-clients'
 import { ProductManage } from '../area-management/product-manage'
 
-interface Props {
-  ordersProducts: OrderProducts[]
-}
+// interface Props {
+//   ordersProducts: OrderProducts[]
+// }
 
-export function OrderProducts({ ordersProducts }: Props) {
+export function OrderProducts({ ordersProducts }: any) {
   return (
     <div>
-      {ordersProducts.map((orderProduct) => {
+      {ordersProducts.map((orderProduct: any) => {
         return (
           <div key={orderProduct.id} className="py-2">
             <p>Quantidade: {orderProduct.quantity}</p>

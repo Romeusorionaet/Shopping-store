@@ -1,11 +1,11 @@
-import { Address } from '@prisma/client'
+// import { Address } from '@prisma/client'
 import Link from 'next/link'
 
-interface Props {
-  address: Address | null
-}
+// interface Props {
+//   address: Address | null
+// }
 
-export function ChangeableAddressInformation({ address }: Props) {
+export function ChangeableAddressInformation({ address }: any) {
   if (!address) {
     return (
       <div className="rounded-md border border-white/20 p-4">

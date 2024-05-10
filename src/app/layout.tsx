@@ -6,10 +6,11 @@ import '@/styles/scrollbar.css'
 import { Header } from '@/components/header'
 import { NextSSRPlugin } from '@uploadthing/react/next-ssr-plugin'
 import { extractRouterConfig } from 'uploadthing/server'
-import Script from 'next/script'
 import { UserContextProvider } from '@/providers/user-context'
 import { ToastContainer } from 'react-toastify'
 import { ourFileRouter } from './api/uploadthing/core'
+import { QueryClientProvider } from '@tanstack/react-query'
+import { queryClient } from '@/lib/query-client'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -41,21 +42,23 @@ export default async function RootLayout({
 }) {
   return (
     <html lang="en">
-      <Script src="https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js"></Script>
-      <Script src="https://www.mercadopago.com/v1/security.js"></Script>
       <body className={`${inter.className} mx-auto max-w-[1680px] antialiased`}>
-        <UserContextProvider>
-          <AuthProvider>
-            <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
-            <Header />
-            {children}
-          </AuthProvider>
-        </UserContextProvider>
-        <ToastContainer
-          autoClose={2000}
-          position={'bottom-left'}
-          theme="dark"
-        />
+        <QueryClientProvider client={queryClient}>
+          <UserContextProvider>
+            <AuthProvider>
+              <NextSSRPlugin
+                routerConfig={extractRouterConfig(ourFileRouter)}
+              />
+              <Header />
+              {children}
+            </AuthProvider>
+          </UserContextProvider>
+          <ToastContainer
+            autoClose={2000}
+            position={'bottom-left'}
+            theme="dark"
+          />
+        </QueryClientProvider>
       </body>
     </html>
   )

@@ -1,29 +1,29 @@
 'use client'
 
-import { Product } from '@prisma/client'
+// import { Product } from '@prisma/client'
 import { Input } from '../ui/input'
 import { useState } from 'react'
 import { CarouselProducts } from '../carousel-products'
 import { Search } from 'lucide-react'
-import { ProductsWithCategory } from '@/app/(store)/(home)/page'
+// import { ProductsWithCategory } from '@/app/(store)/(home)/page'
 
-interface Props {
-  products: ProductsWithCategory[]
-}
+// interface Props {
+//   products: ProductsWithCategory[]
+// }
 
-export function SearchProduct({ products }: Props) {
-  const [filteredProducts, setFilteredProducts] = useState<Product[]>(products)
+export function SearchProduct({ products }: any) {
+  // const [filteredProducts, setFilteredProducts] = useState<Product[]>(products)
   const [searchItem, setSearchItem] = useState<string>('')
 
   const handleSearch = (searchValue: string) => {
     setSearchItem(searchValue)
 
     const filtered = products.filter(
-      (product) =>
+      (product: any) =>
         product.name.toLowerCase().includes(searchValue.toLowerCase()) ||
         product.category.name.toLowerCase().includes(searchValue.toLowerCase()),
     )
-    setFilteredProducts(filtered)
+    // setFilteredProducts(filtered)
   }
 
   return (
@@ -38,14 +38,14 @@ export function SearchProduct({ products }: Props) {
         />
       </div>
 
-      {filteredProducts.length === 0 ? (
+      {/* {filteredProducts.length === 0 ? (
         <p className="text-center">
           O produto <strong>{searchItem}</strong> não está disponível. Verifique
           se o nome está correto.
         </p>
       ) : (
         <CarouselProducts products={filteredProducts} />
-      )}
+      )} */}
     </div>
   )
 }

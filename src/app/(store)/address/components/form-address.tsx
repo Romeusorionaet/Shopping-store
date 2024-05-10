@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
-import { createAddress } from '@/actions/address'
+// import { createAddress } from '@/actions/address'
 import { useSession } from 'next-auth/react'
 import { FormError } from '@/components/form/form-error'
 import {
@@ -15,12 +15,13 @@ import {
   AccordionTrigger,
 } from '@radix-ui/react-accordion'
 import { useNotification } from '@/hooks/use-notifications'
-import { Address } from '@prisma/client'
+// import { Address } from '@prisma/client'
 import { CheckoutCart } from './checkout-cart'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { ChangeableAddressInformation } from '@/components/address-information/changeable-address-information'
 import Cookies from 'js-cookie'
 import { getAddressFromCookies } from '@/utils/get-address-from-cookies'
+import { UserContext } from '@/providers/user-context'
 
 const addressFormSchema = z.object({
   username: z.string().min(1, 'Este campo é obrigatório.'),
@@ -47,7 +48,7 @@ export function FormAddress() {
     resolver: zodResolver(addressFormSchema),
   })
 
-  const [userAddressSaved, setUserAddressSaved] = useState<Address | null>(null)
+  // const [userAddressSaved, setUserAddressSaved] = useState<Address | null>(null)
   const { notifySuccess, notifyError } = useNotification()
 
   const { data } = useSession()
@@ -61,26 +62,26 @@ export function FormAddress() {
     }
 
     try {
-      const result = await createAddress({
-        dataAddress: data,
-        userId,
-      })
+      // const result = await createAddress({
+      //   dataAddress: data,
+      //   userId,
+      // })
 
-      if (result.newAddress) {
-        Cookies.set(
-          '@shopping-store/address',
-          JSON.stringify(result.newAddress),
-        )
-      } else if (result.updatedAddress) {
-        Cookies.set(
-          '@shopping-store/address',
-          JSON.stringify(result.updatedAddress),
-        )
-      }
+      // if (result.newAddress) {
+      //   Cookies.set(
+      //     '@shopping-store/address',
+      //     JSON.stringify(result.newAddress),
+      //   )
+      // } else if (result.updatedAddress) {
+      //   Cookies.set(
+      //     '@shopping-store/address',
+      //     JSON.stringify(result.updatedAddress),
+      //   )
+      // }
 
       reset()
       window.location.reload()
-      notifySuccess(result.message)
+      // notifySuccess(result.message)
     } catch (err) {
       notifyError('Tente novamente mais tarde')
     }
@@ -89,21 +90,24 @@ export function FormAddress() {
   useEffect(() => {
     const addressFromCookies = getAddressFromCookies()
     if (addressFromCookies) {
-      setUserAddressSaved(addressFromCookies)
+      // setUserAddressSaved(addressFromCookies)
     }
   }, [])
 
-  const userHasAddress = !!userAddressSaved
+  const { profile } = useContext(UserContext)
+  console.log(profile, '====from Address')
+
+  // const userHasAddress = !!userAddressSaved
 
   return (
     <div>
-      <div className="my-4">
+      {/* <div className="my-4">
         {userAddressSaved ? (
           <ChangeableAddressInformation address={userAddressSaved} />
         ) : (
           <></>
         )}
-      </div>
+      </div> */}
 
       <Accordion
         type="single"
@@ -250,7 +254,7 @@ export function FormAddress() {
       </Accordion>
 
       <div className="mx-auto flex max-w-[800px] justify-end">
-        <CheckoutCart userHasAddress={userHasAddress} />
+        {/* <CheckoutCart userHasAddress={userHasAddress} /> */}
       </div>
     </div>
   )
