@@ -19,6 +19,7 @@ export const getDataUser = async (accessToken: string | undefined) => {
       },
       withCredentials: true,
     })
+    console.log(response, '=====response')
 
     const profile: ProfileProps = response.data.profile
 
