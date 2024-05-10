@@ -1,7 +1,7 @@
 // import { updateOrder } from '@/actions/update/order'
 import { Button } from '@/components/ui/button'
 import { useNotification } from '@/hooks/use-notifications'
-import { OrderStatusTracking } from '@prisma/client'
+// import { OrderStatusTracking } from '@prisma/client'
 import { useRouter } from 'next/navigation'
 
 interface Props {
