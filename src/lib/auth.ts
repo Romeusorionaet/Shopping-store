@@ -1,11 +1,11 @@
-'use client'
-
 export function getGoogleOAuthURL() {
   const rootUrl = 'https://accounts.google.com/o/oauth2/v2/auth'
 
   const options = {
-    redirect_uri: `${process.env.NEXT_PUBLIC_API_URL}/auth/register/oauth-google/callback`,
-    client_id: process.env.GOOGLE_CLIENT_ID,
+    redirect_uri:
+      'https://api-shopping-store.onrender.com/auth/register/oauth-google/callback',
+    client_id:
+      '581486127159-kv2ul4b30dpj1blp9na91rqf6974pba0.apps.googleusercontent.com',
     access_type: 'offline',
     response_type: 'code',
     prompt: 'consent',
