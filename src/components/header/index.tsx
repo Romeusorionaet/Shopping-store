@@ -22,6 +22,7 @@ import { DialogLoginAdm } from '../dialog-login-adm'
 import { getGoogleOAuthURL } from '@/lib/auth'
 import Cookies from 'js-cookie'
 import { api } from '@/lib/api'
+import { signIn } from 'next-auth/react'
 
 export function Header() {
   const { profile } = useContext(UserContext)
@@ -48,7 +49,8 @@ export function Header() {
 
   const handleLogin = async () => {
     try {
-      window.open(getGoogleOAuthURL())
+      // await signIn()
+      getGoogleOAuthURL()
     } catch (err) {
       console.log(err)
     }
