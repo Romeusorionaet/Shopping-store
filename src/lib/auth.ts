@@ -15,5 +15,7 @@ export function getGoogleOAuthURL() {
     ].join(' '),
   }
   const qs = new URLSearchParams(options)
-  return `${rootUrl}?${qs.toString()}`
+  const url = `${rootUrl}?${qs.toString()}`
+
+  window.open(url, '_self')
 }
