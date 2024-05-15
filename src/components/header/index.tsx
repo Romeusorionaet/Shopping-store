@@ -47,6 +47,15 @@ export function Header() {
     setClientRendered(true)
   }, [])
 
+  const testRoute = async () => {
+    console.log('foi===')
+    try {
+      await api.get('/test-route')
+    } catch (err) {
+      console.log('error:', err)
+    }
+  }
+
   const handleLogin = async () => {
     try {
       // await signIn()
@@ -182,6 +191,8 @@ export function Header() {
                   )}
                 </>
               </div>
+
+              <button onClick={() => testRoute()}>Teste</button>
 
               <div className="flex flex-col items-center justify-center">
                 <>
