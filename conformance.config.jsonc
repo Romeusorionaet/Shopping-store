@@ -1,0 +1,6 @@
+{
+    "SET_COOKIE_VALIDATION": {
+      "cookieAllowList": ["@shopping-store/AT.2.0", "@shopping-store/AT.2.0"]
+    }
+}
+  
