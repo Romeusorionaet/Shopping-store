@@ -8,8 +8,6 @@ interface DecodedAccessToken extends JwtPayload {
   exp: number
 }
 
-console.log(process.env.NEXTAUTH_URL || '', '=====vv')
-
 export const authOptions: AuthOptions = {
   providers: [
     GoogleProvider({
@@ -20,7 +18,6 @@ export const authOptions: AuthOptions = {
           prompt: 'consent',
           access_type: 'offline',
           response_type: 'code',
-          redirect_uri: process.env.NEXTAUTH_URL,
         },
       },
       async profile(profile: GoogleProfile) {

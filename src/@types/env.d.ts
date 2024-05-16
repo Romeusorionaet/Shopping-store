@@ -1,14 +1,14 @@
 declare namespace NodeJS {
   interface ProcessEnv {
-    DATABASE_URL: string
-    GOOGLE_CLIENT_ID: string
-    GOOGLE_CLIENT_SECRET_ID: string
-    HOST_URL: string
+    NEXT_PUBLIC_API_URL: string
+    NEXTAUTH_GOOGLE_CLIENT_ID: string
+    NEXTAUTH_GOOGLE_CLIENT_SECRET_ID: string
+    NEXTAUTH_URL: string
     NEXTAUTH_SECRET: string
     UPLOADTHING_SECRET: string
     UPLOADTHING_APP_ID: string
-    MERCADOPAGO_PUBLIC_KEY: string
-    MERCADOPAGO_ACCESS_TOKEN: string
     JWT_SECRET_KEY_ADM: string
+    NEXT_PUBLIC_POSTHOG_KEY: string
+    NEXT_PUBLIC_POSTHOG_HOST: string
   }
 }
