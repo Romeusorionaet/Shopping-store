@@ -12,7 +12,11 @@ interface ProfileProps {
 
 export const getDataUser = async () => {
   try {
-    console.log('===teste')
+    console.log(
+      process.env.NEXTAUTH_GOOGLE_CLIENT_ID,
+      process.env.NEXTAUTH_URL,
+      '===teste',
+    )
     const response = await api.get('/buyer/profile')
     console.log(response, '=====response')
 
