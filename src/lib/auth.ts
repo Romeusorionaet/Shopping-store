@@ -8,7 +8,7 @@ interface DecodedAccessToken extends JwtPayload {
   exp: number
 }
 
-console.log(process.env.NEXTAUTH_URL, '=====vv')
+console.log(process.env.NEXTAUTH_URL || '', '=====vv')
 
 export const authOptions: AuthOptions = {
   providers: [
