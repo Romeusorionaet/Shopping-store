@@ -19,7 +19,6 @@ import { UserContext } from '@/providers/user-context'
 // import { useCartStore } from '@/providers/zustand-store'
 import { checkIsPrivateRoute } from '@/utils/check-is-private-route'
 import { DialogLoginAdm } from '../dialog-login-adm'
-import { getGoogleOAuthURL } from '@/lib/auth'
 import Cookies from 'js-cookie'
 import { api } from '@/lib/api'
 import { signIn } from 'next-auth/react'
@@ -58,10 +57,11 @@ export function Header() {
 
   const handleLogin = async () => {
     try {
-      // await signIn()
-      getGoogleOAuthURL()
+      const test = await signIn()
+      // const test = getGoogleOAuthURL()
+      console.log(test, '====dtest header===')
     } catch (err) {
-      console.log(err)
+      console.log(err, '====deu erro')
     }
   }
 

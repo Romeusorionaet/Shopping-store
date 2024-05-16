@@ -10,15 +10,10 @@ interface ProfileProps {
   updateAt: string
 }
 
-export const getDataUser = async (accessToken: string | undefined) => {
+export const getDataUser = async () => {
   try {
-    const response = await api.get('/buyer/profile', {
-      headers: {
-        // Authorization: `Bearer ${accessToken}`,
-        'Content-Type': 'application/json',
-      },
-      withCredentials: true,
-    })
+    console.log('===teste')
+    const response = await api.get('/buyer/profile')
     console.log(response, '=====response')
 
     const profile: ProfileProps = response.data.profile

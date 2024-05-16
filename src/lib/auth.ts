@@ -1,21 +1,88 @@
-export function getGoogleOAuthURL() {
-  const rootUrl = 'https://accounts.google.com/o/oauth2/v2/auth'
+import GoogleProvider, { GoogleProfile } from 'next-auth/providers/google'
+import { AuthOptions } from 'next-auth'
+import { api } from './api'
+import { cookies } from 'next/headers'
+import jwt, { JwtPayload } from 'jsonwebtoken'
 
-  const options = {
-    redirect_uri:
-      'https://api-shopping-store.onrender.com/auth/register/oauth-google/callback',
-    client_id:
-      '581486127159-kv2ul4b30dpj1blp9na91rqf6974pba0.apps.googleusercontent.com',
-    access_type: 'offline',
-    response_type: 'code',
-    prompt: 'consent',
-    scope: [
-      'https://www.googleapis.com/auth/userinfo.profile',
-      'https://www.googleapis.com/auth/userinfo.email',
-    ].join(' '),
-  }
-  const qs = new URLSearchParams(options)
-  const url = `${rootUrl}?${qs.toString()}`
+interface DecodedAccessToken extends JwtPayload {
+  exp: number
+}
 
-  window.open(url, '_self')
+export const authOptions: AuthOptions = {
+  providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET_ID,
+      authorization: {
+        params: {
+          prompt: 'consent',
+          access_type: 'offline',
+          response_type: 'code',
+        },
+      },
+      async profile(profile: GoogleProfile) {
+        if (profile.email_verified) {
+          const response = await api.post(
+            '/auth/register/oauth-google/callback',
+            { profile },
+          )
+
+          const accessToken = response.data.accessToken
+
+          const decodedAccessToken = jwt.decode(
+            accessToken,
+          ) as DecodedAccessToken
+
+          const accessTokenExpires = decodedAccessToken.exp
+
+          const refreshToken = response.data.refreshToken
+
+          const decodedRefreshToken = jwt.decode(
+            refreshToken,
+          ) as DecodedAccessToken
+
+          const refreshTokenExpires = decodedRefreshToken.exp
+
+          cookies().set({
+            name: '@shopping-store/AT.2.0',
+            value: accessToken,
+            maxAge: accessTokenExpires - Math.floor(Date.now() / 1000),
+            httpOnly: true,
+            sameSite: 'lax',
+            secure: true,
+            path: '/',
+          })
+
+          cookies().set({
+            name: '@shopping-store/RT.2.0',
+            value: refreshToken,
+            maxAge: refreshTokenExpires - Math.floor(Date.now() / 1000),
+            httpOnly: true,
+            sameSite: 'lax',
+            secure: true,
+            path: '/',
+          })
+        }
+
+        return {
+          id: profile.sub,
+          name: profile.name,
+          email: profile.email,
+          image: profile.picture,
+        }
+      },
+    }),
+  ],
+  callbacks: {
+    async session({ session, token }) {
+      session.user = { ...session.user, id: token.sub } as {
+        id: string
+        name: string
+        email: string
+        image: string
+      }
+
+      return session
+    },
+  },
 }
