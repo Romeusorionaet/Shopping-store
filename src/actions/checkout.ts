@@ -13,7 +13,7 @@ type PreferenceItem = {
 }
 
 mercadopago.configure({
-  access_token: process.env.MERCADOPAGO_ACCESS_TOKEN,
+  access_token: process.env.MERCADOPAGO_ACCESS_TOKEN || '',
 })
 
 const truncateDescription = (
