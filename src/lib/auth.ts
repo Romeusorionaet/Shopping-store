@@ -11,8 +11,8 @@ interface DecodedAccessToken extends JwtPayload {
 export const authOptions: AuthOptions = {
   providers: [
     GoogleProvider({
-      clientId: process.env.NEXTAUTH_GOOGLE_CLIENT_ID || '',
-      clientSecret: process.env.NEXTAUTH_GOOGLE_CLIENT_SECRET_ID || '',
+      clientId: process.env.NEXTAUTH_GOOGLE_CLIENT_ID,
+      clientSecret: process.env.NEXTAUTH_GOOGLE_CLIENT_SECRET_ID,
       authorization: {
         params: {
           prompt: 'consent',
@@ -23,8 +23,6 @@ export const authOptions: AuthOptions = {
             'https://www.googleapis.com/auth/userinfo.email',
           ].join(' '),
           include_granted_scopes: 'true',
-          redirect_uri:
-            'https://shopping-store-kappa.vercel.app/api/auth/callback/google',
         },
       },
       async profile(profile: GoogleProfile) {

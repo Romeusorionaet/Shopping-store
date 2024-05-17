@@ -40,6 +40,7 @@ export function Header() {
   //   clientRendered && cart.length !== 0 && profile.id
 
   console.log(profile)
+  console.log(process.env.NEXTAUTH_URL, '====env')
 
   useEffect(() => {
     // hydrate
@@ -57,9 +58,8 @@ export function Header() {
 
   const handleLogin = async () => {
     try {
-      const test = await signIn()
       // const test = getGoogleOAuthURL()
-      console.log(test, '====dtest header===')
+      await signIn('google', { callbackUrl: '/' })
     } catch (err) {
       console.log(err, '====deu erro')
     }
