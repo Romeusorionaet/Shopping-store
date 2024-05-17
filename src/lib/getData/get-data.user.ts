@@ -15,7 +15,7 @@ export const getDataUser = async () => {
     console.log(
       process.env.NEXTAUTH_GOOGLE_CLIENT_ID,
       process.env.NEXTAUTH_URL,
-      '===teste',
+      '===teste-no getDataUser',
     )
     const response = await api.get('/buyer/profile')
     console.log(response, '=====response')
@@ -28,9 +28,9 @@ export const getDataUser = async () => {
       },
       revalidate: 60 * 60 * 24,
     }
-  } catch (err) {
+  } catch (err: any) {
     return {
-      error: 'Something went wrong while fetching the user.',
+      error: err.message + 'Something went wrong while fetching the user.',
     }
   }
 }
