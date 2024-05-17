@@ -14,6 +14,7 @@ export const authOptions: AuthOptions = {
       clientId: process.env.NEXTAUTH_GOOGLE_CLIENT_ID,
       clientSecret: process.env.NEXTAUTH_GOOGLE_CLIENT_SECRET_ID,
       authorization: {
+        url: 'http://www.google.com/oauth/v2/accessToken',
         params: {
           prompt: 'consent',
           access_type: 'offline',
@@ -80,8 +81,8 @@ export const authOptions: AuthOptions = {
   ],
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
-    async session({ session, token }) {
-      session.user = { ...session.user, id: token.sub } as {
+    async session({ session }) {
+      session.user = { ...session.user } as {
         id: string
         name: string
         email: string
