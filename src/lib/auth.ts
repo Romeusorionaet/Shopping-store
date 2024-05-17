@@ -18,6 +18,12 @@ export const authOptions: AuthOptions = {
           prompt: 'consent',
           access_type: 'offline',
           response_type: 'code',
+          scope: [
+            'https://www.googleapis.com/auth/userinfo.profile',
+            'https://www.googleapis.com/auth/userinfo.email',
+          ].join(' '),
+          include_granted_scopes: 'true',
+          redirect_uri: 'http://localhost:3000/api/auth/callback/google',
         },
       },
       async profile(profile: GoogleProfile) {
