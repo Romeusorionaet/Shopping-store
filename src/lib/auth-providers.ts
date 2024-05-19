@@ -30,7 +30,11 @@ export const authOptions: AuthOptions = {
         if (profile.email_verified) {
           const response = await api.post(
             '/auth/register/oauth-google/callback',
-            { profile },
+            {
+              username: profile.name,
+              email: profile.email,
+              picture: profile.picture,
+            },
           )
 
           const accessToken = response.data.accessToken
@@ -53,20 +57,14 @@ export const authOptions: AuthOptions = {
             name: '@shopping-store/AT.2.0',
             value: accessToken,
             maxAge: accessTokenExpires - Math.floor(Date.now() / 1000),
-            httpOnly: true,
             sameSite: 'lax',
-            secure: true,
-            path: '/',
           })
 
           cookies().set({
             name: '@shopping-store/RT.2.0',
             value: refreshToken,
             maxAge: refreshTokenExpires - Math.floor(Date.now() / 1000),
-            httpOnly: true,
             sameSite: 'lax',
-            secure: true,
-            path: '/',
           })
         }
 
@@ -81,8 +79,8 @@ export const authOptions: AuthOptions = {
   ],
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
-    async session({ session }) {
-      session.user = { ...session.user } as {
+    async session({ session, token }) {
+      session.user = { ...session.user, id: token.sub } as {
         id: string
         name: string
         email: string
@@ -93,5 +91,3 @@ export const authOptions: AuthOptions = {
     },
   },
 }
-
-// olhar o repositório do rapaz e ver qual foi o geito que ele fez a config de auth google

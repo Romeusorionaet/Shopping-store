@@ -4,6 +4,11 @@ import { getDataUser } from '@/lib/getData/get-data.user'
 import { ReactNode, createContext, useEffect, useState } from 'react'
 import Cookies from 'js-cookie'
 import { RefreshToken } from '@/lib/getData/refresh-token'
+import jwt, { JwtPayload } from 'jsonwebtoken'
+
+interface DecodedAccessToken extends JwtPayload {
+  exp: number
+}
 
 interface ProfileProps {
   id: string
@@ -37,30 +42,34 @@ export function UserContextProvider({ children }: UserContextProps) {
 
   useEffect(() => {
     const fetchDataUser = async () => {
-      console.log(accessToken, '==')
-      // if (accessToken) {
-      const { props } = await getDataUser()
+      if (accessToken) {
+        const { props } = await getDataUser(accessToken)
 
-      if (props) {
-        setProfile(props.profile)
-      }
-      // }
-
-      if (!props?.profile.id) {
-        await RefreshToken(refreshToken)
+        if (props?.profile) {
+          setProfile(props.profile)
+        }
       }
 
-      // if (!accessToken && refreshToken) {
-      //   const { props } = await RefreshToken(refreshToken)
+      if (!accessToken && refreshToken) {
+        const { props } = await RefreshToken(refreshToken)
 
-      //   const accessToken: string = props?.tokens.accessToken
+        const accessToken: string = props?.tokens.accessToken
 
-      //   const data = await getDataUser(accessToken)
+        const decodedAccessToken = jwt.decode(accessToken) as DecodedAccessToken
 
-      //   if (data.props) {
-      //     setProfile(data.props.profile)
-      //   }
-      // }
+        const accessTokenExpires = decodedAccessToken.exp
+
+        Cookies.set('@shopping-store/AT.2.0', accessToken, {
+          expires: accessTokenExpires,
+          sameSite: 'lax',
+        })
+
+        const data = await getDataUser(accessToken)
+
+        if (data.props) {
+          setProfile(data.props.profile)
+        }
+      }
     }
 
     fetchDataUser()

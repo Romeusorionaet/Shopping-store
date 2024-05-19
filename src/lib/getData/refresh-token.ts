@@ -2,14 +2,12 @@
 
 import { api } from '../api'
 
-export const RefreshToken = async (refreshToken: string | undefined) => {
+export const RefreshToken = async (refreshToken: string) => {
   try {
-    const response = await api.post('/auth/user/refresh-token', {
+    const response = await api.get('/auth/user/refresh-token', {
       headers: {
-        'Content-Type': 'application/json',
+        Authorization: `Bearer ${refreshToken}`,
       },
-      refreshId: refreshToken,
-      withCredentials: true,
     })
 
     return {

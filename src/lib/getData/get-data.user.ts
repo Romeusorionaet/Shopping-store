@@ -10,15 +10,13 @@ interface ProfileProps {
   updateAt: string
 }
 
-export const getDataUser = async () => {
+export const getDataUser = async (accessToken: string) => {
   try {
-    console.log(
-      process.env.NEXTAUTH_GOOGLE_CLIENT_ID,
-      process.env.NEXTAUTH_URL,
-      '===teste-no getDataUser',
-    )
-    const response = await api.get('/buyer/profile')
-    console.log(response, '=====response')
+    const response = await api.get('/buyer/profile', {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
 
     const profile: ProfileProps = response.data.profile
 
@@ -30,7 +28,8 @@ export const getDataUser = async () => {
     }
   } catch (err: any) {
     return {
-      error: err.message + 'Something went wrong while fetching the user.',
+      message: 'Something went wrong while fetching the user.',
+      error: err.message,
     }
   }
 }

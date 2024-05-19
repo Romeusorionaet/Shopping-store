@@ -15,18 +15,17 @@ import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import { useRouter } from 'next/navigation'
 import { Cart } from '../cart'
 import { useContext, useEffect, useState } from 'react'
-import { UserContext } from '@/providers/user-context'
-// import { useCartStore } from '@/providers/zustand-store'
+import { useCartStore } from '@/providers/zustand-store'
 import { checkIsPrivateRoute } from '@/utils/check-is-private-route'
 import { DialogLoginAdm } from '../dialog-login-adm'
-import Cookies from 'js-cookie'
-import { api } from '@/lib/api'
-import { signIn } from 'next-auth/react'
+import { signIn, useSession, signOut } from 'next-auth/react'
+import { UserContext } from '@/providers/user-context'
 
 export function Header() {
   const { profile } = useContext(UserContext)
-  const isAdm = false // por enquanto
-  // const { cart } = useCartStore()
+  const isAdm = false // por enquanto / pegar role do profile
+  const { cart } = useCartStore()
+  const { data } = useSession()
 
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isCartOpen, setIsCartOpen] = useState(false)
@@ -36,49 +35,25 @@ export function Header() {
 
   const router = useRouter()
 
-  // const conditionForShowSizeCart =
-  //   clientRendered && cart.length !== 0 && profile.id
-
-  console.log(profile)
-  console.log(process.env.NEXTAUTH_URL, '====env')
+  const conditionForShowSizeCart =
+    clientRendered && cart.length !== 0 && data?.user.id
 
   useEffect(() => {
     // hydrate
     setClientRendered(true)
   }, [])
 
-  const testRoute = async () => {
-    console.log('foi===')
-    try {
-      await api.get('/test-route')
-    } catch (err) {
-      console.log('error:', err)
-    }
-  }
-
   const handleLogin = async () => {
     try {
-      // const test = getGoogleOAuthURL()
       await signIn('google', { callbackUrl: '/' })
-    } catch (err) {
-      console.log(err, '====deu erro')
+    } catch (err: any) {
+      console.log(err.message)
+      // TODO redirecionar para página de error
     }
   }
 
   const handleLogout = async () => {
-    try {
-      Cookies.remove('@shopping-store/AT.2.0')
-      Cookies.remove('@shopping-store/RT.2.0')
-
-      api.post('/auth/user/signUp', {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        id: profile?.id,
-      })
-    } catch (err) {
-      console.log(err)
-    }
+    await signOut()
   }
 
   const handleCancel = () => {
@@ -192,11 +167,9 @@ export function Header() {
                 </>
               </div>
 
-              <button onClick={() => testRoute()}>Teste</button>
-
               <div className="flex flex-col items-center justify-center">
                 <>
-                  {!profile.id ? (
+                  {!data ? (
                     <Button
                       size="icon"
                       variant="outline"
@@ -220,21 +193,19 @@ export function Header() {
                 </>
 
                 <>
-                  {profile.id ? (
+                  {data ? (
                     <div className="flex flex-col">
                       <div className="flex items-center gap-2 py-4">
                         <Avatar>
-                          <AvatarFallback>
-                            {profile.username.toUpperCase()}
-                          </AvatarFallback>
+                          <AvatarFallback>{data.user.name}</AvatarFallback>
 
-                          {/* {data.user.image && (
+                          {data.user.image && (
                             <AvatarImage src={data.user.image} />
-                          )} */}
+                          )}
                         </Avatar>
 
                         <div className="flex flex-col">
-                          <p className="font-medium">{profile.username}</p>
+                          <p className="font-medium">{data.user.name}</p>
                           <p className="text-sm opacity-75">Boas compras!</p>
                         </div>
                       </div>
@@ -259,11 +230,11 @@ export function Header() {
           <SheetTrigger asChild>
             <div className="relative border-none bg-base_one_reference_header duration-700">
               <BaggageClaim size={30} />
-              {/* {conditionForShowSizeCart && (
+              {conditionForShowSizeCart && (
                 <div className="absolute -right-2 -top-2 flex h-6 w-6 items-center justify-center rounded-full bg-red-500 p-1 text-white">
                   <p>{clientRendered && cart.length}</p>
                 </div>
-              )} */}
+              )}
             </div>
           </SheetTrigger>
 
