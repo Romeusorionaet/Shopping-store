@@ -1,22 +1,19 @@
-// import { prismaClient } from '@/lib/prisma'
+import { api } from '../api'
 
 export const getDataCatalog = async () => {
   try {
-    // const categories = await prismaClient.category.findMany({})
+    const response = await api.get('/categories')
 
     return {
       propsCategories: {
-        // categories: JSON.stringify(categories),
+        categories: JSON.stringify(response.data.categories),
       },
       revalidate: 60 * 60 * 24,
     }
   } catch (err) {
-    console.log(err)
-
     return {
       notFound: true,
       propsCategories: { categories: '[]' },
-      revalidate: 0,
     }
   }
 }

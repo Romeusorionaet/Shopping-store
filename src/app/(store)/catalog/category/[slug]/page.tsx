@@ -1,14 +1,9 @@
-import { getDataCategory } from '@/lib/getData/get-data-category'
 import Link from 'next/link'
 import Image from 'next/image'
 import { CalculateValueProduct } from '@/utils/calculate-value-product'
 import { AddProductInCart } from '@/components/add-product-in-cart'
-// import { ModeOfSale, Product } from '@prisma/client'
-
-interface SelectedProducts {
-  // products: Product[]
-  products: any
-}
+import { ModeOfSale, ProductProps } from '@/core/@types/api-store'
+import { fetchProductsTheSameCategory } from '@/lib/getData/fetch-products-the-same-category'
 
 interface ParamsProps {
   params: {
@@ -18,27 +13,27 @@ interface ParamsProps {
 
 export default async function Category({ params }: ParamsProps) {
   const { slug } = params
-  const { props } = await getDataCategory(slug)
+  const { props } = await fetchProductsTheSameCategory(slug)
 
-  // const selectedProducts: SelectedProducts = JSON.parse(props.selectedProducts)
+  const products: ProductProps[] = JSON.parse(props.products)
 
-  // if (selectedProducts.products.length === 0) {
-  //   return (
-  //     <div className="flex h-screen items-center justify-center p-2">
-  //       <h1>Não há produtos registrado para esta categoria...</h1>
-  //     </div>
-  //   )
-  // }
+  if (products.length === 0) {
+    return (
+      <div className="flex h-screen items-center justify-center p-2">
+        <h1>Não há produtos registrado para esta categoria...</h1>
+      </div>
+    )
+  }
 
   return (
     <div className="py-[8.5rem] text-center">
       <h1 className="text-2xl font-bold">{slug}</h1>
 
-      {/* <div className="my-8 flex flex-wrap justify-center gap-8">
-        {selectedProducts.products &&
-          selectedProducts.products.map((product: any) => {
+      <div className="my-8 flex flex-wrap justify-center gap-8">
+        {products &&
+          products.map((product) => {
             const { totalPrice } = CalculateValueProduct(product)
-            const productAvailable = product.quantity <= 0
+            const productAvailable = product.stockQuantity <= 0
 
             return (
               <div key={product.id}>
@@ -54,12 +49,12 @@ export default async function Category({ params }: ParamsProps) {
                       data-quantity={productAvailable}
                       className="flex h-full flex-col items-center justify-center gap-2 rounded-md bg-base_reference_card/60 p-4 duration-700 hover:bg-base_reference_card_hover data-[quantity=true]:bg-base_color_dark/5 data-[quantity=true]:hover:bg-base_color_dark/10"
                     >
-                      <p className="text-sm">{product.name}</p>
+                      <p className="text-sm">{product.title}</p>
 
                       <div>
                         <div>
                           {product.placeOfSale ===
-                          ModeOfSale.SELL_IN_REGION_ONLY ? (
+                          ModeOfSale.SELLS_ONLY_IN_THE_REGION ? (
                             <span className="absolute bottom-28 left-0 rounded-tr-md bg-base_color_dark/5 p-1 text-xs font-bold">
                               Local
                             </span>
@@ -72,7 +67,7 @@ export default async function Category({ params }: ParamsProps) {
 
                         {product.discountPercentage !== 0 && (
                           <p className="text-xs line-through opacity-75">
-                            {Number(product.basePrice).toLocaleString('pt-BR', {
+                            {Number(product.price).toLocaleString('pt-BR', {
                               style: 'currency',
                               currency: 'BRL',
                               minimumFractionDigits: 2,
@@ -94,8 +89,8 @@ export default async function Category({ params }: ParamsProps) {
                         height={0}
                         sizes="100vw"
                         className="h-52 w-full object-contain"
-                        src={product.imageUrls[0]}
-                        alt={product.name}
+                        src={product.imgUrlList[0]}
+                        alt={product.title}
                       />
 
                       <div className="mb-4 flex w-full items-center justify-between gap-2">
@@ -106,7 +101,7 @@ export default async function Category({ params }: ParamsProps) {
                         )}
 
                         <p>
-                          Qtd: <strong>{product.quantity}</strong>
+                          Qtd: <strong>{product.stockQuantity}</strong>
                         </p>
                       </div>
                     </div>
@@ -115,7 +110,7 @@ export default async function Category({ params }: ParamsProps) {
               </div>
             )
           })}
-      </div> */}
+      </div>
     </div>
   )
 }

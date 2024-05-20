@@ -1,10 +1,9 @@
-// import { Category } from '@prisma/client'
 import Link from 'next/link'
 import Image from 'next/image'
+import { CategoryProps } from '@/core/@types/api-store'
 
 interface CategoryItemProps {
-  // category: Category
-  category: any
+  category: CategoryProps
 }
 
 export default function CategoryItem({ category }: CategoryItemProps) {
@@ -16,10 +15,10 @@ export default function CategoryItem({ category }: CategoryItemProps) {
           height={0}
           sizes="100vw"
           className="h-52 w-full object-contain"
-          src={category.imageUrl}
-          alt={category.name}
+          src={category.imgUrl}
+          alt={category.title}
         />
-        <p className="text-xs font-bold">{category.name}</p>
+        <p className="text-xs font-bold">{category.title}</p>
       </div>
     </Link>
   )
