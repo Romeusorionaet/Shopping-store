@@ -1,12 +1,8 @@
 import GoogleProvider, { GoogleProfile } from 'next-auth/providers/google'
 import { cookies } from 'next/headers'
-import jwt, { JwtPayload } from 'jsonwebtoken'
 import { api } from '@/lib/api'
 import { AuthOptions } from 'next-auth'
-
-interface DecodedAccessToken extends JwtPayload {
-  exp: number
-}
+import { ExtractExpirationTimeFromJwtToken } from '@/utils/extract-expiration-time-from-jwt-token'
 
 export const authOptions: AuthOptions = {
   providers: [
@@ -38,32 +34,27 @@ export const authOptions: AuthOptions = {
           )
 
           const accessToken = response.data.accessToken
-
-          const decodedAccessToken = jwt.decode(
-            accessToken,
-          ) as DecodedAccessToken
-
-          const accessTokenExpires = decodedAccessToken.exp
-
           const refreshToken = response.data.refreshToken
 
-          const decodedRefreshToken = jwt.decode(
-            refreshToken,
-          ) as DecodedAccessToken
+          const accessTokenExpires =
+            ExtractExpirationTimeFromJwtToken(accessToken)
 
-          const refreshTokenExpires = decodedRefreshToken.exp
+          const refreshTokenExpires =
+            ExtractExpirationTimeFromJwtToken(refreshToken)
+
+          const currentUnixTimestamp = Math.floor(Date.now() / 1000)
 
           cookies().set({
             name: '@shopping-store/AT.2.0',
             value: accessToken,
-            maxAge: accessTokenExpires - Math.floor(Date.now() / 1000),
+            maxAge: accessTokenExpires - currentUnixTimestamp,
             sameSite: 'lax',
           })
 
           cookies().set({
             name: '@shopping-store/RT.2.0',
             value: refreshToken,
-            maxAge: refreshTokenExpires - Math.floor(Date.now() / 1000),
+            maxAge: refreshTokenExpires - currentUnixTimestamp,
             sameSite: 'lax',
           })
         }

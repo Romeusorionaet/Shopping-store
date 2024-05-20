@@ -4,11 +4,7 @@ import { getDataUser } from '@/lib/getData/get-data.user'
 import { ReactNode, createContext, useEffect, useState } from 'react'
 import Cookies from 'js-cookie'
 import { RefreshToken } from '@/lib/getData/refresh-token'
-import jwt, { JwtPayload } from 'jsonwebtoken'
-
-interface DecodedAccessToken extends JwtPayload {
-  exp: number
-}
+import { ExtractExpirationTimeFromJwtToken } from '@/utils/extract-expiration-time-from-jwt-token'
 
 interface ProfileProps {
   id: string
@@ -55,9 +51,8 @@ export function UserContextProvider({ children }: UserContextProps) {
 
         const accessToken: string = props?.tokens.accessToken
 
-        const decodedAccessToken = jwt.decode(accessToken) as DecodedAccessToken
-
-        const accessTokenExpires = decodedAccessToken.exp
+        const accessTokenExpires =
+          ExtractExpirationTimeFromJwtToken(accessToken)
 
         Cookies.set('@shopping-store/AT.2.0', accessToken, {
           expires: accessTokenExpires,
