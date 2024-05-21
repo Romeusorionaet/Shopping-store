@@ -20,6 +20,7 @@ import { checkIsPrivateRoute } from '@/utils/check-is-private-route'
 import { DialogLoginAdm } from '../dialog-login-adm'
 import { signIn, useSession, signOut } from 'next-auth/react'
 import { UserContext } from '@/providers/user-context'
+import posthog from 'posthog-js'
 
 export function Header() {
   const { profile } = useContext(UserContext)
@@ -60,6 +61,7 @@ export function Header() {
     setIsDialogOpen(false)
   }
 
+  posthog.identify(profile.email)
   const handleNavigateTo = (route: string) => {
     const isPrivateRoute = checkIsPrivateRoute(route)
 

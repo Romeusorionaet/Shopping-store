@@ -1,20 +1,19 @@
 'use client'
 
+import { ProductProps } from '@/core/@types/api-store'
 import { useNotification } from '@/hooks/use-notifications'
-// import { useCartStore } from '@/providers/zustand-store'
-// import { Product } from '@prisma/client'
+import { useCartStore } from '@/providers/zustand-store'
 import { BaggageClaim } from 'lucide-react'
 import { useSession } from 'next-auth/react'
 import { useState } from 'react'
 
 interface Props {
-  // product: Product
-  product: any
+  product: ProductProps
   title?: string
 }
 
 export function AddProductInCart({ product, title }: Props) {
-  // const { addProductToCart } = useCartStore()
+  const { addProductToCart } = useCartStore()
   const [quantity] = useState(1)
   const session = useSession()
 
@@ -28,9 +27,9 @@ export function AddProductInCart({ product, title }: Props) {
       return
     }
 
-    const quantityInStock = product.quantity
+    const quantityInStock = product.stockQuantity
 
-    // addProductToCart({ ...product, quantity, quantityInStock })
+    addProductToCart({ ...product, quantity, quantityInStock })
     notifySuccess('Adicionado ao carrinho!')
   }
 

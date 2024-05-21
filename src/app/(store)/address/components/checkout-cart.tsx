@@ -1,7 +1,6 @@
-// import { createOrder } from '@/actions/order'
 import { createCheckout } from '@/actions/checkout'
 import { useSession } from 'next-auth/react'
-// import { useCartStore } from '@/providers/zustand-store'
+import { useCartStore } from '@/providers/zustand-store'
 import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
 import ClipLoader from 'react-spinners/ClipLoader'
@@ -12,7 +11,7 @@ interface Props {
 }
 
 export function CheckoutCart({ userHasAddress }: Props) {
-  // const { cart } = useCartStore()
+  const { cart } = useCartStore()
   const { data } = useSession()
   const { notifyWarning, notifyError } = useNotification()
 
@@ -26,13 +25,28 @@ export function CheckoutCart({ userHasAddress }: Props) {
     )
   }
 
+  // const createOrderBodySchema = z.object({
+  //   buyerId: z.string().uuid(),
+  //   orderProducts: z.array(
+  //     z.object({
+  //       productId: uuidType.transform((value) => new UniqueEntityID(value)),
+  //       title: z.string(),
+  //       description: z.string(),
+  //       basePrice: z.coerce.number(),
+  //       discountPercentage: z.coerce.number(),
+  //       quantity: z.coerce.number(),
+  //       productColor: z.string().nullable(),
+  //     }),
+  //   ),
+  // });
+
   const handleFinishPurchaseClick = async () => {
     try {
-      // if (cart.length === 0) {
-      //   notifyWarning('Carrinho vazio')
-      //   navigate.push('/')
-      //   return
-      // }
+      if (cart.length === 0) {
+        notifyWarning('Carrinho vazio')
+        navigate.push('/')
+        return
+      }
       // const dataOrder = await createOrder(cart, data.user.id)
       // if (!dataOrder.order) {
       //   notifyError(dataOrder.message)

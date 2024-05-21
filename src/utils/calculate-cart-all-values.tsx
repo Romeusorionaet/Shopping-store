@@ -1,16 +1,16 @@
-// import { CartProduct } from '@/providers/zustand-store'
+import { CartProduct } from '@/providers/zustand-store'
 
-export function calculateCartAllValues(cart: any) {
+export function calculateCartAllValues(cart: CartProduct[]) {
   let subtotal = 0
   let totalDiscount = 0
   let total = 0
 
-  cart.forEach((item: any) => {
+  cart.forEach((item) => {
     const currentTotalDiscount =
-      Number(item.basePrice) * (item.discountPercentage / 100) * item.quantity
+      Number(item.price) * (item.discountPercentage / 100) * item.quantity
     const currentTotalPrice =
-      Number(item.basePrice) * item.quantity - currentTotalDiscount
-    subtotal += Number(item.basePrice) * item.quantity
+      Number(item.price) * item.quantity - currentTotalDiscount
+    subtotal += Number(item.price) * item.quantity
     totalDiscount += currentTotalDiscount
     total += currentTotalPrice
   })

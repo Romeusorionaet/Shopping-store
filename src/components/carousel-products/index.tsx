@@ -1,7 +1,6 @@
 'use client'
 
 import { CalculateValueProduct } from '@/utils/calculate-value-product'
-// import { ModeOfSale, Product } from '@prisma/client'
 import Image from 'next/image'
 import Link from 'next/link'
 import { AddProductInCart } from '../add-product-in-cart'
@@ -10,17 +9,18 @@ import Slider from 'react-slick'
 import { useEffect, useRef, useState } from 'react'
 import { ArrowControlLeft, ArrowControlRight } from './arrows-carousel'
 import { useSlickCarousel } from '@/hooks/use-slick-carousel'
+import { ModeOfSale, ProductProps } from '@/core/@types/api-store'
 
 export interface CustomSlider extends Slider {
   slickPrev: () => void
   slickNext: () => void
 }
 
-// interface productsProps {
-//   products: Product[] | undefined
-// }
+interface Props {
+  products: ProductProps[] | undefined
+}
 
-export function CarouselProducts({ products }: any) {
+export function CarouselProducts({ products }: Props) {
   const slider = useRef<CustomSlider>(null)
   const { carouselResponsive } = useSlickCarousel()
 
@@ -47,9 +47,9 @@ export function CarouselProducts({ products }: any) {
 
       <Slider key={sliderKey} ref={slider} {...carouselResponsive}>
         {products &&
-          products.map((product: any) => {
+          products.map((product) => {
             const { totalPrice } = CalculateValueProduct(product)
-            const productAvailable = product.quantity <= 0
+            const productAvailable = product.stockQuantity <= 0
 
             return (
               <div
@@ -68,13 +68,13 @@ export function CarouselProducts({ products }: any) {
                     className="flex flex-col items-center justify-center gap-1 rounded-md bg-base_reference_card p-1 duration-700 hover:bg-base_reference_card_hover data-[quantity=true]:bg-base_color_dark/5 data-[quantity=true]:hover:bg-base_color_dark/10 md:h-full md:gap-2 md:p-4"
                   >
                     <div className="h-10 text-center">
-                      <p className="text-xs md:text-sm">{product.name}</p>
+                      <p className="text-xs md:text-sm">{product.title}</p>
                     </div>
 
                     <div className="h-10">
                       <div>
-                        {/* {product.placeOfSale ===
-                        ModeOfSale.SELL_IN_REGION_ONLY ? (
+                        {product.placeOfSale ===
+                        ModeOfSale.SELLS_ONLY_IN_THE_REGION ? (
                           <span className="absolute bottom-28 left-0 rounded-md bg-base_color_dark/5 p-1 text-xs font-bold">
                             Local
                           </span>
@@ -82,12 +82,12 @@ export function CarouselProducts({ products }: any) {
                           <span className="absolute bottom-28 left-0 rounded-md bg-base_color_dark/5 p-1 text-xs font-bold text-base_color_positive">
                             Brasil
                           </span>
-                        )} */}
+                        )}
                       </div>
 
                       {product.discountPercentage !== 0 && (
                         <p className="text-xs line-through opacity-75">
-                          {Number(product.basePrice).toLocaleString('pt-BR', {
+                          {Number(product.price).toLocaleString('pt-BR', {
                             style: 'currency',
                             currency: 'BRL',
                             minimumFractionDigits: 2,
@@ -110,8 +110,8 @@ export function CarouselProducts({ products }: any) {
                         height={0}
                         sizes="100vw"
                         className="h-32 w-full object-contain md:h-52"
-                        src={product.imageUrls[0]}
-                        alt={product.name}
+                        src={product.imgUrlList[0]}
+                        alt={product.title}
                       />
                     </div>
 
@@ -123,7 +123,7 @@ export function CarouselProducts({ products }: any) {
                       )}
 
                       <p>
-                        Qtd: <strong>{product.quantity}</strong>
+                        Qtd: <strong>{product.stockQuantity}</strong>
                       </p>
                     </div>
                   </div>

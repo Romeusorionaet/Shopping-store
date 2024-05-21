@@ -1,47 +1,47 @@
 import Image from 'next/image'
 import { Button } from '../ui/button'
 import { ArrowLeftIcon, ArrowRightIcon, TrashIcon } from 'lucide-react'
-// import { CartProduct, useCartStore } from '@/providers/zustand-store'
+import { CartProduct, useCartStore } from '@/providers/zustand-store'
 import Link from 'next/link'
 
-// interface CartItemProps {
-//   product: CartProduct
-// }
+interface CartItemProps {
+  product: CartProduct
+}
 
-export function CartItem({ product }: any) {
-  // const {
-  //   decreaseProductQuantity,
-  //   increaseProductQuantity,
-  //   removeProductFromCart,
-  // } = useCartStore()
+export function CartItem({ product }: CartItemProps) {
+  const {
+    decreaseProductQuantity,
+    increaseProductQuantity,
+    removeProductFromCart,
+  } = useCartStore()
 
-  const basePrice = Number(product.basePrice) * product.quantity
+  const basePrice = Number(product.price) * product.quantity
 
-  // const handleDecreaseProductQuantityClick = () => {
-  //   decreaseProductQuantity(product.id)
-  // }
+  const handleDecreaseProductQuantityClick = () => {
+    decreaseProductQuantity(product.id)
+  }
 
-  // const handleIncreaseProductQuantityClick = () => {
-  //   increaseProductQuantity(product.id)
-  // }
+  const handleIncreaseProductQuantityClick = () => {
+    increaseProductQuantity(product.id)
+  }
 
-  // const handleRemoveProductClick = () => {
-  //   removeProductFromCart(product.id)
-  // }
+  const handleRemoveProductClick = () => {
+    removeProductFromCart(product.id)
+  }
 
   return (
     <div className="flex flex-col items-center justify-between gap-2">
-      <p className="whitespace-nowrap text-xs">{product.name}</p>
+      <p className="whitespace-nowrap text-xs">{product.title}</p>
 
       <div className="flex gap-1">
         <div className="flex w-[40%] items-center justify-center rounded-md">
           <Link href={`/details/${product.slug}`}>
             <Image
-              src={product.imageUrls[0]}
+              src={product.imgUrlList[0]}
               width={0}
               height={0}
               sizes="100vw"
-              alt={product.name}
+              alt={product.title}
               className="h-full w-full"
             />
           </Link>
@@ -74,7 +74,7 @@ export function CartItem({ product }: any) {
               size="icon"
               variant="outline"
               className="h-6 w-6"
-              // onClick={handleDecreaseProductQuantityClick}
+              onClick={handleDecreaseProductQuantityClick}
             >
               <ArrowLeftIcon size={16} />
             </Button>
@@ -85,7 +85,7 @@ export function CartItem({ product }: any) {
               size="icon"
               variant="outline"
               className="h-6 w-6"
-              // onClick={handleIncreaseProductQuantityClick}
+              onClick={handleIncreaseProductQuantityClick}
             >
               <ArrowRightIcon size={16} />
             </Button>
@@ -94,7 +94,7 @@ export function CartItem({ product }: any) {
         <Button
           size="icon"
           variant={'destructive'}
-          // onClick={handleRemoveProductClick}
+          onClick={handleRemoveProductClick}
         >
           <TrashIcon size={22} />
         </Button>

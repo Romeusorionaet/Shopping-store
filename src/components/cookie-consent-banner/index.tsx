@@ -1,10 +1,21 @@
 'use client'
 
 import posthog from 'posthog-js'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import Cookie from 'js-cookie'
 
 export function CookieConsentBanner() {
   const [showBanner, setShowBanner] = useState(true)
+
+  // useEffect(() => {
+  //   const cookieConsent = Cookie.get(
+  //     'ph_phc_OS2QK5QdzW0ubfk0Ft9hG9fgwXcqaEr9KwVRspxLZPb_posthog',
+  //   )
+
+  //   if (cookieConsent) {
+  //     setShowBanner(false)
+  //   }
+  // }, [])
 
   const acceptCookie = () => {
     posthog.opt_in_capturing()

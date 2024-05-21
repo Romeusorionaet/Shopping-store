@@ -15,7 +15,6 @@ import { FixedAddressInformation } from '@/components/address-information/fixed-
 // import { OrderIncludeOrderProducts } from '../page'
 import { ChangeableAddressInformation } from '@/components/address-information/changeable-address-information'
 import { useEffect, useState } from 'react'
-import { getAddressFromCookies } from '@/utils/get-address-from-cookies'
 import Link from 'next/link'
 // import { getOrderStatus } from '@/components/helpers/get-order-status'
 
@@ -50,12 +49,12 @@ export function OrderItem({ order }: OrderProductProps) {
     open('https://www.correios.com.br/')
   }
 
-  useEffect(() => {
-    const addressFromLocalStorage = getAddressFromCookies()
-    if (addressFromLocalStorage) {
-      // setUserAddressSaved(addressFromLocalStorage)
-    }
-  }, [])
+  // useEffect(() => {
+  //   const addressFromLocalStorage = getAddressFromCookies()
+  //   if (addressFromLocalStorage) {
+  //     // setUserAddressSaved(addressFromLocalStorage)
+  //   }
+  // }, [])
 
   return (
     <Accordion type="single" className="w-full" collapsible>

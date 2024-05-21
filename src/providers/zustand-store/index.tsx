@@ -2,7 +2,10 @@ import { create } from 'zustand'
 
 interface Product {
   id: string
-  basePrice: number
+  title: string
+  slug: string
+  imgUrlList: string[]
+  price: number
   quantity: number
   discountPercentage: number
 }
@@ -47,8 +50,8 @@ export const useCartStore = create<CartStore>((set, get) => ({
     )
 
     const totalDiscount =
-      Number(product.basePrice) * (product.discountPercentage / 100)
-    const totalPrice = Number(product.basePrice) - totalDiscount
+      Number(product.price) * (product.discountPercentage / 100)
+    const totalPrice = Number(product.price) - totalDiscount
 
     if (existingProductIndex !== -1) {
       const existingProduct = cart[existingProductIndex]
@@ -91,9 +94,9 @@ export const useCartStore = create<CartStore>((set, get) => ({
 
       if (existingProduct.quantity > 1) {
         const totalDiscount =
-          Number(existingProduct.basePrice) *
+          Number(existingProduct.price) *
           (existingProduct.discountPercentage / 100)
-        const totalPrice = Number(existingProduct.basePrice) - totalDiscount
+        const totalPrice = Number(existingProduct.price) - totalDiscount
 
         const newQuantity = existingProduct.quantity - 1
 
@@ -128,9 +131,9 @@ export const useCartStore = create<CartStore>((set, get) => ({
       }
 
       const totalDiscount =
-        Number(existingProduct.basePrice) *
+        Number(existingProduct.price) *
         (existingProduct.discountPercentage / 100)
-      const totalPrice = Number(existingProduct.basePrice) - totalDiscount
+      const totalPrice = Number(existingProduct.price) - totalDiscount
 
       const newQuantity = existingProduct.quantity + 1
 

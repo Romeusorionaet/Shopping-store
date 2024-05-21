@@ -1,7 +1,5 @@
 // 'use server'
 
-// import { prismaClient } from '@/lib/prisma'
-
 // interface Props {
 //   dataAddress: {
 //     cep: string

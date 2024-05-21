@@ -1,9 +1,10 @@
-// import { prismaClient } from '@/lib/prisma'
-// import { OrderStatusTracking } from '@prisma/client'
+'use server'
 
-export const getDataOrders = async (id?: string) => {
+import { api } from '../api'
+
+export const getDataOrders = async (accessToken: string, buyerId?: string) => {
   try {
-    if (!id) {
+    if (!buyerId) {
       return {
         notFound: true,
 
@@ -14,32 +15,20 @@ export const getDataOrders = async (id?: string) => {
       }
     }
 
-    // const orders = await prismaClient.order.findMany({
-    //   where: {
-    //     userId: id,
-    //     NOT: {
-    //       orderTracking: OrderStatusTracking.PRODUCT_DELIVERED_TO_CLIENT,
-    //     },
-    //   },
-    //   include: {
-    //     orderProducts: {
-    //       include: {
-    //         product: true,
-    //       },
-    //     },
-    //     orderAddress: true,
-    //   },
-    // })
+    const response = await api.get(`/buyer/orders/${buyerId}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    console.log(response.data, '====')
 
     return {
       props: {
-        // orders: JSON.stringify(orders),
+        orders: JSON.stringify(response.data.orders),
       },
       revalidate: 60 * 60 * 24,
     }
   } catch (err) {
-    console.log(err)
-
     return {
       notFound: true,
 

@@ -1,15 +1,15 @@
-// import { getServerSession } from 'next-auth'
-// import { authOptions } from '@/lib/auth'
-// import { NoUserMessage } from '@/components/no-user-message'
+import { getServerSession } from 'next-auth'
+import { NoUserMessage } from '@/components/no-user-message'
 import { FormAddress } from './components/form-address'
+import { authOptions } from '@/lib/auth-providers'
 
 export default async function Address() {
-  // const session = await getServerSession(authOptions)
-  // const userId = session?.user.id
+  const session = await getServerSession(authOptions)
+  const userId = session?.user.id
 
-  // if (!userId) {
-  //   return <NoUserMessage />
-  // }
+  if (!userId) {
+    return <NoUserMessage />
+  }
 
   return (
     <div className="p-2 pt-28">

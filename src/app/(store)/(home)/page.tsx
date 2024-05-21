@@ -3,39 +3,50 @@ import Link from 'next/link'
 
 import { LibraryBig } from 'lucide-react'
 import { CarouselProducts } from '@/components/carousel-products'
-// import { Category, OrderStatus, Product } from '@prisma/client'
 import { getDataOrders } from '@/lib/getData/get-data-orders'
 import { getServerSession } from 'next-auth'
 import { SearchProduct } from '@/components/search-product'
 import { OfferBanner } from '@/components/offer-banner'
 import { NoProductRegistrationMessage } from '@/components/no-product-registration-message'
+import { CookieConsentBanner } from '@/components/cookie-consent-banner'
+import posthog from 'posthog-js'
+import { CategoryProps, ProductProps } from '@/core/@types/api-store'
+import { authOptions } from '@/lib/auth-providers'
+import { cookies } from 'next/headers'
 // import { OrderIncludeOrderProducts } from '../orders/page'
 
-// export interface ProductsWithCategory extends Product {
-//   category: Category
-// }
-
 export default async function Home() {
-  // const { props } = await getDataProducts()
-  // const products: ProductsWithCategory[] = JSON.parse(props.products)
+  const { props } = await getDataProducts()
+  const products: ProductProps[] = JSON.parse(props.products)
 
-  // if (products.length === 0) {
-  //   return <NoProductRegistrationMessage />
-  // }
+  if (products.length === 0) {
+    return <NoProductRegistrationMessage />
+  }
 
-  // const productsInOffers = products
-  //   .filter((product) => product.discountPercentage >= 50)
-  //   .sort(() => Math.random() - 0.5)
+  const productsInOffers = products
+    .filter((product) => product.discountPercentage >= 50)
+    .sort(() => Math.random() - 0.5)
 
-  // const filteredProductsWithDiscount = products
-  //   .filter((product) => product.discountPercentage !== 0)
-  //   .sort(() => Math.random() - 0.5)
+  const filteredProductsWithDiscount = products
+    .filter((product) => product.discountPercentage !== 0)
+    .sort(() => Math.random() - 0.5)
 
-  // const allProducts = products.sort(() => Math.random() - 0.5)
+  const allProducts = products.sort(() => Math.random() - 0.5)
 
-  // const session = await getServerSession(authOptions)
+  const session = await getServerSession(authOptions)
 
-  // const { props: propsOrders } = await getDataOrders(session?.user.id)
+  const accessToken = cookies().get('@shopping-store/AT.2.0')
+
+  if (!accessToken) {
+    return
+  }
+
+  const { props: propsOrders } = await getDataOrders(
+    accessToken.value,
+    session?.user.id,
+  )
+
+  console.log(propsOrders)
   // const orders: OrderIncludeOrderProducts[] = JSON.parse(propsOrders.orders)
 
   // const ordersNotPaymentList = orders
@@ -55,7 +66,12 @@ export default async function Home() {
         <div className="absolute right-0 top-0 z-10 h-full w-40 bg-gradient-to-l from-base_reference_card/40 max-2xl:w-28 max-sm:w-10" />
       </div>
 
-      {/* <div>
+      {/* {posthog.has_opted_in_capturing() ||
+      posthog.has_opted_out_capturing() ? null : (
+        <CookieConsentBanner />
+      )} */}
+
+      <div>
         <p className="mb-4 text-center">
           Acesse o nosso catálogo para ver todos os produtos da loja!
         </p>
@@ -93,7 +109,7 @@ export default async function Home() {
         )}
       </div>
 
-      <div>
+      {/* <div>
         {ordersNotPaymentList.length !== 0 && (
           <div className="bg-white p-2">
             <h2 className="my-4 text-lg">Produtos que você se interessou</h2>

@@ -11,6 +11,7 @@ import { ToastContainer } from 'react-toastify'
 import { ourFileRouter } from './api/uploadthing/core'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClient } from '@/lib/query-client'
+import { CSPostHogProvider } from '@/providers/cs-post-hog-provider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -44,15 +45,17 @@ export default async function RootLayout({
     <html lang="en">
       <body className={`${inter.className} mx-auto max-w-[1680px] antialiased`}>
         <QueryClientProvider client={queryClient}>
-          <UserContextProvider>
-            <AuthProvider>
-              <NextSSRPlugin
-                routerConfig={extractRouterConfig(ourFileRouter)}
-              />
-              <Header />
-              {children}
-            </AuthProvider>
-          </UserContextProvider>
+          <AuthProvider>
+            <UserContextProvider>
+              <CSPostHogProvider>
+                <NextSSRPlugin
+                  routerConfig={extractRouterConfig(ourFileRouter)}
+                />
+                <Header />
+                {children}
+              </CSPostHogProvider>
+            </UserContextProvider>
+          </AuthProvider>
           <ToastContainer
             autoClose={2000}
             position={'bottom-left'}

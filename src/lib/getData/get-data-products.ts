@@ -1,22 +1,16 @@
-// import { prismaClient } from '@/lib/prisma'
+import { api } from '../api'
 
 export const getDataProducts = async () => {
   try {
-    // const products = await prismaClient.product.findMany({
-    //   include: {
-    //     category: true,
-    //   },
-    // })
+    const response = await api.get('products')
 
     return {
       props: {
-        // products: JSON.stringify(products),
+        products: JSON.stringify(response.data.products),
       },
       revalidate: 60 * 60 * 24,
     }
   } catch (err) {
-    console.log(err)
-
     return {
       notFound: true,
       props: {
