@@ -5,6 +5,7 @@ import { ReactNode, createContext, useEffect, useState } from 'react'
 import Cookies from 'js-cookie'
 import { RefreshToken } from '@/lib/getData/refresh-token'
 import { ExtractExpirationTimeFromJwtToken } from '@/utils/extract-expiration-time-from-jwt-token'
+import { signOut, useSession } from 'next-auth/react'
 
 interface ProfileProps {
   id: string
@@ -25,6 +26,7 @@ interface UserContextProps {
 export const UserContext = createContext({} as UserContextType)
 
 export function UserContextProvider({ children }: UserContextProps) {
+  const session = useSession()
   const [profile, setProfile] = useState<ProfileProps>({
     id: '',
     username: '',
@@ -54,10 +56,11 @@ export function UserContextProvider({ children }: UserContextProps) {
         const accessTokenExpires =
           ExtractExpirationTimeFromJwtToken(accessToken)
 
-        Cookies.set('@shopping-store/AT.2.0', accessToken, {
-          expires: accessTokenExpires,
-          sameSite: 'lax',
-        })
+        const currentUnixTimestamp = Math.floor(Date.now() / 1000)
+
+        document.cookie = `@shopping-store/AT.2.0=${accessToken}; max-age=${
+          accessTokenExpires - currentUnixTimestamp
+        }; path=/; SameSite=Lax`
 
         const data = await getDataUser(accessToken)
 
@@ -69,6 +72,16 @@ export function UserContextProvider({ children }: UserContextProps) {
 
     fetchDataUser()
   }, [accessToken, refreshToken])
+
+  useEffect(() => {
+    const signOutAutomatic = async () => {
+      if (!refreshToken && session.data) {
+        await signOut()
+      }
+    }
+
+    signOutAutomatic()
+  }, [refreshToken, session])
 
   return (
     <UserContext.Provider

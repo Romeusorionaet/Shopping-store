@@ -5,8 +5,6 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
-// import { createAddress } from '@/actions/address'
-import { useSession } from 'next-auth/react'
 import { FormError } from '@/components/form/form-error'
 import {
   Accordion,
@@ -15,13 +13,14 @@ import {
   AccordionTrigger,
 } from '@radix-ui/react-accordion'
 import { useNotification } from '@/hooks/use-notifications'
-// import { Address } from '@prisma/client'
 import { CheckoutCart } from './checkout-cart'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useState } from 'react'
 import { ChangeableAddressInformation } from '@/components/address-information/changeable-address-information'
-import Cookies from 'js-cookie'
-import { getAddressFromCookies } from '@/utils/get-address-from-cookies'
+import { AddressProps } from '@/core/@types/api-store'
 import { UserContext } from '@/providers/user-context'
+import { api } from '@/lib/api'
+import Cookies from 'js-cookie'
+import { getAccessTokenFromCookies } from '@/utils/get-access-token-from-cookies'
 
 const addressFormSchema = z.object({
   username: z.string().min(1, 'Este campo é obrigatório.'),
@@ -32,7 +31,7 @@ const addressFormSchema = z.object({
   uf: z.string().min(1, 'Este campo é obrigatório.'),
   street: z.string().min(1, 'Este campo é obrigatório.'),
   neighborhood: z.string().min(1, 'Este campo é obrigatório.'),
-  number: z.string().min(1, 'Este campo é obrigatório.'),
+  houseNumber: z.string().min(1, 'Este campo é obrigatório.'),
   complement: z.string().min(1, 'Este campo é obrigatório.'),
 })
 
@@ -48,66 +47,75 @@ export function FormAddress() {
     resolver: zodResolver(addressFormSchema),
   })
 
-  // const [userAddressSaved, setUserAddressSaved] = useState<Address | null>(null)
+  const [userAddressSaved, setUserAddressSaved] = useState<AddressProps | null>(
+    null,
+  )
   const { notifySuccess, notifyError } = useNotification()
 
-  const { data } = useSession()
-  const userId = data?.user.id
+  const { profile } = useContext(UserContext)
+  const userId = profile.id
 
-  const emailDefault = data?.user.email ? data.user.email : ''
+  const emailDefault = profile.email ? profile.email : ''
 
+  const accessToken = getAccessTokenFromCookies()
+  console.log(accessToken)
   async function handleAddressForm(data: AddressFormData) {
     if (!userId) {
       return null
     }
 
     try {
-      // const result = await createAddress({
-      //   dataAddress: data,
-      //   userId,
-      // })
+      const token1 = 'test1'
+      const token2 = 'test2'
+      const oneDayInSeconds = 24 * 60 * 60
+      document.cookie = `token1=${token1}; max-age=${oneDayInSeconds}; path=/; SameSite=Lax; HttpOnly; Secure`
+      Cookies.set('token2', token2, {
+        sameSite: 'lax',
+        httpOnly: true,
+      })
 
-      // if (result.newAddress) {
-      //   Cookies.set(
-      //     '@shopping-store/address',
-      //     JSON.stringify(result.newAddress),
-      //   )
-      // } else if (result.updatedAddress) {
-      //   Cookies.set(
-      //     '@shopping-store/address',
-      //     JSON.stringify(result.updatedAddress),
-      //   )
-      // }
+      await api.post('/user/create-address', {
+        // headers: {
+        //   authorization: `Bearer ${accessToken}`,
+        // },
+        userId,
+        cep: data.cep,
+        city: data.city,
+        uf: data.uf,
+        street: data.street,
+        neighborhood: data.neighborhood,
+        houseNumber: data.houseNumber,
+        complement: data.complement,
+        phoneNumber: data.phoneNumber,
+        username: data.username,
+        email: data.email,
+      })
 
-      reset()
-      window.location.reload()
+      // reset()
+      // window.location.reload()
       // notifySuccess(result.message)
-    } catch (err) {
-      notifyError('Tente novamente mais tarde')
+    } catch (err: any) {
+      if (err.response) {
+        notifyError(err.response.data.error)
+      } else if (err.request) {
+        notifyError(err.request.data.error)
+      } else {
+        notifyError('Erro na requisição, tente novamente mais tarde.')
+      }
     }
   }
 
-  useEffect(() => {
-    const addressFromCookies = getAddressFromCookies()
-    if (addressFromCookies) {
-      // setUserAddressSaved(addressFromCookies)
-    }
-  }, [])
-
-  const { profile } = useContext(UserContext)
-  console.log(profile, '====from Address')
-
-  // const userHasAddress = !!userAddressSaved
+  const userHasAddress = !!userAddressSaved
 
   return (
     <div>
-      {/* <div className="my-4">
+      <div className="my-4">
         {userAddressSaved ? (
           <ChangeableAddressInformation address={userAddressSaved} />
         ) : (
           <></>
         )}
-      </div> */}
+      </div>
 
       <Accordion
         type="single"
@@ -124,8 +132,9 @@ export function FormAddress() {
                   <Input
                     type="text"
                     maxLength={30}
-                    placeholder="nome sobrenome"
+                    placeholder="nome e sobrenome"
                     className="bg-transparent"
+                    defaultValue={'hu'}
                     {...register('username')}
                   />
                   <FormError errors={errors.username?.message} />
@@ -136,7 +145,7 @@ export function FormAddress() {
                   <Input
                     type="text"
                     maxLength={30}
-                    placeholder="usuario@gmail.com"
+                    placeholder="exemplo@gmail.com"
                     className="bg-transparent"
                     defaultValue={emailDefault}
                     {...register('email')}
@@ -162,7 +171,7 @@ export function FormAddress() {
                     type="number"
                     inputMode="decimal"
                     id="cep"
-                    placeholder="59190000"
+                    placeholder="12345678"
                     className="bg-transparent"
                     {...register('cep')}
                   />
@@ -174,7 +183,7 @@ export function FormAddress() {
                   <Input
                     type="text"
                     maxLength={30}
-                    placeholder="Canguaretama"
+                    placeholder="Sua cidade"
                     className="bg-transparent"
                     {...register('city')}
                   />
@@ -186,7 +195,7 @@ export function FormAddress() {
                   <Input
                     type="text"
                     maxLength={2}
-                    placeholder="RN"
+                    placeholder="UF da cidade"
                     className="bg-transparent"
                     {...register('uf')}
                   />
@@ -221,11 +230,11 @@ export function FormAddress() {
                   <Input
                     type="number"
                     maxLength={10}
-                    placeholder="Número da casa"
+                    placeholder="Número da redidência"
                     className="bg-transparent"
-                    {...register('number')}
+                    {...register('houseNumber')}
                   />
-                  <FormError errors={errors.number?.message} />
+                  <FormError errors={errors.houseNumber?.message} />
                 </label>
 
                 <label className="flex flex-col gap-1">
@@ -233,7 +242,7 @@ export function FormAddress() {
                   <Input
                     type="text"
                     maxLength={50}
-                    placeholder="Próximo ao ???"
+                    placeholder="EX: Ao lado do shopping"
                     className="bg-transparent"
                     {...register('complement')}
                   />
@@ -254,7 +263,7 @@ export function FormAddress() {
       </Accordion>
 
       <div className="mx-auto flex max-w-[800px] justify-end">
-        {/* <CheckoutCart userHasAddress={userHasAddress} /> */}
+        <CheckoutCart userHasAddress={userHasAddress} />
       </div>
     </div>
   )

@@ -33,3 +33,21 @@ export interface ProductProps {
   createdAt: Date
   updatedAt: Date | null
 }
+
+export interface AddressProps {
+  id: string
+  buyerId: string
+  orderId: string
+  cep: number
+  city: string
+  uf: string
+  street: string
+  neighborhood: string
+  houseNumber: number
+  complement: string
+  phoneNumber: string
+  username: string
+  email: string
+  createAt: Date
+  updateAt: Date | null
+}
