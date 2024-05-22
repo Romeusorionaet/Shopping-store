@@ -48,26 +48,26 @@ export function UserContextProvider({ children }: UserContextProps) {
         }
       }
 
-      if (!accessToken && refreshToken) {
-        const { props } = await RefreshToken(refreshToken)
+      // if (!accessToken && refreshToken) {
+      //   const { props } = await RefreshToken(refreshToken)
 
-        const accessToken: string = props?.tokens.accessToken
+      //   const accessToken: string = props?.tokens.accessToken
 
-        const accessTokenExpires =
-          ExtractExpirationTimeFromJwtToken(accessToken)
+      //   const accessTokenExpires =
+      //     ExtractExpirationTimeFromJwtToken(accessToken)
 
-        const currentUnixTimestamp = Math.floor(Date.now() / 1000)
+      //   const currentUnixTimestamp = Math.floor(Date.now() / 1000)
 
-        document.cookie = `@shopping-store/AT.2.0=${accessToken}; max-age=${
-          accessTokenExpires - currentUnixTimestamp
-        }; path=/; SameSite=Lax`
+      //   document.cookie = `@shopping-store/AT.2.0=${accessToken}; max-age=${
+      //     accessTokenExpires - currentUnixTimestamp
+      //   }; path=/; SameSite=Lax`
 
-        const data = await getDataUser(accessToken)
+      //   const data = await getDataUser(accessToken)
 
-        if (data.props) {
-          setProfile(data.props.profile)
-        }
-      }
+      //   if (data.props) {
+      //     setProfile(data.props.profile)
+      //   }
+      // }
     }
 
     fetchDataUser()

@@ -49,6 +49,8 @@ export const authOptions: AuthOptions = {
             value: accessToken,
             maxAge: accessTokenExpires - currentUnixTimestamp,
             sameSite: 'lax',
+            httpOnly: true,
+            secure: true,
           })
 
           cookies().set({
