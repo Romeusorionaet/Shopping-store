@@ -2,6 +2,7 @@ import GoogleProvider, { GoogleProfile } from 'next-auth/providers/google'
 import { api } from '@/lib/api'
 import { AuthOptions } from 'next-auth'
 import { setAuthTokenForCookies } from '@/utils/set-auth-token-for-cookies'
+import { KeyCookies } from '@/constants/key-cookies'
 
 export const authOptions: AuthOptions = {
   providers: [
@@ -37,11 +38,11 @@ export const authOptions: AuthOptions = {
 
           setAuthTokenForCookies({
             token: accessToken,
-            key: '@shopping-store/AT.2.0',
+            key: KeyCookies.AT_STORE,
           })
           setAuthTokenForCookies({
             token: refreshToken,
-            key: '@shopping-store/RT.2.0',
+            key: KeyCookies.RT_STORE,
           })
         }
 

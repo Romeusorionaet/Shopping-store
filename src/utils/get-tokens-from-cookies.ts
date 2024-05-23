@@ -1,7 +1,8 @@
+import { KeyCookies } from '@/constants/key-cookies'
 import { cookies } from 'next/headers'
 
 export function getAccessTokenFromCookies() {
-  const accessToken = cookies().get('@shopping-store/AT.2.0')
+  const accessToken = cookies().get(KeyCookies.AT_STORE)
 
   if (!accessToken) {
     return
@@ -11,7 +12,7 @@ export function getAccessTokenFromCookies() {
 }
 
 export function getRefreshTokenFromCookies() {
-  const refreshToken = cookies().get('@shopping-store/RT.2.0')
+  const refreshToken = cookies().get(KeyCookies.RT_STORE)
 
   if (!refreshToken) {
     return null

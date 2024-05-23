@@ -3,6 +3,7 @@
 import { getRefreshTokenFromCookies } from '@/utils/get-tokens-from-cookies'
 import { api } from '../api'
 import { setAuthTokenForCookies } from '@/utils/set-auth-token-for-cookies'
+import { KeyCookies } from '@/constants/key-cookies'
 
 interface BooleanResponse {
   success: boolean
@@ -22,11 +23,11 @@ export const getDataRefreshToken = async (): Promise<BooleanResponse> => {
 
     setAuthTokenForCookies({
       token: accessToken,
-      key: '@shopping-store/AT.2.0',
+      key: KeyCookies.AT_STORE,
     })
 
     return { success: true }
-  } catch (err: any) {
+  } catch (err) {
     return { success: false }
   }
 }
