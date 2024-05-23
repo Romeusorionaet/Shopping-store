@@ -18,9 +18,7 @@ import { useContext, useState } from 'react'
 import { ChangeableAddressInformation } from '@/components/address-information/changeable-address-information'
 import { AddressProps } from '@/core/@types/api-store'
 import { UserContext } from '@/providers/user-context'
-import { api } from '@/lib/api'
-import Cookies from 'js-cookie'
-import { getAccessTokenFromCookies } from '@/utils/get-access-token-from-cookies'
+import { createUserAddress } from '@/actions/address'
 
 const addressFormSchema = z.object({
   username: z.string().min(1, 'Este campo é obrigatório.'),
@@ -57,51 +55,14 @@ export function FormAddress() {
 
   const emailDefault = profile.email ? profile.email : ''
 
-  const accessToken = getAccessTokenFromCookies()
-  console.log(accessToken)
   async function handleAddressForm(data: AddressFormData) {
-    if (!userId) {
-      return null
-    }
+    const result = await createUserAddress(data, userId)
 
-    try {
-      const token1 = 'test1'
-      const token2 = 'test2'
-      const oneDayInSeconds = 24 * 60 * 60
-      document.cookie = `token1=${token1}; max-age=${oneDayInSeconds}; path=/; SameSite=Lax; HttpOnly; Secure`
-      Cookies.set('token2', token2, {
-        sameSite: 'lax',
-        httpOnly: true,
-      })
-
-      await api.post('/user/create-address', {
-        // headers: {
-        //   authorization: `Bearer ${accessToken}`,
-        // },
-        userId,
-        cep: data.cep,
-        city: data.city,
-        uf: data.uf,
-        street: data.street,
-        neighborhood: data.neighborhood,
-        houseNumber: data.houseNumber,
-        complement: data.complement,
-        phoneNumber: data.phoneNumber,
-        username: data.username,
-        email: data.email,
-      })
-
-      // reset()
-      // window.location.reload()
-      // notifySuccess(result.message)
-    } catch (err: any) {
-      if (err.response) {
-        notifyError(err.response.data.error)
-      } else if (err.request) {
-        notifyError(err.request.data.error)
-      } else {
-        notifyError('Erro na requisição, tente novamente mais tarde.')
-      }
+    if (result.success) {
+      reset()
+      notifySuccess(result.message)
+    } else {
+      notifyError(result.message)
     }
   }
 

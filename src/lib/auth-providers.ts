@@ -1,8 +1,7 @@
 import GoogleProvider, { GoogleProfile } from 'next-auth/providers/google'
-import { cookies } from 'next/headers'
 import { api } from '@/lib/api'
 import { AuthOptions } from 'next-auth'
-import { ExtractExpirationTimeFromJwtToken } from '@/utils/extract-expiration-time-from-jwt-token'
+import { setAuthTokenForCookies } from '@/utils/set-auth-token-for-cookies'
 
 export const authOptions: AuthOptions = {
   providers: [
@@ -36,28 +35,13 @@ export const authOptions: AuthOptions = {
           const accessToken = response.data.accessToken
           const refreshToken = response.data.refreshToken
 
-          const accessTokenExpires =
-            ExtractExpirationTimeFromJwtToken(accessToken)
-
-          const refreshTokenExpires =
-            ExtractExpirationTimeFromJwtToken(refreshToken)
-
-          const currentUnixTimestamp = Math.floor(Date.now() / 1000)
-
-          cookies().set({
-            name: '@shopping-store/AT.2.0',
-            value: accessToken,
-            maxAge: accessTokenExpires - currentUnixTimestamp,
-            sameSite: 'lax',
-            httpOnly: true,
-            secure: true,
+          setAuthTokenForCookies({
+            token: accessToken,
+            key: '@shopping-store/AT.2.0',
           })
-
-          cookies().set({
-            name: '@shopping-store/RT.2.0',
-            value: refreshToken,
-            maxAge: refreshTokenExpires - currentUnixTimestamp,
-            sameSite: 'lax',
+          setAuthTokenForCookies({
+            token: refreshToken,
+            key: '@shopping-store/RT.2.0',
           })
         }
 

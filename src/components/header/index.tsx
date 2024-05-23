@@ -35,7 +35,7 @@ export function Header() {
   const [clientRendered, setClientRendered] = useState(false)
 
   const router = useRouter()
-
+  // console.log(profile, '======')
   const conditionForShowSizeCart =
     clientRendered && cart.length !== 0 && data?.user.id
 

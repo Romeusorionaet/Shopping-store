@@ -2,10 +2,9 @@
 
 import { getDataUser } from '@/lib/getData/get-data.user'
 import { ReactNode, createContext, useEffect, useState } from 'react'
-import Cookies from 'js-cookie'
-import { RefreshToken } from '@/lib/getData/refresh-token'
-import { ExtractExpirationTimeFromJwtToken } from '@/utils/extract-expiration-time-from-jwt-token'
 import { signOut, useSession } from 'next-auth/react'
+import { getDataRefreshToken } from '@/lib/getData/get-data-refresh-token'
+import { useNotification } from '@/hooks/use-notifications'
 
 interface ProfileProps {
   id: string
@@ -27,6 +26,9 @@ export const UserContext = createContext({} as UserContextType)
 
 export function UserContextProvider({ children }: UserContextProps) {
   const session = useSession()
+
+  const { notifyError } = useNotification()
+
   const [profile, setProfile] = useState<ProfileProps>({
     id: '',
     username: '',
@@ -35,53 +37,35 @@ export function UserContextProvider({ children }: UserContextProps) {
     updateAt: '',
   })
 
-  const accessToken = Cookies.get('@shopping-store/AT.2.0')
-  const refreshToken = Cookies.get('@shopping-store/RT.2.0')
-
   useEffect(() => {
     const fetchDataUser = async () => {
-      if (accessToken) {
-        const { props } = await getDataUser(accessToken)
+      const resultDataUser = await getDataUser()
 
-        if (props?.profile) {
+      if (resultDataUser.props.profile) {
+        setProfile(resultDataUser.props.profile)
+      }
+
+      if (!resultDataUser.props.profile && session.data) {
+        const { success } = await getDataRefreshToken()
+
+        if (!success) {
+          await signOut()
+
+          notifyError('Faça login em sua conta.')
+
+          return
+        }
+
+        const { props } = await getDataUser()
+
+        if (props.profile) {
           setProfile(props.profile)
         }
       }
-
-      // if (!accessToken && refreshToken) {
-      //   const { props } = await RefreshToken(refreshToken)
-
-      //   const accessToken: string = props?.tokens.accessToken
-
-      //   const accessTokenExpires =
-      //     ExtractExpirationTimeFromJwtToken(accessToken)
-
-      //   const currentUnixTimestamp = Math.floor(Date.now() / 1000)
-
-      //   document.cookie = `@shopping-store/AT.2.0=${accessToken}; max-age=${
-      //     accessTokenExpires - currentUnixTimestamp
-      //   }; path=/; SameSite=Lax`
-
-      //   const data = await getDataUser(accessToken)
-
-      //   if (data.props) {
-      //     setProfile(data.props.profile)
-      //   }
-      // }
     }
 
     fetchDataUser()
-  }, [accessToken, refreshToken])
-
-  useEffect(() => {
-    const signOutAutomatic = async () => {
-      if (!refreshToken && session.data) {
-        await signOut()
-      }
-    }
-
-    signOutAutomatic()
-  }, [refreshToken, session])
+  }, [session.data, notifyError])
 
   return (
     <UserContext.Provider

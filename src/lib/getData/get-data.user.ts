@@ -1,5 +1,6 @@
 'use server'
 
+import { getAccessTokenFromCookies } from '@/utils/get-tokens-from-cookies'
 import { api } from '../api'
 
 interface ProfileProps {
@@ -10,13 +11,22 @@ interface ProfileProps {
   updateAt: string
 }
 
-export const getDataUser = async (accessToken: string) => {
-  console.log(accessToken, '==from getUser')
+interface GetDataUserResponse {
+  props: {
+    profile?: ProfileProps
+  }
+  revalidate: number
+  notFound?: boolean
+}
+
+export const getDataUser = async (): Promise<GetDataUserResponse> => {
+  const accessToken = getAccessTokenFromCookies()
+
   try {
     const response = await api.get('/buyer/profile', {
-      // headers: {
-      //   Authorization: `Bearer ${accessToken}`,
-      // },
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
     })
 
     const profile: ProfileProps = response.data.profile
@@ -29,8 +39,9 @@ export const getDataUser = async (accessToken: string) => {
     }
   } catch (err: any) {
     return {
-      message: 'Something went wrong while fetching the user.',
-      error: err.message,
+      notFound: true,
+      revalidate: 0,
+      props: {},
     }
   }
 }
