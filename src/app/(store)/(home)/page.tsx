@@ -3,17 +3,13 @@ import Link from 'next/link'
 
 import { LibraryBig } from 'lucide-react'
 import { CarouselProducts } from '@/components/carousel-products'
-import { getDataOrders } from '@/lib/getData/get-data-orders'
-import { getServerSession } from 'next-auth'
 import { SearchProduct } from '@/components/search-product'
 import { OfferBanner } from '@/components/offer-banner'
 import { NoProductRegistrationMessage } from '@/components/no-product-registration-message'
 import { CookieConsentBanner } from '@/components/cookie-consent-banner'
 import posthog from 'posthog-js'
-import { CategoryProps, ProductProps } from '@/core/@types/api-store'
-import { authOptions } from '@/lib/auth-providers'
-import { cookies } from 'next/headers'
-// import { OrderIncludeOrderProducts } from '../orders/page'
+import { ProductProps } from '@/core/@types/api-store'
+import { getDataBuyerOrderProducts } from '@/lib/getData/get-data-orders'
 
 export default async function Home() {
   const { props } = await getDataProducts()
@@ -33,30 +29,15 @@ export default async function Home() {
 
   const allProducts = products.sort(() => Math.random() - 0.5)
 
-  const session = await getServerSession(authOptions)
+  const { props: propsOrderProducts } = await getDataBuyerOrderProducts()
 
-  const accessToken = cookies().get('@shopping-store/AT.2.0')
-
-  if (!accessToken) {
-    return
-  }
-
-  const { props: propsOrders } = await getDataOrders(
-    accessToken.value,
-    session?.user.id,
+  const orderProducts: ProductProps[] = JSON.parse(
+    propsOrderProducts.orderProducts,
   )
 
-  console.log(propsOrders)
-  // const orders: OrderIncludeOrderProducts[] = JSON.parse(propsOrders.orders)
-
-  // const ordersNotPaymentList = orders
-  //   .filter((order) => {
-  //     return order.status === OrderStatus.WAITING_FOR_PAYMENT
-  //   })
-  //   .flatMap((ordersProducts) =>
-  //     ordersProducts.orderProducts.map((orderProduct) => orderProduct.product),
-  //   )
-  //   .sort(() => Math.random() - 0.5)
+  const orderProductsNotPaymentList = orderProducts.sort(
+    () => Math.random() - 0.5,
+  )
 
   return (
     <main className="mx-auto flex max-w-[1480px] flex-col gap-4 overflow-hidden pb-8">
@@ -109,15 +90,15 @@ export default async function Home() {
         )}
       </div>
 
-      {/* <div>
-        {ordersNotPaymentList.length !== 0 && (
+      <div>
+        {orderProductsNotPaymentList.length !== 0 && (
           <div className="bg-white p-2">
             <h2 className="my-4 text-lg">Produtos que você se interessou</h2>
 
-            <CarouselProducts products={ordersNotPaymentList} />
+            <CarouselProducts products={orderProductsNotPaymentList} />
           </div>
         )}
-      </div> */}
+      </div>
     </main>
   )
 }

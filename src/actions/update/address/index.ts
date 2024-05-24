@@ -16,17 +16,15 @@ interface Props {
   email: string
 }
 
-export const createUserAddress = async (
+export const updateUserAddress = async (
   address: Props,
-  userId: string,
 ): Promise<{ success: boolean; message: string }> => {
   const accessToken = getAccessTokenFromCookies()
 
   try {
-    await api.post(
-      '/user/create-address',
+    const response = await api.put(
+      '/user/update-user-address',
       {
-        userId,
         ...address,
       },
       {
@@ -36,7 +34,7 @@ export const createUserAddress = async (
       },
     )
 
-    return { success: true, message: '' }
+    return { success: true, message: response.data.message }
   } catch (err: any) {
     const errorMessage = err.response?.data?.error || err.message
 

@@ -14,11 +14,11 @@ import {
 } from '@radix-ui/react-accordion'
 import { useNotification } from '@/hooks/use-notifications'
 import { CheckoutCart } from './checkout-cart'
-import { useContext, useState } from 'react'
-import { ChangeableAddressInformation } from '@/components/address-information/changeable-address-information'
-import { AddressProps } from '@/core/@types/api-store'
-import { UserContext } from '@/providers/user-context'
-import { createUserAddress } from '@/actions/address'
+import { useQuery } from '@tanstack/react-query'
+import { getDataUserAddress } from '@/lib/getData/get-data-user-address'
+import { createUserAddress } from '@/actions/register/address'
+import { updateUserAddress } from '@/actions/update/address'
+import { hasDataChangedDataAddress } from '../utils-address/has-changed-data-address'
 
 const addressFormSchema = z.object({
   username: z.string().min(1, 'Este campo é obrigatório.'),
@@ -39,52 +39,68 @@ export function FormAddress() {
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors, isSubmitting },
   } = useForm<AddressFormData>({
     resolver: zodResolver(addressFormSchema),
   })
 
-  const [userAddressSaved, setUserAddressSaved] = useState<AddressProps | null>(
-    null,
-  )
   const { notifySuccess, notifyError } = useNotification()
 
-  const { profile } = useContext(UserContext)
-  const userId = profile.id
+  const { data: oldAddress, isLoading } = useQuery({
+    queryKey: ['addressData'],
+    queryFn: () => getDataUserAddress(),
+  })
 
-  const emailDefault = profile.email ? profile.email : ''
+  const addressSaved = oldAddress?.props.userAddress
+  const hasUserAddress = !!addressSaved
 
-  async function handleAddressForm(data: AddressFormData) {
-    const result = await createUserAddress(data, userId)
+  const textButtonSubmitForm = hasUserAddress ? 'salvar alterações' : 'salvar'
+  const iconBasedOnAddress = hasUserAddress ? 'V' : 'X'
+
+  async function handleAddressForm(addressFormData: AddressFormData) {
+    const { isSameData } = hasDataChangedDataAddress(
+      addressFormData,
+      oldAddress,
+    )
+
+    if (isSameData) {
+      notifyError('Não há alterações para salvar.')
+      return
+    }
+
+    if (hasUserAddress) {
+      const result = await updateUserAddress(addressFormData)
+
+      if (result.success) {
+        notifySuccess(result.message)
+      } else {
+        notifyError(result.message)
+      }
+
+      return
+    }
+
+    const result = await createUserAddress(addressFormData)
 
     if (result.success) {
-      reset()
-      notifySuccess(result.message)
+      window.location.reload()
     } else {
       notifyError(result.message)
     }
   }
 
-  const userHasAddress = !!userAddressSaved
-
   return (
     <div>
-      <div className="my-4">
-        {userAddressSaved ? (
-          <ChangeableAddressInformation address={userAddressSaved} />
-        ) : (
-          <></>
-        )}
-      </div>
-
       <Accordion
         type="single"
         collapsible
         className="mx-auto mt-8 max-w-[800px] rounded-md border border-base_color_dark/10 p-2"
       >
         <AccordionItem value="item-1">
-          <AccordionTrigger>Preencher formulário</AccordionTrigger>
+          <AccordionTrigger className="flex w-full justify-between">
+            <span>Preencher formulário</span>{' '}
+            {isLoading ? '...' : iconBasedOnAddress}
+          </AccordionTrigger>
           <AccordionContent>
             <form onSubmit={handleSubmit(handleAddressForm)} className="mt-10">
               <div className="space-y-4">
@@ -95,7 +111,7 @@ export function FormAddress() {
                     maxLength={30}
                     placeholder="nome e sobrenome"
                     className="bg-transparent"
-                    defaultValue={'hu'}
+                    defaultValue={addressSaved?.username}
                     {...register('username')}
                   />
                   <FormError errors={errors.username?.message} />
@@ -108,7 +124,7 @@ export function FormAddress() {
                     maxLength={30}
                     placeholder="exemplo@gmail.com"
                     className="bg-transparent"
-                    defaultValue={emailDefault}
+                    defaultValue={addressSaved?.email}
                     {...register('email')}
                   />
                   <FormError errors={errors.email?.message} />
@@ -121,6 +137,7 @@ export function FormAddress() {
                     maxLength={30}
                     placeholder="Número de telefone"
                     className="bg-transparent"
+                    defaultValue={addressSaved?.phoneNumber}
                     {...register('phoneNumber')}
                   />
                   <FormError errors={errors.username?.message} />
@@ -134,6 +151,7 @@ export function FormAddress() {
                     id="cep"
                     placeholder="12345678"
                     className="bg-transparent"
+                    defaultValue={addressSaved?.cep}
                     {...register('cep')}
                   />
                   <FormError errors={errors.cep?.message} />
@@ -146,6 +164,7 @@ export function FormAddress() {
                     maxLength={30}
                     placeholder="Sua cidade"
                     className="bg-transparent"
+                    defaultValue={addressSaved?.city}
                     {...register('city')}
                   />
                   <FormError errors={errors.city?.message} />
@@ -158,6 +177,7 @@ export function FormAddress() {
                     maxLength={2}
                     placeholder="UF da cidade"
                     className="bg-transparent"
+                    defaultValue={addressSaved?.uf}
                     {...register('uf')}
                   />
                   <FormError errors={errors.uf?.message} />
@@ -170,6 +190,7 @@ export function FormAddress() {
                     maxLength={30}
                     placeholder="Nome do seu Bairro"
                     className="bg-transparent"
+                    defaultValue={addressSaved?.neighborhood}
                     {...register('neighborhood')}
                   />
                   <FormError errors={errors.neighborhood?.message} />
@@ -181,6 +202,7 @@ export function FormAddress() {
                     type="text"
                     placeholder="Nome da sua Rua"
                     className="bg-transparent"
+                    defaultValue={addressSaved?.street}
                     {...register('street')}
                   />
                   <FormError errors={errors.street?.message} />
@@ -193,6 +215,7 @@ export function FormAddress() {
                     maxLength={10}
                     placeholder="Número da redidência"
                     className="bg-transparent"
+                    defaultValue={addressSaved?.houseNumber}
                     {...register('houseNumber')}
                   />
                   <FormError errors={errors.houseNumber?.message} />
@@ -205,6 +228,7 @@ export function FormAddress() {
                     maxLength={50}
                     placeholder="EX: Ao lado do shopping"
                     className="bg-transparent"
+                    defaultValue={addressSaved?.complement}
                     {...register('complement')}
                   />
                   <FormError errors={errors.complement?.message} />
@@ -216,7 +240,7 @@ export function FormAddress() {
                 className="mt-8"
                 aria-disabled={isSubmitting}
               >
-                salvar
+                {textButtonSubmitForm}
               </Button>
             </form>
           </AccordionContent>
@@ -224,7 +248,7 @@ export function FormAddress() {
       </Accordion>
 
       <div className="mx-auto flex max-w-[800px] justify-end">
-        <CheckoutCart userHasAddress={userHasAddress} />
+        <CheckoutCart userHasAddress={hasUserAddress} />
       </div>
     </div>
   )

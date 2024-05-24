@@ -3,6 +3,11 @@ export enum ModeOfSale {
   'ONLINE_STORE',
 }
 
+export enum OrderStatus {
+  'WAITING_FOR_PAYMENT',
+  'PAYMENT_CONFIRMED',
+}
+
 export interface CategoryProps {
   id: string
   title: string
@@ -48,6 +53,27 @@ export interface AddressProps {
   phoneNumber: string
   username: string
   email: string
+  createAt: Date
+  updateAt: Date | null
+}
+
+export interface OrderProduct {
+  id: string
+  productId: string
+  basePrice: number
+  discountPercentage: number
+  quantity: number
+  productColor: string[]
+}
+
+export interface OrderProps {
+  id: string
+  buyerId: string
+  trackingCode: string
+  orderStatusTracking: string
+  status: string
+  buyerAddress: AddressProps
+  orderProducts: OrderProduct[]
   createAt: Date
   updateAt: Date | null
 }

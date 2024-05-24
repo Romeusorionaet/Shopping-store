@@ -4,7 +4,6 @@ import { getDataUser } from '@/lib/getData/get-data.user'
 import { ReactNode, createContext, useEffect, useState } from 'react'
 import { signOut, useSession } from 'next-auth/react'
 import { getDataRefreshToken } from '@/lib/getData/get-data-refresh-token'
-import { useNotification } from '@/hooks/use-notifications'
 
 interface ProfileProps {
   id: string
@@ -26,8 +25,6 @@ export const UserContext = createContext({} as UserContextType)
 
 export function UserContextProvider({ children }: UserContextProps) {
   const session = useSession()
-
-  const { notifyError } = useNotification()
 
   const [profile, setProfile] = useState<ProfileProps>({
     id: '',
@@ -51,8 +48,6 @@ export function UserContextProvider({ children }: UserContextProps) {
         if (!success) {
           await signOut()
 
-          notifyError('Faça login em sua conta.')
-
           return
         }
 
@@ -65,7 +60,7 @@ export function UserContextProvider({ children }: UserContextProps) {
     }
 
     fetchDataUser()
-  }, [session.data, notifyError])
+  }, [session.data])
 
   return (
     <UserContext.Provider

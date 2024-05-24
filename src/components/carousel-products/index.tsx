@@ -17,7 +17,7 @@ export interface CustomSlider extends Slider {
 }
 
 interface Props {
-  products: ProductProps[] | undefined
+  products: ProductProps[]
 }
 
 export function CarouselProducts({ products }: Props) {

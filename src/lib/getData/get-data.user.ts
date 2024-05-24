@@ -37,7 +37,7 @@ export const getDataUser = async (): Promise<GetDataUserResponse> => {
       },
       revalidate: 60 * 60 * 24,
     }
-  } catch (err: any) {
+  } catch (err) {
     return {
       notFound: true,
       revalidate: 0,
