@@ -1,11 +1,11 @@
 import Image from 'next/image'
 import { Button } from '../ui/button'
 import { ArrowLeftIcon, ArrowRightIcon, TrashIcon } from 'lucide-react'
-import { CartProduct, useCartStore } from '@/providers/zustand-store'
+import { CartProps, useCartStore } from '@/providers/zustand-store'
 import Link from 'next/link'
 
 interface CartItemProps {
-  product: CartProduct
+  product: CartProps
 }
 
 export function CartItem({ product }: CartItemProps) {

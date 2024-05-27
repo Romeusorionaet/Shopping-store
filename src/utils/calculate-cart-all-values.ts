@@ -1,6 +1,6 @@
-import { CartProduct } from '@/providers/zustand-store'
+import { CartProps } from '@/providers/zustand-store'
 
-export function calculateCartAllValues(cart: CartProduct[]) {
+export function calculateCartAllValues(cart: CartProps[]) {
   let subtotal = 0
   let totalDiscount = 0
   let total = 0

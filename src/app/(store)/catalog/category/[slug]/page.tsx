@@ -32,7 +32,11 @@ export default async function Category({ params }: ParamsProps) {
       <div className="my-8 flex flex-wrap justify-center gap-8">
         {products &&
           products.map((product) => {
-            const { totalPrice } = CalculateValueProduct(product)
+            const { totalPrice } = CalculateValueProduct({
+              discountPercentage: product.discountPercentage,
+              basePrice: product.price,
+            })
+
             const productAvailable = product.stockQuantity <= 0
 
             return (

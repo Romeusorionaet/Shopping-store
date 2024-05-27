@@ -5,7 +5,6 @@ import { NoUserMessage } from '@/components/no-user-message'
 //   AreaOrdersOfClients,
 //   UserWithOrders,
 // } from '../area-management/area-orders-of-clients'
-import { OrderWaitingForPayment } from '@/app/(store)/orders/components/order-waiting-for-payment'
 // import { OrderIncludeOrderProducts } from '@/app/(store)/orders/page'
 
 export async function ManageOrders() {

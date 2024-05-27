@@ -1,6 +1,5 @@
 import { getServerSession } from 'next-auth'
 import { OrderItem } from './components/order-item'
-import { OrderWaitingForPayment } from './components/order-waiting-for-payment'
 import { NoUserMessage } from '@/components/no-user-message'
 import { getDataBuyerOrders } from '@/lib/getData/get-data-buyer-orders'
 import {
