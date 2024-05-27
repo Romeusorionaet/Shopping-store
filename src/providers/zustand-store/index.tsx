@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-interface Product {
+export interface CartProps {
   id: string
   title: string
   slug: string
@@ -8,16 +8,15 @@ interface Product {
   price: number
   quantity: number
   discountPercentage: number
-}
-
-export interface CartProduct extends Product {
+  description: string
+  productColor: string
   totalPrice?: number
   quantityInStock: number
 }
 
 export interface CartStore {
-  cart: CartProduct[]
-  addProductToCart: (item: CartProduct) => void
+  cart: CartProps[]
+  addProductToCart: (item: CartProps) => void
   decreaseProductQuantity: (productId: string) => void
   increaseProductQuantity: (productId: string) => void
   removeProductFromCart: (productId: string) => void

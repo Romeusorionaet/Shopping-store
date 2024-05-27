@@ -2,14 +2,15 @@ import { getDataProducts } from '@/lib/getData/get-data-products'
 import Link from 'next/link'
 
 import { LibraryBig } from 'lucide-react'
-import { CarouselProducts } from '@/components/carousel-products'
 import { SearchProduct } from '@/components/search-product'
 import { OfferBanner } from '@/components/offer-banner'
 import { NoProductRegistrationMessage } from '@/components/no-product-registration-message'
 import { CookieConsentBanner } from '@/components/cookie-consent-banner'
 import posthog from 'posthog-js'
-import { ProductProps } from '@/core/@types/api-store'
-import { getDataBuyerOrderProducts } from '@/lib/getData/get-data-orders'
+import { OrderProductProps, ProductProps } from '@/core/@types/api-store'
+import { getDataBuyerOrderProducts } from '@/lib/getData/get-data-buyer-order-products'
+import { CarouselProducts } from '@/components/carousel-products'
+import { CarouselOrderProducts } from '@/components/carousel-products/order-products'
 
 export default async function Home() {
   const { props } = await getDataProducts()
@@ -31,7 +32,7 @@ export default async function Home() {
 
   const { props: propsOrderProducts } = await getDataBuyerOrderProducts()
 
-  const orderProducts: ProductProps[] = JSON.parse(
+  const orderProducts: OrderProductProps[] = JSON.parse(
     propsOrderProducts.orderProducts,
   )
 
@@ -94,8 +95,9 @@ export default async function Home() {
         {orderProductsNotPaymentList.length !== 0 && (
           <div className="bg-white p-2">
             <h2 className="my-4 text-lg">Produtos que você se interessou</h2>
-
-            <CarouselProducts products={orderProductsNotPaymentList} />
+            <CarouselOrderProducts
+              orderProducts={orderProductsNotPaymentList}
+            />
           </div>
         )}
       </div>

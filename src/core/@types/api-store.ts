@@ -1,11 +1,18 @@
 export enum ModeOfSale {
-  'SELLS_ONLY_IN_THE_REGION',
-  'ONLINE_STORE',
+  SELLS_ONLY_IN_THE_REGION = 'SELLS_ONLY_IN_THE_REGION',
+  ONLINE_STORE = 'ONLINE_STORE',
 }
 
 export enum OrderStatus {
-  'WAITING_FOR_PAYMENT',
-  'PAYMENT_CONFIRMED',
+  WAITING_FOR_PAYMENT = 'WAITING_FOR_PAYMENT',
+  PAYMENT_CONFIRMED = 'PAYMENT_CONFIRMED',
+}
+
+export enum OrderStatusTracking {
+  WAITING = 'WAITING',
+  CANCELED = 'CANCELED',
+  PRODUCT_DELIVERED_TO_CARRIER = 'PRODUCT_DELIVERED_TO_CARRIER',
+  PRODUCT_DELIVERED_TO_CLIENT = 'PRODUCT_DELIVERED_TO_CLIENT',
 }
 
 export interface CategoryProps {
@@ -33,7 +40,7 @@ export interface ProductProps {
   width: number
   height: number
   weight: number
-  placeOfSale: number
+  placeOfSale: string
   stars: number
   createdAt: Date
   updatedAt: Date | null
@@ -53,17 +60,19 @@ export interface AddressProps {
   phoneNumber: string
   username: string
   email: string
-  createAt: Date
-  updateAt: Date | null
+  createdAt: Date
+  updatedAt: Date | null
 }
 
-export interface OrderProduct {
+export interface OrderProductProps {
   id: string
   productId: string
+  title: string
+  imgUrl: string
   basePrice: number
   discountPercentage: number
   quantity: number
-  productColor: string[]
+  productColor: string
 }
 
 export interface OrderProps {
@@ -73,7 +82,7 @@ export interface OrderProps {
   orderStatusTracking: string
   status: string
   buyerAddress: AddressProps
-  orderProducts: OrderProduct[]
-  createAt: Date
-  updateAt: Date | null
+  orderProducts: OrderProductProps[]
+  createdAt: Date
+  updatedAt: Date | null
 }

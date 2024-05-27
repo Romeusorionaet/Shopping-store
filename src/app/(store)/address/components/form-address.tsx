@@ -46,13 +46,13 @@ export function FormAddress() {
 
   const { notifySuccess, notifyError } = useNotification()
 
-  const { data: oldAddress, isLoading } = useQuery({
+  const { data: address, isLoading } = useQuery({
     queryKey: ['addressData'],
     queryFn: () => getDataUserAddress(),
   })
 
-  const addressSaved = oldAddress?.props.userAddress
-  const hasUserAddress = !!addressSaved
+  const oldAddress = address?.props.userAddress
+  const hasUserAddress = !!oldAddress
 
   const textButtonSubmitForm = hasUserAddress ? 'salvar alterações' : 'salvar'
   const iconBasedOnAddress = hasUserAddress ? 'V' : 'X'
@@ -111,7 +111,7 @@ export function FormAddress() {
                     maxLength={30}
                     placeholder="nome e sobrenome"
                     className="bg-transparent"
-                    defaultValue={addressSaved?.username}
+                    defaultValue={oldAddress?.username}
                     {...register('username')}
                   />
                   <FormError errors={errors.username?.message} />
@@ -124,7 +124,7 @@ export function FormAddress() {
                     maxLength={30}
                     placeholder="exemplo@gmail.com"
                     className="bg-transparent"
-                    defaultValue={addressSaved?.email}
+                    defaultValue={oldAddress?.email}
                     {...register('email')}
                   />
                   <FormError errors={errors.email?.message} />
@@ -137,7 +137,7 @@ export function FormAddress() {
                     maxLength={30}
                     placeholder="Número de telefone"
                     className="bg-transparent"
-                    defaultValue={addressSaved?.phoneNumber}
+                    defaultValue={oldAddress?.phoneNumber}
                     {...register('phoneNumber')}
                   />
                   <FormError errors={errors.username?.message} />
@@ -151,7 +151,7 @@ export function FormAddress() {
                     id="cep"
                     placeholder="12345678"
                     className="bg-transparent"
-                    defaultValue={addressSaved?.cep}
+                    defaultValue={oldAddress?.cep}
                     {...register('cep')}
                   />
                   <FormError errors={errors.cep?.message} />
@@ -164,7 +164,7 @@ export function FormAddress() {
                     maxLength={30}
                     placeholder="Sua cidade"
                     className="bg-transparent"
-                    defaultValue={addressSaved?.city}
+                    defaultValue={oldAddress?.city}
                     {...register('city')}
                   />
                   <FormError errors={errors.city?.message} />
@@ -177,7 +177,7 @@ export function FormAddress() {
                     maxLength={2}
                     placeholder="UF da cidade"
                     className="bg-transparent"
-                    defaultValue={addressSaved?.uf}
+                    defaultValue={oldAddress?.uf}
                     {...register('uf')}
                   />
                   <FormError errors={errors.uf?.message} />
@@ -190,7 +190,7 @@ export function FormAddress() {
                     maxLength={30}
                     placeholder="Nome do seu Bairro"
                     className="bg-transparent"
-                    defaultValue={addressSaved?.neighborhood}
+                    defaultValue={oldAddress?.neighborhood}
                     {...register('neighborhood')}
                   />
                   <FormError errors={errors.neighborhood?.message} />
@@ -202,7 +202,7 @@ export function FormAddress() {
                     type="text"
                     placeholder="Nome da sua Rua"
                     className="bg-transparent"
-                    defaultValue={addressSaved?.street}
+                    defaultValue={oldAddress?.street}
                     {...register('street')}
                   />
                   <FormError errors={errors.street?.message} />
@@ -215,7 +215,7 @@ export function FormAddress() {
                     maxLength={10}
                     placeholder="Número da redidência"
                     className="bg-transparent"
-                    defaultValue={addressSaved?.houseNumber}
+                    defaultValue={oldAddress?.houseNumber}
                     {...register('houseNumber')}
                   />
                   <FormError errors={errors.houseNumber?.message} />
@@ -228,7 +228,7 @@ export function FormAddress() {
                     maxLength={50}
                     placeholder="EX: Ao lado do shopping"
                     className="bg-transparent"
-                    defaultValue={addressSaved?.complement}
+                    defaultValue={oldAddress?.complement}
                     {...register('complement')}
                   />
                   <FormError errors={errors.complement?.message} />

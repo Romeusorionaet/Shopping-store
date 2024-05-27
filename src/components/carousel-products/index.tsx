@@ -48,7 +48,10 @@ export function CarouselProducts({ products }: Props) {
       <Slider key={sliderKey} ref={slider} {...carouselResponsive}>
         {products &&
           products.map((product) => {
-            const { totalPrice } = CalculateValueProduct(product)
+            const { totalPrice } = CalculateValueProduct({
+              discountPercentage: product.discountPercentage,
+              basePrice: product.price,
+            })
             const productAvailable = product.stockQuantity <= 0
 
             return (

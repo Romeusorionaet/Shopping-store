@@ -1,38 +1,31 @@
-import { getDataOrders } from '@/lib/getData/get-data-orders'
 import { getServerSession } from 'next-auth'
 import { OrderItem } from './components/order-item'
 import { OrderWaitingForPayment } from './components/order-waiting-for-payment'
-// import {
-//   Order,
-//   OrderAddress,
-//   OrderProduct,
-//   OrderStatus,
-//   Product,
-//   UserOrdersHistoric,
-// } from '@prisma/client'
 import { NoUserMessage } from '@/components/no-user-message'
-import { getUserOrdersHistoric } from '@/lib/getData/get-data-user-order-historic'
-import { HistoricItem } from '@/components/historic-item'
-
-// interface OrderProductIncludeProduct extends OrderProduct {
-//   product: Product
-// }
-
-// export interface OrderIncludeOrderProducts extends Order {
-//   orderProducts: OrderProductIncludeProduct[]
-//   orderAddress: OrderAddress[]
-// }
+import { getDataBuyerOrders } from '@/lib/getData/get-data-buyer-orders'
+import {
+  OrderProps,
+  OrderStatus,
+  OrderStatusTracking,
+} from '@/core/@types/api-store'
 
 export default async function Orders() {
-  // if (!session || !session.user) {
-  //   return <NoUserMessage />
-  // }
+  const session = await getServerSession()
 
-  // const { props } = await getDataOrders(session.user.id)
-  // const orders: OrderIncludeOrderProducts[] = JSON.parse(props.orders)
+  if (!session || !session.user) {
+    return <NoUserMessage />
+  }
 
-  // const { props: userHistoric } = await getUserOrdersHistoric(session.user.id)
-  // const historic: UserOrdersHistoric[] = JSON.parse(userHistoric.historic)
+  const { props } = await getDataBuyerOrders()
+  const orders: OrderProps[] = JSON.parse(props.orders)
+
+  const paymentConfirmed = OrderStatus.PAYMENT_CONFIRMED
+  const ordersInProcess =
+    OrderStatusTracking.WAITING ||
+    OrderStatusTracking.PRODUCT_DELIVERED_TO_CARRIER
+
+  const productDeliveredToClient =
+    OrderStatusTracking.PRODUCT_DELIVERED_TO_CLIENT
 
   return (
     <div className="p-4 pt-28">
@@ -42,9 +35,12 @@ export default async function Orders() {
 
       <div className="mt-4 flex flex-col justify-center">
         <h2 className="text-lg">Pedidos em andamento:</h2>
-        {/* {orders && orders.length >= 1 ? (
+        {orders.length >= 1 ? (
           orders.map((order) => {
-            if (order.status === OrderStatus.PAYMENT_CONFIRMED) {
+            if (
+              order.status === paymentConfirmed &&
+              order.orderStatusTracking === ordersInProcess
+            ) {
               return <OrderItem key={order.id} order={order} />
             } else {
               return (
@@ -56,39 +52,28 @@ export default async function Orders() {
           })
         ) : (
           <p className="mt-10 text-center opacity-80">Vazio</p>
-        )} */}
+        )}
       </div>
 
       <div className="mt-10">
-        <h2 className="mb-4 text-lg">Pedidos entregue:</h2>
+        <h2 className="text-lg">Pedidos entregue:</h2>
 
-        <div className="scrollbar h-80 overflow-auto border border-base_color_dark/20 lg:h-[50rem]">
-          {/* <HistoricItem historic={historic} /> */}
-        </div>
-      </div>
-
-      <div className="scrollbar mt-10 flex h-96 flex-col gap-2 overflow-auto">
-        <h2 className="text-lg">Pedidos não finalizados</h2>
-        <p className="text-sm">
-          Se tiver alguma dúvida sobre um produto que não tenha comprado,
-          ficaríamos felizes em ajudar. Entre em contato conosco pelo WhatsApp:
-          (84) 981127596
-        </p>
-
-        <div className="mt-4 border border-base_color_dark/20 p-2">
-          {/* {orders && orders.length >= 1 ? (
-            orders
-              .map((order) => {
-                if (order.status === OrderStatus.WAITING_FOR_PAYMENT) {
-                  return <OrderWaitingForPayment key={order.id} order={order} />
-                } else {
-                  return null
-                }
-              })
-              .reverse()
+        <div className="mt-4 flex flex-col justify-center">
+          {orders.length >= 1 ? (
+            orders.map((order) => {
+              if (order.orderStatusTracking === productDeliveredToClient) {
+                return <OrderItem key={order.id} order={order} />
+              } else {
+                return (
+                  <p key={order.id} className="text-center opacity-80">
+                    Vazio
+                  </p>
+                )
+              }
+            })
           ) : (
-            <></>
-          )} */}
+            <p className="mt-10 text-center opacity-80">Vazio</p>
+          )}
         </div>
       </div>
     </div>

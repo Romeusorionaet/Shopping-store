@@ -4,6 +4,6 @@ export const APP_ROUTES = {
   },
 
   public: {
-    dashboard: ['/', '/catalog', '/address', '/details', '/orders'],
+    dashboard: ['/', '/catalog', '/address', '/details', '/orders', '/success'],
   },
 }

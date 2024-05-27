@@ -1,10 +1,10 @@
-import { createCheckout } from '@/actions/checkout'
 import { useSession } from 'next-auth/react'
 import { useCartStore } from '@/providers/zustand-store'
 import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
 import ClipLoader from 'react-spinners/ClipLoader'
 import { useNotification } from '@/hooks/use-notifications'
+import { createCheckout } from '@/actions/checkout'
 
 interface Props {
   userHasAddress: boolean
@@ -25,38 +25,50 @@ export function CheckoutCart({ userHasAddress }: Props) {
     )
   }
 
-  // const createOrderBodySchema = z.object({
-  //   buyerId: z.string().uuid(),
-  //   orderProducts: z.array(
-  //     z.object({
-  //       productId: uuidType.transform((value) => new UniqueEntityID(value)),
-  //       title: z.string(),
-  //       description: z.string(),
-  //       basePrice: z.coerce.number(),
-  //       discountPercentage: z.coerce.number(),
-  //       quantity: z.coerce.number(),
-  //       productColor: z.string().nullable(),
-  //     }),
-  //   ),
-  // });
+  const organizeOrderProducts = () => {
+    const orderProducts = []
+
+    for (const product of cart) {
+      const orderProduct = {
+        productId: product.id,
+        title: product.title,
+        imgUrl: product.imgUrlList[0],
+        discountPercentage: product.discountPercentage,
+        basePrice: product.price,
+        quantity: product.quantity,
+        description: product.description,
+        productColor: product.productColor ?? '',
+      }
+
+      orderProducts.push(orderProduct)
+    }
+
+    return { orderProducts }
+  }
 
   const handleFinishPurchaseClick = async () => {
     try {
       if (cart.length === 0) {
         notifyWarning('Carrinho vazio')
+
         navigate.push('/')
+
         return
       }
-      // const dataOrder = await createOrder(cart, data.user.id)
-      // if (!dataOrder.order) {
-      //   notifyError(dataOrder.message)
-      //   return
-      // }
-      // const initPointUrl = await createCheckout(cart, dataOrder.order.id)
-      // if (initPointUrl) {
-      //   window.open(initPointUrl, '_blank')
-      // }
+
+      const { orderProducts } = organizeOrderProducts()
+
+      const { initPointUrl, error } = await createCheckout(orderProducts)
+
+      if (error) {
+        notifyError(error)
+      }
+
+      if (initPointUrl) {
+        window.open(initPointUrl.checkoutUrl, '_blank')
+      }
     } catch (err) {
+      // TODO tratar esse erro
       console.log(err)
     }
   }

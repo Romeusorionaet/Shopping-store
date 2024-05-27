@@ -1,12 +1,10 @@
-// import { OrderAddress } from '@prisma/client'
+import { AddressProps } from '@/core/@types/api-store'
 
-// interface Props {
-//   orderAddress: OrderAddress[]
-// }
+interface Props {
+  address: AddressProps
+}
 
-export function FixedAddressInformation({ orderAddress }: any) {
-  const address = orderAddress[0]
-
+export function FixedAddressInformation({ address }: Props) {
   return (
     <div className="mt-4 flex flex-col gap-1 rounded-md bg-blue-200/20 p-1 opacity-80">
       <div>
@@ -43,7 +41,7 @@ export function FixedAddressInformation({ orderAddress }: any) {
           <span className="font-bold">Rua</span>: {address.street}
         </p>
         <p>
-          <span className="font-bold">Número</span>: {address.number}
+          <span className="font-bold">Número</span>: {address.houseNumber}
         </p>
         <p>
           <span className="font-bold">Complemento</span>: {address.complement}

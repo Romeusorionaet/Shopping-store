@@ -1,15 +1,11 @@
-// import { Prisma } from '@prisma/client'
+import { OrderProductProps } from '@/core/@types/api-store'
 import Image from 'next/image'
 
-// interface OrderProductItemProps {
-//   orderProduct: Prisma.OrderProductGetPayload<{
-//     include: {
-//       product: true
-//     }
-//   }>
-// }
+interface Props {
+  orderProduct: OrderProductProps
+}
 
-export function OrderProductItem({ orderProduct }: any) {
+export function OrderProductItem({ orderProduct }: Props) {
   let total = 0
 
   const currentTotalDiscount =
@@ -25,24 +21,17 @@ export function OrderProductItem({ orderProduct }: any) {
     <div className="flex items-center gap-4">
       <div className="flex h-[77px] w-[100px] items-center justify-center rounded-lg bg-base_reference_card">
         <Image
-          src={orderProduct.product.imageUrls[0]}
+          src={orderProduct.imgUrl}
           width={0}
           height={0}
           sizes="100vw"
           className="h-auto max-h-[80%] w-auto max-w-[80%]"
-          alt={orderProduct.product.name}
+          alt={orderProduct.title}
         />
       </div>
 
       <div className="flex w-full flex-col gap-1">
-        <div className="flex w-fit rounded-md px-3 py-1">
-          <p className="text-[10px]">
-            Vendido e entregue por{' '}
-            <span className="font-bold">shopping-store</span>
-          </p>
-        </div>
-
-        <p className="text-xs">{orderProduct.product.name}</p>
+        <p className="text-xs">{orderProduct.title}</p>
 
         <div className="flex w-full items-center justify-between gap-1">
           <div className="flex items-center gap-1">

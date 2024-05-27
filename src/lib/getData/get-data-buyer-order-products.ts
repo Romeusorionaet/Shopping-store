@@ -11,7 +11,6 @@ export const getDataBuyerOrderProducts = async () => {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
-      params: { page: 1 },
     })
 
     return {

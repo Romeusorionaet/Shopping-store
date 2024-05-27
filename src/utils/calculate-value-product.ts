@@ -1,9 +1,14 @@
-import { ProductProps } from '@/core/@types/api-store'
+interface Props {
+  discountPercentage: number
+  basePrice: number
+}
 
-export function CalculateValueProduct(product: ProductProps) {
-  const totalDiscount =
-    Number(product.price) * (product.discountPercentage / 100)
-  const totalPrice = Number(product.price) - totalDiscount
+export function CalculateValueProduct({
+  discountPercentage,
+  basePrice,
+}: Props) {
+  const totalDiscount = Number(basePrice) * (discountPercentage / 100)
+  const totalPrice = Number(basePrice) - totalDiscount
 
   return { totalPrice }
 }
