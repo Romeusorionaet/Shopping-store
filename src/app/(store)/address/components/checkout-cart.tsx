@@ -37,7 +37,7 @@ export function CheckoutCart({ userHasAddress }: Props) {
         basePrice: product.price,
         quantity: product.quantity,
         description: product.description,
-        productColor: product.productColor ?? '',
+        colorList: product.corsList ?? '',
       }
 
       orderProducts.push(orderProduct)

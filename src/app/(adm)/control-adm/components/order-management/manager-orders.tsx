@@ -1,5 +1,3 @@
-import { getDataOrdersUsers } from '@/lib/getData/get-data-orders-users'
-import { getDataOrders } from '@/lib/getData/get-data-orders'
 import { getServerSession } from 'next-auth'
 // import { OrderStatus, OrderStatusTracking } from '@prisma/client'
 import { NoUserMessage } from '@/components/no-user-message'
@@ -11,7 +9,7 @@ import { OrderWaitingForPayment } from '@/app/(store)/orders/components/order-wa
 // import { OrderIncludeOrderProducts } from '@/app/(store)/orders/page'
 
 export async function ManageOrders() {
-  const { props } = await getDataOrdersUsers()
+  // const { props } = await getDataOrdersUsers()
   // const ordersUsers: UserWithOrders[] = JSON.parse(props.ordersUsers)
 
   // const session = await getServerSession(authOptions)

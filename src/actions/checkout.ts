@@ -11,7 +11,7 @@ interface orderProductsProps {
   basePrice: number
   quantity: number
   description: string
-  productColor: string
+  colorList: string[]
 }
 
 interface ObjectUrlProps {

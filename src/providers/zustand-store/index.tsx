@@ -1,17 +1,9 @@
+import { ProductProps } from '@/core/@types/api-store'
 import { create } from 'zustand'
 
-export interface CartProps {
-  id: string
-  title: string
-  slug: string
-  imgUrlList: string[]
-  price: number
+export interface CartProps extends ProductProps {
   quantity: number
-  discountPercentage: number
-  description: string
-  productColor: string
   totalPrice?: number
-  quantityInStock: number
 }
 
 export interface CartStore {
@@ -56,7 +48,7 @@ export const useCartStore = create<CartStore>((set, get) => ({
       const existingProduct = cart[existingProductIndex]
       const updatedCart = [...cart]
 
-      if (existingProduct.quantity >= existingProduct.quantityInStock) {
+      if (existingProduct.quantity >= existingProduct.stockQuantity) {
         return
       }
 
@@ -125,7 +117,7 @@ export const useCartStore = create<CartStore>((set, get) => ({
       const updatedCart = [...cart]
       const existingProduct = cart[existingProductIndex]
 
-      if (existingProduct.quantity >= existingProduct.quantityInStock) {
+      if (existingProduct.quantity >= existingProduct.stockQuantity) {
         return
       }
 
