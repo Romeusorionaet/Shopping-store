@@ -10,6 +10,7 @@ import { useEffect, useRef, useState } from 'react'
 import { ArrowControlLeft, ArrowControlRight } from './arrows-carousel'
 import { useSlickCarousel } from '@/hooks/use-slick-carousel'
 import { ModeOfSale, ProductProps } from '@/core/@types/api-store'
+import { SlugGenerator } from '@/utils/slug-generator'
 
 export interface CustomSlider extends Slider {
   slickPrev: () => void
@@ -54,6 +55,8 @@ export function CarouselProducts({ products }: Props) {
             })
             const productAvailable = product.stockQuantity <= 0
 
+            const slug = SlugGenerator.createFromText(product.title)
+
             return (
               <div
                 key={product.id}
@@ -65,7 +68,7 @@ export function CarouselProducts({ products }: Props) {
                 >
                   <AddProductInCart product={product} />
                 </div>
-                <Link href={`/details/${product.slug}`}>
+                <Link href={`/details/${slug.value}/${product.id}`}>
                   <div
                     data-quantity={productAvailable}
                     className="flex flex-col items-center justify-center gap-1 rounded-md bg-base_reference_card p-1 duration-700 hover:bg-base_reference_card_hover data-[quantity=true]:bg-base_color_dark/5 data-[quantity=true]:hover:bg-base_color_dark/10 md:h-full md:gap-2 md:p-4"

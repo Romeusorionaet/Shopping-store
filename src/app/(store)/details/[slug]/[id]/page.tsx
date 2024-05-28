@@ -1,25 +1,19 @@
 import { getDataUniqueProduct } from '@/lib/getData/get-data-unique-product'
-import { ProductImages } from '../components/product-images'
 import { CalculateValueProduct } from '@/utils/calculate-value-product'
 import { CarouselProducts } from '@/components/carousel-products'
-import { AskForProductReturn } from '../components/Ask-for-product-return'
-// import { Category, ModeOfSale, Product } from '@prisma/client'
 import { AddProductInCart } from '@/components/add-product-in-cart'
 import { PackageX } from 'lucide-react'
 import { Metadata } from 'next'
 import { metadata } from '@/app/layout'
-
-// interface CategoryIncludeProducts extends Category {
-//   products: Product[]
-// }
-
-// export interface ProductIncludeCategoryAndProducts extends Product {
-//   category: CategoryIncludeProducts
-// }
+import { ModeOfSale, ProductProps } from '@/core/@types/api-store'
+import { ProductImages } from '../../components/product-images'
+import { AskForProductReturn } from '../../components/Ask-for-product-return'
+import { getDataProductsTheSameCategory } from '@/lib/getData/get-data-products-the-same-category'
 
 interface ParamsProps {
   params: {
     slug: string
+    id: string
   }
 }
 
@@ -46,37 +40,51 @@ export async function generateMetadata({
 }
 
 export default async function Details({ params }: ParamsProps) {
-  const { slug } = params
-  const { props } = await getDataUniqueProduct(slug)
-  // const product: ProductIncludeCategoryAndProducts = JSON.parse(props.product)
+  const { id } = params
+  const { props } = await getDataUniqueProduct(id)
 
-  // if (!product) {
-  //   return (
-  //     <div className="flex h-screen flex-col items-center justify-center gap-4 p-4">
-  //       <PackageX size={44} />
-  //       <p>Produto não encontrado.</p>
-  //     </div>
-  //   )
-  // }
+  if (!props.product) {
+    return (
+      <div className="flex h-screen flex-col items-center justify-center gap-4 p-4">
+        <PackageX size={44} />
+        <p>Produto não encontrado.</p>
+      </div>
+    )
+  }
 
-  // const { totalPrice } = CalculateValueProduct(product)
-  // const totalPriceDividedByTwelve = totalPrice / 12
+  const product: ProductProps = JSON.parse(props.product)
 
-  // const quantity = product.quantity < 0 ? 0 : product.quantity
+  const { props: dataProducts } = await getDataProductsTheSameCategory(
+    product.categoryId,
+  )
+
+  const dataProductsTheSameCategory: ProductProps[] = JSON.parse(
+    dataProducts.products,
+  )
+
+  const { totalPrice } = CalculateValueProduct({
+    discountPercentage: product.discountPercentage,
+    basePrice: product.price,
+  })
+  const totalPriceDividedByTwelve = totalPrice / 12
+
+  const quantity = product.stockQuantity < 0 ? 0 : product.stockQuantity
 
   return (
     <div className="flex h-screen flex-col justify-between pt-[4.5rem]">
       <div className="my-8 flex items-center justify-center gap-8 max-md:flex-col md:items-start">
-        {/* <ProductImages imageUrls={product.imageUrls} name={product.name} /> */}
+        <ProductImages imageUrls={product.imgUrlList} name={product.title} />
 
         <div className="flex flex-col gap-4 p-4 2xl:w-[50%]">
-          {/* <h1 className="font-bold">{product.name}</h1> */}
-          <p>{/* Quantidade em estoque: <strong>{quantity}</strong> */}</p>
-          {/* <div>
+          <h1 className="font-bold">{product.title}</h1>
+          <p>
+            Quantidade em estoque: <strong>{quantity}</strong>
+          </p>
+          <div>
             {product.discountPercentage !== 0 && (
               <div className="flex gap-8">
                 <p className="line-through opacity-75">
-                  {Number(product.basePrice).toLocaleString('pt-BR', {
+                  {Number(product.price).toLocaleString('pt-BR', {
                     style: 'currency',
                     currency: 'BRL',
                     minimumFractionDigits: 2,
@@ -103,22 +111,22 @@ export default async function Details({ params }: ParamsProps) {
                 </span>
               </p>
             </div>
-          </div> */}
+          </div>
 
           <p className="text-xl">Descrição:</p>
           <div className="scrollbar h-96 overflow-auto border border-base_color_dark/20 p-1">
             <pre className="whitespace-pre-wrap font-sans">
-              {/* {product.description} */}
+              {product.description}
             </pre>
           </div>
 
-          {/* {product.quantity <= 0 ? (
+          {product.stockQuantity <= 0 ? (
             <div className="space-y-4">
               <p>
                 Não temos mais este produto no momento. Por favor mande sua
                 mensagem para o retorno do produto ao estoque.
               </p>
-              <AskForProductReturn productName={product.name} />
+              <AskForProductReturn productName={product.title} />
             </div>
           ) : (
             <div>
@@ -134,18 +142,18 @@ export default async function Details({ params }: ParamsProps) {
                 />
               )}
             </div>
-          )} */}
+          )}
         </div>
       </div>
 
       <div className="space-y-8 p-4">
-        {/* {product.category?.products.length !== 0 && (
+        {dataProductsTheSameCategory.length !== 0 && (
           <div className="space-y-6">
             <h2 className="text-lg uppercase md:text-2xl">Veja também</h2>
 
-            <CarouselProducts products={product.category.products} />
+            <CarouselProducts products={dataProductsTheSameCategory} />
           </div>
-        )} */}
+        )}
       </div>
     </div>
   )

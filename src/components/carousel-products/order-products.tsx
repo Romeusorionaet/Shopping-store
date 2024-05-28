@@ -53,14 +53,14 @@ export function CarouselOrderProducts({ orderProducts }: Props) {
               basePrice: orderProduct.basePrice,
             })
 
-            const slug = new SlugGenerator(orderProduct.title)
+            const slug = SlugGenerator.createFromText(orderProduct.title)
 
             return (
               <div
                 key={orderProduct.id}
                 className="group relative z-20 h-72 md:h-[26rem]"
               >
-                <Link href={`/details/${slug.value}`}>
+                <Link href={`/details/${slug.value}/${orderProduct.productId}`}>
                   <div className="flex flex-col items-center justify-center gap-1 rounded-md bg-base_reference_card p-1 duration-700 hover:bg-base_reference_card_hover md:h-full md:gap-2 md:p-4">
                     <div className="h-10 text-center">
                       <p className="text-xs md:text-sm">{orderProduct.title}</p>

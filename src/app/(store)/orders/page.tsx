@@ -34,6 +34,7 @@ export default async function Orders() {
 
       <div className="mt-4 flex flex-col justify-center">
         <h2 className="text-lg">Pedidos em andamento:</h2>
+
         {orders.length >= 1 ? (
           orders.map((order) => {
             if (
@@ -42,11 +43,7 @@ export default async function Orders() {
             ) {
               return <OrderItem key={order.id} order={order} />
             } else {
-              return (
-                <p key={order.id} className="mt-10 text-center opacity-80">
-                  Vazio
-                </p>
-              )
+              return <></>
             }
           })
         ) : (
@@ -63,11 +60,7 @@ export default async function Orders() {
               if (order.orderStatusTracking === productDeliveredToClient) {
                 return <OrderItem key={order.id} order={order} />
               } else {
-                return (
-                  <p key={order.id} className="text-center opacity-80">
-                    Vazio
-                  </p>
-                )
+                return <></>
               }
             })
           ) : (

@@ -1,41 +1,33 @@
-// import { prismaClient } from '@/lib/prisma'
+'use server'
 
-export const getDataUniqueProduct = async (slug: string) => {
+import { api } from '../api'
+
+interface GetDataProductResponse {
+  props: {
+    product?: string
+  }
+  revalidate: number
+  notFound?: boolean
+}
+
+export const getDataUniqueProduct = async (
+  productId: string,
+): Promise<GetDataProductResponse> => {
   try {
-    // const product = await prismaClient.product.findFirst({
-    //   where: {
-    //     slug,
-    //   },
-    //   include: {
-    //     category: {
-    //       include: {
-    //         products: {
-    //           where: {
-    //             slug: {
-    //               not: slug,
-    //             },
-    //           },
-    //         },
-    //       },
-    //     },
-    //   },
-    // })
+    const response = await api.get(`/product/details/${productId}`)
 
     return {
       props: {
-        // product: JSON.stringify(product),
+        product: JSON.stringify(response.data.product),
       },
       revalidate: 60 * 60 * 24,
     }
   } catch (err) {
-    console.log(err)
-
     return {
       notFound: true,
-      props: {
-        product: '[]',
-      },
+
       revalidate: 0,
+      props: {},
     }
   }
 }
