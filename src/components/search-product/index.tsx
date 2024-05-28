@@ -31,7 +31,7 @@ export function SearchProduct({ products }: Props) {
       <div className="relative mx-auto max-w-2xl px-4">
         <Search className="absolute left-8 top-2 text-base_color_dark/20" />
         <Input
-          className="w-full bg-base_color_dark/5 px-14 "
+          className="w-full bg-base_color_dark/5 pl-14 "
           onChange={(e) => handleSearch(e.target.value)}
           value={searchItem}
           placeholder="Pesquise por nome ou categoria"

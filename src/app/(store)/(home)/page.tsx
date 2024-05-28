@@ -53,8 +53,8 @@ export default async function Home() {
         <CookieConsentBanner />
       )} */}
 
-      <div>
-        <p className="mb-4 text-center">
+      <div className="my-10 flex flex-col gap-8">
+        <p className="text-center">
           Acesse o nosso catálogo para ver todos os produtos da loja!
         </p>
         <div className="mx-auto flex w-52 items-center justify-center gap-2 rounded-md border border-base_color_dark/10 p-2 duration-700 hover:bg-base_reference_card">

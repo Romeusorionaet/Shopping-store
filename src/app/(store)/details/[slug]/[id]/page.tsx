@@ -62,6 +62,10 @@ export default async function Details({ params }: ParamsProps) {
     dataProducts.products,
   )
 
+  const filteredProductsTheSameCategory = dataProductsTheSameCategory.filter(
+    (product) => product.id !== id,
+  )
+
   const { totalPrice } = CalculateValueProduct({
     discountPercentage: product.discountPercentage,
     basePrice: product.price,
@@ -151,7 +155,7 @@ export default async function Details({ params }: ParamsProps) {
           <div className="space-y-6">
             <h2 className="text-lg uppercase md:text-2xl">Veja também</h2>
 
-            <CarouselProducts products={dataProductsTheSameCategory} />
+            <CarouselProducts products={filteredProductsTheSameCategory} />
           </div>
         )}
       </div>

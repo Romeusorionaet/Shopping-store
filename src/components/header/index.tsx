@@ -76,7 +76,7 @@ export function Header() {
   return (
     <header className="fixed left-0 z-30 w-full rounded-none bg-base_one_reference_header p-4 text-foreground">
       <DialogLoginAdm handleCancel={handleCancel} isDialogOpen={isDialogOpen} />
-      <div className="mx-auto flex max-w-[1550px] items-center justify-between md:px-10">
+      <div className="mx-auto flex max-w-[1550px] items-center justify-between md:gap-16 md:px-10">
         <Sheet
           modal={false}
           open={isMenuOpen}
@@ -168,8 +168,8 @@ export function Header() {
                 </>
               </div>
 
-              <div className="flex flex-col items-center justify-center">
-                <>
+              <div className="flex items-center justify-between gap-8">
+                <div className="w-full">
                   {!data ? (
                     <Button
                       size="icon"
@@ -191,9 +191,9 @@ export function Header() {
                       Sair
                     </Button>
                   )}
-                </>
+                </div>
 
-                <>
+                <div>
                   {data ? (
                     <div className="flex flex-col">
                       <div className="flex items-center gap-2 py-4">
@@ -204,49 +204,76 @@ export function Header() {
                             <AvatarImage src={data.user.image} />
                           )}
                         </Avatar>
-
-                        <div className="flex flex-col">
-                          <p className="font-medium">{data.user.name}</p>
-                          <p className="text-sm opacity-75">Boas compras!</p>
-                        </div>
                       </div>
                     </div>
                   ) : (
                     <></>
                   )}
-                </>
+                </div>
               </div>
             </div>
           </SheetContent>
         </Sheet>
 
-        <h1
-          onClick={() => handleNavigateTo('/')}
-          className="cursor-pointer text-2xl font-bold"
-        >
-          Shopping Store
-        </h1>
+        <div className="flex gap-2">
+          <h1
+            onClick={() => handleNavigateTo('/')}
+            className="cursor-pointer text-2xl font-bold"
+          >
+            Shopping Store
+          </h1>
 
-        <Sheet open={isCartOpen} onOpenChange={(open) => setIsCartOpen(open)}>
-          <SheetTrigger asChild>
-            <div className="relative border-none bg-base_one_reference_header duration-700">
-              <BaggageClaim size={30} />
-              {conditionForShowSizeCart && (
-                <div className="absolute -right-2 -top-2 flex h-6 w-6 items-center justify-center rounded-full bg-red-500 p-1 text-white">
-                  <p>{clientRendered && cart.length}</p>
+          <Sheet open={isCartOpen} onOpenChange={(open) => setIsCartOpen(open)}>
+            <SheetTrigger asChild>
+              <div className="relative border-none bg-base_one_reference_header duration-700">
+                <BaggageClaim size={30} />
+                {conditionForShowSizeCart && (
+                  <div className="absolute -right-2 -top-2 flex h-6 w-6 items-center justify-center rounded-full bg-red-500 p-1 text-white">
+                    <p>{clientRendered && cart.length}</p>
+                  </div>
+                )}
+              </div>
+            </SheetTrigger>
+
+            <SheetContent className="bg-base_one_reference_header text-foreground">
+              <SheetHeader className="text-left text-lg font-bold">
+                Carrinho
+              </SheetHeader>
+
+              <Cart handleNavigateTo={handleNavigateTo} />
+            </SheetContent>
+          </Sheet>
+        </div>
+
+        <div className="">
+          {data ? (
+            <div className="flex flex-col">
+              <div className="flex items-center gap-2 py-4">
+                <Avatar>
+                  <AvatarFallback>{data.user.name}</AvatarFallback>
+
+                  {data.user.image && <AvatarImage src={data.user.image} />}
+                </Avatar>
+
+                <div className="flex flex-col max-md:hidden">
+                  <p className="font-medium">{data.user.name}</p>
+                  <p className="text-sm opacity-75">Boas compras!</p>
                 </div>
-              )}
+              </div>
             </div>
-          </SheetTrigger>
-
-          <SheetContent className="bg-base_one_reference_header text-foreground">
-            <SheetHeader className="text-left text-lg font-bold">
-              Carrinho
-            </SheetHeader>
-
-            <Cart handleNavigateTo={handleNavigateTo} />
-          </SheetContent>
-        </Sheet>
+          ) : (
+            <div className="w-full">
+              <Button
+                size="icon"
+                variant="default"
+                onClick={handleLogin}
+                className="w-full gap-4 font-semibold text-black hover:bg-base_reference_card hover:text-primary"
+              >
+                <LogIn />
+              </Button>
+            </div>
+          )}
+        </div>
       </div>
     </header>
   )
