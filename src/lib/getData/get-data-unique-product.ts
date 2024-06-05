@@ -2,18 +2,7 @@
 
 import { api } from '../api'
 
-interface GetDataProductResponse {
-  props: {
-    product?: string
-    technicalProductDetails?: string
-  }
-  revalidate: number
-  notFound?: boolean
-}
-
-export const getDataUniqueProduct = async (
-  productId: string,
-): Promise<GetDataProductResponse> => {
+export const getDataUniqueProduct = async (productId: string) => {
   try {
     const response = await api.get(`/product/details/${productId}`)
 

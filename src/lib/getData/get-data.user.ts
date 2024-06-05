@@ -2,14 +2,7 @@
 
 import { getAccessTokenFromCookies } from '@/utils/get-tokens-from-cookies'
 import { api } from '../api'
-
-interface ProfileProps {
-  id: string
-  username: string
-  email: string
-  createAt: string
-  updateAt: string
-}
+import { ProfileProps } from '@/core/@types/api-store'
 
 interface GetDataUserResponse {
   props: {

@@ -15,6 +15,14 @@ export enum OrderStatusTracking {
   PRODUCT_DELIVERED_TO_CLIENT = 'PRODUCT_DELIVERED_TO_CLIENT',
 }
 
+export interface ProfileProps {
+  id: string
+  username: string
+  email: string
+  createAt: string
+  updateAt: string
+}
+
 export interface CategoryProps {
   id: string
   title: string
