@@ -1,10 +1,19 @@
 import { api } from '../api'
 
-export const getDataProductsTheSameCategory = async (categoryId: string) => {
+interface Props {
+  categoryId: string
+  page: number
+}
+
+export const getDataProductsTheSameCategory = async ({
+  categoryId,
+  page,
+}: Props) => {
   try {
     const response = await api.get('/products/same-category', {
       params: {
         categoryId,
+        page,
       },
     })
 
@@ -20,7 +29,6 @@ export const getDataProductsTheSameCategory = async (categoryId: string) => {
       props: {
         products: '[]',
       },
-      revalidate: 0,
     }
   }
 }

@@ -11,7 +11,6 @@ export default async function ControlAdm() {
   const { propsCategories } = await getDataCatalog()
   // const categories: Category[] = JSON.parse(propsCategories.categories)
 
-  const { props } = await getDataProducts()
   // const products: Product[] = JSON.parse(props.products)
 
   return (

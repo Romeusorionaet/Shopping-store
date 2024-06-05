@@ -46,6 +46,25 @@ export interface ProductProps {
   updatedAt: Date | null
 }
 
+export interface TechnicalProductDetailsProps {
+  id: string
+  productId: string
+  width: string
+  height: string
+  weight: string
+  brand: string
+  model: string
+  ram: string
+  rom: string
+  videoResolution: string
+  batteryCapacity: string
+  screenOrWatchFace: string
+  averageBatteryLife: string
+  videoCaptureResolution: string
+  processorBrand: string
+  operatingSystem: string
+}
+
 export interface AddressProps {
   id: string
   buyerId: string

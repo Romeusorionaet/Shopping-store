@@ -5,10 +5,19 @@ import { AddProductInCart } from '@/components/add-product-in-cart'
 import { PackageX } from 'lucide-react'
 import { Metadata } from 'next'
 import { metadata } from '@/app/layout'
-import { ModeOfSale, ProductProps } from '@/core/@types/api-store'
+import {
+  ModeOfSale,
+  ProductProps,
+  TechnicalProductDetailsProps,
+} from '@/core/@types/api-store'
 import { ProductImages } from '../../components/product-images'
 import { AskForProductReturn } from '../../components/Ask-for-product-return'
 import { getDataProductsTheSameCategory } from '@/lib/getData/get-data-products-the-same-category'
+import { TechnicalProductDetails } from '../../components/technical-product-details'
+import { PaymentAndPolices } from '@/components/rules-and-policies/payment-and-rules'
+import { ReturnPolices } from '@/components/rules-and-policies/return-policies'
+import { PaymentAndOptions } from '@/components/rules-and-policies/payment-options'
+import { DecorationPercentageIndicator } from '@/components/decoration-percentage-indicator'
 
 interface ParamsProps {
   params: {
@@ -52,11 +61,19 @@ export default async function Details({ params }: ParamsProps) {
     )
   }
 
-  const product: ProductProps = JSON.parse(props.product)
+  if (!props.technicalProductDetails) {
+    return
+  }
 
-  const { props: dataProducts } = await getDataProductsTheSameCategory(
-    product.categoryId,
+  const product: ProductProps = JSON.parse(props.product)
+  const technicalProductDetails: TechnicalProductDetailsProps = JSON.parse(
+    props.technicalProductDetails,
   )
+
+  const { props: dataProducts } = await getDataProductsTheSameCategory({
+    categoryId: product.categoryId,
+    page: 1,
+  })
 
   const dataProductsTheSameCategory: ProductProps[] = JSON.parse(
     dataProducts.products,
@@ -70,7 +87,7 @@ export default async function Details({ params }: ParamsProps) {
     discountPercentage: product.discountPercentage,
     basePrice: product.price,
   })
-  const totalPriceDividedByTwelve = totalPrice / 12
+  const totalPriceDividedByTwelve = totalPrice / 10
 
   const quantity = product.stockQuantity < 0 ? 0 : product.stockQuantity
 
@@ -79,11 +96,12 @@ export default async function Details({ params }: ParamsProps) {
       <div className="my-8 flex items-center justify-center gap-8 max-md:flex-col md:items-start">
         <ProductImages imageUrls={product.imgUrlList} name={product.title} />
 
-        <div className="flex flex-col gap-4 p-4 2xl:w-[50%]">
+        <div className="flex flex-col gap-4 p-4 md:border-l 2xl:w-[50%]">
           <h1 className="font-bold">{product.title}</h1>
           <p>
             Quantidade em estoque: <strong>{quantity}</strong>
           </p>
+
           <div>
             {product.discountPercentage !== 0 && (
               <div className="flex gap-8">
@@ -94,12 +112,16 @@ export default async function Details({ params }: ParamsProps) {
                     minimumFractionDigits: 2,
                   })}
                 </p>
-                <p className="text-lg font-bold text-base_color_positive">
-                  {product.discountPercentage}%{' '}
-                  <span className="uppercase">off</span>
-                </p>
+
+                <div className="rounded-md bg-base_one_reference_header p-1">
+                  <p className="text-lg font-bold text-base_color_positive">
+                    {product.discountPercentage}%{' '}
+                    <span className="uppercase">off</span>
+                  </p>
+                </div>
               </div>
             )}
+
             <div>
               <p className="text-xl">
                 {totalPrice.toLocaleString('pt-BR', {
@@ -109,19 +131,32 @@ export default async function Details({ params }: ParamsProps) {
                 })}
               </p>
               <p>
-                em{' '}
+                em até{' '}
                 <span className="text-base_color_positive">
                   12x R$ {totalPriceDividedByTwelve.toFixed(2)} sem juros
                 </span>
               </p>
             </div>
+
+            <PaymentAndOptions totalPrice={totalPrice} />
+
+            <div className="mt-4 flex items-center gap-2">
+              <DecorationPercentageIndicator
+                discountPercentage={product.discountPercentage}
+              />
+              <p className="text-xs">Temperatura</p>
+            </div>
+
+            <div className="mt-2">
+              {product.stars > 0 && <p>Vendido: {product.stars}</p>}
+            </div>
+
+            <p className="mt-4 uppercase">Frete gratis para todo Brasil!</p>
           </div>
 
-          <p className="text-xl">Descrição:</p>
-          <div className="scrollbar h-96 overflow-auto border border-base_color_dark/20 p-1">
-            <pre className="whitespace-pre-wrap font-sans">
-              {product.description}
-            </pre>
+          <div className="mx-auto flex gap-2">
+            <PaymentAndPolices />
+            <ReturnPolices />
           </div>
 
           {product.stockQuantity <= 0 ? (
@@ -140,18 +175,33 @@ export default async function Details({ params }: ParamsProps) {
                   Store
                 </p>
               ) : (
-                <AddProductInCart
-                  title="Adicionar ao carrinho"
-                  product={product}
-                />
+                <div className="mx-auto w-60">
+                  <AddProductInCart
+                    title="Adicionar ao carrinho"
+                    product={product}
+                  />
+                </div>
               )}
             </div>
           )}
         </div>
       </div>
 
-      <div className="space-y-8 p-4">
-        {dataProductsTheSameCategory.length !== 0 && (
+      <div className="ml-2">
+        <h2 className="mb-4 text-lg uppercase md:text-2xl">Descrição:</h2>
+        <div className="scrollbar h-96 overflow-auto border-b border-base_color_dark/20 p-1 md:h-56">
+          <pre className="whitespace-pre-wrap font-roboto">
+            {product.description}
+          </pre>
+        </div>
+      </div>
+
+      <TechnicalProductDetails
+        technicalProductDetails={technicalProductDetails}
+      />
+
+      <div className="p-2 pb-28">
+        {filteredProductsTheSameCategory.length !== 0 && (
           <div className="space-y-6">
             <h2 className="text-lg uppercase md:text-2xl">Veja também</h2>
 

@@ -1,16 +1,13 @@
 'use client'
 
-import { CalculateValueProduct } from '@/utils/calculate-value-product'
-import Image from 'next/image'
-import Link from 'next/link'
-import { AddProductInCart } from '../add-product-in-cart'
-import '../../styles/slide-slick/slick.css'
+import '@/assets/styles/slide-slick/slick.css'
 import Slider from 'react-slick'
 import { useEffect, useRef, useState } from 'react'
 import { ArrowControlLeft, ArrowControlRight } from './arrows-carousel'
 import { useSlickCarousel } from '@/hooks/use-slick-carousel'
-import { ModeOfSale, ProductProps } from '@/core/@types/api-store'
-import { SlugGenerator } from '@/utils/slug-generator'
+import { ProductProps } from '@/core/@types/api-store'
+import { ProductCard } from './product-card'
+import Link from 'next/link'
 
 export interface CustomSlider extends Slider {
   slickPrev: () => void
@@ -19,132 +16,74 @@ export interface CustomSlider extends Slider {
 
 interface Props {
   products: ProductProps[]
+  section?: string
 }
 
-export function CarouselProducts({ products }: Props) {
+export function CarouselProducts({ products, section }: Props) {
   const slider = useRef<CustomSlider>(null)
   const { carouselResponsive } = useSlickCarousel()
 
   const [sliderKey, setSliderKey] = useState(0)
 
+  const [currentSlide, setCurrentSlide] = useState(0)
+  const [slidesToShow, setSlidesToShow] = useState(3)
+
+  useEffect(() => {
+    if (carouselResponsive && carouselResponsive.slidesToShow) {
+      setSlidesToShow(carouselResponsive.slidesToShow)
+    }
+  }, [carouselResponsive])
+
+  const handleAfterChange = (current: number) => {
+    setCurrentSlide(current)
+  }
+
   useEffect(() => {
     setSliderKey((prevKey) => prevKey + 1)
   }, [products])
-
-  if (!products) {
-    return null
-  }
 
   const sizeList = products.length === 0
 
   return (
     <div className="relative">
-      {products.length > 3 && (
+      {products.length > slidesToShow && currentSlide > 0 && (
         <ArrowControlLeft
           sizeList={sizeList}
           onClick={() => slider.current?.slickPrev()}
         />
       )}
 
-      <Slider key={sliderKey} ref={slider} {...carouselResponsive}>
+      <Slider
+        key={sliderKey}
+        ref={slider}
+        {...carouselResponsive}
+        afterChange={handleAfterChange}
+      >
         {products &&
           products.map((product) => {
-            const { totalPrice } = CalculateValueProduct({
-              discountPercentage: product.discountPercentage,
-              basePrice: product.price,
-            })
-            const productAvailable = product.stockQuantity <= 0
-
-            const slug = SlugGenerator.createFromText(product.title)
-
-            return (
-              <div
-                key={product.id}
-                className="group relative z-20 h-72 md:h-[26rem]"
-              >
-                <div
-                  data-quantity={productAvailable}
-                  className="absolute bottom-1 left-1/2 w-full -translate-x-1/2 transform group-hover:flex data-[quantity=true]:hidden data-[quantity=true]:group-hover:hidden md:hidden"
-                >
-                  <AddProductInCart product={product} />
-                </div>
-                <Link href={`/details/${slug.value}/${product.id}`}>
-                  <div
-                    data-quantity={productAvailable}
-                    className="flex flex-col items-center justify-center gap-1 rounded-md bg-base_reference_card p-1 duration-700 hover:bg-base_reference_card_hover data-[quantity=true]:bg-base_color_dark/5 data-[quantity=true]:hover:bg-base_color_dark/10 md:h-full md:gap-2 md:p-4"
-                  >
-                    <div className="h-10 text-center">
-                      <p className="text-xs md:text-sm">{product.title}</p>
-                    </div>
-
-                    <div className="h-10">
-                      <div>
-                        {product.placeOfSale ===
-                        ModeOfSale.SELLS_ONLY_IN_THE_REGION ? (
-                          <span className="absolute bottom-28 left-0 rounded-md bg-base_color_dark/5 p-1 text-xs font-bold">
-                            Local
-                          </span>
-                        ) : (
-                          <span className="absolute bottom-28 left-0 rounded-md bg-base_color_dark/5 p-1 text-xs font-bold text-base_color_positive">
-                            Brasil
-                          </span>
-                        )}
-                      </div>
-
-                      {product.discountPercentage !== 0 && (
-                        <p className="text-xs line-through opacity-75">
-                          {Number(product.price).toLocaleString('pt-BR', {
-                            style: 'currency',
-                            currency: 'BRL',
-                            minimumFractionDigits: 2,
-                          })}
-                        </p>
-                      )}
-
-                      <p className="text-sm">
-                        {totalPrice.toLocaleString('pt-BR', {
-                          style: 'currency',
-                          currency: 'BRL',
-                          minimumFractionDigits: 2,
-                        })}
-                      </p>
-                    </div>
-
-                    <div>
-                      <Image
-                        width={0}
-                        height={0}
-                        sizes="100vw"
-                        className="h-32 w-full object-contain md:h-52"
-                        src={product.imgUrlList[0]}
-                        alt={product.title}
-                      />
-                    </div>
-
-                    <div className="mb-4 flex w-full items-center justify-between gap-2 max-md:text-xs">
-                      {product.discountPercentage !== 0 && (
-                        <p>
-                          <strong>{product.discountPercentage}%</strong> Desc
-                        </p>
-                      )}
-
-                      <p>
-                        Qtd: <strong>{product.stockQuantity}</strong>
-                      </p>
-                    </div>
-                  </div>
-                </Link>
-              </div>
-            )
+            return <ProductCard key={product.id} product={product} />
           })}
+        <div
+          key="end-message"
+          className="flex h-72 w-72 flex-nowrap items-center justify-center"
+        >
+          {products.length === 14 ? (
+            <Link href={`/search?s=${section}&p=1`}>
+              <p className="underline">Ver todos...</p>
+            </Link>
+          ) : (
+            <></>
+          )}
+        </div>
       </Slider>
 
-      {products.length > 3 && (
-        <ArrowControlRight
-          sizeList={sizeList}
-          onClick={() => slider.current?.slickNext()}
-        />
-      )}
+      {products.length > slidesToShow &&
+        currentSlide < products.length - slidesToShow && (
+          <ArrowControlRight
+            sizeList={sizeList}
+            onClick={() => slider.current?.slickNext()}
+          />
+        )}
     </div>
   )
 }

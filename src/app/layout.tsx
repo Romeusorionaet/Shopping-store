@@ -1,8 +1,7 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
-import '@/styles/globals.css'
-import { AuthProvider } from '@/providers/auth'
-import '@/styles/scrollbar.css'
+import { Roboto } from 'next/font/google'
+import '@/assets/styles/globals.css'
+import '@/assets/styles/scrollbar.css'
 import { Header } from '@/components/header'
 import { NextSSRPlugin } from '@uploadthing/react/next-ssr-plugin'
 import { extractRouterConfig } from 'uploadthing/server'
@@ -11,9 +10,14 @@ import { ToastContainer } from 'react-toastify'
 import { ourFileRouter } from './api/uploadthing/core'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClient } from '@/lib/query-client'
-import { CSPostHogProvider } from '@/providers/cs-post-hog-provider'
+import { HandleCartArea } from '@/components/cart/handle-cart-area'
+import { AuthProvider } from '@/providers/auth'
 
-const inter = Inter({ subsets: ['latin'] })
+const roboto = Roboto({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  variable: '--font-roboto',
+})
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://shopping-store-kappa.vercel.app'),
@@ -43,17 +47,16 @@ export default async function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} mx-auto max-w-[1680px] antialiased`}>
+      <body className={`${roboto.variable} mx-auto max-w-[1680px] antialiased`}>
         <QueryClientProvider client={queryClient}>
           <AuthProvider>
             <UserContextProvider>
-              <CSPostHogProvider>
-                <NextSSRPlugin
-                  routerConfig={extractRouterConfig(ourFileRouter)}
-                />
-                <Header />
-                {children}
-              </CSPostHogProvider>
+              <NextSSRPlugin
+                routerConfig={extractRouterConfig(ourFileRouter)}
+              />
+              <Header />
+              {children}
+              <HandleCartArea />
             </UserContextProvider>
           </AuthProvider>
           <ToastContainer

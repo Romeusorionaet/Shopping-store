@@ -1,3 +1,4 @@
+import { KeyLocalStorage } from '@/constants/key-local-storage'
 import { ProductProps } from '@/core/@types/api-store'
 import { create } from 'zustand'
 
@@ -17,7 +18,7 @@ export interface CartStore {
 const getInitialCartState = () => {
   if (typeof window !== 'undefined') {
     const cartSavedInLocalStorage = JSON.parse(
-      localStorage.getItem('@shopping-store/cart-products') || '[]',
+      localStorage.getItem(KeyLocalStorage.LOCAL_STORAGE_CART_PRODUCT) || '[]',
     )
 
     return {
@@ -69,7 +70,7 @@ export const useCartStore = create<CartStore>((set, get) => ({
       useCartStore.getState().cart,
     )
     localStorage.setItem(
-      '@shopping-store/cart-products',
+      KeyLocalStorage.LOCAL_STORAGE_CART_PRODUCT,
       updatedCartInLocalStorage,
     )
   },
@@ -101,7 +102,7 @@ export const useCartStore = create<CartStore>((set, get) => ({
 
         const updatedCartInLocalStorage = JSON.stringify(get().cart)
         localStorage.setItem(
-          '@shopping-store/cart-products',
+          KeyLocalStorage.LOCAL_STORAGE_CART_PRODUCT,
           updatedCartInLocalStorage,
         )
       }
@@ -138,7 +139,7 @@ export const useCartStore = create<CartStore>((set, get) => ({
 
       const updatedCartInLocalStorage = JSON.stringify(get().cart)
       localStorage.setItem(
-        '@shopping-store/cart-products',
+        KeyLocalStorage.LOCAL_STORAGE_CART_PRODUCT,
         updatedCartInLocalStorage,
       )
     }
@@ -155,7 +156,7 @@ export const useCartStore = create<CartStore>((set, get) => ({
 
     const updatedCartInLocalStorage = JSON.stringify(get().cart)
     localStorage.setItem(
-      '@shopping-store/cart-products',
+      KeyLocalStorage.LOCAL_STORAGE_CART_PRODUCT,
       updatedCartInLocalStorage,
     )
   },

@@ -16,6 +16,10 @@ module.exports = {
       },
     },
 
+    fontFamily: {
+      roboto: 'var(--font-roboto)',
+    },
+
     extend: {
       colors: {
         border: 'hsl(var(--border))',
@@ -23,13 +27,14 @@ module.exports = {
         ring: 'hsl(var(--ring))',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
-        base_one_reference_header: '#284151',
-        base_reference_card: 'rgb(255 251 235)',
-        base_reference_card_hover: 'rgb(254 243 199)',
+        base_one_reference_header: 'rgb(23 37 84 / 0.9)',
+        base_reference_card: '#FAFAFF',
+        base_reference_card_hover: '#FEFEFA',
         base_detail_decoration: 'rgb(245 158 11)',
         base_color_negative: 'rgb(239 68 68)',
         base_color_positive: 'rgb(34 197 94)',
         base_color_dark: 'rgb(9 9 11)',
+        base_color_text_top: '#FFFF',
         primary: {
           DEFAULT: 'hsl(var(--primary))',
           foreground: 'hsl(var(--primary-foreground))',

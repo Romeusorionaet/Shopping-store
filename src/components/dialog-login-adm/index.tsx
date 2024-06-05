@@ -10,7 +10,6 @@ import { Input } from '../ui/input'
 import { useState } from 'react'
 import { useNotification } from '@/hooks/use-notifications'
 import { useRouter } from 'next/navigation'
-import Cookies from 'js-cookie'
 
 interface Props {
   isDialogOpen: boolean | undefined

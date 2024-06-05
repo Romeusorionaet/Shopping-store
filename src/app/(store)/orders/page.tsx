@@ -64,7 +64,7 @@ export default async function Orders() {
               }
             })
           ) : (
-            <p className="mt-10 text-center opacity-80">Vazio</p>
+            <></>
           )}
         </div>
       </div>

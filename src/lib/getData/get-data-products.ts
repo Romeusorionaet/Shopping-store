@@ -1,8 +1,12 @@
 import { api } from '../api'
 
-export const getDataProducts = async () => {
+interface Props {
+  page: number
+}
+
+export const getDataProducts = async ({ page }: Props) => {
   try {
-    const response = await api.get('products')
+    const response = await api.get('products', { params: { page } })
 
     return {
       props: {

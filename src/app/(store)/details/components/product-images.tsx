@@ -1,5 +1,6 @@
 'use client'
 
+import { BaseUrl } from '@/constants/base-url'
 import Image from 'next/image'
 import { useState } from 'react'
 
@@ -19,7 +20,7 @@ export function ProductImages({ imageUrls, name }: ProductImagesProps) {
     <div className="flex items-center max-lg:flex-col max-md:gap-4 md:h-[31rem] md:w-3/5 md:min-w-[50%] lg:flex-row-reverse lg:items-start">
       <div className="mx-auto flex h-[380px] w-full max-w-[80%] items-center justify-center  rounded-md p-1 duration-700 md:h-5/6">
         <Image
-          src={currentImage}
+          src={`${BaseUrl.IMG}/${currentImage}`}
           alt={name}
           height={0}
           width={0}
@@ -41,7 +42,7 @@ export function ProductImages({ imageUrls, name }: ProductImagesProps) {
             onClick={() => handleImageClick(imageUrl)}
           >
             <Image
-              src={imageUrl}
+              src={`${BaseUrl.IMG}/${imageUrl}`}
               alt={name}
               height={0}
               width={0}

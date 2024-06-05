@@ -68,8 +68,9 @@ export function CheckoutCart({ userHasAddress }: Props) {
         window.open(initPointUrl.checkoutUrl, '_blank')
       }
     } catch (err) {
-      // TODO tratar esse erro
-      console.log(err)
+      notifyError(
+        'Houve um problema na criação da compra. Reporte esse erro e tente novamente mais tarde.',
+      )
     }
   }
 
@@ -77,7 +78,7 @@ export function CheckoutCart({ userHasAddress }: Props) {
     <Button
       data-address={userHasAddress}
       disabled={!userHasAddress}
-      className="mt-8 uppercase data-[address=false]:cursor-not-allowed data-[address=false]:bg-base_color_dark/10"
+      className="mt-8 uppercase hover:text-base_color_text_top data-[address=false]:cursor-not-allowed data-[address=false]:bg-base_color_dark/10"
       onClick={handleFinishPurchaseClick}
     >
       Finalizar compra

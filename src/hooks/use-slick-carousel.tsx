@@ -34,9 +34,9 @@ export function useSlickCarousel() {
 
   const carouselAutoPlay = {
     arrows: false,
-    dots: true,
     infinite: true,
-    slidesToShow: 1.5,
+    dots: true,
+    slidesToShow: 1,
     slidesToScroll: 1,
     initialSlide: 0,
     autoplay: true,

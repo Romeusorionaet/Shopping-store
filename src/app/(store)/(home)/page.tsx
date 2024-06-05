@@ -1,106 +1,218 @@
 import { getDataProducts } from '@/lib/getData/get-data-products'
 import Link from 'next/link'
-
 import { LibraryBig } from 'lucide-react'
-import { SearchProduct } from '@/components/search-product'
 import { OfferBanner } from '@/components/offer-banner'
 import { NoProductRegistrationMessage } from '@/components/no-product-registration-message'
-import { CookieConsentBanner } from '@/components/cookie-consent-banner'
-import posthog from 'posthog-js'
 import { OrderProductProps, ProductProps } from '@/core/@types/api-store'
 import { getDataBuyerOrderProducts } from '@/lib/getData/get-data-buyer-order-products'
 import { CarouselProducts } from '@/components/carousel-products'
 import { CarouselOrderProducts } from '@/components/carousel-products/order-products'
+import Image from 'next/image'
+import smartphonePropaganda from '@/assets/img/banner-decoration/poco-smartphone.png'
+import { Button } from '@/components/ui/button'
+import bannerIphoneXsMax from '@/assets/img/banner-decoration/banner-iphone-xs-max.png'
+import bannerIphoneLogo from '@/assets/img/banner-decoration/iPhone-logo.png'
+import cart from '@/assets/img/banner-decoration/cart.png'
+import { SearchForm } from '@/components/search-form'
+import { Suspense } from 'react'
+import { SectionBrandLogo } from '@/components/section-brand-logo'
+import { DialogInformation } from '@/components/dialog-information'
+import { getDataSearchProducts } from '@/lib/getData/get-data-search-products'
 
 export default async function Home() {
-  const { props } = await getDataProducts()
+  // All Product
+  const { props } = await getDataProducts({ page: 1 })
   const products: ProductProps[] = JSON.parse(props.products)
 
   if (products.length === 0) {
     return <NoProductRegistrationMessage />
   }
 
-  const productsInOffers = products
-    .filter((product) => product.discountPercentage >= 50)
-    .sort(() => Math.random() - 0.5)
-
-  const filteredProductsWithDiscount = products
-    .filter((product) => product.discountPercentage !== 0)
-    .sort(() => Math.random() - 0.5)
-
   const allProducts = products.sort(() => Math.random() - 0.5)
 
+  // Order Products
   const { props: propsOrderProducts } = await getDataBuyerOrderProducts()
 
   const orderProducts: OrderProductProps[] = JSON.parse(
     propsOrderProducts.orderProducts,
   )
 
-  const orderProductsNotPaymentList = orderProducts.sort(
-    () => Math.random() - 0.5,
+  const productMap: { [key: string]: OrderProductProps } = {}
+
+  orderProducts.forEach((product) => {
+    productMap[product.productId] = product
+  })
+
+  const uniqueProducts = Object.values(productMap)
+
+  const shuffledProducts = uniqueProducts.sort(() => Math.random() - 0.5)
+
+  // Popular products
+  const { props: propsProductPopularFiltered } = await getDataSearchProducts({
+    section: 'stars',
+  })
+  const productPopularFiltered: ProductProps[] = JSON.parse(
+    propsProductPopularFiltered.products,
   )
+  const topSellingProducts = productPopularFiltered
+    .filter((product) => product.stars > 0)
+    .sort(() => Math.random() - 0.5)
+
+  // Promotion products
+  const { props: propsProductPromotionFiltered } = await getDataSearchProducts({
+    section: 'discountPercentage',
+  })
+  const productPromotionFiltered: ProductProps[] = JSON.parse(
+    propsProductPromotionFiltered.products,
+  )
+  const productsInOffers = productPromotionFiltered
+    .filter((product) => product.discountPercentage >= 1)
+    .sort(() => Math.random() - 0.5)
 
   return (
-    <main className="mx-auto flex max-w-[1480px] flex-col gap-4 overflow-hidden pb-8">
-      <div className="relative mx-auto w-full max-w-[1480px]">
-        <div className="absolute left-0 top-0 z-10 h-full w-40 bg-gradient-to-r from-base_reference_card/40 max-2xl:w-28 max-sm:w-10" />
-        <OfferBanner />
-        <div className="absolute right-0 top-0 z-10 h-full w-40 bg-gradient-to-l from-base_reference_card/40 max-2xl:w-28 max-sm:w-10" />
-      </div>
+    <div>
+      <OfferBanner />
 
-      {/* {posthog.has_opted_in_capturing() ||
-      posthog.has_opted_out_capturing() ? null : (
-        <CookieConsentBanner />
-      )} */}
+      <DialogInformation />
 
-      <div className="my-10 flex flex-col gap-8">
-        <p className="text-center">
-          Acesse o nosso catálogo para ver todos os produtos da loja!
-        </p>
-        <div className="mx-auto flex w-52 items-center justify-center gap-2 rounded-md border border-base_color_dark/10 p-2 duration-700 hover:bg-base_reference_card">
-          <Link className="font-bold" href="/catalog">
-            Ver Nosso Catálogo
-          </Link>
-          <LibraryBig size={16} />
-        </div>
-      </div>
+      <main className="mx-auto flex max-w-[1480px] flex-col gap-4 overflow-hidden pb-20">
+        <div className="relative rounded-md bg-base_one_reference_header/80">
+          <div className="my-10 ml-4 flex h-52 flex-col justify-center md:ml-20">
+            <div className="relative z-10 flex flex-col gap-8 text-base_color_text_top">
+              <p className="font-roboto text-xl font-extrabold md:text-3xl">
+                Acesse o nosso catálogo para ver todos{' '}
+                <br className="max-md:hidden" /> os produtos da loja!
+              </p>
 
-      <div className="bg-white p-2">
-        <h2 className="my-4 text-lg">Todos os produtos</h2>
-
-        <SearchProduct products={allProducts} />
-      </div>
-
-      <div>
-        {productsInOffers.length !== 0 && (
-          <div className="bg-white p-2">
-            <h2 className="my-4 text-lg">Super promoção</h2>
-
-            <CarouselProducts products={productsInOffers} />
+              <div className="flex flex-col gap-4 md:flex-row">
+                <div className="flex w-44 items-center justify-center gap-2 rounded-md border border-base_color_text_top p-2 hover:bg-base_reference_card hover:text-base_color_dark">
+                  <Link className="font-bold" href="/catalog">
+                    Ver Catálogo
+                  </Link>
+                  <LibraryBig size={16} />
+                </div>
+                <Button
+                  variant="ghost"
+                  className="w-40 hover:bg-base_color_text_top hover:text-base_color_dark"
+                >
+                  Entre em contato
+                </Button>
+              </div>
+            </div>
           </div>
-        )}
-      </div>
 
-      <div>
-        {filteredProductsWithDiscount.length !== 0 && (
-          <div className="bg-white p-2">
-            <h2 className="my-4 text-lg">Produtos em Promoção</h2>
-
-            <CarouselProducts products={filteredProductsWithDiscount} />
-          </div>
-        )}
-      </div>
-
-      <div>
-        {orderProductsNotPaymentList.length !== 0 && (
-          <div className="bg-white p-2">
-            <h2 className="my-4 text-lg">Produtos que você se interessou</h2>
-            <CarouselOrderProducts
-              orderProducts={orderProductsNotPaymentList}
+          <div className="absolute bottom-0 right-0 rounded-full bg-gradient-to-t from-transparent to-cyan-100 md:right-10 md:w-52">
+            <Image
+              width={0}
+              height={0}
+              sizes="100vw"
+              className="h-36 w-44 object-cover md:h-52"
+              src={smartphonePropaganda}
+              alt={'smartphone poco blue color, propaganda'}
             />
           </div>
-        )}
-      </div>
-    </main>
+        </div>
+
+        <div className="bg-white px-2 py-8">
+          <Suspense fallback={null}>
+            <SearchForm />
+          </Suspense>
+
+          <h2 className="my-4 uppercase md:text-lg">Todos os produtos</h2>
+
+          <CarouselProducts products={allProducts} />
+        </div>
+
+        <div className="flex rounded-md bg-base_one_reference_header/80 pr-2 text-base_color_text_top">
+          <div className="flex h-56 w-1/2 justify-end">
+            <Image
+              width={0}
+              height={0}
+              sizes="100vw"
+              className="h-full object-cover"
+              src={bannerIphoneXsMax}
+              alt="banner Iphone Xs Max"
+            />
+          </div>
+
+          <div className="relative flex w-1/2 flex-col items-center justify-center gap-2">
+            <div className="h-20 w-20">
+              <Image
+                width={0}
+                height={0}
+                sizes="100vw"
+                className="rounded-full bg-white object-cover"
+                src={bannerIphoneLogo}
+                alt="banner Iphone Logo"
+              />
+            </div>
+
+            <h3 className="font-bold">Iphone XS Max</h3>
+
+            <p className="text-justify text-xs md:text-center">
+              O iPhone XS Max tem tela Super Retina de 6,5 polegadas* em OLED
+              exclusivo para HDR e brilho impressionante.{' '}
+              <br className="max-md:hidden" /> Face ID avançado que permite
+              desbloquear o aparelho
+            </p>
+          </div>
+        </div>
+
+        <div>
+          {productsInOffers.length !== 0 && (
+            <div className="bg-white p-2">
+              <h2 className="my-4 text-lg uppercase md:text-lg">Em promoção</h2>
+
+              <CarouselProducts
+                section={'discountPercentage'}
+                products={productsInOffers}
+              />
+            </div>
+          )}
+        </div>
+
+        <div className="flex flex-col items-center justify-center gap-2 rounded-md bg-base_one_reference_header/80 py-2">
+          <Image
+            width={0}
+            height={0}
+            sizes="100vw"
+            className="h-40 w-40 rounded-full object-cover"
+            src={cart}
+            alt="banner Iphone Xs Max"
+          />
+          <p className="text-xl font-bold text-base_color_text_top md:text-2xl">
+            Frete gratis para todo o Brasil!
+          </p>
+        </div>
+
+        <div>
+          {topSellingProducts.length !== 0 && (
+            <div className="bg-white p-2">
+              <h2 className="my-4 text-lg uppercase md:text-lg">
+                Mais populares
+              </h2>
+
+              <CarouselProducts
+                section={'stars'}
+                products={topSellingProducts}
+              />
+            </div>
+          )}
+        </div>
+
+        <SectionBrandLogo />
+
+        <div>
+          {shuffledProducts.length !== 0 && (
+            <div className="bg-white p-2">
+              <h2 className="my-4 text-lg uppercase md:text-lg">
+                Produtos que você se interessou
+              </h2>
+              <CarouselOrderProducts orderProducts={shuffledProducts} />
+            </div>
+          )}
+        </div>
+      </main>
+    </div>
   )
 }

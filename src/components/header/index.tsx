@@ -13,42 +13,32 @@ import { Sheet, SheetContent, SheetHeader, SheetTrigger } from '../ui/sheet'
 import { Button } from '../ui/button'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import { useRouter } from 'next/navigation'
-import { Cart } from '../cart'
-import { useContext, useEffect, useState } from 'react'
-import { useCartStore } from '@/providers/zustand-store'
+import { useContext, useState } from 'react'
 import { checkIsPrivateRoute } from '@/utils/check-is-private-route'
-import { DialogLoginAdm } from '../dialog-login-adm'
 import { signIn, useSession, signOut } from 'next-auth/react'
 import { UserContext } from '@/providers/user-context'
-import posthog from 'posthog-js'
+import { DialogLoginAdm } from '../dialog-login-adm'
+import { useNotification } from '@/hooks/use-notifications'
 
 export function Header() {
   const { profile } = useContext(UserContext)
   const isAdm = false // por enquanto / pegar role do profile
-  const { cart } = useCartStore()
   const { data } = useSession()
 
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [isCartOpen, setIsCartOpen] = useState(false)
   const [isDialogOpen, setIsDialogOpen] = useState<boolean | undefined>(false)
 
-  const [clientRendered, setClientRendered] = useState(false)
+  const { notifyError } = useNotification()
 
   const router = useRouter()
-  const conditionForShowSizeCart =
-    clientRendered && cart.length !== 0 && data?.user.id
-
-  useEffect(() => {
-    // hydrate
-    setClientRendered(true)
-  }, [])
 
   const handleLogin = async () => {
     try {
       await signIn('google', { callbackUrl: '/' })
     } catch (err: any) {
-      console.log(err.message)
-      // TODO redirecionar para página de error
+      notifyError(
+        'Houve um problema ao realizar o login. Reporte esse erro e tente novamente mais tarde.',
+      )
     }
   }
 
@@ -60,7 +50,6 @@ export function Header() {
     setIsDialogOpen(false)
   }
 
-  posthog.identify(profile.email)
   const handleNavigateTo = (route: string) => {
     const isPrivateRoute = checkIsPrivateRoute(route)
 
@@ -68,13 +57,12 @@ export function Header() {
       setIsDialogOpen(true)
     } else {
       setIsMenuOpen(false)
-      setIsCartOpen(false)
       router.push(route)
     }
   }
 
   return (
-    <header className="fixed left-0 z-30 w-full rounded-none bg-base_one_reference_header p-4 text-foreground">
+    <header className="fixed left-0 z-30 w-full rounded-none border-b border-b-base_color_dark/30 bg-base_one_reference_header text-base_color_text_top">
       <DialogLoginAdm handleCancel={handleCancel} isDialogOpen={isDialogOpen} />
       <div className="mx-auto flex max-w-[1550px] items-center justify-between md:gap-16 md:px-10">
         <Sheet
@@ -88,7 +76,7 @@ export function Header() {
 
           <SheetContent
             side="left"
-            className="bg-base_one_reference_header text-foreground"
+            className="bg-base_color_text_top text-foreground"
           >
             <SheetHeader className="text-left text-lg font-bold">
               Menu
@@ -175,7 +163,7 @@ export function Header() {
                       size="icon"
                       variant="outline"
                       onClick={handleLogin}
-                      className="w-full gap-4 font-semibold hover:bg-base_reference_card hover:text-primary"
+                      className="w-full gap-4 font-semibold hover:bg-base_one_reference_header hover:text-base_color_text_top"
                     >
                       <LogIn />
                       Fazer login
@@ -185,7 +173,7 @@ export function Header() {
                       size="icon"
                       variant="outline"
                       onClick={handleLogout}
-                      className="w-full gap-4 font-semibold duration-700 hover:bg-base_reference_card hover:text-primary"
+                      className="w-full gap-4 font-semibold duration-700 hover:bg-base_one_reference_header hover:text-base_color_text_top"
                     >
                       <LogIn size={26} />
                       Sair
@@ -193,7 +181,7 @@ export function Header() {
                   )}
                 </div>
 
-                <div>
+                <>
                   {data ? (
                     <div className="flex flex-col">
                       <div className="flex items-center gap-2 py-4">
@@ -209,7 +197,7 @@ export function Header() {
                   ) : (
                     <></>
                   )}
-                </div>
+                </>
               </div>
             </div>
           </SheetContent>
@@ -222,30 +210,9 @@ export function Header() {
           >
             Shopping Store
           </h1>
-
-          <Sheet open={isCartOpen} onOpenChange={(open) => setIsCartOpen(open)}>
-            <SheetTrigger asChild>
-              <div className="relative border-none bg-base_one_reference_header duration-700">
-                <BaggageClaim size={30} />
-                {conditionForShowSizeCart && (
-                  <div className="absolute -right-2 -top-2 flex h-6 w-6 items-center justify-center rounded-full bg-red-500 p-1 text-white">
-                    <p>{clientRendered && cart.length}</p>
-                  </div>
-                )}
-              </div>
-            </SheetTrigger>
-
-            <SheetContent className="bg-base_one_reference_header text-foreground">
-              <SheetHeader className="text-left text-lg font-bold">
-                Carrinho
-              </SheetHeader>
-
-              <Cart handleNavigateTo={handleNavigateTo} />
-            </SheetContent>
-          </Sheet>
         </div>
 
-        <div className="">
+        <div>
           {data ? (
             <div className="flex flex-col">
               <div className="flex items-center gap-2 py-4">
@@ -265,9 +232,9 @@ export function Header() {
             <div className="w-full">
               <Button
                 size="icon"
-                variant="default"
+                variant="ghost"
                 onClick={handleLogin}
-                className="w-full gap-4 font-semibold text-black hover:bg-base_reference_card hover:text-primary"
+                className="w-full gap-4 font-semibold duration-700"
               >
                 <LogIn />
               </Button>

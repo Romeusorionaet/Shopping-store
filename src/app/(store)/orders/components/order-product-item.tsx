@@ -1,3 +1,4 @@
+import { BaseUrl } from '@/constants/base-url'
 import { OrderProductProps } from '@/core/@types/api-store'
 import Image from 'next/image'
 
@@ -21,7 +22,7 @@ export function OrderProductItem({ orderProduct }: Props) {
     <div className="flex items-center gap-4">
       <div className="flex h-[77px] w-[100px] items-center justify-center rounded-lg bg-base_reference_card">
         <Image
-          src={orderProduct.imgUrl}
+          src={`${BaseUrl.IMG}/${orderProduct.imgUrl}`}
           width={0}
           height={0}
           sizes="100vw"

@@ -1,11 +1,11 @@
-// import { Address } from '@prisma/client'
+import { AddressProps } from '@/core/@types/api-store'
 import Link from 'next/link'
 
-// interface Props {
-//   address: Address | null
-// }
+interface Props {
+  address: AddressProps | null
+}
 
-export function ChangeableAddressInformation({ address }: any) {
+export function ChangeableAddressInformation({ address }: Props) {
   if (!address) {
     return (
       <div className="rounded-md border border-white/20 p-4">
@@ -54,7 +54,7 @@ export function ChangeableAddressInformation({ address }: any) {
           <span className="font-bold">Rua</span>: {address.street}
         </p>
         <p>
-          <span className="font-bold">Número</span>: {address.number}
+          <span className="font-bold">Número</span>: {address.phoneNumber}
         </p>
         <p>
           <span className="font-bold">Complemento</span>: {address.complement}

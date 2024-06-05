@@ -5,6 +5,7 @@ import { api } from '../api'
 interface GetDataProductResponse {
   props: {
     product?: string
+    technicalProductDetails?: string
   }
   revalidate: number
   notFound?: boolean
@@ -19,6 +20,9 @@ export const getDataUniqueProduct = async (
     return {
       props: {
         product: JSON.stringify(response.data.product),
+        technicalProductDetails: JSON.stringify(
+          response.data.technicalProductDetails,
+        ),
       },
       revalidate: 60 * 60 * 24,
     }

@@ -18,7 +18,8 @@ import { useQuery } from '@tanstack/react-query'
 import { getDataUserAddress } from '@/lib/getData/get-data-user-address'
 import { createUserAddress } from '@/actions/register/address'
 import { updateUserAddress } from '@/actions/update/address'
-import { hasDataChangedDataAddress } from '../utils-address/has-changed-data-address'
+import { hasDataChangedDataAddress } from '../helpers/has-changed-data-address'
+import { Check, ShieldAlert } from 'lucide-react'
 
 const addressFormSchema = z.object({
   username: z.string().min(1, 'Este campo é obrigatório.'),
@@ -55,7 +56,12 @@ export function FormAddress() {
   const hasUserAddress = !!oldAddress
 
   const textButtonSubmitForm = hasUserAddress ? 'salvar alterações' : 'salvar'
-  const iconBasedOnAddress = hasUserAddress ? 'V' : 'X'
+
+  const iconBasedOnAddress = hasUserAddress ? (
+    <Check className="text-base_color_positive" />
+  ) : (
+    <ShieldAlert className="text-base_color_negative" />
+  )
 
   async function handleAddressForm(addressFormData: AddressFormData) {
     const { isSameData } = hasDataChangedDataAddress(
@@ -237,7 +243,7 @@ export function FormAddress() {
 
               <Button
                 type="submit"
-                className="mt-8"
+                className="mt-8 hover:text-base_color_text_top"
                 aria-disabled={isSubmitting}
               >
                 {textButtonSubmitForm}
@@ -247,7 +253,7 @@ export function FormAddress() {
         </AccordionItem>
       </Accordion>
 
-      <div className="mx-auto flex max-w-[800px] justify-end">
+      <div className="mx-auto mb-20 flex max-w-[800px] justify-end">
         <CheckoutCart userHasAddress={hasUserAddress} />
       </div>
     </div>
