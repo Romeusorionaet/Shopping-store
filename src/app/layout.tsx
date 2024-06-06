@@ -5,13 +5,10 @@ import '@/assets/styles/scrollbar.css'
 import { Header } from '@/components/header'
 import { NextSSRPlugin } from '@uploadthing/react/next-ssr-plugin'
 import { extractRouterConfig } from 'uploadthing/server'
-import { UserContextProvider } from '@/providers/user-context'
 import { ToastContainer } from 'react-toastify'
 import { ourFileRouter } from './api/uploadthing/core'
-import { QueryClientProvider } from '@tanstack/react-query'
-import { queryClient } from '@/lib/query-client'
 import { HandleCartArea } from '@/components/cart/handle-cart-area'
-import { AuthProvider } from '@/providers/auth'
+import Providers from '@/utils/providers'
 
 const roboto = Roboto({
   subsets: ['latin'],
@@ -48,23 +45,18 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={`${roboto.variable} mx-auto max-w-[1680px] antialiased`}>
-        <QueryClientProvider client={queryClient}>
-          <AuthProvider>
-            <UserContextProvider>
-              <NextSSRPlugin
-                routerConfig={extractRouterConfig(ourFileRouter)}
-              />
-              <Header />
-              {children}
-              <HandleCartArea />
-            </UserContextProvider>
-          </AuthProvider>
+        <Providers>
+          <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
+          <Header />
+          {children}
+          <HandleCartArea />
+
           <ToastContainer
             autoClose={2000}
             position={'bottom-left'}
             theme="dark"
           />
-        </QueryClientProvider>
+        </Providers>
       </body>
     </html>
   )

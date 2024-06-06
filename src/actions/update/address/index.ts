@@ -4,12 +4,12 @@ import { api } from '@/lib/api'
 import { getAccessTokenFromCookies } from '@/utils/get-tokens-from-cookies'
 
 interface Props {
-  cep: string
+  cep: number
   city: string
   uf: string
   street: string
   neighborhood: string
-  houseNumber: string
+  houseNumber: number
   complement: string
   phoneNumber: string
   username: string

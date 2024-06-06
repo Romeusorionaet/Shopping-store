@@ -4,7 +4,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useForm } from 'react-hook-form'
-import { z } from 'zod'
 import { FormError } from '@/components/form/form-error'
 import {
   Accordion,
@@ -15,26 +14,16 @@ import {
 import { useNotification } from '@/hooks/use-notifications'
 import { CheckoutCart } from './checkout-cart'
 import { useQuery } from '@tanstack/react-query'
-import { getDataUserAddress } from '@/lib/getData/get-data-user-address'
 import { createUserAddress } from '@/actions/register/address'
 import { updateUserAddress } from '@/actions/update/address'
 import { hasDataChangedDataAddress } from '../helpers/has-changed-data-address'
 import { Check, ShieldAlert } from 'lucide-react'
-
-const addressFormSchema = z.object({
-  username: z.string().min(1, 'Este campo é obrigatório.'),
-  email: z.string().min(1, 'Este campo é obrigatório.'),
-  phoneNumber: z.string().min(1, 'Este campo é obrigatório.'),
-  cep: z.string().min(8, 'O CEP deve ter 8 números.'),
-  city: z.string().min(1, 'Este campo é obrigatório.'),
-  uf: z.string().min(1, 'Este campo é obrigatório.'),
-  street: z.string().min(1, 'Este campo é obrigatório.'),
-  neighborhood: z.string().min(1, 'Este campo é obrigatório.'),
-  houseNumber: z.string().min(1, 'Este campo é obrigatório.'),
-  complement: z.string().min(1, 'Este campo é obrigatório.'),
-})
-
-export type AddressFormData = z.infer<typeof addressFormSchema>
+import { useEffect, useState } from 'react'
+import { getDataUserAddress } from '@/actions/get/user/get-data-user-address'
+import {
+  AddressFormData,
+  addressFormSchema,
+} from '../schemas/address-form-schema'
 
 export function FormAddress() {
   const {
@@ -47,13 +36,27 @@ export function FormAddress() {
 
   const { notifySuccess, notifyError } = useNotification()
 
-  const { data: address, isLoading } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ['addressData'],
     queryFn: () => getDataUserAddress(),
   })
 
-  const oldAddress = address?.props.userAddress
-  const hasUserAddress = !!oldAddress
+  const initialDataUserAddress = {
+    username: '',
+    email: '',
+    phoneNumber: '',
+    cep: 0,
+    city: '',
+    uf: '',
+    street: '',
+    neighborhood: '',
+    houseNumber: 0,
+    complement: '',
+  }
+
+  const [oldAddress, setOldAddress] = useState(initialDataUserAddress)
+
+  const hasUserAddress = !!oldAddress.username
 
   const textButtonSubmitForm = hasUserAddress ? 'salvar alterações' : 'salvar'
 
@@ -62,6 +65,12 @@ export function FormAddress() {
   ) : (
     <ShieldAlert className="text-base_color_negative" />
   )
+
+  useEffect(() => {
+    if (data?.props.userAddress) {
+      setOldAddress(data.props.userAddress)
+    }
+  }, [data])
 
   async function handleAddressForm(addressFormData: AddressFormData) {
     const { isSameData } = hasDataChangedDataAddress(
@@ -75,21 +84,28 @@ export function FormAddress() {
     }
 
     if (hasUserAddress) {
-      const result = await updateUserAddress(addressFormData)
-
-      if (result.success) {
-        notifySuccess(result.message)
-      } else {
-        notifyError(result.message)
-      }
-
-      return
+      await updateExistingAddress(addressFormData)
+    } else {
+      await createNewAddress(addressFormData)
     }
+  }
 
+  async function createNewAddress(addressFormData: AddressFormData) {
     const result = await createUserAddress(addressFormData)
 
     if (result.success) {
       window.location.reload()
+    } else {
+      notifyError(result.message)
+    }
+  }
+
+  async function updateExistingAddress(addressFormData: AddressFormData) {
+    const result = await updateUserAddress(addressFormData)
+
+    if (result.success) {
+      notifySuccess(result.message)
+      setOldAddress(addressFormData)
     } else {
       notifyError(result.message)
     }

@@ -1,14 +1,13 @@
 'use server'
 
 import { getAccessTokenFromCookies } from '@/utils/get-tokens-from-cookies'
-import { api } from '../api'
 import { AddressProps } from '@/core/@types/api-store'
+import { api } from '@/lib/api'
 
-interface GetDataUserAddressResponse {
+export interface GetDataUserAddressResponse {
   props: {
-    userAddress?: AddressProps
+    userAddress: AddressProps | null
   }
-  revalidate: number
   notFound?: boolean
 }
 
@@ -28,13 +27,13 @@ export const getDataUserAddress =
         props: {
           userAddress,
         },
-        revalidate: 60 * 60 * 24,
       }
     } catch (err) {
       return {
         notFound: true,
-        revalidate: 0,
-        props: {},
+        props: {
+          userAddress: null,
+        },
       }
     }
   }

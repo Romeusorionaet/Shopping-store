@@ -13,6 +13,7 @@ interface Props {
 }
 
 export function AddProductInCart({ product, title }: Props) {
+  // TODO   const addProductToCart = useCartStore((state) => state.addProductToCart)
   const { addProductToCart } = useCartStore()
   const [quantity] = useState(1)
   const session = useSession()

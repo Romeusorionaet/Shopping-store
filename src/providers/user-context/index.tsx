@@ -1,5 +1,3 @@
-'use client'
-
 import { getDataUser } from '@/lib/getData/get-data.user'
 import { ReactNode, createContext, useEffect, useState } from 'react'
 import { signOut, useSession } from 'next-auth/react'
@@ -26,13 +24,15 @@ export const UserContext = createContext({} as UserContextType)
 export function UserContextProvider({ children }: UserContextProps) {
   const session = useSession()
 
-  const [profile, setProfile] = useState<ProfileProps>({
+  const initialDataProfile = {
     id: '',
     username: '',
     email: '',
     createAt: '',
     updateAt: '',
-  })
+  }
+
+  const [profile, setProfile] = useState<ProfileProps>(initialDataProfile)
 
   useEffect(() => {
     const fetchDataUser = async () => {
