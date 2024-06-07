@@ -11,8 +11,6 @@ import { format } from 'date-fns'
 import { Button } from '@/components/ui/button'
 import { OrderProductItem } from './order-product-item'
 import { FixedAddressInformation } from '@/components/address-information/fixed-address-information'
-import { ChangeableAddressInformation } from '@/components/address-information/changeable-address-information'
-import Link from 'next/link'
 import { OrderProps, OrderStatusTracking } from '@/core/@types/api-store'
 import { getOrderStatus } from '@/utils/get-order-status'
 
@@ -176,22 +174,7 @@ export function OrderItem({ order }: Props) {
               </div>
             </div>
 
-            {order.buyerAddress ? (
-              <FixedAddressInformation address={order.buyerAddress} />
-            ) : order.orderStatusTracking === OrderStatusTracking.CANCELED ? (
-              <></>
-            ) : (
-              <div>
-                <p>
-                  O endereço pode ser editado enquanto o pedido está
-                  <strong> Aguardando</strong>.{' '}
-                  <Link className="text-blue-500" href="/address">
-                    Enditar.
-                  </Link>
-                </p>
-                <ChangeableAddressInformation address={order.buyerAddress} />
-              </div>
-            )}
+            <FixedAddressInformation address={order.buyerAddress} />
 
             <div>
               <Button

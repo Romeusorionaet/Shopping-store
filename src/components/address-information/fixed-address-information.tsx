@@ -1,4 +1,5 @@
 import { AddressProps } from '@/core/@types/api-store'
+import { AddressField } from './address-field'
 
 interface Props {
   address: AddressProps
@@ -16,36 +17,16 @@ export function FixedAddressInformation({ address }: Props) {
       </div>
 
       <div className="mt-2 text-sm">
-        <p>
-          <span className="font-bold">Nome</span>: {address.username}
-        </p>
-        <p>
-          <span className="font-bold">Email</span>: {address.email}
-        </p>
-        <p>
-          <span className="font-bold">Contanto</span>: {address.phoneNumber}
-        </p>
-        <p>
-          <span className="font-bold">CEP</span>: {address.cep}
-        </p>
-        <p>
-          <span className="font-bold">Cidade</span>: {address.city}
-        </p>
-        <p>
-          <span className="font-bold">UF</span>: {address.uf}
-        </p>
-        <p>
-          <span className="font-bold">Bairro</span>: {address.neighborhood}
-        </p>
-        <p>
-          <span className="font-bold">Rua</span>: {address.street}
-        </p>
-        <p>
-          <span className="font-bold">Número</span>: {address.houseNumber}
-        </p>
-        <p>
-          <span className="font-bold">Complemento</span>: {address.complement}
-        </p>
+        <AddressField label="Nome" value={address.username} />
+        <AddressField label="Email" value={address.email} />
+        <AddressField label="Contato" value={address.phoneNumber} />
+        <AddressField label="CEP" value={address.cep} />
+        <AddressField label="Cidade" value={address.city} />
+        <AddressField label="UF" value={address.uf} />
+        <AddressField label="Bairro" value={address.neighborhood} />
+        <AddressField label="Rua" value={address.street} />
+        <AddressField label="Número" value={address.houseNumber} />
+        <AddressField label="Complemento" value={address.complement} />
       </div>
     </div>
   )

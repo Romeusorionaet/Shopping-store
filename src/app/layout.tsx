@@ -7,8 +7,8 @@ import { NextSSRPlugin } from '@uploadthing/react/next-ssr-plugin'
 import { extractRouterConfig } from 'uploadthing/server'
 import { ToastContainer } from 'react-toastify'
 import { ourFileRouter } from './api/uploadthing/core'
-import { HandleCartArea } from '@/components/cart/handle-cart-area'
 import Providers from '@/utils/providers'
+import { CartArea } from '@/components/cart/cart-area'
 
 const roboto = Roboto({
   subsets: ['latin'],
@@ -49,7 +49,7 @@ export default async function RootLayout({
           <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
           <Header />
           {children}
-          <HandleCartArea />
+          <CartArea />
 
           <ToastContainer
             autoClose={2000}

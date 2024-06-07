@@ -3,14 +3,14 @@ import { Button } from '../ui/button'
 import { useCartStore } from '@/providers/zustand-store'
 import { calculateCartAllValues } from '@/utils/calculate-cart-all-values'
 import { useSession } from 'next-auth/react'
-import { CartItem } from './CartItem'
 import { NoUserMessage } from '../no-user-message'
+import { CartItem } from './cart-Item'
 
 interface Props {
   handleNavigateTo: (route: string) => void
 }
 
-export function Cart({ handleNavigateTo }: Props) {
+export function CartOverview({ handleNavigateTo }: Props) {
   const { cart } = useCartStore()
   const { subtotal, totalDiscount, total } = calculateCartAllValues(cart)
   const { data } = useSession()
@@ -26,7 +26,7 @@ export function Cart({ handleNavigateTo }: Props) {
 
   return (
     <div className="flex h-full flex-col gap-6 pb-4">
-      <div className="mt-10 flex h-full flex-col gap-5 overflow-y-auto">
+      <div className="scrollbar mt-10 flex h-full flex-col gap-5 overflow-y-auto overflow-x-hidden">
         <div className="flex h-full flex-col gap-8">
           {cart.length > 0 ? (
             cart.map((product) => (

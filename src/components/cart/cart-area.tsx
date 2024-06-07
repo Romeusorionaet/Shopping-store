@@ -6,10 +6,10 @@ import { BaggageClaim, Bell, Phone } from 'lucide-react'
 import { useCartStore } from '@/providers/zustand-store'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
-import { Cart } from './cart'
 import { Button } from '../ui/button'
+import { CartOverview } from './cart-overview'
 
-export function HandleCartArea() {
+export function CartArea() {
   const [isCartOpen, setIsCartOpen] = useState(false)
   const [clientRendered, setClientRendered] = useState(false)
 
@@ -69,7 +69,7 @@ export function HandleCartArea() {
             Carrinho
           </SheetHeader>
 
-          <Cart handleNavigateTo={handleNavigateTo} />
+          <CartOverview handleNavigateTo={handleNavigateTo} />
         </SheetContent>
       </Sheet>
     </div>

@@ -23,6 +23,7 @@ export default async function Orders() {
   }
 
   const paymentConfirmed = OrderStatus.PAYMENT_CONFIRMED
+
   const ordersInProcess =
     OrderStatusTracking.WAITING ||
     OrderStatusTracking.PRODUCT_DELIVERED_TO_CARRIER
@@ -31,7 +32,7 @@ export default async function Orders() {
     OrderStatusTracking.PRODUCT_DELIVERED_TO_CLIENT
 
   return (
-    <div className="p-4 pt-28">
+    <div className="px-4 py-28">
       <div className="border-b border-base_color_dark">
         <h1 className="font-bold">Seus pedidos</h1>
       </div>

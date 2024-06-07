@@ -62,7 +62,7 @@ export function Header() {
   }
 
   return (
-    <header className="fixed left-0 z-30 w-full rounded-none border-b border-b-base_color_dark/30 bg-base_one_reference_header text-base_color_text_top">
+    <header className="fixed left-0 z-30 w-full rounded-none border-b border-b-base_color_dark/30 bg-base_one_reference_header p-2 text-base_color_text_top">
       <DialogLoginAdm handleCancel={handleCancel} isDialogOpen={isDialogOpen} />
       <div className="mx-auto flex max-w-[1550px] items-center justify-between md:gap-16 md:px-10">
         <Sheet
@@ -215,7 +215,7 @@ export function Header() {
         <div>
           {data ? (
             <div className="flex flex-col">
-              <div className="flex items-center gap-2 py-4">
+              <div className="flex items-center gap-2 md:py-4">
                 <Avatar>
                   <AvatarFallback>{data.user.name}</AvatarFallback>
 
@@ -223,7 +223,7 @@ export function Header() {
                 </Avatar>
 
                 <div className="flex flex-col max-md:hidden">
-                  <p className="font-medium">{data.user.name}</p>
+                  <p className="font-medium">{profile.username}</p>
                   <p className="text-sm opacity-75">Boas compras!</p>
                 </div>
               </div>

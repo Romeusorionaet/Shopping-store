@@ -18,17 +18,18 @@ import { DialogInformation } from '@/components/dialog-information'
 import { getDataBuyerOrderProducts } from '@/actions/get/buyer/get-data-buyer-order-products'
 import { getDataSearchProducts } from '@/actions/get/product/get-data-search-products'
 import { getDataProducts } from '@/lib/get-data/get-data-products'
+import { SectionProductName } from '@/constants/section-product-name'
 
 export default async function Home() {
   // All Product
   const { props } = await getDataProducts({ page: 1 })
-  const products: ProductProps[] = JSON.parse(props.products)
+  const allProducts: ProductProps[] = JSON.parse(props.products).sort(
+    () => Math.random() - 0.5,
+  )
 
-  if (products.length === 0) {
+  if (allProducts.length === 0) {
     return <NoProductRegistrationMessage />
   }
-
-  const allProducts = products.sort(() => Math.random() - 0.5)
 
   // Order Products
   const { props: propsOrderProducts } = await getDataBuyerOrderProducts()
@@ -43,28 +44,32 @@ export default async function Home() {
     productMap[product.productId] = product
   })
 
-  const uniqueProducts = Object.values(productMap)
-
-  const shuffledProducts = uniqueProducts.sort(() => Math.random() - 0.5)
+  const shuffledProducts = Object.values(productMap).sort(
+    () => Math.random() - 0.5,
+  )
 
   // Popular products
   const { props: propsProductPopularFiltered } = await getDataSearchProducts({
-    section: 'stars',
+    section: SectionProductName.STARS,
   })
+
   const productPopularFiltered: ProductProps[] = JSON.parse(
     propsProductPopularFiltered.products,
   )
+
   const topSellingProducts = productPopularFiltered
     .filter((product) => product.stars > 0)
     .sort(() => Math.random() - 0.5)
 
   // Promotion products
   const { props: propsProductPromotionFiltered } = await getDataSearchProducts({
-    section: 'discountPercentage',
+    section: SectionProductName.DISCOUNT_PERCENTAGE,
   })
+
   const productPromotionFiltered: ProductProps[] = JSON.parse(
     propsProductPromotionFiltered.products,
   )
+
   const productsInOffers = productPromotionFiltered
     .filter((product) => product.discountPercentage >= 1)
     .sort(() => Math.random() - 0.5)
@@ -164,7 +169,7 @@ export default async function Home() {
               <h2 className="my-4 text-lg uppercase md:text-lg">Em promoção</h2>
 
               <CarouselProducts
-                section={'discountPercentage'}
+                section={SectionProductName.DISCOUNT_PERCENTAGE}
                 products={productsInOffers}
               />
             </div>
@@ -193,7 +198,7 @@ export default async function Home() {
               </h2>
 
               <CarouselProducts
-                section={'stars'}
+                section={SectionProductName.STARS}
                 products={topSellingProducts}
               />
             </div>
