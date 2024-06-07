@@ -1,4 +1,4 @@
-import { getDataCatalog } from '@/lib/getData/get-data-catalog'
+import { getDataCatalog } from '@/actions/get/catalog/get-data-catalog'
 import CategoryItem from './components/category-item'
 import { NoProductRegistrationMessage } from '@/components/no-product-registration-message'
 import { CategoryProps } from '@/core/@types/api-store'

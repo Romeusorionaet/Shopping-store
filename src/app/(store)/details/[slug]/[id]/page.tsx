@@ -1,4 +1,3 @@
-import { getDataUniqueProduct } from '@/lib/getData/get-data-unique-product'
 import { CalculateValueProduct } from '@/utils/calculate-value-product'
 import { CarouselProducts } from '@/components/carousel-products'
 import { AddProductInCart } from '@/components/add-product-in-cart'
@@ -12,12 +11,13 @@ import {
 } from '@/core/@types/api-store'
 import { ProductImages } from '../../components/product-images'
 import { AskForProductReturn } from '../../components/Ask-for-product-return'
-import { getDataProductsTheSameCategory } from '@/lib/getData/get-data-products-the-same-category'
 import { TechnicalProductDetails } from '../../components/technical-product-details'
 import { PaymentAndPolices } from '@/components/rules-and-policies/payment-and-rules'
 import { ReturnPolices } from '@/components/rules-and-policies/return-policies'
 import { PaymentAndOptions } from '@/components/rules-and-policies/payment-options'
 import { DecorationPercentageIndicator } from '@/components/decoration-percentage-indicator'
+import { getDataProductsTheSameCategory } from '@/actions/get/product/get-data-products-the-same-category'
+import { getDataUniqueProduct } from '@/actions/get/product/get-data-unique-product'
 
 interface ParamsProps {
   params: {

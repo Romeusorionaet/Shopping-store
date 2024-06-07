@@ -1,4 +1,4 @@
-import { api } from '../api'
+import { api } from '@/lib/api'
 
 interface Props {
   categoryId: string
@@ -21,7 +21,7 @@ export const getDataProductsTheSameCategory = async ({
       props: {
         products: JSON.stringify(response.data.products),
       },
-      revalidate: 60 * 60 * 24,
+      revalidate: 60 * 60 * 24, // 1 day
     }
   } catch (err) {
     return {

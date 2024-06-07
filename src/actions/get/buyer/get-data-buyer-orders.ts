@@ -1,13 +1,13 @@
 'use server'
 
+import { api } from '@/lib/api'
 import { getAccessTokenFromCookies } from '@/utils/get-tokens-from-cookies'
-import { api } from '../api'
 
-export const getDataBuyerOrderProducts = async () => {
+export const getDataBuyerOrders = async () => {
   const accessToken = getAccessTokenFromCookies()
 
   try {
-    const response = await api.get('/buyer/order/products', {
+    const response = await api.get('/buyer/orders', {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
@@ -15,16 +15,16 @@ export const getDataBuyerOrderProducts = async () => {
 
     return {
       props: {
-        orderProducts: JSON.stringify(response.data.products),
+        orders: JSON.stringify(response.data.orders),
       },
-      revalidate: 60 * 60 * 24,
+      revalidate: 60 * 60 * 24, // 1 day
     }
   } catch (err) {
     return {
       notFound: true,
 
       props: {
-        orderProducts: '[]',
+        orders: '[]',
       },
     }
   }

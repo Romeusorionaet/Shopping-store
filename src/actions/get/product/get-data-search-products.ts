@@ -1,4 +1,4 @@
-import { api } from '../api'
+import { api } from '@/lib/api'
 
 interface Props {
   page?: number
@@ -20,7 +20,7 @@ export const getDataSearchProducts = async ({
       props: {
         products: JSON.stringify(response.data.products),
       },
-      revalidate: 60 * 60 * 24,
+      revalidate: 60 * 60 * 24, // 1 day
     }
   } catch (err) {
     return {
@@ -28,7 +28,6 @@ export const getDataSearchProducts = async ({
       props: {
         products: '[]',
       },
-      revalidate: 0,
     }
   }
 }

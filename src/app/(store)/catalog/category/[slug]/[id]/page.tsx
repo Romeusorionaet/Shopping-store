@@ -1,7 +1,7 @@
 import { ProductProps } from '@/core/@types/api-store'
-import { getDataProductsTheSameCategory } from '@/lib/getData/get-data-products-the-same-category'
 import { ProductCard } from '@/components/carousel-products/product-card'
 import { Pagination } from '@/components/pagination'
+import { getDataProductsTheSameCategory } from '@/actions/get/product/get-data-products-the-same-category'
 
 interface ParamsProps {
   params: {

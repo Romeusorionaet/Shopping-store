@@ -1,4 +1,4 @@
-import { api } from '../api'
+import { api } from '@/lib/api'
 
 export const getDataCatalog = async () => {
   try {
@@ -8,7 +8,7 @@ export const getDataCatalog = async () => {
       propsCategories: {
         categories: JSON.stringify(response.data.categories),
       },
-      revalidate: 60 * 60 * 24,
+      revalidate: 60 * 60 * 24, // 1 day
     }
   } catch (err) {
     return {

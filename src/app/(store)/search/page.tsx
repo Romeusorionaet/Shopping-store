@@ -1,10 +1,10 @@
 import { SearchForm } from '@/components/search-form'
 import { ProductProps } from '@/core/@types/api-store'
-import { getDataProducts } from '@/lib/getData/get-data-products'
 import { Suspense } from 'react'
 import { ProductCard } from '@/components/carousel-products/product-card'
-import { getDataSearchProducts } from '@/lib/getData/get-data-search-products'
 import { Pagination } from '@/components/pagination'
+import { getDataProducts } from '@/actions/get/product/get-data-products'
+import { getDataSearchProducts } from '@/actions/get/product/get-data-search-products'
 
 interface SearchProps {
   searchParams: {

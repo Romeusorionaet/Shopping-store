@@ -1,9 +1,9 @@
 'use server'
 
 import { getRefreshTokenFromCookies } from '@/utils/get-tokens-from-cookies'
-import { api } from '../api'
 import { setAuthTokenForCookies } from '@/utils/set-auth-token-for-cookies'
 import { KeyCookies } from '@/constants/key-cookies'
+import { api } from '@/lib/api'
 
 interface BooleanResponse {
   success: boolean

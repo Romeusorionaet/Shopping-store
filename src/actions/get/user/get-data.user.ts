@@ -1,8 +1,8 @@
 'use server'
 
 import { getAccessTokenFromCookies } from '@/utils/get-tokens-from-cookies'
-import { api } from '../api'
 import { ProfileProps } from '@/core/@types/api-store'
+import { api } from '@/lib/api'
 
 interface GetDataUserResponse {
   props: {
@@ -28,7 +28,7 @@ export const getDataUser = async (): Promise<GetDataUserResponse> => {
       props: {
         profile,
       },
-      revalidate: 60 * 60 * 24,
+      revalidate: 60 * 60 * 24, // 1 day
     }
   } catch (err) {
     return {

@@ -1,7 +1,7 @@
-import { getDataUser } from '@/lib/getData/get-data.user'
 import { ReactNode, createContext, useEffect, useState } from 'react'
 import { signOut, useSession } from 'next-auth/react'
-import { getDataRefreshToken } from '@/lib/getData/get-data-refresh-token'
+import { getDataUser } from '@/actions/get/user/get-data.user'
+import { getDataRefreshToken } from '@/actions/get/refresh-token/get-data-refresh-token'
 
 interface ProfileProps {
   id: string

@@ -121,7 +121,7 @@ export function FormAddress() {
         <AccordionItem value="item-1">
           <AccordionTrigger className="flex w-full justify-between">
             <span>Preencher formulário</span>{' '}
-            {isLoading ? '...' : iconBasedOnAddress}
+            {isLoading ? 'carregando...' : iconBasedOnAddress}
           </AccordionTrigger>
           <AccordionContent>
             <form onSubmit={handleSubmit(handleAddressForm)} className="mt-10">

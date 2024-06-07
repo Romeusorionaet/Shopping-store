@@ -1,6 +1,6 @@
 'use server'
 
-import { api } from '../api'
+import { api } from '@/lib/api'
 
 export const getDataUniqueProduct = async (productId: string) => {
   try {
@@ -13,7 +13,7 @@ export const getDataUniqueProduct = async (productId: string) => {
           response.data.technicalProductDetails,
         ),
       },
-      revalidate: 60 * 60 * 24,
+      revalidate: 60 * 60 * 24, // 1 day
     }
   } catch (err) {
     return {

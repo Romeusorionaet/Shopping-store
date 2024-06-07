@@ -1,10 +1,8 @@
-import { getDataProducts } from '@/lib/getData/get-data-products'
 import Link from 'next/link'
 import { LibraryBig } from 'lucide-react'
 import { OfferBanner } from '@/components/offer-banner'
 import { NoProductRegistrationMessage } from '@/components/no-product-registration-message'
 import { OrderProductProps, ProductProps } from '@/core/@types/api-store'
-import { getDataBuyerOrderProducts } from '@/lib/getData/get-data-buyer-order-products'
 import { CarouselProducts } from '@/components/carousel-products'
 import { CarouselOrderProducts } from '@/components/carousel-products/order-products'
 import Image from 'next/image'
@@ -17,7 +15,9 @@ import { SearchForm } from '@/components/search-form'
 import { Suspense } from 'react'
 import { SectionBrandLogo } from '@/components/section-brand-logo'
 import { DialogInformation } from '@/components/dialog-information'
-import { getDataSearchProducts } from '@/lib/getData/get-data-search-products'
+import { getDataBuyerOrderProducts } from '@/actions/get/buyer/get-data-buyer-order-products'
+import { getDataProducts } from '@/actions/get/product/get-data-products'
+import { getDataSearchProducts } from '@/actions/get/product/get-data-search-products'
 
 export default async function Home() {
   // All Product
