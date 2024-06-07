@@ -3,8 +3,8 @@ import { ProductProps } from '@/core/@types/api-store'
 import { Suspense } from 'react'
 import { ProductCard } from '@/components/carousel-products/product-card'
 import { Pagination } from '@/components/pagination'
-import { getDataProducts } from '@/actions/get/product/get-data-products'
 import { getDataSearchProducts } from '@/actions/get/product/get-data-search-products'
+import { getDataProducts } from '@/lib/get-data/get-data-products'
 
 interface SearchProps {
   searchParams: {
