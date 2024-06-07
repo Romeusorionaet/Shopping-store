@@ -10,11 +10,15 @@ export interface CartItemProps {
 }
 
 export function CartItem({ product, handleNavigateTo }: CartItemProps) {
-  const {
+  const [
     decreaseProductQuantity,
     increaseProductQuantity,
     removeProductFromCart,
-  } = useCartStore()
+  ] = useCartStore((state) => [
+    state.decreaseProductQuantity,
+    state.increaseProductQuantity,
+    state.removeProductFromCart,
+  ])
 
   const basePrice = Number(product.price) * product.quantity
 

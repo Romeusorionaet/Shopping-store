@@ -13,7 +13,7 @@ export function CartArea() {
   const [isCartOpen, setIsCartOpen] = useState(false)
   const [clientRendered, setClientRendered] = useState(false)
 
-  const { cart } = useCartStore()
+  const cart = useCartStore((state) => state.cart)
   const { data } = useSession()
 
   const router = useRouter()

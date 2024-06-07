@@ -25,7 +25,7 @@ export default async function Orders() {
   const paymentConfirmed = OrderStatus.PAYMENT_CONFIRMED
 
   const ordersInProcess =
-    OrderStatusTracking.WAITING ||
+    OrderStatusTracking.WAITING &&
     OrderStatusTracking.PRODUCT_DELIVERED_TO_CARRIER
 
   const productDeliveredToClient =

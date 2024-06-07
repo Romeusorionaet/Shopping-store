@@ -11,7 +11,7 @@ interface Props {
 }
 
 export function CartOverview({ handleNavigateTo }: Props) {
-  const { cart } = useCartStore()
+  const cart = useCartStore((state) => state.cart)
   const { subtotal, totalDiscount, total } = calculateCartAllValues(cart)
   const { data } = useSession()
   const user = data?.user

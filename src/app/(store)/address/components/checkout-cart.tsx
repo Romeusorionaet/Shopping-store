@@ -11,7 +11,7 @@ interface Props {
 }
 
 export function CheckoutCart({ userHasAddress }: Props) {
-  const { cart } = useCartStore()
+  const cart = useCartStore((state) => state.cart)
   const { data } = useSession()
   const { notifyWarning, notifyError } = useNotification()
 

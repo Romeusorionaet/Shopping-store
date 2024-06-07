@@ -38,7 +38,7 @@ export const createUserAddress = async (
   } catch (err: any) {
     const errorMessage =
       err.response?.data?.error ||
-      'Aconteceu um erro inesperado, tente novamente mais tarde.' // TODO
+      'Aconteceu um erro inesperado, tente novamente mais tarde.'
 
     return { success: false, message: errorMessage }
   }
