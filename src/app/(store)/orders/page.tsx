@@ -18,6 +18,10 @@ export default async function Orders() {
   const { props } = await getDataBuyerOrders()
   const orders: OrderProps[] = JSON.parse(props.orders)
 
+  if (!orders) {
+    return <p className="pt-52 text-center">Realize uma compra...</p>
+  }
+
   const paymentConfirmed = OrderStatus.PAYMENT_CONFIRMED
   const ordersInProcess =
     OrderStatusTracking.WAITING ||
