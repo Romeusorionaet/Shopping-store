@@ -1,7 +1,6 @@
 import Link from 'next/link'
 import { LibraryBig } from 'lucide-react'
 import { OfferBanner } from '@/components/offer-banner'
-import { NoProductRegistrationMessage } from '@/components/no-product-registration-message'
 import Image from 'next/image'
 import smartphonePropaganda from '@/assets/img/banner-decoration/poco-smartphone.png'
 import { Button } from '@/components/ui/button'
@@ -10,35 +9,25 @@ import bannerIphoneLogo from '@/assets/img/banner-decoration/iPhone-logo.png'
 import cart from '@/assets/img/banner-decoration/cart.png'
 import { SectionBrandLogo } from '@/components/section-brand-logo'
 import { DialogInformation } from '@/components/dialog-information'
-import { getDataBuyerOrderProducts } from '@/actions/get/buyer/get-data-buyer-order-products'
-import { getDataSearchProducts } from '@/actions/get/product/get-data-search-products'
-import { SectionProductName } from '@/constants/section-product-name'
-import { getDataProducts } from '@/actions/get/product/get-data-products'
 import { SectionAllProducts } from './components/section-all-products'
 import { SectionPromotion } from './components/section-promotion'
 import { SectionPopular } from './components/section-popular'
 import { SectionOrders } from './components/section-orders'
+import {
+  HydrationBoundary,
+  QueryClient,
+  dehydrate,
+} from '@tanstack/react-query'
+import { getDataProducts } from '@/actions/get/product/get-data-products'
 
 export default async function Home() {
-  // All Product
-  const { props: allProducts } = await getDataProducts({ page: 1 })
+  const queryClient = new QueryClient()
 
-  if (allProducts.products.length === 0) {
-    return <NoProductRegistrationMessage />
-  }
-
-  // Promotion products
-  const { props: propsProductPromotionFiltered } = await getDataSearchProducts({
-    section: SectionProductName.DISCOUNT_PERCENTAGE,
+  await queryClient.prefetchQuery({
+    queryKey: ['allProducts'],
+    queryFn: () => getDataProducts({ page: 1 }),
+    staleTime: 1000 * 60 * 30, // 30 minutes
   })
-
-  // Popular products
-  const { props: propsProductPopularFiltered } = await getDataSearchProducts({
-    section: SectionProductName.STARS,
-  })
-
-  // Order Products
-  const { props: propsOrderProducts } = await getDataBuyerOrderProducts()
 
   return (
     <div>
@@ -84,7 +73,9 @@ export default async function Home() {
           </div>
         </div>
 
-        <SectionAllProducts products={allProducts.products} />
+        <HydrationBoundary state={dehydrate(queryClient)}>
+          <SectionAllProducts />
+        </HydrationBoundary>
 
         <div className="flex rounded-md bg-base_one_reference_header/80 pr-2 text-base_color_text_top">
           <div className="flex h-56 w-1/2 justify-end">
@@ -121,7 +112,7 @@ export default async function Home() {
           </div>
         </div>
 
-        <SectionPromotion products={propsProductPromotionFiltered.products} />
+        <SectionPromotion />
 
         <div className="flex flex-col items-center justify-center gap-2 rounded-md bg-base_one_reference_header/80 py-2">
           <Image
@@ -137,11 +128,11 @@ export default async function Home() {
           </p>
         </div>
 
-        <SectionPopular products={propsProductPopularFiltered.products} />
+        <SectionPopular />
 
         <SectionBrandLogo />
 
-        <SectionOrders products={propsOrderProducts.orderProducts} />
+        <SectionOrders />
       </main>
     </div>
   )
