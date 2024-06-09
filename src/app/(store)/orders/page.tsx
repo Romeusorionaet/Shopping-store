@@ -21,11 +21,10 @@ export default async function Orders() {
   if (!orders) {
     return <p className="pt-52 text-center">Realize uma compra...</p>
   }
-
   const paymentConfirmed = OrderStatus.PAYMENT_CONFIRMED
 
   const ordersInProcess =
-    OrderStatusTracking.WAITING &&
+    OrderStatusTracking.WAITING ||
     OrderStatusTracking.PRODUCT_DELIVERED_TO_CARRIER
 
   const productDeliveredToClient =
