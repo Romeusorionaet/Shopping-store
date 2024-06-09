@@ -17,8 +17,8 @@ import { SectionBrandLogo } from '@/components/section-brand-logo'
 import { DialogInformation } from '@/components/dialog-information'
 import { getDataBuyerOrderProducts } from '@/actions/get/buyer/get-data-buyer-order-products'
 import { getDataSearchProducts } from '@/actions/get/product/get-data-search-products'
-import { getDataProducts } from '@/lib/get-data/get-data-products'
 import { SectionProductName } from '@/constants/section-product-name'
+import { getDataProducts } from '@/actions/get/product/get-data-products'
 
 export default async function Home() {
   // All Product

@@ -94,7 +94,8 @@ export function FormAddress() {
     const result = await createUserAddress(addressFormData)
 
     if (result.success) {
-      window.location.reload()
+      notifySuccess(result.message)
+      setOldAddress(addressFormData)
     } else {
       notifyError(result.message)
     }
@@ -257,13 +258,17 @@ export function FormAddress() {
                 </label>
               </div>
 
-              <Button
-                type="submit"
-                className="mt-8 hover:text-base_color_text_top"
-                aria-disabled={isSubmitting}
-              >
-                {textButtonSubmitForm}
-              </Button>
+              <div className="flex items-center justify-between">
+                <Button
+                  type="submit"
+                  className="mt-8 hover:text-base_color_text_top"
+                  aria-disabled={isSubmitting}
+                >
+                  {textButtonSubmitForm}
+                </Button>
+
+                {iconBasedOnAddress}
+              </div>
             </form>
           </AccordionContent>
         </AccordionItem>
