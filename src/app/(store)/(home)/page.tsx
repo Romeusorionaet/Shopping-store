@@ -2,77 +2,43 @@ import Link from 'next/link'
 import { LibraryBig } from 'lucide-react'
 import { OfferBanner } from '@/components/offer-banner'
 import { NoProductRegistrationMessage } from '@/components/no-product-registration-message'
-import { OrderProductProps, ProductProps } from '@/core/@types/api-store'
-import { CarouselProducts } from '@/components/carousel-products'
-import { CarouselOrderProducts } from '@/components/carousel-products/order-products'
 import Image from 'next/image'
 import smartphonePropaganda from '@/assets/img/banner-decoration/poco-smartphone.png'
 import { Button } from '@/components/ui/button'
 import bannerIphoneXsMax from '@/assets/img/banner-decoration/banner-iphone-xs-max.png'
 import bannerIphoneLogo from '@/assets/img/banner-decoration/iPhone-logo.png'
 import cart from '@/assets/img/banner-decoration/cart.png'
-import { SearchForm } from '@/components/search-form'
-import { Suspense } from 'react'
 import { SectionBrandLogo } from '@/components/section-brand-logo'
 import { DialogInformation } from '@/components/dialog-information'
 import { getDataBuyerOrderProducts } from '@/actions/get/buyer/get-data-buyer-order-products'
 import { getDataSearchProducts } from '@/actions/get/product/get-data-search-products'
 import { SectionProductName } from '@/constants/section-product-name'
 import { getDataProducts } from '@/actions/get/product/get-data-products'
+import { SectionAllProducts } from './components/section-all-products'
+import { SectionPromotion } from './components/section-promotion'
+import { SectionPopular } from './components/section-popular'
+import { SectionOrders } from './components/section-orders'
 
 export default async function Home() {
   // All Product
-  const { props } = await getDataProducts({ page: 1 })
-  const allProducts: ProductProps[] = JSON.parse(props.products).sort(
-    () => Math.random() - 0.5,
-  )
+  const { props: allProducts } = await getDataProducts({ page: 1 })
 
-  if (allProducts.length === 0) {
+  if (allProducts.products.length === 0) {
     return <NoProductRegistrationMessage />
   }
-
-  // Order Products
-  const { props: propsOrderProducts } = await getDataBuyerOrderProducts()
-
-  const orderProducts: OrderProductProps[] = JSON.parse(
-    propsOrderProducts.orderProducts,
-  )
-
-  const productMap: { [key: string]: OrderProductProps } = {}
-
-  orderProducts.forEach((product) => {
-    productMap[product.productId] = product
-  })
-
-  const shuffledProducts = Object.values(productMap).sort(
-    () => Math.random() - 0.5,
-  )
-
-  // Popular products
-  const { props: propsProductPopularFiltered } = await getDataSearchProducts({
-    section: SectionProductName.STARS,
-  })
-
-  const productPopularFiltered: ProductProps[] = JSON.parse(
-    propsProductPopularFiltered.products,
-  )
-
-  const topSellingProducts = productPopularFiltered
-    .filter((product) => product.stars > 0)
-    .sort(() => Math.random() - 0.5)
 
   // Promotion products
   const { props: propsProductPromotionFiltered } = await getDataSearchProducts({
     section: SectionProductName.DISCOUNT_PERCENTAGE,
   })
 
-  const productPromotionFiltered: ProductProps[] = JSON.parse(
-    propsProductPromotionFiltered.products,
-  )
+  // Popular products
+  const { props: propsProductPopularFiltered } = await getDataSearchProducts({
+    section: SectionProductName.STARS,
+  })
 
-  const productsInOffers = productPromotionFiltered
-    .filter((product) => product.discountPercentage >= 1)
-    .sort(() => Math.random() - 0.5)
+  // Order Products
+  const { props: propsOrderProducts } = await getDataBuyerOrderProducts()
 
   return (
     <div>
@@ -118,15 +84,7 @@ export default async function Home() {
           </div>
         </div>
 
-        <div className="bg-white px-2 py-8">
-          <Suspense fallback={null}>
-            <SearchForm />
-          </Suspense>
-
-          <h2 className="my-4 uppercase md:text-lg">Todos os produtos</h2>
-
-          <CarouselProducts products={allProducts} />
-        </div>
+        <SectionAllProducts products={allProducts.products} />
 
         <div className="flex rounded-md bg-base_one_reference_header/80 pr-2 text-base_color_text_top">
           <div className="flex h-56 w-1/2 justify-end">
@@ -163,18 +121,7 @@ export default async function Home() {
           </div>
         </div>
 
-        <div>
-          {productsInOffers.length !== 0 && (
-            <div className="bg-white p-2">
-              <h2 className="my-4 text-lg uppercase md:text-lg">Em promoção</h2>
-
-              <CarouselProducts
-                section={SectionProductName.DISCOUNT_PERCENTAGE}
-                products={productsInOffers}
-              />
-            </div>
-          )}
-        </div>
+        <SectionPromotion products={propsProductPromotionFiltered.products} />
 
         <div className="flex flex-col items-center justify-center gap-2 rounded-md bg-base_one_reference_header/80 py-2">
           <Image
@@ -190,33 +137,11 @@ export default async function Home() {
           </p>
         </div>
 
-        <div>
-          {topSellingProducts.length !== 0 && (
-            <div className="bg-white p-2">
-              <h2 className="my-4 text-lg uppercase md:text-lg">
-                Mais populares
-              </h2>
-
-              <CarouselProducts
-                section={SectionProductName.STARS}
-                products={topSellingProducts}
-              />
-            </div>
-          )}
-        </div>
+        <SectionPopular products={propsProductPopularFiltered.products} />
 
         <SectionBrandLogo />
 
-        <div>
-          {shuffledProducts.length !== 0 && (
-            <div className="bg-white p-2">
-              <h2 className="my-4 text-lg uppercase md:text-lg">
-                Produtos que você se interessou
-              </h2>
-              <CarouselOrderProducts orderProducts={shuffledProducts} />
-            </div>
-          )}
-        </div>
+        <SectionOrders products={propsOrderProducts.orderProducts} />
       </main>
     </div>
   )
