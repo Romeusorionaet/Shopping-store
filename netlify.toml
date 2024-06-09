@@ -1,5 +1,0 @@
-[[redirects]]
-from = "/*"
-to = "/src"
-status = 200
-force = false
