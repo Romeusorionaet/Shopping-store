@@ -4,7 +4,7 @@ import { useCartStore } from '@/providers/zustand-store'
 import { calculateCartAllValues } from '@/utils/calculate-cart-all-values'
 import { useSession } from 'next-auth/react'
 import { NoUserMessage } from '../no-user-message'
-import { CartItem } from './cart-Item'
+import { CartItem } from './cart-item'
 
 interface Props {
   handleNavigateTo: (route: string) => void
