@@ -59,7 +59,11 @@ export default async function Search({ searchParams }: SearchProps) {
             <p>Nem um item foi encontrado.</p>
           ) : (
             productListToShow.map((product) => {
-              return <ProductCard key={product.id} product={product} />
+              return (
+                <div key={product.id} className="w-[10rem] md:w-[20rem]">
+                  <ProductCard product={product} />
+                </div>
+              )
             })
           )}
         </div>

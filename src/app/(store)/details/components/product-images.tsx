@@ -29,7 +29,7 @@ export function ProductImages({ imageUrls, name }: ProductImagesProps) {
         />
       </div>
 
-      <div className="flex gap-2 px-2 lg:flex-col">
+      <div className="flex w-40 gap-2 px-2 lg:w-[100px] lg:flex-col">
         {imageUrls.map((imageUrl) => (
           <button
             key={imageUrl}
@@ -47,7 +47,7 @@ export function ProductImages({ imageUrls, name }: ProductImagesProps) {
               height={0}
               width={0}
               sizes="100vw"
-              className="h-auto max-h-[70%] w-auto max-w-[80%] md:max-h-[40%] md:max-w-[50%]"
+              className="h-auto max-h-[70%] w-auto max-w-[80%] md:max-h-[40%] md:max-w-[400px]"
             />
           </button>
         ))}

@@ -41,7 +41,11 @@ export default async function Category({ params, searchParams }: ParamsProps) {
         <div className="my-8 flex flex-wrap justify-center gap-8">
           {products &&
             products.map((product) => {
-              return <ProductCard key={product.id} product={product} />
+              return (
+                <div key={product.id} className="w-[10rem] md:w-[20rem]">
+                  <ProductCard product={product} />
+                </div>
+              )
             })}
         </div>
       </div>
