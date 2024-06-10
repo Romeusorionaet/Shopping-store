@@ -2,7 +2,6 @@
 
 import { getDataSearchProducts } from '@/actions/get/product/get-data-search-products'
 import { CarouselProducts } from '@/components/carousel-products'
-import { NoProductRegistrationMessage } from '@/components/no-product-registration-message'
 import { SectionProductName } from '@/constants/section-product-name'
 import { ProductProps } from '@/core/@types/api-store'
 import { useQuery } from '@tanstack/react-query'
@@ -25,7 +24,7 @@ export function SectionPromotion() {
     !data || data?.notFound || data?.props?.products?.length === 0
 
   if (hasProduct) {
-    return <NoProductRegistrationMessage />
+    return
   }
 
   const productPromotionFiltered: ProductProps[] = JSON.parse(

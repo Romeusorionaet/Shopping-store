@@ -2,7 +2,6 @@
 
 import { getDataBuyerOrderProducts } from '@/actions/get/buyer/get-data-buyer-order-products'
 import { CarouselOrderProducts } from '@/components/carousel-products/order-products'
-import { NoProductRegistrationMessage } from '@/components/no-product-registration-message'
 import { OrderProductProps } from '@/core/@types/api-store'
 import { useQuery } from '@tanstack/react-query'
 import ClipLoader from 'react-spinners/ClipLoader'
@@ -21,7 +20,7 @@ export function SectionOrders() {
     !data || data?.notFound || data?.props?.orderProducts?.length === 0
 
   if (hasProduct) {
-    return <NoProductRegistrationMessage />
+    return
   }
 
   const orderProducts: OrderProductProps[] = JSON.parse(

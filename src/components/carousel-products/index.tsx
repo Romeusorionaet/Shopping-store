@@ -44,6 +44,8 @@ export function CarouselProducts({ products, section }: Props) {
 
   const sizeList = products.length === 0
 
+  const searchUrl = section ? `/search?s=${section}&p=1` : '/search?p=1'
+
   return (
     <div className="relative">
       {products.length > slidesToShow && currentSlide > 0 && (
@@ -68,7 +70,7 @@ export function CarouselProducts({ products, section }: Props) {
           className="flex h-72 w-72 flex-nowrap items-center justify-center"
         >
           {products.length === 14 ? (
-            <Link href={`/search?s=${section}&p=1`}>
+            <Link href={searchUrl}>
               <p className="underline">Ver todos...</p>
             </Link>
           ) : (

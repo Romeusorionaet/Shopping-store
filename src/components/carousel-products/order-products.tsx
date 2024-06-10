@@ -57,7 +57,7 @@ export function CarouselOrderProducts({ orderProducts }: Props) {
               >
                 <Link href={`/details/${slug.value}/${orderProduct.productId}`}>
                   <div className="flex flex-col items-center justify-center gap-1 rounded-md bg-base_reference_card p-1 duration-700 hover:bg-base_reference_card_hover md:h-full md:gap-2 md:p-4">
-                    <div className="line-clamp-2 h-10 text-center">
+                    <div className="line-clamp-2 h-8 text-center md:h-10">
                       <p className="text-xs md:text-sm">{orderProduct.title}</p>
                     </div>
 
