@@ -38,7 +38,7 @@ export function TechnicalProductDetails({ technicalProductDetails }: Props) {
   ]
 
   return (
-    <div className="mb-28 ml-2">
+    <div className="mb-28 ml-2 mt-4">
       <h2 className="text-lg uppercase md:text-2xl">
         Detalhes técnicos do produto
       </h2>

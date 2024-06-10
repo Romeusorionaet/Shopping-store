@@ -5,7 +5,7 @@ import { CarouselProducts } from '@/components/carousel-products'
 import { SectionProductName } from '@/constants/section-product-name'
 import { ProductProps } from '@/core/@types/api-store'
 import { useQuery } from '@tanstack/react-query'
-import ClipLoader from 'react-spinners/ClipLoader'
+import { SkeletonCarousel } from './skeleton-carousel'
 
 export function SectionPromotion() {
   const { data, isLoading } = useQuery({
@@ -17,7 +17,7 @@ export function SectionPromotion() {
   })
 
   if (isLoading) {
-    return <ClipLoader color="#000" size={35} />
+    return <SkeletonCarousel />
   }
 
   const hasProduct =

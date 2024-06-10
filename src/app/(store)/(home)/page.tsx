@@ -19,6 +19,8 @@ import {
   dehydrate,
 } from '@tanstack/react-query'
 import { getDataProducts } from '@/actions/get/product/get-data-products'
+import { Suspense } from 'react'
+import { SearchForm } from '@/components/search-form'
 
 export default async function Home() {
   const queryClient = new QueryClient()
@@ -73,9 +75,17 @@ export default async function Home() {
           </div>
         </div>
 
-        <HydrationBoundary state={dehydrate(queryClient)}>
-          <SectionAllProducts />
-        </HydrationBoundary>
+        <div className="bg-white px-2 py-8">
+          <Suspense fallback={null}>
+            <SearchForm />
+          </Suspense>
+
+          <h2 className="my-4 uppercase md:text-lg">Todos os produtos</h2>
+
+          <HydrationBoundary state={dehydrate(queryClient)}>
+            <SectionAllProducts />
+          </HydrationBoundary>
+        </div>
 
         <div className="flex rounded-md bg-base_one_reference_header/80 pr-2 text-base_color_text_top">
           <div className="flex h-56 w-1/2 justify-end">

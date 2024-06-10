@@ -189,7 +189,8 @@ export default async function Details({ params }: ParamsProps) {
 
       <div className="ml-2">
         <h2 className="mb-4 text-lg uppercase md:text-2xl">Descrição:</h2>
-        <div className="scrollbar h-96 overflow-auto border-b border-base_color_dark/20 p-1 md:h-56">
+
+        <div className="border-b border-base_color_dark/20 p-1">
           <pre className="whitespace-pre-wrap font-roboto">
             {product.description}
           </pre>

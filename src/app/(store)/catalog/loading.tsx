@@ -1,9 +1,5 @@
-import ClipLoader from 'react-spinners/ClipLoader'
+import { SkeletonCatalog } from './components/skeleton-catalog'
 
 export default function CatalogLoading() {
-  return (
-    <div className="flex h-screen items-center justify-center">
-      <ClipLoader color="#000" size={35} />
-    </div>
-  )
+  return <SkeletonCatalog />
 }

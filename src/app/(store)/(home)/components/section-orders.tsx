@@ -4,7 +4,7 @@ import { getDataBuyerOrderProducts } from '@/actions/get/buyer/get-data-buyer-or
 import { CarouselOrderProducts } from '@/components/carousel-products/order-products'
 import { OrderProductProps } from '@/core/@types/api-store'
 import { useQuery } from '@tanstack/react-query'
-import ClipLoader from 'react-spinners/ClipLoader'
+import { SkeletonCarousel } from './skeleton-carousel'
 
 export function SectionOrders() {
   const { data, isLoading } = useQuery({
@@ -13,7 +13,7 @@ export function SectionOrders() {
   })
 
   if (isLoading) {
-    return <ClipLoader color="#000" size={35} />
+    return <SkeletonCarousel />
   }
 
   const hasProduct =

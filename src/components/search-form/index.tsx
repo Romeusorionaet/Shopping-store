@@ -40,7 +40,7 @@ export function SearchForm() {
     >
       <form
         onSubmit={handleSearch}
-        className="mx-auto flex w-full max-w-[600px] items-center gap-3 rounded-md border px-5 py-2 ring-zinc-700"
+        className="mx-auto flex w-full max-w-[600px] items-center gap-3 rounded-md border px-5 ring-zinc-700 md:py-2"
       >
         <Search size={32} className="text-base_color_white h-5 w-5" />
 
@@ -51,14 +51,14 @@ export function SearchForm() {
           onChange={(e) => setValueInput(e.target.value)}
           name="q"
           required
-          className="flex-1 bg-transparent text-sm outline-none"
+          className="flex-1 bg-transparent outline-none max-md:text-sm"
         />
 
         <Button
           variant="secondary"
           type="submit"
           disabled={!valueInput}
-          className="rounded-md p-1 text-base_color_text_top/80 duration-700 disabled:cursor-not-allowed disabled:bg-base_one_reference_header/40"
+          className="rounded-md bg-base_one_reference_header p-1 text-xs text-base_color_text_top/80 duration-700 disabled:cursor-not-allowed disabled:bg-base_one_reference_header/40 max-md:-mr-5"
         >
           buscar
         </Button>
