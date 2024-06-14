@@ -2,13 +2,11 @@ import type { Metadata } from 'next'
 import { Roboto } from 'next/font/google'
 import '@/assets/styles/globals.css'
 import '@/assets/styles/scrollbar.css'
-import { Header } from '@/components/header'
 import { NextSSRPlugin } from '@uploadthing/react/next-ssr-plugin'
 import { extractRouterConfig } from 'uploadthing/server'
 import { ToastContainer } from 'react-toastify'
 import { ourFileRouter } from './api/uploadthing/core'
-import Providers from '@/utils/providers'
-import { CartArea } from '@/components/cart/cart-area'
+import ClientProviders from '@/utils/client-providers'
 
 const roboto = Roboto({
   subsets: ['latin'],
@@ -45,18 +43,17 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={`${roboto.variable} mx-auto max-w-[1680px] antialiased`}>
-        <Providers>
+        <ClientProviders>
           <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
-          <Header />
+
           {children}
-          <CartArea />
 
           <ToastContainer
             autoClose={2000}
             position={'bottom-left'}
             theme="dark"
           />
-        </Providers>
+        </ClientProviders>
       </body>
     </html>
   )
