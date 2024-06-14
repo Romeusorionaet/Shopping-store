@@ -21,6 +21,7 @@ export const getDataUserAddress =
           Authorization: `Bearer ${accessToken}`,
         },
       })
+
       const userAddress: AddressProps = response.data.userAddress
 
       return {

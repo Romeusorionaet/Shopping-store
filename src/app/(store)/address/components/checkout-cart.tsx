@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation'
 import ClipLoader from 'react-spinners/ClipLoader'
 import { useNotification } from '@/hooks/use-notifications'
 import { createCheckout } from '@/actions/checkout'
+import { UserContext } from '@/providers/user-context'
+import { useContext } from 'react'
 
 interface Props {
   userHasAddress: boolean
@@ -12,15 +14,15 @@ interface Props {
 
 export function CheckoutCart({ userHasAddress }: Props) {
   const cart = useCartStore((state) => state.cart)
-  const { data } = useSession()
+  const { profile } = useContext(UserContext)
   const { notifyWarning, notifyError } = useNotification()
 
   const navigate = useRouter()
 
-  if (!data) {
+  if (!profile.username) {
     return (
       <div className="mt-10">
-        <ClipLoader color="#000" loading={!data} size={35} />
+        <ClipLoader color="#000" loading={!profile.username} size={35} />
       </div>
     )
   }

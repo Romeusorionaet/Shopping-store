@@ -1,4 +1,3 @@
-import { getServerSession } from 'next-auth'
 import { OrderItem } from './components/order-item'
 import { NoUserMessage } from '@/components/no-user-message'
 import {
@@ -7,11 +6,12 @@ import {
   OrderStatusTracking,
 } from '@/core/@types/api-store'
 import { getDataBuyerOrders } from '@/actions/get/buyer/get-data-buyer-orders'
+import { getAccessTokenFromCookies } from '@/utils/get-tokens-from-cookies'
 
 export default async function Orders() {
-  const session = await getServerSession()
+  const token = getAccessTokenFromCookies()
 
-  if (!session || !session.user) {
+  if (!token) {
     return <NoUserMessage />
   }
 

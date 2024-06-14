@@ -4,7 +4,6 @@ import { ProductProps } from '@/core/@types/api-store'
 import { useNotification } from '@/hooks/use-notifications'
 import { useCartStore } from '@/providers/zustand-store'
 import { BaggageClaim } from 'lucide-react'
-import { useSession } from 'next-auth/react'
 import { useState } from 'react'
 
 interface Props {
@@ -15,18 +14,10 @@ interface Props {
 export function AddProductInCart({ product, title }: Props) {
   const addProductToCart = useCartStore((state) => state.addProductToCart)
   const [quantity] = useState(1)
-  const session = useSession()
 
-  const { notifyError, notifySuccess } = useNotification()
+  const { notifySuccess } = useNotification()
 
   const handleAddToProductInCart = () => {
-    const user = session.data?.user
-
-    if (!user) {
-      notifyError('Faça login na sua conta.')
-      return
-    }
-
     const stockQuantity = product.stockQuantity
 
     addProductToCart({ ...product, quantity, stockQuantity })

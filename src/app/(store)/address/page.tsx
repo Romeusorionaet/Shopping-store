@@ -1,20 +1,18 @@
-import { getServerSession } from 'next-auth'
 import { NoUserMessage } from '@/components/no-user-message'
 import { FormAddress } from './components/form-address'
 import { DataCreditCardTest } from './components/data-credit-card-test'
-import { authOptions } from '@/providers/google-providers'
 import {
   HydrationBoundary,
   QueryClient,
   dehydrate,
 } from '@tanstack/react-query'
 import { getDataUserAddress } from '@/actions/get/user/get-data-user-address'
+import { getAccessTokenFromCookies } from '@/utils/get-tokens-from-cookies'
 
 export default async function Address() {
-  const session = await getServerSession(authOptions)
-  const userId = session?.user.id
+  const token = getAccessTokenFromCookies()
 
-  if (!userId) {
+  if (!token) {
     return <NoUserMessage />
   }
 

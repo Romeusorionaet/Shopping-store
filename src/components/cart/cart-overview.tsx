@@ -2,8 +2,6 @@ import { Separator } from '../ui/separator'
 import { Button } from '../ui/button'
 import { useCartStore } from '@/providers/zustand-store'
 import { calculateCartAllValues } from '@/utils/calculate-cart-all-values'
-import { useSession } from 'next-auth/react'
-import { NoUserMessage } from '../no-user-message'
 import { CartItem } from './cart-item'
 
 interface Props {
@@ -13,12 +11,6 @@ interface Props {
 export function CartOverview({ handleNavigateTo }: Props) {
   const cart = useCartStore((state) => state.cart)
   const { subtotal, totalDiscount, total } = calculateCartAllValues(cart)
-  const { data } = useSession()
-  const user = data?.user
-
-  if (!user) {
-    return <NoUserMessage />
-  }
 
   const handleNavigateToAddressPage = () => {
     handleNavigateTo('/address')

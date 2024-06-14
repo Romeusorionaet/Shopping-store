@@ -1,9 +1,9 @@
-import { getRefreshTokenFromCookies } from '@/utils/get-tokens-from-cookies'
+import { getAccessTokenFromCookies } from '@/utils/get-tokens-from-cookies'
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
 export function middleware(request: NextRequest) {
-  const token = getRefreshTokenFromCookies()
+  const token = getAccessTokenFromCookies()
 
   if (token) {
     const url = request.nextUrl.clone()

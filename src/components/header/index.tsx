@@ -15,35 +15,30 @@ import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import { useRouter } from 'next/navigation'
 import { useContext, useState } from 'react'
 import { checkIsPrivateRoute } from '@/utils/check-is-private-route'
-import { signIn, useSession, signOut } from 'next-auth/react'
+import { signOut, useSession } from 'next-auth/react'
 import { UserContext } from '@/providers/user-context'
 import { DialogLoginAdm } from '../dialog-login-adm'
-import { useNotification } from '@/hooks/use-notifications'
+import { cleanAuthCookies } from '@/actions/auth/sign-out'
 
 export function Header() {
-  const { profile } = useContext(UserContext)
-  const isAdm = false // por enquanto / pegar role do profile
+  const { profile, refetchUserProfile } = useContext(UserContext)
   const { data } = useSession()
-
+  const isAdm = false // por enquanto / pegar role do profile
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isDialogOpen, setIsDialogOpen] = useState<boolean | undefined>(false)
 
-  const { notifyError } = useNotification()
-
   const router = useRouter()
 
-  const handleLogin = async () => {
-    try {
-      await signIn('google', { callbackUrl: '/' })
-    } catch (err: any) {
-      notifyError(
-        'Houve um problema ao realizar o login. Reporte esse erro e tente novamente mais tarde.',
-      )
-    }
-  }
-
   const handleLogout = async () => {
-    await signOut()
+    if (data?.user) {
+      await signOut()
+      await cleanAuthCookies()
+
+      return
+    }
+
+    await cleanAuthCookies()
+    await refetchUserProfile()
   }
 
   const handleCancel = () => {
@@ -158,16 +153,18 @@ export function Header() {
 
               <div className="flex items-center justify-between gap-8">
                 <div className="w-full">
-                  {!data ? (
-                    <Button
-                      size="icon"
-                      variant="outline"
-                      onClick={handleLogin}
-                      className="w-full gap-4 font-semibold hover:bg-base_one_reference_header hover:text-base_color_text_top"
-                    >
-                      <LogIn />
-                      Fazer login
-                    </Button>
+                  {!profile.username ? (
+                    <div className="flex flex-col gap-4">
+                      <Button
+                        size="icon"
+                        variant="outline"
+                        onClick={() => handleNavigateTo('/signIn')}
+                        className="w-full gap-4 font-bold uppercase hover:bg-base_one_reference_header hover:text-base_color_text_top"
+                      >
+                        Login
+                        <LogIn size={18} />
+                      </Button>
+                    </div>
                   ) : (
                     <Button
                       size="icon"
@@ -182,15 +179,15 @@ export function Header() {
                 </div>
 
                 <>
-                  {data ? (
+                  {profile.username ? (
                     <div className="flex flex-col">
                       <div className="flex items-center gap-2 py-4">
                         <Avatar>
-                          <AvatarFallback>{data.user.name}</AvatarFallback>
+                          <AvatarFallback>{profile.username}</AvatarFallback>
 
-                          {data.user.image && (
+                          {/* {data.user.image && (
                             <AvatarImage src={data.user.image} />
-                          )}
+                          )} */}
                         </Avatar>
                       </div>
                     </div>
@@ -213,13 +210,13 @@ export function Header() {
         </div>
 
         <div>
-          {data ? (
+          {profile.username ? (
             <div className="flex flex-col">
               <div className="flex items-center gap-2 md:py-4">
                 <Avatar>
-                  <AvatarFallback>{data.user.name}</AvatarFallback>
+                  <AvatarFallback>{profile.username}</AvatarFallback>
 
-                  {data.user.image && <AvatarImage src={data.user.image} />}
+                  {/* {data.user.image && <AvatarImage src={data.user.image} />} */}
                 </Avatar>
 
                 <div className="flex flex-col max-md:hidden">
@@ -233,7 +230,7 @@ export function Header() {
               <Button
                 size="icon"
                 variant="ghost"
-                onClick={handleLogin}
+                onClick={() => handleNavigateTo('/signIn')}
                 className="w-full gap-4 font-semibold duration-700"
               >
                 <LogIn />

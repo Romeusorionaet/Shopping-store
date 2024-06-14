@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react'
 import { Sheet, SheetContent, SheetHeader, SheetTrigger } from '../ui/sheet'
 import { BaggageClaim, Bell, Phone } from 'lucide-react'
 import { useCartStore } from '@/providers/zustand-store'
-import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { Button } from '../ui/button'
 import { CartOverview } from './cart-overview'
@@ -14,12 +13,10 @@ export function CartArea() {
   const [clientRendered, setClientRendered] = useState(false)
 
   const cart = useCartStore((state) => state.cart)
-  const { data } = useSession()
 
   const router = useRouter()
 
-  const conditionForShowSizeCart =
-    clientRendered && cart.length !== 0 && data?.user.id
+  const conditionForShowSizeCart = clientRendered && cart.length !== 0
 
   useEffect(() => {
     // hydrate
