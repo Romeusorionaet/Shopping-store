@@ -30,15 +30,13 @@ export function Header() {
   const router = useRouter()
 
   const handleLogout = async () => {
-    if (data?.user) {
-      await signOut()
-      await cleanAuthCookies()
+    const logOutFromGoogle = !!data?.user
 
-      return
+    if (logOutFromGoogle) {
+      await Promise.all([signOut(), cleanAuthCookies()])
+    } else {
+      await Promise.all([cleanAuthCookies(), refetchUserProfile()])
     }
-
-    await cleanAuthCookies()
-    await refetchUserProfile()
   }
 
   const handleCancel = () => {

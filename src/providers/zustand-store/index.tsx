@@ -8,7 +8,9 @@ export interface CartProps extends ProductProps {
 }
 
 export interface CartStore {
+  cartKey: string
   cart: CartProps[]
+  initializeCartState: () => void
   addProductToCart: (item: CartProps) => void
   decreaseProductQuantity: (productId: string) => void
   increaseProductQuantity: (productId: string) => void
@@ -17,16 +19,21 @@ export interface CartStore {
 
 const getInitialCartState = () => {
   if (typeof window !== 'undefined') {
+    const publicId = localStorage.getItem(KeyLocalStorage.PUBLIC_ID)
+    const cartKey = `${KeyLocalStorage.LOCAL_STORAGE_CART_PRODUCT}${publicId}`
+
     const cartSavedInLocalStorage = JSON.parse(
-      localStorage.getItem(KeyLocalStorage.LOCAL_STORAGE_CART_PRODUCT) || '[]',
+      localStorage.getItem(cartKey) || '[]',
     )
 
     return {
+      cartKey,
       cart: cartSavedInLocalStorage,
     }
   }
 
   return {
+    cartKey: '',
     cart: [],
   }
 }
@@ -34,8 +41,13 @@ const getInitialCartState = () => {
 export const useCartStore = create<CartStore>((set, get) => ({
   ...getInitialCartState(),
 
+  initializeCartState: () => {
+    const { cartKey, cart } = getInitialCartState()
+    set({ cartKey, cart })
+  },
+
   addProductToCart: (product) => {
-    const { cart } = useCartStore.getState()
+    const { cart, cartKey } = useCartStore.getState()
 
     const existingProductIndex = cart.findIndex(
       (item) => item.id === product.id,
@@ -69,10 +81,8 @@ export const useCartStore = create<CartStore>((set, get) => ({
     const updatedCartInLocalStorage = JSON.stringify(
       useCartStore.getState().cart,
     )
-    localStorage.setItem(
-      KeyLocalStorage.LOCAL_STORAGE_CART_PRODUCT,
-      updatedCartInLocalStorage,
-    )
+
+    localStorage.setItem(cartKey, updatedCartInLocalStorage)
   },
 
   decreaseProductQuantity: (productId) => {
@@ -101,6 +111,7 @@ export const useCartStore = create<CartStore>((set, get) => ({
         set({ cart: updatedCart })
 
         const updatedCartInLocalStorage = JSON.stringify(get().cart)
+
         localStorage.setItem(
           KeyLocalStorage.LOCAL_STORAGE_CART_PRODUCT,
           updatedCartInLocalStorage,
@@ -110,7 +121,7 @@ export const useCartStore = create<CartStore>((set, get) => ({
   },
 
   increaseProductQuantity: (productId) => {
-    const { cart } = get()
+    const { cart, cartKey } = get()
 
     const existingProductIndex = cart.findIndex((item) => item.id === productId)
 
@@ -138,15 +149,13 @@ export const useCartStore = create<CartStore>((set, get) => ({
       set({ cart: updatedCart })
 
       const updatedCartInLocalStorage = JSON.stringify(get().cart)
-      localStorage.setItem(
-        KeyLocalStorage.LOCAL_STORAGE_CART_PRODUCT,
-        updatedCartInLocalStorage,
-      )
+
+      localStorage.setItem(cartKey, updatedCartInLocalStorage)
     }
   },
 
   removeProductFromCart: (productId: string) => {
-    const { cart } = get()
+    const { cart, cartKey } = get()
 
     const updatedCart = cart.filter(
       (cartProduct) => cartProduct.id !== productId,
@@ -155,9 +164,7 @@ export const useCartStore = create<CartStore>((set, get) => ({
     set({ cart: updatedCart })
 
     const updatedCartInLocalStorage = JSON.stringify(get().cart)
-    localStorage.setItem(
-      KeyLocalStorage.LOCAL_STORAGE_CART_PRODUCT,
-      updatedCartInLocalStorage,
-    )
+
+    localStorage.setItem(cartKey, updatedCartInLocalStorage)
   },
 }))

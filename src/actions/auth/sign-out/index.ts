@@ -6,4 +6,6 @@ import { cookies } from 'next/headers'
 export async function cleanAuthCookies() {
   cookies().delete(KeyCookies.AT_STORE)
   cookies().delete(KeyCookies.RT_STORE)
+
+  return
 }

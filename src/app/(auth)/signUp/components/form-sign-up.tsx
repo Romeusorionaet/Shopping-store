@@ -5,23 +5,21 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { FormError } from '@/components/form/form-error'
 import { Button } from '@/components/ui/button'
-import { signInWithEmailAndPassword } from '@/actions/auth/signIn'
 import { useNotification } from '@/hooks/use-notifications'
 import { useRouter } from 'next/navigation'
-import { useContext } from 'react'
-import { UserContext } from '@/providers/user-context'
 import { motion } from 'framer-motion'
-import { signIn } from 'next-auth/react'
 import { Separator } from '@/components/ui/separator'
+import { signUp } from '@/actions/auth/sign-up'
 
 const loginFormSchema = z.object({
+  username: z.string().min(1, { message: 'Nome obrigatório' }),
   email: z.string().min(1, { message: 'Email é obrigatório' }),
   password: z.string().min(6, { message: 'No mínimo 6 digitos' }),
 })
 
 type LoginFormData = z.infer<typeof loginFormSchema>
 
-export function FormSignIn() {
+export function FormSignUp() {
   const {
     register,
     handleSubmit,
@@ -30,40 +28,31 @@ export function FormSignIn() {
     resolver: zodResolver(loginFormSchema),
   })
 
-  const { refetchUserProfile } = useContext(UserContext)
-
   const { notifyError } = useNotification()
 
   const router = useRouter()
 
+  // TODO repetir senha para confirmar se esta correto
   async function handleSignInForm(data: LoginFormData) {
-    const { email, password } = data
+    const { username, email, password } = data
 
-    const response = await signInWithEmailAndPassword({ email, password })
+    const response = await signUp({
+      username,
+      email,
+      password,
+    })
 
     if (!response.success) {
       notifyError(response.message)
     }
 
     if (response.success && !isSubmitting) {
-      await refetchUserProfile()
-
-      router.push('/')
+      router.push('/signIn')
     }
   }
 
-  function handleNavigateToSignUp() {
-    router.push('/signUp')
-  }
-
-  const handleLoginWithGoogle = async () => {
-    try {
-      await signIn('google', { callbackUrl: '/' })
-    } catch (err: any) {
-      notifyError(
-        'Houve um problema ao realizar o login. Reporte esse erro e tente novamente mais tarde.',
-      )
-    }
+  function handleNavigateToSignIn() {
+    router.push('/signIn')
   }
 
   return (
@@ -76,11 +65,22 @@ export function FormSignIn() {
       }}
     >
       <h1 className="mb-4 text-center font-bold uppercase text-base_one_reference_header">
-        Fazer login
+        Criar conta
       </h1>
 
       <form className="space-y-8" onSubmit={handleSubmit(handleSignInForm)}>
         <fieldset className="flex flex-col gap-6">
+          <label className="flex flex-col" htmlFor="username">
+            Nome completo
+            <input
+              id="username"
+              placeholder="Nome e sobrenome"
+              className="p-2"
+              {...register('username')}
+            />
+            <FormError errors={errors.username?.message} />
+          </label>
+
           <label className="flex flex-col" htmlFor="email">
             Email
             <input
@@ -113,33 +113,24 @@ export function FormSignIn() {
             {isSubmitting ? (
               <div className="h-6 w-6 animate-spin rounded-full border-transparent bg-gradient-to-t from-black via-white to-black" />
             ) : (
-              <p>Entrar</p>
+              <p>Criar</p>
             )}
           </Button>
         </div>
       </form>
 
+      <Separator className="my-8 opacity-20" />
+
       <div className="mt-4 flex justify-center">
         <Button
           type={'button'}
-          size="icon"
-          variant="outline"
-          onClick={handleLoginWithGoogle}
-          className="w-60 gap-4 font-semibold hover:bg-base_one_reference_header hover:text-base_color_text_top"
+          variant="ghost"
+          onClick={handleNavigateToSignIn}
+          className="w-full gap-4 font-semibold hover:bg-base_one_reference_header hover:text-base_color_text_top"
         >
-          Entrar com Google
+          Voltar a tela de login
         </Button>
       </div>
-
-      <Separator className="my-8 opacity-20" />
-
-      <Button
-        variant="ghost"
-        onClick={handleNavigateToSignUp}
-        className="w-full text-center hover:bg-base_one_reference_header"
-      >
-        Criar conta
-      </Button>
     </motion.div>
   )
 }

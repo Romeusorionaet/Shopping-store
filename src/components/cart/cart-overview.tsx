@@ -3,14 +3,22 @@ import { Button } from '../ui/button'
 import { useCartStore } from '@/providers/zustand-store'
 import { calculateCartAllValues } from '@/utils/calculate-cart-all-values'
 import { CartItem } from './cart-item'
+import { NoUserMessage } from '../no-user-message'
+import { UserContext } from '@/providers/user-context'
+import { useContext } from 'react'
 
 interface Props {
   handleNavigateTo: (route: string) => void
 }
 
 export function CartOverview({ handleNavigateTo }: Props) {
-  const cart = useCartStore((state) => state.cart)
+  const [cart] = useCartStore((state) => [state.cart])
+  const { profile } = useContext(UserContext)
   const { subtotal, totalDiscount, total } = calculateCartAllValues(cart)
+
+  if (!profile.publicId) {
+    return <NoUserMessage />
+  }
 
   const handleNavigateToAddressPage = () => {
     handleNavigateTo('/address')

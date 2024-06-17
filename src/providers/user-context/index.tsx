@@ -8,8 +8,10 @@ import {
   useQuery,
 } from '@tanstack/react-query'
 import { KeyLocalStorage } from '@/constants/key-local-storage'
+import { useCartStore } from '../zustand-store'
 
 interface ProfileProps {
+  publicId: string
   username: string
   email: string
   createAt: string
@@ -31,8 +33,10 @@ export const UserContext = createContext({} as UserContextType)
 
 export function UserContextProvider({ children }: UserContextProps) {
   const session = useSession()
+  const initializeCartState = useCartStore((state) => state.initializeCartState)
 
   const initialDataProfile = {
+    publicId: '',
     username: '',
     email: '',
     createAt: '',
@@ -48,13 +52,8 @@ export function UserContextProvider({ children }: UserContextProps) {
   })
 
   useEffect(() => {
-    const fetchDataUser = async () => {
+    const refreshDataUser = async () => {
       const userLogged = localStorage.getItem(KeyLocalStorage.USER_LOGGED)
-
-      if (data?.props.profile) {
-        setProfile(data?.props.profile)
-        localStorage.setItem(KeyLocalStorage.USER_LOGGED, 'true')
-      }
 
       const hasSessionData = !data?.props.profile && session.data
       const hasUserLogged = !data?.props.profile && userLogged === 'true'
@@ -64,22 +63,36 @@ export function UserContextProvider({ children }: UserContextProps) {
 
         if (!success) {
           localStorage.removeItem(KeyLocalStorage.USER_LOGGED)
-          await signOut()
-          return
-        }
+          localStorage.removeItem(KeyLocalStorage.PUBLIC_ID)
 
-        refetchUserProfile()
+          await signOut()
+
+          return
+        } else {
+          refetchUserProfile()
+        }
       }
     }
 
-    fetchDataUser()
+    refreshDataUser()
   }, [session.data, data, refetchUserProfile])
 
   useEffect(() => {
-    if (data?.props.profile) {
-      setProfile(data?.props.profile)
+    const setData = async () => {
+      if (data?.props.profile) {
+        setProfile(data?.props.profile)
+        localStorage.setItem(KeyLocalStorage.USER_LOGGED, 'true')
+      }
+
+      if (profile.publicId) {
+        localStorage.setItem(KeyLocalStorage.PUBLIC_ID, profile.publicId)
+      }
+
+      initializeCartState()
     }
-  }, [data])
+
+    setData()
+  }, [data, profile.publicId, initializeCartState])
 
   return (
     <UserContext.Provider

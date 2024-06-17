@@ -16,6 +16,7 @@ export enum OrderStatusTracking {
 }
 
 export interface ProfileProps {
+  publicId: string
   username: string
   email: string
   createAt: string

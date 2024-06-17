@@ -1,5 +1,6 @@
 'use client'
 
+import { KeyLocalStorage } from '@/constants/key-local-storage'
 import { ProductProps } from '@/core/@types/api-store'
 import { useNotification } from '@/hooks/use-notifications'
 import { useCartStore } from '@/providers/zustand-store'
@@ -12,15 +13,28 @@ interface Props {
 }
 
 export function AddProductInCart({ product, title }: Props) {
-  const addProductToCart = useCartStore((state) => state.addProductToCart)
+  const [addProductToCart] = useCartStore((state) => [state.addProductToCart])
+
   const [quantity] = useState(1)
 
-  const { notifySuccess } = useNotification()
+  const { notifySuccess, notifyError } = useNotification()
 
   const handleAddToProductInCart = () => {
+    const publicId = localStorage.getItem(KeyLocalStorage.PUBLIC_ID)
+
+    if (!publicId) {
+      notifyError('Você precisa fazer login')
+      return
+    }
+
     const stockQuantity = product.stockQuantity
 
-    addProductToCart({ ...product, quantity, stockQuantity })
+    addProductToCart({
+      ...product,
+      quantity,
+      stockQuantity,
+    })
+
     notifySuccess('Adicionado ao carrinho!')
   }
 
