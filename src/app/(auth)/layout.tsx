@@ -10,10 +10,16 @@ export default async function AuthLayout({
   return (
     <div className="mx-auto w-full max-w-[400px]">
       <div className="pl-6 pt-4">
-        <Link className="cursor-pointer text-2xl" href={'/'}>
+        <Link
+          title="Home"
+          className="flex cursor-pointer items-center gap-2 text-2xl"
+          href={'/'}
+        >
           <Store className="rounded-full border-b pb-1" size={36} />
+          <span className="text-lg">Shopping store</span>
         </Link>
       </div>
+
       <ClientProviders>{children}</ClientProviders>
     </div>
   )

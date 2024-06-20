@@ -9,7 +9,7 @@ export const ourFileRouter = {
   imageShoppingStore: f({
     image: {
       maxFileSize: '2MB',
-      maxFileCount: 4,
+      maxFileCount: 1,
     },
   })
     .middleware(async ({ req }) => {
@@ -23,6 +23,8 @@ export const ourFileRouter = {
       console.log('Upload complete for userId:', metadata.userId)
 
       console.log('file url', file.url)
+
+      // return { uploadedBy: metadata.userId };
     }),
 } satisfies FileRouter
 

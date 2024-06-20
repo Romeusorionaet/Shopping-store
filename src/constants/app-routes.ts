@@ -3,6 +3,6 @@ export const APP_ROUTES = {
 
   public: {
     dashboard: ['/', '/catalog', '/address', '/details', '/orders', '/success'],
-    auth: ['/signIn', '/signUp'],
+    auth: ['/signIn', '/signUp', 'confirm-email'],
   },
 }

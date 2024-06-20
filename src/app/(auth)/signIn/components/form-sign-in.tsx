@@ -13,13 +13,9 @@ import { UserContext } from '@/providers/user-context'
 import { motion } from 'framer-motion'
 import { signIn } from 'next-auth/react'
 import { Separator } from '@/components/ui/separator'
+import { signInFormSchema } from '../../schema/form-sign-in'
 
-const loginFormSchema = z.object({
-  email: z.string().min(1, { message: 'Email é obrigatório' }),
-  password: z.string().min(6, { message: 'No mínimo 6 digitos' }),
-})
-
-type LoginFormData = z.infer<typeof loginFormSchema>
+type LoginFormData = z.infer<typeof signInFormSchema>
 
 export function FormSignIn() {
   const {
@@ -27,7 +23,7 @@ export function FormSignIn() {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<LoginFormData>({
-    resolver: zodResolver(loginFormSchema),
+    resolver: zodResolver(signInFormSchema),
   })
 
   const { refetchUserProfile } = useContext(UserContext)
@@ -59,7 +55,7 @@ export function FormSignIn() {
   const handleLoginWithGoogle = async () => {
     try {
       await signIn('google', { callbackUrl: '/' })
-    } catch (err: any) {
+    } catch (err) {
       notifyError(
         'Houve um problema ao realizar o login. Reporte esse erro e tente novamente mais tarde.',
       )

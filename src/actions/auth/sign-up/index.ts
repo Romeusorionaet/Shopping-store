@@ -6,6 +6,7 @@ interface Props {
   username: string
   email: string
   password: string
+  picture: string
 }
 
 interface ResponseProps {
@@ -17,12 +18,14 @@ export const signUp = async ({
   username,
   email,
   password,
+  picture,
 }: Props): Promise<ResponseProps> => {
   try {
     const response = await api.post('/auth/user/register', {
       username,
       email,
       password,
+      picture,
     })
 
     return {

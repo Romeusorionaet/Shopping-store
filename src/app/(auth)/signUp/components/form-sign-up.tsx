@@ -2,7 +2,6 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { z } from 'zod'
 import { FormError } from '@/components/form/form-error'
 import { Button } from '@/components/ui/button'
 import { useNotification } from '@/hooks/use-notifications'
@@ -10,14 +9,20 @@ import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { Separator } from '@/components/ui/separator'
 import { signUp } from '@/actions/auth/sign-up'
+import ClipLoader from 'react-spinners/ClipLoader'
+import { z } from 'zod'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { UploadButton } from '@/utils/generate-components'
+import { useState } from 'react'
+import { User } from 'lucide-react'
+import { signUpFormSchema } from '../../schema/form-sign-up'
 
-const loginFormSchema = z.object({
-  username: z.string().min(1, { message: 'Nome obrigatório' }),
-  email: z.string().min(1, { message: 'Email é obrigatório' }),
-  password: z.string().min(6, { message: 'No mínimo 6 digitos' }),
-})
+interface ImageProfileProps {
+  name: string
+  url: string
+}
 
-type LoginFormData = z.infer<typeof loginFormSchema>
+type LoginFormData = z.infer<typeof signUpFormSchema>
 
 export function FormSignUp() {
   const {
@@ -25,21 +30,36 @@ export function FormSignUp() {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<LoginFormData>({
-    resolver: zodResolver(loginFormSchema),
+    resolver: zodResolver(signUpFormSchema),
   })
 
-  const { notifyError } = useNotification()
+  const [imageProfile, setImageProfile] = useState<ImageProfileProps[]>([
+    {
+      name: '',
+      url: '',
+    },
+  ])
+
+  const { notifyError, notifySuccess } = useNotification()
 
   const router = useRouter()
 
-  // TODO repetir senha para confirmar se esta correto
+  const hasImageProfile = !!imageProfile[0].url
+
   async function handleSignInForm(data: LoginFormData) {
     const { username, email, password } = data
+
+    if (!hasImageProfile) {
+      notifyError('Selecione uma imagem para o seu perfil')
+
+      return
+    }
 
     const response = await signUp({
       username,
       email,
       password,
+      picture: imageProfile[0].url,
     })
 
     if (!response.success) {
@@ -47,11 +67,11 @@ export function FormSignUp() {
     }
 
     if (response.success && !isSubmitting) {
-      router.push('/signIn')
+      handleNavigateToSignIn()
     }
   }
 
-  function handleNavigateToSignIn() {
+  const handleNavigateToSignIn = () => {
     router.push('/signIn')
   }
 
@@ -69,6 +89,36 @@ export function FormSignUp() {
       </h1>
 
       <form className="space-y-8" onSubmit={handleSubmit(handleSignInForm)}>
+        <div className="flex items-center justify-center gap-4">
+          <Avatar
+            data-value={hasImageProfile}
+            className="h-16 w-16 border border-base_color_dark/30 bg-base_one_reference_header data-[value=false]:opacity-30"
+          >
+            {hasImageProfile ? (
+              <>
+                <AvatarImage src={imageProfile[0].url} />
+                <AvatarFallback>{imageProfile[0].name}</AvatarFallback>
+              </>
+            ) : (
+              <div className="flex w-full items-center justify-center">
+                <User className="text-white" size={40} />
+              </div>
+            )}
+          </Avatar>
+
+          <UploadButton
+            className="mt-4 ut-button:bg-base_one_reference_header ut-button:ut-uploading:bg-red-500/50"
+            endpoint="imageShoppingStore"
+            onClientUploadComplete={(res) => {
+              res && setImageProfile(res)
+              notifySuccess('Imagem do perfil salvo')
+            }}
+            onUploadError={(error: Error) => {
+              notifyError(`ERROR! ${error.message}`)
+            }}
+          />
+        </div>
+
         <fieldset className="flex flex-col gap-6">
           <label className="flex flex-col" htmlFor="username">
             Nome completo
@@ -103,6 +153,18 @@ export function FormSignUp() {
             />
             <FormError errors={errors.password?.message} />
           </label>
+
+          <label className="flex flex-col" htmlFor="passwordRepeat">
+            Repetir senha
+            <input
+              type="password"
+              id="passwordRepeat"
+              placeholder="******"
+              className="p-2"
+              {...register('passwordRepeat')}
+            />
+            <FormError errors={errors.passwordRepeat?.message} />
+          </label>
         </fieldset>
 
         <div className="flex  justify-center">
@@ -111,7 +173,7 @@ export function FormSignUp() {
             className="w-60 gap-4 font-semibold hover:bg-base_one_reference_header hover:text-base_color_text_top"
           >
             {isSubmitting ? (
-              <div className="h-6 w-6 animate-spin rounded-full border-transparent bg-gradient-to-t from-black via-white to-black" />
+              <ClipLoader color="#FFFF" loading={isSubmitting} size={35} />
             ) : (
               <p>Criar</p>
             )}

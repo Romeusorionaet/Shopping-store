@@ -30,6 +30,7 @@ export const authOptions: AuthOptions = {
               username: profile.name,
               email: profile.email,
               picture: profile.picture,
+              emailVerified: profile.email_verified,
             },
           )
 
