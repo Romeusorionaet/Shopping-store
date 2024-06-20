@@ -38,7 +38,7 @@ export function FormSignIn() {
     const response = await signInWithEmailAndPassword({ email, password })
 
     if (!response.success) {
-      notifyError(response.message)
+      notifyError({ message: response.message, origin: 'server' })
     }
 
     if (response.success && !isSubmitting) {
@@ -56,9 +56,11 @@ export function FormSignIn() {
     try {
       await signIn('google', { callbackUrl: '/' })
     } catch (err) {
-      notifyError(
-        'Houve um problema ao realizar o login. Reporte esse erro e tente novamente mais tarde.',
-      )
+      notifyError({
+        message:
+          'Houve um problema ao realizar o login. Reporte esse erro e tente novamente mais tarde',
+        origin: 'client',
+      })
     }
   }
 

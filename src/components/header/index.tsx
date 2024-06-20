@@ -200,6 +200,7 @@ export function Header() {
 
         <div className="flex gap-2">
           <h1
+            title="Home"
             onClick={() => handleNavigateTo('/')}
             className="cursor-pointer text-2xl font-bold"
           >

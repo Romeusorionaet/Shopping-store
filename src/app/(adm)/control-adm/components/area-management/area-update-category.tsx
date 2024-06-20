@@ -96,7 +96,10 @@ export function AreaUpdateCategory({ listOfCategory, listOfProducts }: Props) {
         //   notifyError(result.messageError)
         // }
       } else {
-        notifyWarning('Este produto não está habilidato para edição.')
+        notifyWarning({
+          message: 'Este produto não está habilidato para edição',
+          origin: 'client',
+        })
       }
     } catch (err) {
       console.log(err)
@@ -145,10 +148,16 @@ export function AreaUpdateCategory({ listOfCategory, listOfProducts }: Props) {
                           onClientUploadComplete={(res) => {
                             res && setImageDataCategory(res)
                             setIdFile(category.id)
-                            notifySuccess('Imagem da categoria salva')
+                            notifySuccess({
+                              message: 'Imagem da categoria salva',
+                              origin: 'client',
+                            })
                           }}
                           onUploadError={(error: Error) => {
-                            notifyError(`ERROR! ${error.message}`)
+                            notifyError({
+                              message: error.message,
+                              origin: 'client',
+                            })
                           }}
                         />
                         <ArrowBigRight />

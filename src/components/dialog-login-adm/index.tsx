@@ -29,7 +29,7 @@ export function DialogLoginAdm({ isDialogOpen, handleCancel }: Props) {
   const handleLogin = async () => {
     try {
       if (!password) {
-        notifyError('Campo vazio')
+        notifyError({ message: 'Campo vazio', origin: 'client' })
         return
       }
 

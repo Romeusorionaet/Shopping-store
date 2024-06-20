@@ -23,7 +23,7 @@ export function AddProductInCart({ product, title }: Props) {
     const publicId = localStorage.getItem(KeyLocalStorage.PUBLIC_ID)
 
     if (!publicId) {
-      notifyError('Você precisa fazer login')
+      notifyError({ message: 'Você precisa fazer login', origin: 'client' })
       return
     }
 
@@ -35,7 +35,7 @@ export function AddProductInCart({ product, title }: Props) {
       stockQuantity,
     })
 
-    notifySuccess('Adicionado ao carrinho!')
+    notifySuccess({ message: 'Adicionado ao carrinho!', origin: 'client' })
   }
 
   return (

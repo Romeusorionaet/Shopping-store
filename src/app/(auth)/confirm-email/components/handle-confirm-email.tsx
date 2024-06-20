@@ -25,9 +25,9 @@ export function HandleConfirmEmail() {
         router.push('/signIn')
       }
     } catch (err: any) {
-      const errorMessageFromServer = `Error: ${err.response.data.error} / Error path: ${err.response.data.error_path[0]}`
+      const errorMessage = `Error: ${err.response.data.error} / Error path: ${err.response.data.error_path[0]}`
 
-      notifyError(errorMessageFromServer)
+      notifyError({ message: errorMessage, origin: 'server' })
     }
   }
 

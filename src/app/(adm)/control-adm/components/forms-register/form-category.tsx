@@ -55,7 +55,10 @@ export function FormCategory() {
     const { name } = data
 
     if (imageDataCategory[0].url === '') {
-      notifyError('Escolha uma imagem que represente a categoria')
+      notifyError({
+        message: 'Escolha uma imagem que represente a categoria',
+        origin: 'client',
+      })
       return
     }
 
@@ -98,10 +101,13 @@ export function FormCategory() {
                 endpoint="imageShoppingStore"
                 onClientUploadComplete={(res) => {
                   res && setImageDataCategory(res)
-                  notifySuccess('Imagem da categoria salva')
+                  notifySuccess({
+                    message: 'Imagem da categoria salva',
+                    origin: 'client',
+                  })
                 }}
                 onUploadError={(error: Error) => {
-                  notifyError(`ERROR! ${error.message}`)
+                  notifyError({ message: error.message, origin: 'client' })
                 }}
               />
 

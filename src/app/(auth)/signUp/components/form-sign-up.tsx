@@ -50,7 +50,10 @@ export function FormSignUp() {
     const { username, email, password } = data
 
     if (!hasImageProfile) {
-      notifyError('Selecione uma imagem para o seu perfil')
+      notifyError({
+        message: 'Selecione uma imagem para o seu perfil',
+        origin: 'client',
+      })
 
       return
     }
@@ -63,7 +66,7 @@ export function FormSignUp() {
     })
 
     if (!response.success) {
-      notifyError(response.message)
+      notifyError({ message: response.message, origin: 'server' })
     }
 
     if (response.success && !isSubmitting) {
@@ -111,10 +114,13 @@ export function FormSignUp() {
             endpoint="imageShoppingStore"
             onClientUploadComplete={(res) => {
               res && setImageProfile(res)
-              notifySuccess('Imagem do perfil salvo')
+              notifySuccess({
+                message: 'Imagem do perfil salvo',
+                origin: 'client',
+              })
             }}
             onUploadError={(error: Error) => {
-              notifyError(`ERROR! ${error.message}`)
+              notifyError({ message: error.message, origin: 'client' })
             }}
           />
         </div>

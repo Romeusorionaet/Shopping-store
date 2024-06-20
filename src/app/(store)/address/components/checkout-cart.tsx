@@ -51,7 +51,7 @@ export function CheckoutCart({ userHasAddress }: Props) {
   const handleFinishPurchaseClick = async () => {
     try {
       if (cart.length === 0) {
-        notifyWarning('Carrinho vazio')
+        notifyWarning({ message: 'Carrinho vazio', origin: 'client' })
 
         navigate.push('/')
 
@@ -63,16 +63,18 @@ export function CheckoutCart({ userHasAddress }: Props) {
       const { initPointUrl, error } = await createCheckout(orderProducts)
 
       if (error) {
-        notifyError(error)
+        notifyError({ message: error, origin: 'server' })
       }
 
       if (initPointUrl) {
         window.open(initPointUrl.checkoutUrl, '_blank')
       }
     } catch (err) {
-      notifyError(
-        'Houve um problema na criação da compra. Reporte esse erro e tente novamente mais tarde.',
-      )
+      notifyError({
+        message:
+          'Houve um problema na criação da compra. Reporte esse erro e tente novamente mais tarde',
+        origin: 'server',
+      })
     }
   }
 

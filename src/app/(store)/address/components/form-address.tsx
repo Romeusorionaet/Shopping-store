@@ -79,7 +79,10 @@ export function FormAddress() {
     )
 
     if (isSameData) {
-      notifyError('Não há alterações para salvar.')
+      notifyError({
+        message: 'Não há alterações para salvar',
+        origin: 'client',
+      })
       return
     }
 
@@ -94,10 +97,10 @@ export function FormAddress() {
     const result = await createUserAddress(addressFormData)
 
     if (result.success) {
-      notifySuccess(result.message)
+      notifySuccess({ message: result.message, origin: 'server' })
       setOldAddress(addressFormData)
     } else {
-      notifyError(result.message)
+      notifyError({ message: result.message, origin: 'server' })
     }
   }
 
@@ -105,10 +108,10 @@ export function FormAddress() {
     const result = await updateUserAddress(addressFormData)
 
     if (result.success) {
-      notifySuccess(result.message)
+      notifySuccess({ message: result.message, origin: 'server' })
       setOldAddress(addressFormData)
     } else {
-      notifyError(result.message)
+      notifyError({ message: result.message, origin: 'server' })
     }
   }
 

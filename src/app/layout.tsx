@@ -49,7 +49,7 @@ export default async function RootLayout({
           {children}
 
           <ToastContainer
-            autoClose={2000}
+            autoClose={3000}
             position={'bottom-left'}
             theme="dark"
           />

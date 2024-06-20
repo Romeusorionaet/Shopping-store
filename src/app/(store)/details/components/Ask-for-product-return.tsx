@@ -16,7 +16,7 @@ export function AskForProductReturn({ productName }: Props) {
 
   const handleSendMenssage = () => {
     if (!message) {
-      notifyWarning('Escreva algo')
+      notifyWarning({ message: 'Escreva algo', origin: 'client' })
       return
     }
 

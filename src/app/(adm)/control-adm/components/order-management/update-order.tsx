@@ -22,7 +22,7 @@ export function UpdateOrder({ orderId, userAddress }: Props) {
 
   const handleUpdateDataOrder = async () => {
     if (!trackingCode) {
-      notifyError('Insira o código')
+      notifyError({ message: 'Insira o código', origin: 'client' })
       return
     }
 
@@ -50,7 +50,7 @@ export function UpdateOrder({ orderId, userAddress }: Props) {
     try {
       // await updateOrder({ orderTracking: CANCELED, orderId })
 
-      notifyError('Pedido cancelado')
+      notifyError({ message: 'Pedido cancelado', origin: 'client' })
 
       setTrackingCode('')
 

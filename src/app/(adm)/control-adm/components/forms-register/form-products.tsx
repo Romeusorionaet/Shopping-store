@@ -93,7 +93,10 @@ export function FormProduct({ listOfCategory }: Props) {
     //     : ModeOfSale.SELL_IN_REGION_ONLY
 
     if (imageDataProducts.length !== 4) {
-      notifyError('É importante que tenha 4 imagens para o seu produto')
+      notifyError({
+        message: 'É importante que tenha 4 imagens para o seu produto',
+        origin: 'client',
+      })
       return
     }
 
@@ -140,11 +143,14 @@ export function FormProduct({ listOfCategory }: Props) {
                 endpoint="imageShoppingStore"
                 onClientUploadComplete={(res) => {
                   res && setImageDataProducts(res)
-                  notifySuccess('Imagem da categoria salva')
+                  notifySuccess({
+                    message: 'Imagem da categoria salva',
+                    origin: 'client',
+                  })
                 }}
                 onUploadError={(error: Error) => {
                   console.log('Error', error)
-                  notifyError(`ERROR! ${error.message}`)
+                  notifyError({ message: error.message, origin: 'client' })
                 }}
               />
 

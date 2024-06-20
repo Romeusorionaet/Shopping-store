@@ -144,10 +144,13 @@ export function FormUpdate({ product }: FormUpdateProps) {
           endpoint="imageShoppingStore"
           onClientUploadComplete={(res) => {
             res && setImageDataProduct(res)
-            notifySuccess('Imagens da categoria salva')
+            notifySuccess({
+              message: 'Imagens da categoria salva',
+              origin: 'client',
+            })
           }}
           onUploadError={(error: Error) => {
-            notifyError(`ERROR! ${error.message}`)
+            notifyError({ message: error.message, origin: 'client' })
           }}
         />
       </div>
