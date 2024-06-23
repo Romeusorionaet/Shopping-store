@@ -1,4 +1,4 @@
-import { CartArea } from '@/components/cart/cart-area'
+import { Footer } from '@/components/footer'
 import { Header } from '@/components/header'
 
 export default async function StoreLayout({
@@ -10,7 +10,7 @@ export default async function StoreLayout({
     <div>
       <Header />
       {children}
-      <CartArea />
+      <Footer />
     </div>
   )
 }

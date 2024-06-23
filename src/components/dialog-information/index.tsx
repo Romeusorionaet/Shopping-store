@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { Button } from '../ui/button'
 
 export function DialogInformation() {
-  const [userConsent, setUserConsent] = useState(false)
+  const [userConsent, setUserConsent] = useState(true)
 
   useEffect(() => {
     const localStorageConsent = localStorage.getItem(
