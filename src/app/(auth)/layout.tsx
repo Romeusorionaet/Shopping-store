@@ -8,11 +8,11 @@ export default async function AuthLayout({
   children: React.ReactNode
 }) {
   return (
-    <div className="mx-auto w-full max-w-[400px]">
-      <div className="pl-6 pt-4">
+    <div>
+      <div className="pt-4">
         <Link
           title="Home"
-          className="flex cursor-pointer items-center gap-2 text-2xl"
+          className="ml-6 flex cursor-pointer items-center gap-2 text-2xl"
           href={'/'}
         >
           <Store className="rounded-full border-b pb-1" size={36} />

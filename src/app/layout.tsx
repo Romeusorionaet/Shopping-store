@@ -5,8 +5,8 @@ import '@/assets/styles/scrollbar.css'
 import { NextSSRPlugin } from '@uploadthing/react/next-ssr-plugin'
 import { extractRouterConfig } from 'uploadthing/server'
 import { ToastContainer } from 'react-toastify'
-import { ourFileRouter } from './api/uploadthing/core'
 import ClientProviders from '@/utils/client-providers'
+import { ourFileRouter } from './api/uploadthing/our-file-router'
 
 const roboto = Roboto({
   subsets: ['latin'],

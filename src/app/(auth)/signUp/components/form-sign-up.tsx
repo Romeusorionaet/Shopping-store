@@ -109,20 +109,25 @@ export function FormSignUp() {
             )}
           </Avatar>
 
-          <UploadButton
-            className="mt-4 ut-button:bg-base_one_reference_header ut-button:ut-uploading:bg-red-500/50"
-            endpoint="imageShoppingStore"
-            onClientUploadComplete={(res) => {
-              res && setImageProfile(res)
-              notifySuccess({
-                message: 'Imagem do perfil salvo',
-                origin: 'client',
-              })
-            }}
-            onUploadError={(error: Error) => {
-              notifyError({ message: error.message, origin: 'client' })
-            }}
-          />
+          <div
+            data-value={!hasImageProfile}
+            className="data-[value=false]:hidden"
+          >
+            <UploadButton
+              className="mt-4 ut-button:bg-base_one_reference_header ut-button:ut-uploading:bg-red-500/50"
+              endpoint="imageProfileShoppingStore"
+              onClientUploadComplete={(res) => {
+                res && setImageProfile(res)
+                notifySuccess({
+                  message: 'Imagem do perfil salvo',
+                  origin: 'client',
+                })
+              }}
+              onUploadError={(error: Error) => {
+                notifyError({ message: error.message, origin: 'client' })
+              }}
+            />
+          </div>
         </div>
 
         <fieldset className="flex flex-col gap-6">

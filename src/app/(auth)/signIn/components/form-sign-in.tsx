@@ -66,7 +66,7 @@ export function FormSignIn() {
 
   return (
     <motion.div
-      className="mx-auto mt-28 w-[90vw] max-w-[450px] rounded-xl bg-base_color_text_top p-4 shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px] focus:outline-none"
+      className="mx-auto mt-10 w-[90vw] max-w-[450px] rounded-xl bg-base_color_text_top p-4 shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px] focus:outline-none md:mt-28"
       initial={{ opacity: 0, scale: 0.8 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{

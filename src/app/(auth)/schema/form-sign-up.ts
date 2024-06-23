@@ -4,6 +4,7 @@ export const signUpFormSchema = z
   .object({
     username: z.string().min(1, { message: 'Nome e sobrenome é obrigatório' }),
     email: z.string().email('Precisa ser um email válido'),
+    picture: z.string().url('Imagem de perfil necessário'),
     password: z.string().min(6, { message: 'No mínimo 6 digitos' }),
     passwordRepeat: z.string(),
   })
