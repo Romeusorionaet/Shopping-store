@@ -13,6 +13,7 @@ import { useCartStore } from '../zustand-store'
 interface ProfileProps {
   publicId: string
   username: string
+  picture: string
   email: string
   createAt: string
   updateAt: string
@@ -39,6 +40,7 @@ export function UserContextProvider({ children }: UserContextProps) {
     publicId: '',
     username: '',
     email: '',
+    picture: '',
     createAt: '',
     updateAt: '',
   }

@@ -1,4 +1,3 @@
-import { useSession } from 'next-auth/react'
 import { useCartStore } from '@/providers/zustand-store'
 import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'

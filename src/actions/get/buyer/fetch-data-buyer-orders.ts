@@ -3,7 +3,7 @@
 import { api } from '@/lib/api'
 import { getAccessTokenFromCookies } from '@/utils/get-tokens-from-cookies'
 
-export const getDataBuyerOrders = async () => {
+export const fetchDataBuyerOrders = async () => {
   const accessToken = getAccessTokenFromCookies()
 
   try {
