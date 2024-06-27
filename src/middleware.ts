@@ -7,8 +7,20 @@ export function middleware(request: NextRequest) {
 
   if (token) {
     const url = request.nextUrl.clone()
+
     if (url.pathname === '/signIn' || url.pathname === '/signUp') {
       url.pathname = '/'
+
+      return NextResponse.redirect(url)
+    }
+  }
+
+  if (!token) {
+    const url = request.nextUrl.clone()
+
+    if (url.pathname.startsWith('/notification/')) {
+      url.pathname = '/signIn'
+
       return NextResponse.redirect(url)
     }
   }
@@ -17,5 +29,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/signIn', '/signUp', '/'],
+  matcher: ['/signIn', '/signUp', '/', '/notification/:path*'],
 }
