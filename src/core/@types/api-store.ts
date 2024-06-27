@@ -19,6 +19,7 @@ export interface ProfileProps {
   publicId: string
   username: string
   email: string
+  picture: string
   createAt: string
   updateAt: string
 }
@@ -112,4 +113,12 @@ export interface OrderProps {
   orderProducts: OrderProductProps[]
   createdAt: Date
   updatedAt: Date | null
+}
+
+export interface NotificationProps {
+  id: string
+  title: string
+  content: string
+  createdAt: Date
+  readAt: string | boolean
 }
