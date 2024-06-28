@@ -6,7 +6,6 @@ import { getAccessTokenFromCookies } from '@/utils/get-tokens-from-cookies'
 export const getDataBuyerNotification = async (id: string) => {
   const accessToken = getAccessTokenFromCookies()
 
-  // TODO aplicar essa mesma lógica para os demais para evitar de bater na api sem token
   if (!accessToken) {
     return {
       notFound: true,

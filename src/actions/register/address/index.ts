@@ -21,6 +21,13 @@ export const createUserAddress = async (
 ): Promise<{ success: boolean; message: string }> => {
   const accessToken = getAccessTokenFromCookies()
 
+  if (!accessToken) {
+    return {
+      success: false,
+      message: 'Não autorizado',
+    }
+  }
+
   try {
     const response = await api.post(
       '/user/create-address',

@@ -21,6 +21,13 @@ export const updateUserAddress = async (
 ): Promise<{ success: boolean; message: string }> => {
   const accessToken = getAccessTokenFromCookies()
 
+  if (!accessToken) {
+    return {
+      success: false,
+      message: 'Não autorizado',
+    }
+  }
+
   try {
     const response = await api.put(
       '/user/update-user-address',

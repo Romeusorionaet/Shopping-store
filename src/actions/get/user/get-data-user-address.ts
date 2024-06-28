@@ -15,6 +15,16 @@ export const getDataUserAddress =
   async (): Promise<GetDataUserAddressResponse> => {
     const accessToken = getAccessTokenFromCookies()
 
+    if (!accessToken) {
+      return {
+        notFound: true,
+
+        props: {
+          userAddress: null,
+        },
+      }
+    }
+
     try {
       const response = await api.get('/user/get-address', {
         headers: {

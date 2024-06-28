@@ -65,7 +65,7 @@ export function NotificationContextProvider({
   useEffect(() => {
     const handleOldNotifications = () => {
       const notificationsData: NotificationProps[] = JSON.parse(
-        data?.props.notifications || '[]',
+        data?.props?.notifications || '[]',
       )
 
       const unreadNotifications = notificationsData.filter(

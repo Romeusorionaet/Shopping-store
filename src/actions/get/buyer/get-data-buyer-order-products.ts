@@ -6,6 +6,14 @@ import { getAccessTokenFromCookies } from '@/utils/get-tokens-from-cookies'
 export const getDataBuyerOrderProducts = async () => {
   const accessToken = getAccessTokenFromCookies()
 
+  if (!accessToken) {
+    return {
+      notFound: true,
+
+      props: null,
+    }
+  }
+
   try {
     const response = await api.get('/buyer/order/products', {
       headers: {
@@ -23,9 +31,7 @@ export const getDataBuyerOrderProducts = async () => {
     return {
       notFound: true,
 
-      props: {
-        orderProducts: '[]',
-      },
+      props: null,
     }
   }
 }

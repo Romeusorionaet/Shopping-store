@@ -17,7 +17,7 @@ export function SectionOrders() {
   }
 
   const hasProduct =
-    !data || data?.notFound || data?.props?.orderProducts?.length === 0
+    !data?.props || data?.notFound || data?.props?.orderProducts?.length === 0
 
   if (hasProduct) {
     return

@@ -15,10 +15,10 @@ export default async function Notification({ params }: Props) {
 
   const { props } = await getDataBuyerNotification(id)
 
-  if (!props) {
+  if (!props?.notification) {
     return <p className="pt-28 text-center">Notificação não foi encontrado.</p>
   }
-
+  // TODO criar skeleton
   const notification: NotificationProps = JSON.parse(props.notification || '{}')
 
   return (
@@ -30,10 +30,11 @@ export default async function Notification({ params }: Props) {
           <div className="flex gap-2">
             <Clock size={16} />
             <span className="text-xs">
-              {formatDistanceToNow(new Date(notification.createdAt), {
-                addSuffix: true,
-                locale: ptBR,
-              })}
+              {notification.createdAt &&
+                formatDistanceToNow(new Date(notification.createdAt), {
+                  addSuffix: true,
+                  locale: ptBR,
+                })}
             </span>
           </div>
 
@@ -47,10 +48,11 @@ export default async function Notification({ params }: Props) {
         <div className="flex gap-2">
           <Eye size={16} />
           <span className="text-xs">
-            {formatDistanceToNow(new Date(notification.readAt.toString()), {
-              addSuffix: true,
-              locale: ptBR,
-            })}
+            {notification.readAt &&
+              formatDistanceToNow(new Date(notification.readAt.toString()), {
+                addSuffix: true,
+                locale: ptBR,
+              })}
           </span>
         </div>
       </div>

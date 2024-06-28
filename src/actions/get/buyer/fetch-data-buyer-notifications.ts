@@ -6,6 +6,14 @@ import { getAccessTokenFromCookies } from '@/utils/get-tokens-from-cookies'
 export const fetchDataBuyerNotifications = async () => {
   const accessToken = getAccessTokenFromCookies()
 
+  if (!accessToken) {
+    return {
+      notFound: true,
+
+      props: null,
+    }
+  }
+
   try {
     const response = await api.get('/buyer/notifications', {
       headers: {
@@ -24,7 +32,7 @@ export const fetchDataBuyerNotifications = async () => {
       notFound: true,
 
       props: {
-        notifications: '[]',
+        notifications: null,
       },
     }
   }

@@ -57,8 +57,8 @@ export function UserContextProvider({ children }: UserContextProps) {
     const refreshDataUser = async () => {
       const userLogged = localStorage.getItem(KeyLocalStorage.USER_LOGGED)
 
-      const hasSessionData = !data?.props.profile && session.data
-      const hasUserLogged = !data?.props.profile && userLogged === 'true'
+      const hasSessionData = !data?.props?.profile && session.data
+      const hasUserLogged = !data?.props?.profile && userLogged === 'true'
 
       if (hasSessionData || hasUserLogged) {
         const { success } = await getDataRefreshToken()
@@ -81,7 +81,7 @@ export function UserContextProvider({ children }: UserContextProps) {
 
   useEffect(() => {
     const setData = async () => {
-      if (data?.props.profile) {
+      if (data?.props?.profile) {
         setProfile(data?.props.profile)
         localStorage.setItem(KeyLocalStorage.USER_LOGGED, 'true')
       }

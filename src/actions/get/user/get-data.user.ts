@@ -7,6 +7,14 @@ import { api } from '@/lib/api'
 export const getDataUser = async () => {
   const accessToken = getAccessTokenFromCookies()
 
+  if (!accessToken) {
+    return {
+      notFound: true,
+
+      props: null,
+    }
+  }
+
   try {
     const response = await api.get('/buyer/profile', {
       headers: {
@@ -24,9 +32,7 @@ export const getDataUser = async () => {
   } catch (err) {
     return {
       notFound: true,
-      props: {
-        profile: null,
-      },
+      props: null,
     }
   }
 }

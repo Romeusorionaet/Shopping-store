@@ -12,6 +12,10 @@ interface BooleanResponse {
 export const getDataRefreshToken = async (): Promise<BooleanResponse> => {
   const refreshToken = getRefreshTokenFromCookies()
 
+  if (!refreshToken) {
+    return { success: false }
+  }
+
   try {
     const response = await api.get('/auth/user/refresh-token', {
       headers: {

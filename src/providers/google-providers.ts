@@ -23,28 +23,32 @@ export const authOptions: AuthOptions = {
         },
       },
       async profile(profile: GoogleProfile) {
-        if (profile.email_verified) {
-          const response = await api.post(
-            '/auth/register/oauth-google/callback',
-            {
-              username: profile.name,
-              email: profile.email,
-              picture: profile.picture,
-              emailVerified: profile.email_verified,
-            },
-          )
+        try {
+          if (profile.email_verified) {
+            const response = await api.post(
+              '/auth/register/oauth-google/callback',
+              {
+                username: profile.name,
+                email: profile.email,
+                picture: profile.picture,
+                emailVerified: profile.email_verified,
+              },
+            )
 
-          const accessToken = response.data.accessToken
-          const refreshToken = response.data.refreshToken
+            const accessToken = response.data.accessToken
+            const refreshToken = response.data.refreshToken
 
-          setAuthTokenForCookies({
-            token: accessToken,
-            key: KeyCookies.AT_STORE,
-          })
-          setAuthTokenForCookies({
-            token: refreshToken,
-            key: KeyCookies.RT_STORE,
-          })
+            setAuthTokenForCookies({
+              token: accessToken,
+              key: KeyCookies.AT_STORE,
+            })
+            setAuthTokenForCookies({
+              token: refreshToken,
+              key: KeyCookies.RT_STORE,
+            })
+          }
+        } catch (err) {
+          console.log(err)
         }
 
         return {
