@@ -57,6 +57,7 @@ export function Header() {
   return (
     <header className="fixed left-0 z-30 w-full rounded-none border-b border-b-base_color_dark/30 bg-base_one_reference_header p-2 text-base_color_text_top">
       <DialogLoginAdm handleCancel={handleCancel} isDialogOpen={isDialogOpen} />
+
       <div className="mx-auto flex max-w-[1550px] items-center justify-between md:gap-16 md:px-10">
         <Sheet
           modal={false}
@@ -64,7 +65,9 @@ export function Header() {
           onOpenChange={(open) => setIsMenuOpen(open)}
         >
           <SheetTrigger asChild className="border-none duration-700">
-            <Menu size={30} />
+            <button>
+              <Menu size={30} />
+            </button>
           </SheetTrigger>
 
           <SheetContent
@@ -183,9 +186,9 @@ export function Header() {
                         <Avatar>
                           <AvatarFallback>{profile.username}</AvatarFallback>
 
-                          {/* {data.user.image && (
-                            <AvatarImage src={data.user.image} />
-                          )} */}
+                          {profile.picture && (
+                            <AvatarImage src={profile.picture} />
+                          )}
                         </Avatar>
                       </div>
                     </div>
@@ -198,15 +201,9 @@ export function Header() {
           </SheetContent>
         </Sheet>
 
-        <div className="flex gap-2">
-          <h1
-            title="Home"
-            onClick={() => handleNavigateTo('/')}
-            className="cursor-pointer text-2xl font-bold"
-          >
-            Shopping Store
-          </h1>
-        </div>
+        <button onClick={() => handleNavigateTo('/')}>
+          <span className="text-2xl font-bold">Shopping Store</span>
+        </button>
 
         <div>
           {profile.username ? (
@@ -215,7 +212,7 @@ export function Header() {
                 <Avatar>
                   <AvatarFallback>{profile.username}</AvatarFallback>
 
-                  {/* {data.user.image && <AvatarImage src={data.user.image} />} */}
+                  {profile.picture && <AvatarImage src={profile.picture} />}
                 </Avatar>
 
                 <div className="flex flex-col max-md:hidden">

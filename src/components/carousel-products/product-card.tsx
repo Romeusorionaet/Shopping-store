@@ -25,10 +25,11 @@ export function ProductCard({ product }: Props) {
     <div className="group relative z-20 ml-3 h-72 md:h-[26rem]">
       <div
         data-quantity={productAvailable}
-        className="absolute bottom-1 left-1/2 w-full -translate-x-1/2 transform group-hover:flex data-[quantity=true]:hidden data-[quantity=true]:group-hover:hidden md:hidden"
+        className="absolute bottom-1 left-1/2 w-full -translate-x-1/2 transform group-focus-within:flex group-hover:flex data-[quantity=true]:hidden data-[quantity=true]:group-hover:hidden md:hidden"
       >
         <AddProductInCart product={product} />
       </div>
+
       <Link href={`/details/${slug.value}/${product.id}`}>
         <div
           data-quantity={productAvailable}

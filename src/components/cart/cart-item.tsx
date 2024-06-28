@@ -97,12 +97,14 @@ export function CartItem({ product, handleNavigateTo }: CartItemProps) {
             </Button>
           </div>
         </div>
+
         <Button
           size="icon"
           variant={'destructive'}
           onClick={handleRemoveProductClick}
+          // className="p-1 outline-none focus-visible:ring-2 focus-visible:ring-offset-base_color_negative"
         >
-          <TrashIcon size={22} />
+          <TrashIcon size={20} />
         </Button>
       </div>
     </div>
