@@ -19,6 +19,7 @@ import { signOut, useSession } from 'next-auth/react'
 import { UserContext } from '@/providers/user-context'
 import { DialogLoginAdm } from '../dialog-login-adm'
 import { cleanAuthCookies } from '@/actions/auth/sign-out'
+import Link from 'next/link'
 
 export function Header() {
   const { profile, refetchUserProfile } = useContext(UserContext)
@@ -201,9 +202,9 @@ export function Header() {
           </SheetContent>
         </Sheet>
 
-        <button onClick={() => handleNavigateTo('/')}>
+        <Link href="/">
           <span className="text-2xl font-bold">Shopping Store</span>
-        </button>
+        </Link>
 
         <div>
           {profile.username ? (

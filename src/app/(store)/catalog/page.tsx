@@ -12,7 +12,7 @@ export default async function Catalog() {
   }
 
   return (
-    <div className="pt-[8.5rem] text-center">
+    <div className="pb-28 pt-[8.5rem] text-center">
       <h1 className="text-2xl font-bold uppercase">Catálogo</h1>
 
       <div className="my-8 flex flex-wrap justify-center gap-8">
