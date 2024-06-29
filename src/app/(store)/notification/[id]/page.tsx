@@ -18,7 +18,7 @@ export default async function Notification({ params }: Props) {
   if (!props?.notification) {
     return <p className="pt-28 text-center">Notificação não foi encontrado.</p>
   }
-  // TODO criar skeleton
+
   const notification: NotificationProps = JSON.parse(props.notification || '{}')
 
   return (
