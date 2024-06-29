@@ -47,8 +47,8 @@ export const authOptions: AuthOptions = {
               key: KeyCookies.RT_STORE,
             })
           }
-        } catch (err) {
-          console.log(err)
+        } catch (err: any) {
+          console.log(err.message)
         }
 
         return {
