@@ -181,10 +181,10 @@ export function FormSignUp() {
         <div className="flex  justify-center">
           <Button
             type="submit"
-            className="w-60 gap-4 font-semibold hover:bg-base_one_reference_header hover:text-base_color_text_top"
+            className="group w-60 gap-4 font-semibold hover:bg-base_one_reference_header hover:text-base_color_text_top"
           >
             {isSubmitting ? (
-              <ClipLoader color="#FFFF" loading={isSubmitting} size={35} />
+              <ClipLoader loading={isSubmitting} size={35} />
             ) : (
               <p>Criar</p>
             )}

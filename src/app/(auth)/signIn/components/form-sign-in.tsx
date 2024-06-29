@@ -14,6 +14,7 @@ import { motion } from 'framer-motion'
 import { signIn } from 'next-auth/react'
 import { Separator } from '@/components/ui/separator'
 import { signInFormSchema } from '../../schema/form-sign-in'
+import ClipLoader from 'react-spinners/ClipLoader'
 
 type LoginFormData = z.infer<typeof signInFormSchema>
 
@@ -109,7 +110,7 @@ export function FormSignIn() {
             className="w-60 gap-4 font-semibold hover:bg-base_one_reference_header hover:text-base_color_text_top"
           >
             {isSubmitting ? (
-              <div className="h-6 w-6 animate-spin rounded-full border-transparent bg-gradient-to-t from-black via-white to-black" />
+              <ClipLoader loading={isSubmitting} size={35} />
             ) : (
               <p>Entrar</p>
             )}
