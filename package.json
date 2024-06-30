@@ -48,6 +48,7 @@
   },
   "devDependencies": {
     "@rocketseat/eslint-config": "^2.1.0",
+    "@tanstack/react-query-devtools": "^5.49.0",
     "@types/js-cookie": "^3.0.6",
     "@types/jsonwebtoken": "^9.0.5",
     "@types/mercadopago": "^1.5.11",

@@ -11,19 +11,12 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@radix-ui/react-accordion'
-import { useNotification } from '@/hooks/use-notifications'
 import { CheckoutCart } from './checkout-cart'
-import { useQuery } from '@tanstack/react-query'
-import { createUserAddress } from '@/actions/register/address'
-import { updateUserAddress } from '@/actions/update/address'
-import { hasDataChangedDataAddress } from '../helpers/has-changed-data-address'
-import { Check, ShieldAlert } from 'lucide-react'
-import { useEffect, useState } from 'react'
-import { getDataUserAddress } from '@/actions/get/user/get-data-user-address'
 import {
   AddressFormData,
   addressFormSchema,
 } from '../schemas/address-form-schema'
+import { useAddressForm } from '@/hooks/use-address-form'
 
 export function FormAddress() {
   const {
@@ -34,86 +27,13 @@ export function FormAddress() {
     resolver: zodResolver(addressFormSchema),
   })
 
-  const { notifySuccess, notifyError } = useNotification()
-
-  const { data, isLoading } = useQuery({
-    queryKey: ['addressData'],
-    queryFn: () => getDataUserAddress(),
-  })
-
-  const initialDataUserAddress = {
-    username: '',
-    email: '',
-    phoneNumber: '',
-    cep: 0,
-    city: '',
-    uf: '',
-    street: '',
-    neighborhood: '',
-    houseNumber: 0,
-    complement: '',
-  }
-
-  const [oldAddress, setOldAddress] = useState(initialDataUserAddress)
-
-  const hasUserAddress = !!oldAddress.username
-
-  const textButtonSubmitForm = hasUserAddress ? 'salvar alterações' : 'salvar'
-
-  const iconBasedOnAddress = hasUserAddress ? (
-    <Check className="text-base_color_positive" />
-  ) : (
-    <ShieldAlert className="text-base_color_negative" />
-  )
-
-  useEffect(() => {
-    if (data?.props.userAddress) {
-      setOldAddress(data.props.userAddress)
-    }
-  }, [data])
-
-  async function handleAddressForm(addressFormData: AddressFormData) {
-    const { isSameData } = hasDataChangedDataAddress(
-      addressFormData,
-      oldAddress,
-    )
-
-    if (isSameData) {
-      notifyError({
-        message: 'Não há alterações para salvar',
-        origin: 'client',
-      })
-      return
-    }
-
-    if (hasUserAddress) {
-      await updateExistingAddress(addressFormData)
-    } else {
-      await createNewAddress(addressFormData)
-    }
-  }
-
-  async function createNewAddress(addressFormData: AddressFormData) {
-    const result = await createUserAddress(addressFormData)
-
-    if (result.success) {
-      notifySuccess({ message: result.message, origin: 'server' })
-      setOldAddress(addressFormData)
-    } else {
-      notifyError({ message: result.message, origin: 'server' })
-    }
-  }
-
-  async function updateExistingAddress(addressFormData: AddressFormData) {
-    const result = await updateUserAddress(addressFormData)
-
-    if (result.success) {
-      notifySuccess({ message: result.message, origin: 'server' })
-      setOldAddress(addressFormData)
-    } else {
-      notifyError({ message: result.message, origin: 'server' })
-    }
-  }
+  const {
+    oldAddress,
+    textButtonSubmitForm,
+    iconBasedOnAddress,
+    handleAddressForm,
+    hasUserAddress,
+  } = useAddressForm()
 
   return (
     <div>
@@ -124,8 +44,7 @@ export function FormAddress() {
       >
         <AccordionItem value="item-1">
           <AccordionTrigger className="flex w-full justify-between">
-            <span>Preencher formulário</span>{' '}
-            {isLoading ? 'carregando...' : iconBasedOnAddress}
+            <span>Preencher formulário</span> {iconBasedOnAddress}
           </AccordionTrigger>
           <AccordionContent>
             <form onSubmit={handleSubmit(handleAddressForm)} className="mt-10">
@@ -277,7 +196,7 @@ export function FormAddress() {
         </AccordionItem>
       </Accordion>
 
-      <div className="mx-auto mb-20 flex max-w-[800px] justify-end">
+      <div className="mx-auto mb-28 flex max-w-[800px] justify-end">
         <CheckoutCart userHasAddress={hasUserAddress} />
       </div>
     </div>

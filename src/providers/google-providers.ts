@@ -25,15 +25,12 @@ export const authOptions: AuthOptions = {
       async profile(profile: GoogleProfile) {
         try {
           if (profile.email_verified) {
-            const response = await api.post(
-              '/auth/register/oauth-google/callback',
-              {
-                username: profile.name,
-                email: profile.email,
-                picture: profile.picture,
-                emailVerified: profile.email_verified,
-              },
-            )
+            const response = await api.post('/auth/register/oauth/callback', {
+              username: profile.name,
+              email: profile.email,
+              picture: profile.picture,
+              emailVerified: profile.email_verified,
+            })
 
             const accessToken = response.data.accessToken
             const refreshToken = response.data.refreshToken

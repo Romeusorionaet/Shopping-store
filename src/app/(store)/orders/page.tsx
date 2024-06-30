@@ -26,6 +26,7 @@ export default async function Orders() {
   if (orders.length === 0) {
     return <p className="pt-52 text-center">Realize uma compra...</p>
   }
+
   const paymentConfirmed = OrderStatus.PAYMENT_CONFIRMED
 
   const ordersInProcess =
@@ -52,11 +53,7 @@ export default async function Orders() {
             ) {
               return <OrderItem key={order.id} order={order} />
             } else {
-              return (
-                <>
-                  <p className="mt-4 font-light">Realize uma compra</p>
-                </>
-              )
+              return <></>
             }
           })}
       </div>
@@ -70,11 +67,7 @@ export default async function Orders() {
               if (order.orderStatusTracking === productDeliveredToClient) {
                 return <OrderItem key={order.id} order={order} />
               } else {
-                return (
-                  <>
-                    <p className="font-light">Vazio</p>
-                  </>
-                )
+                return <></>
               }
             })}
         </div>

@@ -5,9 +5,7 @@ import { AddressProps } from '@/core/@types/api-store'
 import { api } from '@/lib/api'
 
 export interface GetDataUserAddressResponse {
-  props: {
-    userAddress: AddressProps | null
-  }
+  userAddress: AddressProps | null
   notFound?: boolean
 }
 
@@ -19,9 +17,7 @@ export const getDataUserAddress =
       return {
         notFound: true,
 
-        props: {
-          userAddress: null,
-        },
+        userAddress: null,
       }
     }
 
@@ -35,16 +31,12 @@ export const getDataUserAddress =
       const userAddress: AddressProps = response.data.userAddress
 
       return {
-        props: {
-          userAddress,
-        },
+        userAddress,
       }
     } catch (err) {
       return {
         notFound: true,
-        props: {
-          userAddress: null,
-        },
+        userAddress: null,
       }
     }
   }
