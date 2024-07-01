@@ -38,22 +38,22 @@ export function CartItem({ product, handleNavigateTo }: CartItemProps) {
     <div className="flex flex-col items-center justify-between gap-2">
       <p className="line-clamp-1 text-xs">{product.title}</p>
 
-      <div className="flex gap-1 max-md:pr-1">
-        <div className="flex w-[40%] items-center justify-center rounded-md">
+      <div className="flex h-40 gap-1 max-md:pr-1">
+        <div className="flex w-1/2 items-center justify-center rounded-md">
           <Image
             src={`${BaseUrl.IMG}/${product.imgUrlList[0]}`}
             width={0}
             height={0}
             sizes="100vw"
             alt={product.title}
-            className="h-full w-full"
+            className="h-full w-full object-contain"
             onClick={() =>
               handleNavigateTo(`/details/${product.slug}/${product.id}`)
             }
           />
         </div>
 
-        <div className="flex w-[40%] flex-col items-center gap-2">
+        <div className="flex w-1/2 flex-col items-center justify-between gap-2">
           <div className="flex flex-col items-center gap-2">
             {product.discountPercentage > 0 && (
               <p className="text-xs line-through opacity-75">
@@ -96,16 +96,16 @@ export function CartItem({ product, handleNavigateTo }: CartItemProps) {
               <ArrowRightIcon size={16} />
             </Button>
           </div>
-        </div>
 
-        <Button
-          size="icon"
-          variant={'destructive'}
-          onClick={handleRemoveProductClick}
-          // className="p-1 outline-none focus-visible:ring-2 focus-visible:ring-offset-base_color_negative"
-        >
-          <TrashIcon size={20} />
-        </Button>
+          <Button
+            size="icon"
+            variant={'destructive'}
+            onClick={handleRemoveProductClick}
+            className="p-1 outline-none focus-visible:ring-2 focus-visible:ring-offset-base_color_negative"
+          >
+            <TrashIcon size={20} />
+          </Button>
+        </div>
       </div>
     </div>
   )
