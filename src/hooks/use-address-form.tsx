@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react'
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { getDataUserAddress } from '@/actions/get/user/get-data-user-address'
 import { createUserAddress } from '@/actions/register/address'
 import { updateUserAddress } from '@/actions/update/address'
@@ -8,39 +7,43 @@ import { Check, ShieldAlert } from 'lucide-react'
 import { AddressFormData } from '@/app/(store)/address/schemas/address-form-schema'
 import { hasDataChangedDataAddress } from '@/app/(store)/address/helpers/has-changed-data-address'
 
-const initialDataUserAddress = {
-  username: '',
-  email: '',
-  phoneNumber: '',
-  cep: 0,
-  city: '',
-  uf: '',
-  street: '',
-  neighborhood: '',
-  houseNumber: 0,
-  complement: '',
-}
-
 export function useAddressForm() {
   const { notifySuccess, notifyError } = useNotification()
-  const { data } = useQuery({
+
+  const { data, refetch, isLoading } = useQuery({
     queryKey: ['addressData'],
-    queryFn: getDataUserAddress,
+    queryFn: () => getDataUserAddress(),
+    staleTime: 1000 * 60 * 60 * 24, // 24 hours
   })
 
-  const [oldAddress, setOldAddress] = useState(initialDataUserAddress)
-  const hasUserAddress = !!oldAddress.username // boolean
+  const mutation = useMutation({
+    mutationFn: async ({
+      addressFormData,
+      operation,
+    }: {
+      addressFormData: AddressFormData
+      operation: 'create' | 'update'
+    }) => {
+      const result =
+        operation === 'create'
+          ? await createUserAddress(addressFormData)
+          : await updateUserAddress(addressFormData)
 
-  useEffect(() => {
-    if (data?.userAddress) {
-      setOldAddress(data.userAddress)
-    }
-  }, [data])
+      if (result.success) {
+        notifySuccess({ message: result.message, origin: 'server' })
+        refetch()
+      } else {
+        notifyError({ message: result.message, origin: 'server' })
+      }
+    },
+  })
 
   async function handleAddressForm(addressFormData: AddressFormData) {
+    const previousAddress = data?.userAddress
+
     const { isSameData } = hasDataChangedDataAddress(
       addressFormData,
-      oldAddress,
+      data?.userAddress,
     )
 
     if (isSameData) {
@@ -51,44 +54,27 @@ export function useAddressForm() {
       return
     }
 
-    if (hasUserAddress) {
-      await updateExistingAddress(addressFormData)
-    } else {
-      await createNewAddress(addressFormData)
-    }
+    mutation.mutate({
+      addressFormData,
+      operation: previousAddress ? 'update' : 'create',
+    })
   }
 
-  async function createNewAddress(addressFormData: AddressFormData) {
-    const result = await createUserAddress(addressFormData)
+  const textButtonSubmitForm = data?.userAddress?.username
+    ? 'salvar alterações'
+    : 'salvar'
 
-    if (result.success) {
-      notifySuccess({ message: result.message, origin: 'server' })
-      setOldAddress(addressFormData)
-    } else {
-      notifyError({ message: result.message, origin: 'server' })
-    }
-  }
-
-  async function updateExistingAddress(addressFormData: AddressFormData) {
-    const result = await updateUserAddress(addressFormData)
-
-    if (result.success) {
-      notifySuccess({ message: result.message, origin: 'server' })
-      setOldAddress(addressFormData)
-    } else {
-      notifyError({ message: result.message, origin: 'server' })
-    }
-  }
+  const iconBasedOnAddress = data?.userAddress?.username ? (
+    <Check className="text-base_color_positive" />
+  ) : (
+    <ShieldAlert className="text-base_color_negative" />
+  )
 
   return {
-    oldAddress,
-    hasUserAddress,
-    textButtonSubmitForm: hasUserAddress ? 'salvar alterações' : 'salvar',
-    iconBasedOnAddress: hasUserAddress ? (
-      <Check className="text-base_color_positive" />
-    ) : (
-      <ShieldAlert className="text-base_color_negative" />
-    ),
+    isLoading,
+    oldAddress: data?.userAddress,
+    textButtonSubmitForm,
+    iconBasedOnAddress,
     handleAddressForm,
   }
 }

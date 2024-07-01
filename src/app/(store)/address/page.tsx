@@ -19,7 +19,7 @@ export default async function Address() {
   const queryClient = new QueryClient()
   await queryClient.prefetchQuery({
     queryKey: ['addressData'],
-    queryFn: getDataUserAddress,
+    queryFn: () => getDataUserAddress(),
     staleTime: 1000 * 60 * 60 * 24, // 24 hours
   })
 

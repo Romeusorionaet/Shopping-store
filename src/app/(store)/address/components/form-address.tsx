@@ -28,11 +28,11 @@ export function FormAddress() {
   })
 
   const {
+    isLoading,
     oldAddress,
     textButtonSubmitForm,
     iconBasedOnAddress,
     handleAddressForm,
-    hasUserAddress,
   } = useAddressForm()
 
   return (
@@ -44,7 +44,8 @@ export function FormAddress() {
       >
         <AccordionItem value="item-1">
           <AccordionTrigger className="flex w-full justify-between">
-            <span>Preencher formulário</span> {iconBasedOnAddress}
+            <span>Preencher formulário</span>{' '}
+            {isLoading ? '...' : iconBasedOnAddress}
           </AccordionTrigger>
           <AccordionContent>
             <form onSubmit={handleSubmit(handleAddressForm)} className="mt-10">
@@ -197,7 +198,7 @@ export function FormAddress() {
       </Accordion>
 
       <div className="mx-auto mb-28 flex max-w-[800px] justify-end">
-        <CheckoutCart userHasAddress={hasUserAddress} />
+        <CheckoutCart userHasAddress={!!oldAddress} />
       </div>
     </div>
   )
