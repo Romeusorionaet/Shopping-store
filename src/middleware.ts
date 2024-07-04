@@ -1,11 +1,11 @@
-import { getAccessTokenFromCookies } from '@/utils/get-tokens-from-cookies'
+import { getTokenFromCookies } from '@/utils/get-tokens-from-cookies'
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
 export function middleware(request: NextRequest) {
-  const token = getAccessTokenFromCookies()
+  const accessToken = getTokenFromCookies.accessToken()
 
-  if (token) {
+  if (accessToken) {
     const url = request.nextUrl.clone()
 
     if (url.pathname === '/signIn' || url.pathname === '/signUp') {
@@ -15,7 +15,7 @@ export function middleware(request: NextRequest) {
     }
   }
 
-  if (!token) {
+  if (!accessToken) {
     const url = request.nextUrl.clone()
 
     if (url.pathname.startsWith('/notification/')) {

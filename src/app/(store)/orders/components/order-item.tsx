@@ -93,11 +93,11 @@ export function OrderItem({ order }: Props) {
                 {order.orderStatusTracking ===
                 OrderStatusTracking.CANCELED.toString() ? (
                   <p className="text-base_color_negative">
-                    {getOrderStatus(order.orderStatusTracking)}
+                    {getOrderStatus({ status: order.orderStatusTracking })}
                   </p>
                 ) : (
                   <p className="text-base_color_positive">
-                    {getOrderStatus(order.status)}
+                    {getOrderStatus({ status: order.status })}
                   </p>
                 )}
               </div>
@@ -108,7 +108,10 @@ export function OrderItem({ order }: Props) {
                   {format(new Date(order.createdAt), "d/MM/y 'às' HH:mm")}
                 </p>
                 <p>
-                  <strong>{getOrderStatus(order.orderStatusTracking)}</strong>:
+                  <strong>
+                    {getOrderStatus({ status: order.orderStatusTracking })}
+                  </strong>
+                  :
                 </p>
                 <p>
                   {order.updatedAt

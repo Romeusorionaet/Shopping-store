@@ -1,10 +1,10 @@
 'use server'
 
 import { api } from '@/lib/api'
-import { getAccessTokenFromCookies } from '@/utils/get-tokens-from-cookies'
+import { getTokenFromCookies } from '@/utils/get-tokens-from-cookies'
 
 export const getDataBuyerNotification = async (id: string) => {
-  const accessToken = getAccessTokenFromCookies()
+  const accessToken = getTokenFromCookies.accessToken()
 
   if (!accessToken) {
     return {

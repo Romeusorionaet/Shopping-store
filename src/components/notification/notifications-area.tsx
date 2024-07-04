@@ -1,4 +1,3 @@
-import { getAccessTokenFromCookies } from '@/utils/get-tokens-from-cookies'
 import { NotificationsPreview } from './notifications-preview'
 import {
   HydrationBoundary,
@@ -8,9 +7,10 @@ import {
 import { UserMinus } from 'lucide-react'
 import { fetchDataBuyerNotifications } from '@/actions/get/buyer/fetch-data-buyer-notifications'
 import Link from 'next/link'
+import { getTokenFromCookies } from '@/utils/get-tokens-from-cookies'
 
 export async function NotificationsArea() {
-  const token = getAccessTokenFromCookies()
+  const token = getTokenFromCookies.accessToken()
 
   if (!token) {
     return (
