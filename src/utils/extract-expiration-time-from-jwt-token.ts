@@ -4,7 +4,7 @@ interface DecodedAccessToken extends JwtPayload {
   exp: number
 }
 
-export function ExtractExpirationTimeFromJwtToken(token: string) {
+export function extractExpirationTimeFromJwtToken(token: string) {
   const decodedAccessToken = jwt.decode(token) as DecodedAccessToken
 
   const tokenExpires = decodedAccessToken.exp

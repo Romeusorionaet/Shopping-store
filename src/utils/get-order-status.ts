@@ -1,22 +1,13 @@
+import { orderStatusMap, orderStatusTrackingMap } from '@/constants/status-map'
 import { OrderStatus, OrderStatusTracking } from '@/core/@types/api-store'
 
-const orderStatusMap = {
-  [OrderStatus.PAYMENT_CONFIRMED]: 'Pago',
-  [OrderStatus.WAITING_FOR_PAYMENT]: 'Pendente',
+interface Props {
+  status: OrderStatus | OrderStatusTracking | string
 }
 
-const orderStatusTrackingMap = {
-  [OrderStatusTracking.WAITING]: 'Aguardando',
-  [OrderStatusTracking.CANCELED]: 'Reembolso',
-  [OrderStatusTracking.PRODUCT_DELIVERED_TO_CARRIER]: 'Entregue no correio',
-  [OrderStatusTracking.PRODUCT_DELIVERED_TO_CLIENT]: 'Entregue ao cliente',
-}
-
-export const getOrderStatus = (
-  orderStatus: OrderStatus | OrderStatusTracking | string,
-) => {
+export const getOrderStatus = ({ status }: Props) => {
   return (
-    orderStatusMap[orderStatus as OrderStatus] ||
-    orderStatusTrackingMap[orderStatus as OrderStatusTracking]
+    orderStatusMap[status as OrderStatus] ||
+    orderStatusTrackingMap[status as OrderStatusTracking]
   )
 }

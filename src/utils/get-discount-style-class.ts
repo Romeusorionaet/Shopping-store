@@ -2,7 +2,7 @@ interface Props {
   discountPercentage: number
 }
 
-export function categorizeDiscount({ discountPercentage }: Props) {
+export function getDiscountStyleClass({ discountPercentage }: Props) {
   switch (true) {
     case discountPercentage === 0:
       return { styleDiscountPercentage: '' }

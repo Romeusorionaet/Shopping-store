@@ -1,5 +1,5 @@
 import { cookies } from 'next/headers'
-import { ExtractExpirationTimeFromJwtToken } from './extract-expiration-time-from-jwt-token'
+import { extractExpirationTimeFromJwtToken } from './extract-expiration-time-from-jwt-token'
 
 interface Props {
   token: string
@@ -7,7 +7,7 @@ interface Props {
 }
 
 export const setAuthTokenForCookies = ({ token, key }: Props) => {
-  const tokenExpires = ExtractExpirationTimeFromJwtToken(token)
+  const tokenExpires = extractExpirationTimeFromJwtToken(token)
 
   const currentUnixTimestamp = Math.floor(Date.now() / 1000)
 

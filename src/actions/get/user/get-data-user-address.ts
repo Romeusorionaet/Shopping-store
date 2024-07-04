@@ -1,6 +1,6 @@
 'use server'
 
-import { getAccessTokenFromCookies } from '@/utils/get-tokens-from-cookies'
+import { getTokenFromCookies } from '@/utils/get-tokens-from-cookies'
 import { AddressProps } from '@/core/@types/api-store'
 import { api } from '@/lib/api'
 
@@ -11,7 +11,7 @@ export interface GetDataUserAddressResponse {
 
 export const getDataUserAddress =
   async (): Promise<GetDataUserAddressResponse> => {
-    const accessToken = getAccessTokenFromCookies()
+    const accessToken = getTokenFromCookies.accessToken()
 
     if (!accessToken) {
       return {

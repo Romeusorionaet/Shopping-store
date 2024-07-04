@@ -5,7 +5,7 @@ import { updateUserAddress } from '@/actions/update/address'
 import { useNotification } from '@/hooks/use-notifications'
 import { Check, ShieldAlert } from 'lucide-react'
 import { AddressFormData } from '@/app/(store)/address/schemas/address-form-schema'
-import { hasDataChangedDataAddress } from '@/app/(store)/address/helpers/has-changed-data-address'
+import { checkDataEquality } from '@/utils/check-data-equality'
 
 export function useAddressForm() {
   const { notifySuccess, notifyError } = useNotification()
@@ -41,10 +41,7 @@ export function useAddressForm() {
   async function handleAddressForm(addressFormData: AddressFormData) {
     const previousAddress = data?.userAddress
 
-    const { isSameData } = hasDataChangedDataAddress(
-      addressFormData,
-      data?.userAddress,
-    )
+    const { isSameData } = checkDataEquality(addressFormData, data?.userAddress)
 
     if (isSameData) {
       notifyError({

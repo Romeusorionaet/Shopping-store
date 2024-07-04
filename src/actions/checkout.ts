@@ -1,7 +1,7 @@
 'use server'
 
 import { api } from '@/lib/api'
-import { getAccessTokenFromCookies } from '@/utils/get-tokens-from-cookies'
+import { getTokenFromCookies } from '@/utils/get-tokens-from-cookies'
 
 interface orderProductsProps {
   productId: string
@@ -22,7 +22,7 @@ interface ObjectUrlProps {
 export const createCheckout = async (
   orderProduct: orderProductsProps[],
 ): Promise<{ initPointUrl: ObjectUrlProps | null; error: string | null }> => {
-  const accessToken = getAccessTokenFromCookies()
+  const accessToken = getTokenFromCookies.accessToken()
 
   try {
     const response = await api.post(

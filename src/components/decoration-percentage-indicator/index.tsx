@@ -1,4 +1,4 @@
-import { categorizeDiscount } from '@/utils/categorize-discount'
+import { getDiscountStyleClass } from '@/utils/get-discount-style-class'
 import { Flame } from 'lucide-react'
 
 interface Props {
@@ -6,7 +6,7 @@ interface Props {
 }
 
 export function DecorationPercentageIndicator({ discountPercentage }: Props) {
-  const { styleDiscountPercentage } = categorizeDiscount({
+  const { styleDiscountPercentage } = getDiscountStyleClass({
     discountPercentage,
   })
 
