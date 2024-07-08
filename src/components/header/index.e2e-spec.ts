@@ -94,7 +94,7 @@ test('should be able navigate to sign in page if click in (icon logIn) from head
   await page.waitForURL('/signIn')
 })
 
-test.only('should be able navigate to home page if click in (logo - shopping store) from header', async ({
+test('should be able navigate to home page if click in (logo - shopping store) from header', async ({
   page,
 }) => {
   await page.goto('/catalog')
