@@ -6,7 +6,7 @@ interface Props {
 
 export const getDataProducts = async ({ page }: Props) => {
   try {
-    const response = await api.get('products', { params: { page } })
+    const response = await api.get('/products', { params: { page } })
 
     return {
       props: {
@@ -20,7 +20,6 @@ export const getDataProducts = async ({ page }: Props) => {
       props: {
         products: '[]',
       },
-      revalidate: 0,
     }
   }
 }
