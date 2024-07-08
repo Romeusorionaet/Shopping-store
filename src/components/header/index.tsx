@@ -65,7 +65,11 @@ export function Header() {
           open={isMenuOpen}
           onOpenChange={(open) => setIsMenuOpen(open)}
         >
-          <SheetTrigger asChild className="border-none duration-700">
+          <SheetTrigger
+            data-testId="btn_menu"
+            asChild
+            className="border-none duration-700"
+          >
             <button>
               <Menu size={30} />
             </button>
@@ -206,7 +210,7 @@ export function Header() {
           <span className="text-2xl font-bold">Shopping Store</span>
         </Link>
 
-        <div>
+        <div className="w-10">
           {profile.username ? (
             <div className="flex flex-col">
               <div className="flex items-center gap-2 md:py-4">
@@ -223,16 +227,15 @@ export function Header() {
               </div>
             </div>
           ) : (
-            <div className="w-full">
-              <Button
-                size="icon"
-                variant="ghost"
-                onClick={() => handleNavigateTo('/signIn')}
-                className="w-full gap-4 font-semibold duration-700"
-              >
-                <LogIn />
-              </Button>
-            </div>
+            <Button
+              data-testId="btn_signIn_from_header"
+              size="icon"
+              variant="ghost"
+              onClick={() => handleNavigateTo('/signIn')}
+              className="w-full gap-4 font-semibold duration-700"
+            >
+              <LogIn />
+            </Button>
           )}
         </div>
       </div>
