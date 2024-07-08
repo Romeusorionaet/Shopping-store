@@ -1,9 +1,13 @@
 import { test, expect } from '../../../test/mocks/playwright-msw'
 
+test.use({
+  actionTimeout: 10000,
+})
+
 test('should be able open the menu if click in Menu icon', async ({ page }) => {
   await page.goto('/')
 
-  await page.getByTestId('btn_menu').click({ delay: 100 })
+  await page.getByTestId('btn_menu').click()
 
   const menuButton = page.getByTestId('btn_menu')
 
