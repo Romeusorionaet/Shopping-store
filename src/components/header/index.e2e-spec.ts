@@ -1,8 +1,6 @@
 import { test, expect } from '../../../test/mocks/playwright-msw'
 
-test.only('should be able open the menu if click in Menu icon', async ({
-  page,
-}) => {
+test('should be able open the menu if click in Menu icon', async ({ page }) => {
   await page.goto('/')
 
   const menuButton = page.getByTestId('btn_menu')
