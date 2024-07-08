@@ -51,7 +51,7 @@ export default async function RootLayout({
           <ToastContainer
             autoClose={3000}
             position={'bottom-left'}
-            theme="dark"
+            theme="light"
           />
         </ClientProviders>
       </body>
