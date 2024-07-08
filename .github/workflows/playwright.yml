@@ -24,9 +24,6 @@ jobs:
       - name: Build the project
         run: npm run build
 
-      - name: Start the build project
-        run: npm run start
-
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
