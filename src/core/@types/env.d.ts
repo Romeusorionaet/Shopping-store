@@ -10,5 +10,7 @@ declare namespace NodeJS {
     JWT_SECRET_KEY_ADM: string
     NEXT_PUBLIC_POSTHOG_KEY: string
     NEXT_PUBLIC_POSTHOG_HOST: string
+    NEXT_NODE: string
+    NEXT_PUBLIC_API_MOCKING: string
   }
 }

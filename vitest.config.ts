@@ -10,9 +10,8 @@ export default defineConfig({
   },
 
   test: {
-    include: ['**/*.e2e-spec.tsx', '**/*spec.tsx', '**/*spec.ts'],
     globals: true,
-    setupFiles: ['./test/setup.ts'],
+    setupFiles: ['./test/setup-unit.ts'],
     environment: 'happy-dom',
   },
   plugins: [tsConfigPaths()],
