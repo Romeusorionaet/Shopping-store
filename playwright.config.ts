@@ -9,6 +9,7 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined,
   use: {
     baseURL: 'http://localhost:3000',
+    testIdAttribute: 'data-testId',
   },
   webServer: {
     command: 'npm run start',

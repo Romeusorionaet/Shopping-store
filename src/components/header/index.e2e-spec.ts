@@ -3,11 +3,9 @@ import { test, expect } from '../../../test/mocks/playwright-msw'
 test('should be able open the menu if click in Menu icon', async ({ page }) => {
   await page.goto('/')
 
+  await page.getByTestId('btn_menu').click({ delay: 100 })
+
   const menuButton = page.getByTestId('btn_menu')
-
-  await menuButton.waitFor({ state: 'visible', timeout: 60000 })
-
-  await menuButton.click()
 
   const ariaExpanded = await menuButton.getAttribute('aria-expanded')
   expect(ariaExpanded).toBe('true')
