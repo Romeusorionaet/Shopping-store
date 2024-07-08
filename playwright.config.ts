@@ -1,6 +1,7 @@
-import { defineConfig } from '@playwright/test'
+import { defineConfig, devices } from '@playwright/test'
 
 export default defineConfig({
+  timeout: 1 * 60 * 1000,
   testDir: './src',
   testMatch: /.*\.e2e-spec.ts$/,
   fullyParallel: true,
@@ -16,18 +17,18 @@ export default defineConfig({
     reuseExistingServer: !process.env.CI,
   },
 
-  // projects: [
-  //   {
-  //     name: 'chromium',
-  //     use: { ...devices['Desktop Chrome'] },
-  //   },
-  //   {
-  //     name: 'firefox',
-  //     use: { ...devices['Desktop Firefox'] },
-  //   },
-  //   {
-  //     name: 'webkit',
-  //     use: { ...devices['Desktop Safari'] },
-  //   },
-  // ],
+  projects: [
+    {
+      name: 'chromium',
+      use: { ...devices['Desktop Chrome'] },
+    },
+    {
+      name: 'firefox',
+      use: { ...devices['Desktop Firefox'] },
+    },
+    {
+      name: 'webkit',
+      use: { ...devices['Desktop Safari'] },
+    },
+  ],
 })

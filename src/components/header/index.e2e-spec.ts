@@ -3,10 +3,6 @@ import { test, expect } from '../../../test/mocks/playwright-msw'
 test('should be able open the menu if click in Menu icon', async ({ page }) => {
   await page.goto('/')
 
-  await page.waitForTimeout(2000)
-
-  await page.getByTestId('btn_menu').waitFor({ state: 'visible' })
-
   await page.getByTestId('btn_menu').click()
 
   const menuButton = page.getByTestId('btn_menu')
