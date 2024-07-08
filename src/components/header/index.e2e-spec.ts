@@ -1,9 +1,5 @@
 import { test, expect } from '../../../test/mocks/playwright-msw'
 
-test.use({
-  actionTimeout: 10000,
-})
-
 test('should be able open the menu if click in Menu icon', async ({ page }) => {
   await page.goto('/')
 
