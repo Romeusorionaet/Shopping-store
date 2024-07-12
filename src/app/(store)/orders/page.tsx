@@ -6,10 +6,10 @@ import {
   OrderStatus,
   OrderStatusTracking,
 } from '@/core/@types/api-store'
-import { getTokenFromCookies } from '@/utils/get-tokens-from-cookies'
+import { getAccessTokenFromCookies } from '@/utils/get-tokens-from-cookies'
 
 export default async function Orders() {
-  const accessToken = getTokenFromCookies.accessToken()
+  const accessToken = await getAccessTokenFromCookies()
 
   if (!accessToken) {
     return <NoUserMessage />

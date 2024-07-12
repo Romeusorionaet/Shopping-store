@@ -40,6 +40,7 @@ export function FormSignIn() {
 
     if (!response.success) {
       notifyError({ message: response.message, origin: 'server' })
+      return
     }
 
     if (response.success && !isSubmitting) {

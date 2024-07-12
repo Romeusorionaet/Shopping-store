@@ -8,9 +8,9 @@ declare namespace NodeJS {
     UPLOADTHING_SECRET: string
     UPLOADTHING_APP_ID: string
     JWT_SECRET_KEY_ADM: string
+    NEXT_ENV: string
     NEXT_PUBLIC_POSTHOG_KEY: string
     NEXT_PUBLIC_POSTHOG_HOST: string
-    NEXT_NODE: string
     NEXT_PUBLIC_API_MOCKING: string
   }
 }

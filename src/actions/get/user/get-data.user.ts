@@ -1,11 +1,9 @@
-'use server'
-
-import { getTokenFromCookies } from '@/utils/get-tokens-from-cookies'
+import { getAccessTokenFromCookies } from '@/utils/get-tokens-from-cookies'
 import { ProfileProps } from '@/core/@types/api-store'
 import { api } from '@/lib/api'
 
 export const getDataUser = async () => {
-  const accessToken = getTokenFromCookies.accessToken()
+  const accessToken = await getAccessTokenFromCookies()
 
   if (!accessToken) {
     return {

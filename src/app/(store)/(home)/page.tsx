@@ -1,9 +1,8 @@
 import Link from 'next/link'
-import { LibraryBig } from 'lucide-react'
+import { LibraryBig, Phone } from 'lucide-react'
 import { OfferBanner } from '@/components/offer-banner'
 import Image from 'next/image'
 import smartphonePropaganda from '@/assets/img/banner-decoration/poco-smartphone.png'
-import { Button } from '@/components/ui/button'
 import bannerIphoneXsMax from '@/assets/img/banner-decoration/banner-iphone-xs-max.png'
 import bannerIphoneLogo from '@/assets/img/banner-decoration/iPhone-logo.png'
 import cart from '@/assets/img/banner-decoration/cart.png'
@@ -25,11 +24,13 @@ import { SearchForm } from '@/components/search-form'
 export default async function Home() {
   const queryClient = new QueryClient()
 
-  await queryClient.prefetchQuery({
-    queryKey: ['allProducts'],
-    queryFn: () => getDataProducts({ page: 1 }),
-    staleTime: 1000 * 60 * 30, // 30 minutes
-  })
+  if (process.env.NEXT_ENV !== 'test') {
+    await queryClient.prefetchQuery({
+      queryKey: ['allProducts'],
+      queryFn: () => getDataProducts({ page: 1 }),
+      staleTime: 1000 * 60 * 30, // 30 minutes
+    })
+  }
 
   return (
     <div>
@@ -55,12 +56,15 @@ export default async function Home() {
                   <LibraryBig size={16} />
                 </Link>
 
-                <Button
-                  variant="ghost"
-                  className="w-40 hover:bg-base_color_text_top hover:text-base_color_dark"
+                <a
+                  href="https://api.whatsapp.com/send?phone=55084981127596"
+                  target="_blank"
+                  className="flex w-36 items-center gap-2 text-sm text-white outline-none duration-500 hover:text-blue-500 focus:rounded-sm focus:border-transparent focus:outline-blue-500 md:w-56"
+                  rel="noreferrer"
                 >
-                  Entre em contato
-                </Button>
+                  <Phone size={20} />
+                  Entre em contato: <br className="md:hidden" /> 84 81127596
+                </a>
               </div>
             </div>
           </div>

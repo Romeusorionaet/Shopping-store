@@ -7,10 +7,10 @@ import {
   dehydrate,
 } from '@tanstack/react-query'
 import { getDataUserAddress } from '@/actions/get/user/get-data-user-address'
-import { getTokenFromCookies } from '@/utils/get-tokens-from-cookies'
+import { getAccessTokenFromCookies } from '@/utils/get-tokens-from-cookies'
 
 export default async function Address() {
-  const token = getTokenFromCookies.accessToken()
+  const token = await getAccessTokenFromCookies()
 
   if (!token) {
     return <NoUserMessage />

@@ -9,7 +9,7 @@ import { SkeletonCarousel } from './skeleton-carousel'
 
 export function SectionAllProducts() {
   const { data, isLoading } = useQuery({
-    queryKey: ['allProoducts'],
+    queryKey: ['allProducts'],
     queryFn: () => getDataProducts({ page: 1 }),
   })
 

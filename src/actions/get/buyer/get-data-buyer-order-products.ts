@@ -1,12 +1,13 @@
 'use server'
 
 import { api } from '@/lib/api'
-import { getTokenFromCookies } from '@/utils/get-tokens-from-cookies'
+import { getAccessTokenFromCookies } from '@/utils/get-tokens-from-cookies'
 
 export const getDataBuyerOrderProducts = async () => {
-  const accessToken = getTokenFromCookies.accessToken()
+  const accessToken = await getAccessTokenFromCookies()
 
   if (!accessToken) {
+    console.log('oioioiio=')
     return {
       notFound: true,
 

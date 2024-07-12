@@ -1,6 +1,7 @@
 import { CartProps } from '@/providers/zustand-store'
 import { randomUUID } from 'crypto'
 import { faker } from '@faker-js/faker'
+import { ModeOfSale } from '@/core/@types/api-store'
 
 export function makeCart(overrides: Partial<CartProps>[] = [{}]): CartProps[] {
   const uuid = randomUUID()
@@ -32,7 +33,7 @@ export function makeCart(overrides: Partial<CartProps>[] = [{}]): CartProps[] {
       width: faker.number.int({ min: 10, max: 500 }),
       height: faker.number.int({ min: 10, max: 500 }),
       weight: faker.number.int({ min: 10, max: 500 }),
-      placeOfSale: 'default',
+      placeOfSale: ModeOfSale.ONLINE_STORE,
       stars: faker.number.int({ min: 0, max: 100 }),
       createdAt: new Date(),
       updatedAt: null,
