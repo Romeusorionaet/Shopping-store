@@ -7,14 +7,16 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
+
   use: {
     baseURL: 'http://localhost:3000',
-    testIdAttribute: 'data-testId',
   },
+
   webServer: {
     command: 'npm run start',
     url: 'http://localhost:3000',
     reuseExistingServer: !process.env.CI,
+    stderr: 'pipe',
   },
 
   projects: [

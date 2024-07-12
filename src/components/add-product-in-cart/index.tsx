@@ -40,7 +40,7 @@ export function AddProductInCart({ product, title }: Props) {
 
   return (
     <button
-      data-test-id={product.id}
+      data-testid={product.id}
       onClick={() => handleAddToProductInCart()}
       className="max-w-56 flex w-full items-center justify-center gap-2 rounded-md bg-base_color_positive/60 p-1 duration-700 hover:bg-base_color_positive"
     >

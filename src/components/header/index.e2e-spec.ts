@@ -1,3 +1,4 @@
+import { HttpResponse } from 'msw'
 import { test, expect } from '../../../test/mocks/playwright-msw'
 
 test('should be able open the menu if click in Menu icon', async ({ page }) => {
@@ -74,7 +75,17 @@ test('should be able navigate to address page if click in (Endereço de entrega)
 
 test('should be able navigate to sign in page if click in (Login) from menu options', async ({
   page,
+  worker,
+  http,
 }) => {
+  await worker.use(
+    http.get('/buyer/profile', async () => {
+      return new HttpResponse(null, {
+        status: 404,
+      })
+    }),
+  )
+
   await page.goto('/')
 
   await page.getByTestId('btn_menu').click()
@@ -86,7 +97,17 @@ test('should be able navigate to sign in page if click in (Login) from menu opti
 
 test('should be able navigate to sign in page if click in (icon logIn) from header', async ({
   page,
+  worker,
+  http,
 }) => {
+  await worker.use(
+    http.get('/buyer/profile', async () => {
+      return new HttpResponse(null, {
+        status: 404,
+      })
+    }),
+  )
+
   await page.goto('/')
 
   await page.getByTestId('btn_signIn_from_header').click()

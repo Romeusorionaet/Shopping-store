@@ -93,7 +93,7 @@ test.describe('Home test (E2E)', () => {
 
     await product.hover({ force: true })
 
-    const btnAddToCart = page.getByTestId('4681')
+    const btnAddToCart = page.getByTestId(firstProduct.id)
 
     await expect(btnAddToCart).toBeVisible()
 

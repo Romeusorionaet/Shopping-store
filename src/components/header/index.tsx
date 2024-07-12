@@ -67,7 +67,7 @@ export function Header() {
           onOpenChange={(open) => setIsMenuOpen(open)}
         >
           <SheetTrigger
-            data-test-id="btn_menu"
+            data-testid="btn_menu"
             asChild
             className="border-none duration-700"
           >
@@ -231,7 +231,7 @@ export function Header() {
             </div>
           ) : (
             <Button
-              data-test-id="btn_signIn_from_header"
+              data-testid="btn_signIn_from_header"
               size="icon"
               variant="ghost"
               onClick={() => handleNavigateTo('/signIn')}

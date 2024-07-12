@@ -1,9 +1,15 @@
-import { getAccessTokenFromCookies } from '@/utils/get-tokens-from-cookies'
+import { cookies } from 'next/headers'
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
+import { KeyCookies } from './constants/key-cookies'
 
-export async function middleware(request: NextRequest) {
-  const accessToken = await getAccessTokenFromCookies()
+const getAccessToken = () => {
+  const accessToken = cookies().get(KeyCookies.AT_STORE)
+  return accessToken
+}
+
+function handleAuthenticatedRequest(request: NextRequest) {
+  const accessToken = getAccessToken()
 
   if (accessToken) {
     const url = request.nextUrl.clone()
@@ -15,6 +21,12 @@ export async function middleware(request: NextRequest) {
     }
   }
 
+  return null
+}
+
+function handleUnauthenticatedRequest(request: NextRequest) {
+  const accessToken = getAccessToken()
+
   if (!accessToken) {
     const url = request.nextUrl.clone()
 
@@ -25,7 +37,14 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  return NextResponse.next()
+  return null
+}
+
+export async function middleware(request: NextRequest) {
+  const response =
+    handleAuthenticatedRequest(request) || handleUnauthenticatedRequest(request)
+
+  return response || NextResponse.next()
 }
 
 export const config = {
