@@ -18,9 +18,10 @@ export interface CustomSlider extends Slider {
 
 interface Props {
   orderProducts: OrderProductProps[]
+  section: string
 }
 
-export function CarouselOrderProducts({ orderProducts }: Props) {
+export function CarouselOrderProducts({ orderProducts, section }: Props) {
   const slider = useRef<CustomSlider>(null)
   const { carouselResponsive } = useSlickCarousel()
 
@@ -40,6 +41,7 @@ export function CarouselOrderProducts({ orderProducts }: Props) {
     <div className="relative">
       {orderProducts.length > 3 && (
         <ArrowControlLeft
+          section={section}
           sizeList={sizeList}
           onClick={() => slider.current?.slickPrev()}
         />
@@ -80,6 +82,7 @@ export function CarouselOrderProducts({ orderProducts }: Props) {
 
       {orderProducts.length > 3 && (
         <ArrowControlRight
+          section={section}
           sizeList={sizeList}
           onClick={() => slider.current?.slickNext()}
         />

@@ -30,7 +30,10 @@ export function CartArea() {
   return (
     <Sheet open={isCartOpen} onOpenChange={(open) => setIsCartOpen(open)}>
       <SheetTrigger asChild>
-        <button className="rounded-full p-1 outline-none focus-visible:ring-2 focus-visible:ring-offset-base_one_reference_header">
+        <button
+          data-testid="cart_trigger"
+          className="rounded-full p-1 outline-none focus-visible:ring-2 focus-visible:ring-offset-base_one_reference_header"
+        >
           <div className="relative flex h-16 w-16 cursor-pointer items-center justify-center rounded-full bg-base_one_reference_header text-base_color_text_top duration-700">
             <BaggageClaim size={30} />
             {conditionForShowSizeCart && (

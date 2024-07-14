@@ -3,6 +3,7 @@ import { http } from 'msw'
 import type { MockServiceWorker } from 'playwright-msw'
 import { createWorkerFixture } from 'playwright-msw'
 import { handlers } from './handlers'
+import { setupServer } from 'msw/node'
 
 const test = base.extend<{
   worker: MockServiceWorker
@@ -11,5 +12,11 @@ const test = base.extend<{
   worker: createWorkerFixture(handlers),
   http,
 })
+
+const server = setupServer(...handlers)
+
+test.beforeAll(() => server.listen())
+test.afterAll(() => server.resetHandlers())
+test.afterAll(() => server.close())
 
 export { test, expect }

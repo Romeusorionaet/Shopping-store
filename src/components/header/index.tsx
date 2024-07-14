@@ -20,6 +20,7 @@ import { UserContext } from '@/providers/user-context'
 import { DialogLoginAdm } from '../dialog-login-adm'
 import { cleanAuthCookies } from '@/actions/auth/sign-out'
 import Link from 'next/link'
+import { BaseUrl } from '@/constants/base-url'
 
 export function Header() {
   const { profile, refetchUserProfile } = useContext(UserContext)
@@ -66,7 +67,7 @@ export function Header() {
           onOpenChange={(open) => setIsMenuOpen(open)}
         >
           <SheetTrigger
-            data-testId="btn_menu"
+            data-testid="btn_menu"
             asChild
             className="border-none duration-700"
           >
@@ -217,7 +218,9 @@ export function Header() {
                 <Avatar>
                   <AvatarFallback>{profile.username}</AvatarFallback>
 
-                  {profile.picture && <AvatarImage src={profile.picture} />}
+                  {profile.picture && (
+                    <AvatarImage src={`${BaseUrl.IMG}/${profile.picture}`} />
+                  )}
                 </Avatar>
 
                 <div className="flex flex-col max-md:hidden">
@@ -228,7 +231,7 @@ export function Header() {
             </div>
           ) : (
             <Button
-              data-testId="btn_signIn_from_header"
+              data-testid="btn_signIn_from_header"
               size="icon"
               variant="ghost"
               onClick={() => handleNavigateTo('/signIn')}

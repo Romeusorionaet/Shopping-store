@@ -1,26 +1,28 @@
-import { KeyCookies } from '@/constants/key-cookies'
+'use server'
+
 import { cookies } from 'next/headers'
+import { KeyCookies } from '@/constants/key-cookies'
 
-class GetTokenFromCookies {
-  accessToken() {
-    const accessToken = cookies().get(KeyCookies.AT_STORE)
-
-    if (!accessToken) {
-      return
-    }
-
-    return accessToken.value
+export async function getAccessTokenFromCookies() {
+  if (process.env.NEXT_ENV === 'test') {
+    return 'fakeToken'
   }
 
-  refreshToken() {
-    const refreshToken = cookies().get(KeyCookies.RT_STORE)
+  const accessToken = cookies().get(KeyCookies.AT_STORE)
 
-    if (!refreshToken) {
-      return null
-    }
-
-    return refreshToken.value
+  if (!accessToken) {
+    return
   }
+
+  return accessToken.value
 }
 
-export const getTokenFromCookies = new GetTokenFromCookies()
+export async function getRefreshTokenFromCookies() {
+  const refreshToken = cookies().get(KeyCookies.RT_STORE)
+
+  if (!refreshToken) {
+    return null
+  }
+
+  return refreshToken.value
+}

@@ -18,6 +18,7 @@ import { PaymentAndOptions } from '@/components/rules-and-policies/payment-optio
 import { DecorationPercentageIndicator } from '@/components/decoration-percentage-indicator'
 import { getDataProductsTheSameCategory } from '@/actions/get/product/get-data-products-the-same-category'
 import { getDataUniqueProduct } from '@/actions/get/product/get-data-unique-product'
+import { SectionProductName } from '@/constants/section-product-name'
 
 interface ParamsProps {
   params: {
@@ -206,7 +207,10 @@ export default async function Details({ params }: ParamsProps) {
           <div className="space-y-6">
             <h2 className="text-lg uppercase md:text-2xl">Veja também</h2>
 
-            <CarouselProducts products={filteredProductsTheSameCategory} />
+            <CarouselProducts
+              section={SectionProductName.SAME_CATEGORY}
+              products={filteredProductsTheSameCategory}
+            />
           </div>
         )}
       </div>

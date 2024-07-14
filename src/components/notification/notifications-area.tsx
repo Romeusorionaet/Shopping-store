@@ -7,12 +7,12 @@ import {
 import { UserMinus } from 'lucide-react'
 import { fetchDataBuyerNotifications } from '@/actions/get/buyer/fetch-data-buyer-notifications'
 import Link from 'next/link'
-import { getTokenFromCookies } from '@/utils/get-tokens-from-cookies'
+import { getAccessTokenFromCookies } from '@/utils/get-tokens-from-cookies'
 
 export async function NotificationsArea() {
-  const token = getTokenFromCookies.accessToken()
+  const accessToken = await getAccessTokenFromCookies()
 
-  if (!token) {
+  if (!accessToken) {
     return (
       <Link href="/signIn" title="fazer login">
         <UserMinus size={24} />

@@ -1,5 +1,3 @@
-'use server'
-
 import { KeyCookies } from '@/constants/key-cookies'
 import { api } from '@/lib/api'
 import { setAuthTokenForCookies } from '@/utils/set-auth-token-for-cookies'

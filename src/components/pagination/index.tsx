@@ -14,17 +14,17 @@ export function Pagination({ sizeList, disableArrowIf }: Props) {
   const searchParams = useSearchParams()
   const query = searchParams.get('q') ?? ''
   const section = searchParams.get('section')
-  const initialPage = parseInt(searchParams.get('p') || '1', 10)
+  const page = parseInt(searchParams.get('p') || '1', 10)
 
-  const [currentPage, setCurrentPage] = useState(initialPage)
+  const [currentPage, setCurrentPage] = useState(page)
 
   const router = useRouter()
 
   const path = usePathname()
 
   useEffect(() => {
-    setCurrentPage(initialPage)
-  }, [initialPage])
+    setCurrentPage(page)
+  }, [page])
 
   const handleChangePage = (direction: string) => {
     let newPage = currentPage
@@ -44,21 +44,31 @@ export function Pagination({ sizeList, disableArrowIf }: Props) {
   }
 
   return (
-    <div className="flex w-full justify-end gap-4 pr-4">
-      <Button
-        data-value={currentPage <= 1}
-        onClick={() => handleChangePage('previous')}
-        className="hover:text-base_color_text_top data-[value=true]:hidden"
-      >
-        <ChevronLeft />
-      </Button>
-      <Button
-        data-value={sizeList < 14 || !disableArrowIf}
-        onClick={() => handleChangePage('next')}
-        className="hover:text-base_color_text_top data-[value=true]:hidden"
-      >
-        <ChevronRight />
-      </Button>
+    <div className="mt-10 w-full pr-4">
+      <div className="flex items-center justify-end gap-4">
+        <Button
+          data-testid="btn_left"
+          data-value={currentPage <= 1}
+          onClick={() => handleChangePage('previous')}
+          className="hover:text-base_color_text_top data-[value=true]:hidden"
+        >
+          <ChevronLeft />
+        </Button>
+        <span
+          data-value={!disableArrowIf}
+          className="font-bold data-[value=true]:hidden"
+        >
+          {page}
+        </span>
+        <Button
+          data-testid="btn_right"
+          data-value={sizeList < 14 || !disableArrowIf}
+          onClick={() => handleChangePage('next')}
+          className="hover:text-base_color_text_top data-[value=true]:hidden"
+        >
+          <ChevronRight />
+        </Button>
+      </div>
     </div>
   )
 }

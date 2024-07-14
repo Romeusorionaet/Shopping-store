@@ -1,7 +1,7 @@
 'use server'
 
 import { api } from '@/lib/api'
-import { getTokenFromCookies } from '@/utils/get-tokens-from-cookies'
+import { getAccessTokenFromCookies } from '@/utils/get-tokens-from-cookies'
 
 interface Props {
   cep: number
@@ -19,7 +19,7 @@ interface Props {
 export const createUserAddress = async (
   address: Props,
 ): Promise<{ success: boolean; message: string }> => {
-  const accessToken = getTokenFromCookies.accessToken()
+  const accessToken = await getAccessTokenFromCookies()
 
   if (!accessToken) {
     return {
