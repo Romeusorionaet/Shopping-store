@@ -6,6 +6,7 @@ import { getDataProducts } from '@/actions/get/product/get-data-products'
 import { NoProductRegistrationMessage } from '@/components/no-product-registration-message'
 import { useQuery } from '@tanstack/react-query'
 import { SkeletonCarousel } from './skeleton-carousel'
+import { SectionProductName } from '@/constants/section-product-name'
 
 export function SectionAllProducts() {
   const { data, isLoading } = useQuery({
@@ -28,5 +29,10 @@ export function SectionAllProducts() {
     () => Math.random() - 0.5,
   )
 
-  return <CarouselProducts products={allProducts} />
+  return (
+    <CarouselProducts
+      section={SectionProductName.ALL_products}
+      products={allProducts}
+    />
+  )
 }

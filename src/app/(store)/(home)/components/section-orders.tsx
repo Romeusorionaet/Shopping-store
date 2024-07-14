@@ -5,6 +5,7 @@ import { CarouselOrderProducts } from '@/components/carousel-products/order-prod
 import { OrderProductProps } from '@/core/@types/api-store'
 import { useQuery } from '@tanstack/react-query'
 import { SkeletonCarousel } from './skeleton-carousel'
+import { SectionProductName } from '@/constants/section-product-name'
 
 export function SectionOrders() {
   const { data, isLoading } = useQuery({
@@ -44,7 +45,10 @@ export function SectionOrders() {
           <h2 className="my-4 text-lg uppercase md:text-lg">
             Produtos que você se interessou
           </h2>
-          <CarouselOrderProducts orderProducts={shuffledProducts} />
+          <CarouselOrderProducts
+            section={SectionProductName.ORDERS_PRODUCTS}
+            orderProducts={shuffledProducts}
+          />
         </div>
       )}
     </div>
