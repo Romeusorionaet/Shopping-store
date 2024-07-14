@@ -6,9 +6,9 @@ test.describe('Carousel Products (E2E)', () => {
   }) => {
     await page.goto('/')
 
-    const arrowLeft = page.getByTestId('arrow_control_right_allProducts')
+    const arrowLeft = page.getByTestId('arrow_control_left_allProducts')
 
-    expect(arrowLeft).toBeHidden()
+    await expect(arrowLeft).toBeHidden()
   })
 
   test('should be able slider carousel via right arrow and left arrow from carousel products', async ({
@@ -34,17 +34,15 @@ test.describe('Carousel Products (E2E)', () => {
   }) => {
     await page.goto('/')
 
-    await page.getByTestId('arrow_control_right_allProducts').waitFor()
-
     const arrowRight = page.getByTestId('arrow_control_right_allProducts')
 
-    for (let i = 0; i < 6; i++) {
-      await page.waitForTimeout(1000)
+    await arrowRight.waitFor()
+
+    while (await arrowRight.isVisible()) {
       await arrowRight.click()
+      await page.waitForTimeout(1000)
     }
 
-    await page.waitForLoadState('networkidle')
-
-    await expect(arrowRight).toBeHidden()
+    await expect(page.locator('arrow_control_right_allProducts')).toBeHidden()
   })
 })

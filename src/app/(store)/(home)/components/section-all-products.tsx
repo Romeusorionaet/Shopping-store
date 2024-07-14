@@ -31,7 +31,7 @@ export function SectionAllProducts() {
 
   return (
     <CarouselProducts
-      section={SectionProductName.ALL_products}
+      section={SectionProductName.ALL_PRODUCTS}
       products={allProducts}
     />
   )
