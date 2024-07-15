@@ -2,7 +2,7 @@ import { HttpResponse } from 'msw'
 import { test, expect } from '../../../../test/mocks/playwright-msw'
 import { makeUser } from '../../../../test/factories/make-user'
 
-test.describe.only('Sign in Test (E2E)', () => {
+test.describe('Sign in Test (E2E)', () => {
   test('should be able the user sign in', async ({ page, worker, http }) => {
     await page.goto('/signIn')
 
