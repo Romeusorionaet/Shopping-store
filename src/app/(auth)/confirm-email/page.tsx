@@ -7,7 +7,7 @@ export default function ConfirmEmail() {
       <div className="items-center justify-center gap-8 text-center md:flex">
         <h1 className="mb-2 font-bold">Confirme seu email</h1>
 
-        <Suspense>
+        <Suspense fallback={null}>
           <HandleConfirmEmail />
         </Suspense>
       </div>
