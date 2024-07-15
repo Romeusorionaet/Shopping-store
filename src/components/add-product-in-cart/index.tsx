@@ -42,7 +42,7 @@ export function AddProductInCart({ product, title }: Props) {
     <button
       data-testid={product.id}
       onClick={() => handleAddToProductInCart()}
-      className="max-w-56 flex w-full items-center justify-center gap-2 rounded-md bg-base_color_positive/60 p-1 duration-700 hover:bg-base_color_positive"
+      className="flex w-full max-w-56  items-center justify-center gap-2 rounded-md bg-base_color_positive/60 p-1 duration-700 hover:bg-base_color_positive"
     >
       {title}
       <BaggageClaim size={28} />

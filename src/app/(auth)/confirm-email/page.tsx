@@ -1,3 +1,4 @@
+import { Suspense } from 'react'
 import { HandleConfirmEmail } from './components/handle-confirm-email'
 
 export default function ConfirmEmail() {
@@ -6,7 +7,9 @@ export default function ConfirmEmail() {
       <div className="items-center justify-center gap-8 text-center md:flex">
         <h1 className="mb-2 font-bold">Confirme seu email</h1>
 
-        <HandleConfirmEmail />
+        <Suspense>
+          <HandleConfirmEmail />
+        </Suspense>
       </div>
     </div>
   )

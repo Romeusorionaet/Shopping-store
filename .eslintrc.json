@@ -4,6 +4,7 @@
     "next/core-web-vitals"
   ],
   "rules": {
-    "no-useless-return": "off"
+    "no-useless-return": "off",
+    "@typescript-eslint/no-explicit-any": "off"
   }
 }
