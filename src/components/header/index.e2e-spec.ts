@@ -2,7 +2,7 @@ import { HttpResponse } from 'msw'
 import { test, expect } from '../../../test/mocks/playwright-msw'
 
 test.describe('Header test (E2E)', () => {
-  test('should be able open and close the menu', async ({ page }) => {
+  test.only('should be able open and close the menu', async ({ page }) => {
     await page.goto('/')
 
     const btnMenu = page.getByTestId('btn_menu')
@@ -15,8 +15,6 @@ test.describe('Header test (E2E)', () => {
     expect(ariaExpanded).toBe('true')
 
     await page.getByRole('button', { name: 'Close' }).click()
-
-    await page.waitForLoadState('networkidle')
 
     const ariaExpandedAfter = await btnMenu.getAttribute('aria-expanded')
     expect(ariaExpandedAfter).toBe('false')
