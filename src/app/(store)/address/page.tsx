@@ -17,11 +17,14 @@ export default async function Address() {
   }
 
   const queryClient = new QueryClient()
-  await queryClient.prefetchQuery({
-    queryKey: ['addressData'],
-    queryFn: () => getDataUserAddress(),
-    staleTime: 1000 * 60 * 60 * 24, // 24 hours
-  })
+
+  if (process.env.NEXT_ENV !== 'test') {
+    await queryClient.prefetchQuery({
+      queryKey: ['addressData'],
+      queryFn: () => getDataUserAddress(),
+      staleTime: 1000 * 60 * 60 * 24, // 24 hours
+    })
+  }
 
   return (
     <div className="p-2 pt-28">

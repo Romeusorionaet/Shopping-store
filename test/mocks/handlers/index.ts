@@ -2,6 +2,7 @@ import { http, HttpResponse } from 'msw'
 import { makeProduct } from '../../factories/make-product'
 import { makeUser } from '../../factories/make-user'
 import { fakeEncrypterToken } from '../../cryptography/fake-token'
+import { makeAddress } from '../../factories/make-address'
 
 const { fakeToken } = fakeEncrypterToken({ time: '30m' })
 
@@ -84,9 +85,70 @@ export const handlers = [
     return HttpResponse.json(
       {
         success: true,
+        message: 'success',
+      },
+      {
+        status: 201,
+      },
+    )
+  }),
+
+  http.post('/user/create-address', async () => {
+    return HttpResponse.json(
+      {
+        success: true,
+        message: 'success',
+      },
+      {
+        headers: {
+          authorization: `Bearer ${fakeToken}`,
+        },
+        status: 201,
+      },
+    )
+  }),
+
+  http.post('/user/update-user-address', async () => {
+    return HttpResponse.json(
+      {
+        success: true,
         message: 'ok',
       },
       {
+        headers: {
+          authorization: `Bearer ${fakeToken}`,
+        },
+        status: 201,
+      },
+    )
+  }),
+
+  http.get('/user/get-address', async () => {
+    const userAddress = makeAddress()
+
+    return HttpResponse.json(
+      {
+        userAddress,
+      },
+      {
+        headers: {
+          authorization: `Bearer ${fakeToken}`,
+        },
+        status: 200,
+      },
+    )
+  }),
+
+  http.put('/user/update-user-address', async () => {
+    return HttpResponse.json(
+      {
+        success: true,
+        message: 'success',
+      },
+      {
+        headers: {
+          authorization: `Bearer ${fakeToken}`,
+        },
         status: 201,
       },
     )

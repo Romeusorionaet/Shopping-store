@@ -31,7 +31,9 @@ export function useAddressForm() {
 
       if (result.success) {
         notifySuccess({ message: result.message, origin: 'server' })
-        refetch()
+        await refetch()
+
+        return
       } else {
         notifyError({ message: result.message, origin: 'server' })
       }

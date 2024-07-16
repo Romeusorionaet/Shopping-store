@@ -71,7 +71,7 @@ export function UserContextProvider({ children }: UserContextProps) {
 
           return
         } else {
-          refetchUserProfile()
+          await refetchUserProfile()
         }
       }
     }
