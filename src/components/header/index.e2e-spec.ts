@@ -2,28 +2,22 @@ import { HttpResponse } from 'msw'
 import { test, expect } from '../../../test/mocks/playwright-msw'
 
 test.describe('Header test (E2E)', () => {
-  test('should be able open the menu if click in Menu icon', async ({
-    page,
-  }) => {
-    await page.goto('/')
-
-    await page.getByTestId('btn_menu').click()
-
-    const menuButton = page.getByTestId('btn_menu')
-
-    const ariaExpanded = await menuButton.getAttribute('aria-expanded')
-    expect(ariaExpanded).toBe('true')
-  })
-
   test('should be able open and close the menu', async ({ page }) => {
     await page.goto('/')
 
-    await page.getByTestId('btn_menu').dblclick()
+    const btnMenu = page.getByTestId('btn_menu')
 
-    const menuButton = page.getByTestId('btn_menu')
+    await btnMenu.click()
 
-    const ariaExpanded = await menuButton.getAttribute('aria-expanded')
-    expect(ariaExpanded).toBe('false')
+    await page.getByRole('button', { name: 'Close' }).waitFor()
+
+    const ariaExpanded = await btnMenu.getAttribute('aria-expanded')
+    expect(ariaExpanded).toBe('true')
+
+    await page.getByRole('button', { name: 'Close' }).click()
+
+    const ariaExpandedAfter = await btnMenu.getAttribute('aria-expanded')
+    expect(ariaExpandedAfter).toBe('false')
   })
 
   test('should be able navigate to catalog page if click in (Catálogo) from menu options', async ({
@@ -32,6 +26,8 @@ test.describe('Header test (E2E)', () => {
     await page.goto('/')
 
     await page.getByTestId('btn_menu').click()
+
+    await page.getByRole('button', { name: 'Catálogo', exact: true }).waitFor()
 
     await page.getByRole('button', { name: 'Catálogo', exact: true }).click()
 
@@ -59,6 +55,10 @@ test.describe('Header test (E2E)', () => {
 
     await page
       .getByRole('button', { name: 'Meus pedidos', exact: true })
+      .waitFor()
+
+    await page
+      .getByRole('button', { name: 'Meus pedidos', exact: true })
       .click()
 
     await page.waitForURL('/orders')
@@ -70,6 +70,10 @@ test.describe('Header test (E2E)', () => {
     await page.goto('/')
 
     await page.getByTestId('btn_menu').click()
+
+    await page
+      .getByRole('button', { name: 'Endereço de entrega', exact: true })
+      .waitFor({ timeout: 50000 })
 
     await page
       .getByRole('button', { name: 'Endereço de entrega', exact: true })

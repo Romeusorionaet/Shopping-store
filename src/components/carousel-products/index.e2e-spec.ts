@@ -29,7 +29,7 @@ test.describe('Carousel Products (E2E)', () => {
     await page.waitForTimeout(500)
   })
 
-  test('Should be able to hide the right arrow when the slider gets finished', async ({
+  test('should be able to hide the right arrow when the slider gets finished', async ({
     page,
   }) => {
     await page.goto('/')
@@ -44,5 +44,17 @@ test.describe('Carousel Products (E2E)', () => {
     }
 
     await expect(page.locator('arrow_control_right_allProducts')).toBeHidden()
+  })
+
+  test('should be not able view the right and left arrows when you have less than 4 products in the carousel', async ({
+    page,
+  }) => {
+    await page.goto('/')
+
+    const arrowRight = page.locator('arrow_control_right_allProducts')
+    const arrowLeft = page.locator('arrow_control_left_allProducts')
+
+    await expect(arrowRight).toBeHidden()
+    await expect(arrowLeft).toBeHidden()
   })
 })

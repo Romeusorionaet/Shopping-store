@@ -118,9 +118,7 @@ test.describe('Home test (E2E)', () => {
 
     await dialog.getByRole('button', { name: 'OK' }).click()
 
-    expect(dialog).not.toBeVisible()
-
-    await page.waitForLoadState('networkidle')
+    await expect(dialog).toBeHidden()
   })
 
   test('should be able visualize the freight free illustration component', async ({

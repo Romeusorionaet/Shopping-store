@@ -14,10 +14,8 @@ import { Button } from '../ui/button'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import { useRouter } from 'next/navigation'
 import { useContext, useState } from 'react'
-import { checkIsPrivateRoute } from '@/utils/check-is-private-route'
 import { signOut, useSession } from 'next-auth/react'
 import { UserContext } from '@/providers/user-context'
-import { DialogLoginAdm } from '../dialog-login-adm'
 import { cleanAuthCookies } from '@/actions/auth/sign-out'
 import Link from 'next/link'
 import { BaseUrl } from '@/constants/base-url'
@@ -27,7 +25,6 @@ export function Header() {
   const { data } = useSession()
   const isAdm = false // por enquanto / pegar role do profile
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [isDialogOpen, setIsDialogOpen] = useState<boolean | undefined>(false)
 
   const router = useRouter()
 
@@ -41,25 +38,13 @@ export function Header() {
     }
   }
 
-  const handleCancel = () => {
-    setIsDialogOpen(false)
-  }
-
   const handleNavigateTo = (route: string) => {
-    const isPrivateRoute = checkIsPrivateRoute(route)
-
-    if (isPrivateRoute) {
-      setIsDialogOpen(true)
-    } else {
-      setIsMenuOpen(false)
-      router.push(route)
-    }
+    setIsMenuOpen(false)
+    router.push(route)
   }
 
   return (
     <header className="fixed left-0 z-30 w-full rounded-none border-b border-b-base_color_dark/30 bg-base_one_reference_header p-2 text-base_color_text_top">
-      <DialogLoginAdm handleCancel={handleCancel} isDialogOpen={isDialogOpen} />
-
       <div className="mx-auto flex max-w-[1550px] items-center justify-between md:gap-16 md:px-10">
         <Sheet
           modal={false}
