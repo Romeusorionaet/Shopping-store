@@ -2,7 +2,7 @@ import { HttpResponse } from 'msw'
 import { test, expect } from '../../../test/mocks/playwright-msw'
 
 test.describe('Header test (E2E)', () => {
-  test.only('should be able open and close the menu', async ({ page }) => {
+  test('should be able open and close the menu', async ({ page }) => {
     await page.goto('/')
 
     const btnMenu = page.getByTestId('btn_menu')
