@@ -1,5 +1,3 @@
-'use server'
-
 import { api } from '@/lib/api'
 import { getAccessTokenFromCookies } from '@/utils/get-tokens-from-cookies'
 
