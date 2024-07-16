@@ -73,7 +73,7 @@ test.describe('Header test (E2E)', () => {
 
     await page
       .getByRole('button', { name: 'Endereço de entrega', exact: true })
-      .waitFor({ timeout: 50000 })
+      .waitFor()
 
     await page
       .getByRole('button', { name: 'Endereço de entrega', exact: true })

@@ -46,7 +46,7 @@ test.describe('Home test (E2E)', () => {
 
     await page.getByRole('button', { name: 'buscar' }).click()
 
-    await page.waitForLoadState('networkidle')
+    await page.waitForTimeout(5000)
 
     const currentUrl = page.url()
     expect(currentUrl).toContain('/search')
