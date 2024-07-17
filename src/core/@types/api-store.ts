@@ -46,9 +46,6 @@ export interface ProductProps {
   stockQuantity: number
   minimumQuantityStock: number
   discountPercentage: number
-  width: number
-  height: number
-  weight: number
   placeOfSale: string
   stars: number
   createdAt: Date

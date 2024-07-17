@@ -7,7 +7,6 @@ export const getDataBuyerOrderProducts = async () => {
   const accessToken = await getAccessTokenFromCookies()
 
   if (!accessToken) {
-    console.log('oioioiio=')
     return {
       notFound: true,
 

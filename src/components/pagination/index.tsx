@@ -54,11 +54,8 @@ export function Pagination({ sizeList, disableArrowIf }: Props) {
         >
           <ChevronLeft />
         </Button>
-        <span
-          data-value={!disableArrowIf}
-          className="font-bold data-[value=true]:hidden"
-        >
-          {page}
+        <span data-value={!disableArrowIf} className="data-[value=true]:hidden">
+          page: <strong>{page}</strong>
         </span>
         <Button
           data-testid="btn_right"

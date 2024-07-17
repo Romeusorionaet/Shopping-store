@@ -1,5 +1,3 @@
-'use server'
-
 import { api } from '@/lib/api'
 
 export const getDataUniqueProduct = async (productId: string) => {

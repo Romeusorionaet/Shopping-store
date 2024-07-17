@@ -2,7 +2,7 @@
 
 import '@/assets/styles/slide-slick/slick.css'
 import Slider from 'react-slick'
-import { useEffect, useRef, useState } from 'react'
+import { Suspense, useEffect, useRef, useState } from 'react'
 import { ArrowControlLeft, ArrowControlRight } from './arrows-carousel'
 import { useSlickCarousel } from '@/hooks/use-slick-carousel'
 import { ProductProps } from '@/core/@types/api-store'
@@ -64,7 +64,11 @@ export function CarouselProducts({ products, section }: Props) {
       >
         {products &&
           products.map((product) => {
-            return <ProductCard key={product.id} product={product} />
+            return (
+              <Suspense key={product.id} fallback={null}>
+                <ProductCard product={product} />
+              </Suspense>
+            )
           })}
         <div
           key="end-message"
