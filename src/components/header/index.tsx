@@ -18,7 +18,6 @@ import { signOut, useSession } from 'next-auth/react'
 import { UserContext } from '@/providers/user-context'
 import { cleanAuthCookies } from '@/actions/auth/sign-out'
 import Link from 'next/link'
-import { BaseUrl } from '@/constants/base-url'
 
 export function Header() {
   const { profile, refetchUserProfile } = useContext(UserContext)
@@ -196,7 +195,7 @@ export function Header() {
           <span className="text-2xl font-bold">Shopping Store</span>
         </Link>
 
-        <div className="w-10">
+        <div>
           {profile.username ? (
             <div className="flex flex-col">
               <div className="flex items-center gap-2 md:py-4">
@@ -204,7 +203,7 @@ export function Header() {
                   <AvatarFallback>{profile.username}</AvatarFallback>
 
                   {profile.picture && (
-                    <AvatarImage src={`${BaseUrl.IMG}/${profile.picture}`} />
+                    <AvatarImage src={`${profile.picture}`} />
                   )}
                 </Avatar>
 
