@@ -12,26 +12,10 @@ import { SectionAllProducts } from './components/section-all-products'
 import { SectionPromotion } from './components/section-promotion'
 import { SectionPopular } from './components/section-popular'
 import { SectionOrders } from './components/section-orders'
-import {
-  HydrationBoundary,
-  QueryClient,
-  dehydrate,
-} from '@tanstack/react-query'
-import { getDataProducts } from '@/actions/get/product/get-data-products'
 import { Suspense } from 'react'
 import { SearchForm } from '@/components/search-form'
 
 export default async function Home() {
-  const queryClient = new QueryClient()
-
-  if (process.env.NEXT_ENV !== 'test') {
-    await queryClient.prefetchQuery({
-      queryKey: ['allProducts'],
-      queryFn: () => getDataProducts({ page: 1 }),
-      staleTime: 1000 * 60 * 30, // 30 minutes
-    })
-  }
-
   return (
     <div>
       <OfferBanner />
@@ -88,9 +72,7 @@ export default async function Home() {
 
           <h2 className="my-4 uppercase md:text-lg">Todos os produtos</h2>
 
-          <HydrationBoundary state={dehydrate(queryClient)}>
-            <SectionAllProducts />
-          </HydrationBoundary>
+          <SectionAllProducts />
         </div>
 
         <div className="flex rounded-md bg-base_one_reference_header/80 pr-2 text-base_color_text_top">
