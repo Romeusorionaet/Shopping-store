@@ -29,10 +29,6 @@ export default async function Orders() {
 
   const paymentConfirmed = OrderStatus.PAYMENT_CONFIRMED
 
-  const ordersInProcess =
-    OrderStatusTracking.WAITING ||
-    OrderStatusTracking.PRODUCT_DELIVERED_TO_CARRIER
-
   const productDeliveredToClient =
     OrderStatusTracking.PRODUCT_DELIVERED_TO_CLIENT
 
@@ -48,8 +44,9 @@ export default async function Orders() {
         {orders.length >= 1 &&
           orders.map((order) => {
             if (
-              order.status === paymentConfirmed &&
-              order.orderStatusTracking === ordersInProcess
+              (order.status === paymentConfirmed &&
+                order.orderStatusTracking === OrderStatusTracking.WAITING) ||
+              OrderStatusTracking.PRODUCT_DELIVERED_TO_CARRIER
             ) {
               return <OrderItem key={order.id} order={order} />
             } else {
