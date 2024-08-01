@@ -1,13 +1,33 @@
-import { useMutation, useQuery } from '@tanstack/react-query'
+'use client'
+
 import { getDataUserAddress } from '@/actions/get/user/get-data-user-address'
 import { createUserAddress } from '@/actions/register/address'
 import { updateUserAddress } from '@/actions/update/address'
-import { useNotification } from '@/hooks/use-notifications'
-import { Check, ShieldAlert } from 'lucide-react'
 import { AddressFormData } from '@/app/(store)/address/schemas/address-form-schema'
+import { AddressProps } from '@/core/@types/api-store'
+import { useNotification } from '@/hooks/use-notifications'
 import { checkDataEquality } from '@/utils/check-data-equality'
+import { useMutation, useQuery } from '@tanstack/react-query'
+import { Check, ShieldAlert } from 'lucide-react'
+import { ReactNode, createContext } from 'react'
 
-export function useAddressForm() {
+interface AddressFormContextType {
+  isLoading: boolean
+  oldAddress: AddressProps | null | undefined
+  textButtonSubmitForm: string
+  iconBasedOnAddress: JSX.Element
+  handleAddressForm: (addressFormData: AddressFormData) => Promise<void>
+}
+
+interface AddressFormContextProps {
+  children: ReactNode
+}
+
+export const AddressFormContext = createContext({} as AddressFormContextType)
+
+export function AddressFormContextProvider({
+  children,
+}: AddressFormContextProps) {
   const { notifySuccess, notifyError } = useNotification()
 
   const { data, refetch, isLoading } = useQuery({
@@ -69,11 +89,17 @@ export function useAddressForm() {
     <ShieldAlert className="text-base_color_negative" />
   )
 
-  return {
-    isLoading,
-    oldAddress: data?.userAddress,
-    textButtonSubmitForm,
-    iconBasedOnAddress,
-    handleAddressForm,
-  }
+  return (
+    <AddressFormContext.Provider
+      value={{
+        isLoading,
+        oldAddress: data?.userAddress,
+        textButtonSubmitForm,
+        iconBasedOnAddress,
+        handleAddressForm,
+      }}
+    >
+      {children}
+    </AddressFormContext.Provider>
+  )
 }

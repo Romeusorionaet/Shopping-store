@@ -1,6 +1,7 @@
 'use client'
 
 import { queryClient } from '@/lib/query-client'
+import { AddressFormContextProvider } from '@/providers/address-form-context'
 import { AuthProvider } from '@/providers/auth'
 import { NotificationContextProvider } from '@/providers/notification-context'
 import { UserContextProvider } from '@/providers/user-context'
@@ -12,7 +13,11 @@ export default function ClientProviders({ children }: { children: ReactNode }) {
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <UserContextProvider>
-          <NotificationContextProvider>{children}</NotificationContextProvider>
+          <AddressFormContextProvider>
+            <NotificationContextProvider>
+              {children}
+            </NotificationContextProvider>
+          </AddressFormContextProvider>
         </UserContextProvider>
       </AuthProvider>
     </QueryClientProvider>

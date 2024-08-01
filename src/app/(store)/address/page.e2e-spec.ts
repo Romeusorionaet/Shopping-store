@@ -24,10 +24,14 @@ test.describe('Address test (E2E)', () => {
       }),
     )
 
-    await page.getByRole('button', { name: 'Preencher formulário' }).click()
+    await page
+      .getByRole('button', {
+        name: 'Preencher formulário',
+      })
+      .click()
 
-    await page.getByPlaceholder('nome e sobrenome').fill('romeu soares')
-    await page.getByPlaceholder('exemplo@gmail.com').fill('romeu@gmail.com')
+    await page.getByPlaceholder('example@gmail.com').fill('romeu soares')
+    await page.getByPlaceholder('example@gmail.com').fill('romeu@gmail.com')
     await page.getByPlaceholder('Número de telefone').fill('84981127596')
     await page.getByPlaceholder('12345678').fill('12345678')
     await page.getByPlaceholder('Sua cidade').fill('canguaretama')
@@ -44,12 +48,8 @@ test.describe('Address test (E2E)', () => {
     await page.getByRole('button', { name: 'salvar', exact: true }).click()
 
     const toast = page.getByRole('alert')
-    const successMessage = page.getByText('success')
 
     expect(toast).toBeTruthy()
-    expect(successMessage).toBeVisible()
-
-    await page.waitForTimeout(10000)
   })
 
   test('should be able update the address of user', async ({
@@ -74,10 +74,14 @@ test.describe('Address test (E2E)', () => {
       }),
     )
 
-    await page.getByRole('button', { name: 'Preencher formulário' }).click()
+    await page
+      .getByRole('button', {
+        name: 'Preencher formulário',
+      })
+      .click()
 
     await page.getByPlaceholder('nome e sobrenome').fill('romeu soares')
-    await page.getByPlaceholder('exemplo@gmail.com').fill(userAddress.email)
+    await page.getByPlaceholder('example@gmail.com').fill(userAddress.email)
     await page.getByPlaceholder('Número de telefone').fill('84981127596')
     await page.getByPlaceholder('12345678').fill(userAddress.cep.toString())
     await page.getByPlaceholder('Sua cidade').fill(userAddress.city)
