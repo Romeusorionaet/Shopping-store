@@ -7,7 +7,9 @@ export default async function Catalog() {
   const { propsCategories } = await getDataCatalog()
   const categories: CategoryProps[] = JSON.parse(propsCategories.categories)
 
-  if (categories.length === 0) {
+  const noCategories = !categories || categories.length === 0
+
+  if (noCategories) {
     return <NoProductRegistrationMessage />
   }
 
@@ -16,14 +18,13 @@ export default async function Catalog() {
       <h1 className="text-2xl font-bold uppercase">Catálogo</h1>
 
       <div className="my-8 flex flex-wrap justify-center gap-8">
-        {categories &&
-          categories.map((category) => {
-            return (
-              <div key={category.id}>
-                <CategoryItem category={category} />
-              </div>
-            )
-          })}
+        {categories.map((category) => {
+          return (
+            <div key={category.id}>
+              <CategoryItem category={category} />
+            </div>
+          )
+        })}
       </div>
     </div>
   )
