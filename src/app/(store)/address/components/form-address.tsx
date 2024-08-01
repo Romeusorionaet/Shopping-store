@@ -18,7 +18,6 @@ import {
 } from '../schemas/address-form-schema'
 import { useContext } from 'react'
 import { AddressFormContext } from '@/providers/address-form-context'
-import { UserContext } from '@/providers/user-context'
 
 export function FormAddress() {
   const {
@@ -28,8 +27,6 @@ export function FormAddress() {
   } = useForm<AddressFormData>({
     resolver: zodResolver(addressFormSchema),
   })
-
-  const { profile } = useContext(UserContext)
 
   const {
     isLoading,
@@ -72,7 +69,7 @@ export function FormAddress() {
                   <Input
                     type="text"
                     maxLength={30}
-                    placeholder={profile.email}
+                    placeholder="example@gmail.com"
                     className="bg-transparent"
                     defaultValue={oldAddress?.email}
                     {...register('email')}
