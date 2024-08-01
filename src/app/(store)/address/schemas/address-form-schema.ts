@@ -4,7 +4,7 @@ const phoneNumberMessage = 'Informe um número válido. Exemplo: 84981127596'
 
 export const addressFormSchema = z.object({
   username: z.string().min(1, 'Este campo é obrigatório.'),
-  email: z.string().min(1, 'Este campo é obrigatório.'),
+  email: z.string().email('precisa ser um e-mail'),
   phoneNumber: z
     .string()
     .min(11, { message: phoneNumberMessage })
