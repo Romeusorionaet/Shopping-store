@@ -29,6 +29,12 @@ export function DialogInformation() {
     >
       <div className="w-full space-y-8 border bg-base_color_text_top p-4 md:w-1/2">
         <p>
+          Atenção: A Api na qual este e-commerce consome, está hospedado de
+          forma gratuita, e esses serviços são apenas para testes. Isso implica
+          diretamente no funcionamento do site como por exemplo, lentidão ao
+          carregar os produtos no primeiro acesso.
+        </p>
+        <p>
           Este e-commerce está em fase de desenvolvimento e é destinado
           exclusivamente para fins de portfólio. O objetivo é demonstrar minhas
           habilidades como programador web.
@@ -36,7 +42,11 @@ export function DialogInformation() {
 
         <p>
           Acesse meu{' '}
-          <a href="https://romeuportfolio.netlify.app" className="underline">
+          <a
+            href="https://romeu-portfolio.netlify.app/"
+            className="underline"
+            target="_blank"
+          >
             Portfólio
           </a>{' '}
           para visualizar mais projetos.
