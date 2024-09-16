@@ -1,6 +1,6 @@
 import { test, expect } from '../../../test/mocks/playwright-msw'
 
-test.describe.only('Carousel Products (E2E)', () => {
+test.describe('Carousel Products (E2E)', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/')
 
@@ -27,7 +27,7 @@ test.describe.only('Carousel Products (E2E)', () => {
     await expect(arrowLeft).toBeHidden()
   })
 
-  test.only('should be able slider carousel via right arrow and left arrow from carousel products', async ({
+  test('should be able slider carousel via right arrow and left arrow from carousel products', async ({
     page,
   }) => {
     await page.goto('/')
