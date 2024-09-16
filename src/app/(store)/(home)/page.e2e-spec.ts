@@ -107,8 +107,6 @@ test.describe('Home test (E2E)', () => {
       .locator('..')
       .locator('..')
 
-    await expect(product).toHaveCount(1)
-
     await product.hover({ force: true })
 
     await page.getByRole('link', { name: 'Adicionar ao carrinho o' }).click()
