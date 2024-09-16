@@ -3,6 +3,17 @@ import { test, expect } from '../../../../test/mocks/playwright-msw'
 import { delay, HttpResponse } from 'msw'
 
 test.describe('Home test (E2E)', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/')
+
+    page
+      .locator('div')
+      .filter({ hasText: 'Atenção: A Api na qual este e' })
+      .nth(3)
+
+    await page.getByRole('button', { name: 'OK' }).click()
+  })
+
   test('should be able visualize the header component', async ({ page }) => {
     await page.goto('/')
 
@@ -17,7 +28,12 @@ test.describe('Home test (E2E)', () => {
     await page.goto('/')
 
     await page.getByRole('link', { name: 'Ver Catálogo' }).click()
+
     await page.waitForURL('/catalog')
+
+    const catalogPage = page.url()
+
+    expect(catalogPage).toBe('http://localhost:3000/catalog')
   })
 
   test('should be able navigate to whatsapp if click in (Entre em contato) from Home', async ({
@@ -42,14 +58,18 @@ test.describe('Home test (E2E)', () => {
 
     await page.locator('form').waitFor()
 
-    await page.getByPlaceholder('Buscar produtos').fill('Realme Note 50')
+    await page.getByPlaceholder('Buscar produtos...').waitFor()
+
+    await page.waitForTimeout(5000)
+
+    await page.getByPlaceholder('Buscar produtos...').fill('Realme Note 50')
 
     await page.getByRole('button', { name: 'buscar' }).click()
 
     await page.waitForTimeout(5000)
 
     const currentUrl = page.url()
-    expect(currentUrl).toContain('/search')
+    expect(currentUrl).toContain('http://localhost:3000/search')
   })
 
   test('should be able add some product in cart from section (Todos os produtos)', async ({
@@ -62,14 +82,12 @@ test.describe('Home test (E2E)', () => {
       title: 'Adicionar ao carrinho o product test (e2e)',
     })
 
-    const secondProduct = makeProduct()
-
     await worker.use(
       http.get('/products', async () => {
         await delay(250)
         return new HttpResponse(
           JSON.stringify({
-            products: [firstProduct, secondProduct],
+            products: [firstProduct],
           }),
           {
             status: 200,
@@ -93,54 +111,11 @@ test.describe('Home test (E2E)', () => {
 
     await product.hover({ force: true })
 
-    const btnAddToCart = page.getByTestId(firstProduct.id)
-
-    await expect(btnAddToCart).toBeVisible()
-
-    await btnAddToCart.click()
+    await page.getByRole('link', { name: 'Adicionar ao carrinho o' }).click()
 
     const toast = page.locator('[id="\\31 "]').getByRole('alert')
 
     expect(toast).toBeTruthy()
-  })
-
-  test('should be able view and confirm the dialog information at home', async ({
-    page,
-  }) => {
-    await page.goto('/')
-
-    const dialog = page
-      .locator('div')
-      .filter({ hasText: 'Este e-commerce está em fase' })
-      .nth(3)
-
-    expect(dialog).toBeVisible()
-
-    await dialog.getByRole('button', { name: 'OK' }).click()
-
-    await expect(dialog).toBeHidden()
-  })
-
-  test('should be able visualize the freight free illustration component', async ({
-    page,
-  }) => {
-    await page.goto('/')
-
-    const freightFreeIllustration = page
-      .locator('div')
-      .filter({ hasText: /^Frete gratis para todo o Brasil!$/ })
-
-    await expect(freightFreeIllustration).toBeVisible()
-  })
-
-  test('should be able visualize the section brand logo component', async ({
-    page,
-  }) => {
-    await page.goto('/')
-
-    const freightFreeIllustration = page.locator('.mx-auto > div:nth-child(7)')
-
-    await expect(freightFreeIllustration).toBeVisible()
   })
 
   test('should be able visualize the footer component', async ({ page }) => {

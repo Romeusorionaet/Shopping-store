@@ -32,6 +32,10 @@ test.describe('Header test (E2E)', () => {
     await page.getByRole('button', { name: 'Catálogo', exact: true }).click()
 
     await page.waitForURL('/catalog')
+
+    const catalogPage = page.url()
+
+    expect(catalogPage).toBe('http://localhost:3000/catalog')
   })
 
   test('should be able navigate to home page if click in (Início) from menu options', async ({
