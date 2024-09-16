@@ -36,9 +36,11 @@ test.describe('Carousel Products (E2E)', () => {
       .getByTestId('arrow_control_right_allProducts')
       .waitFor({ state: 'visible' })
 
+    await page.waitForLoadState('load')
+
     await page.getByTestId('arrow_control_right_allProducts').click()
 
-    await page.waitForLoadState('networkidle')
+    await page.waitForLoadState('load')
 
     await page
       .getByTestId('arrow_control_left_allProducts')
@@ -59,7 +61,7 @@ test.describe('Carousel Products (E2E)', () => {
     await arrowRight.waitFor({ state: 'visible' })
 
     while (await arrowRight.isVisible()) {
-      await page.getByTestId('arrow_control_right_allProducts').click()
+      await arrowRight.click()
       await page.waitForTimeout(1000)
     }
 

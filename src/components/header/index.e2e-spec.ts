@@ -75,6 +75,8 @@ test.describe('Header test (E2E)', () => {
 
     await page.getByTestId('btn_menu').click()
 
+    await page.waitForLoadState('load')
+
     await page
       .getByRole('button', { name: 'Endereço de entrega', exact: true })
       .waitFor()
