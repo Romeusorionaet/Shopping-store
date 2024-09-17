@@ -9,6 +9,8 @@ test.describe('Header test (E2E)', () => {
 
     await btnMenu.click()
 
+    await page.waitForLoadState('load')
+
     await page.getByRole('button', { name: 'Close' }).waitFor()
 
     const ariaExpanded = await btnMenu.getAttribute('aria-expanded')
@@ -137,6 +139,6 @@ test.describe('Header test (E2E)', () => {
 
     await page.getByRole('link', { name: 'Shopping Store' }).click()
 
-    await page.waitForURL('/')
+    await page.waitForURL('http://localhost:3000')
   })
 })

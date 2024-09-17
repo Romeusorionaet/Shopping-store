@@ -29,9 +29,12 @@ test.describe('Home test (E2E)', () => {
 
     await page.getByRole('link', { name: 'Ver Catálogo' }).click()
 
+    await page.waitForLoadState('load')
+
     await page.waitForURL('/catalog')
 
     const catalogPage = page.url()
+    console.log(catalogPage, '==')
 
     expect(catalogPage).toBe('http://localhost:3000/catalog')
   })

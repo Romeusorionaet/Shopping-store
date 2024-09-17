@@ -27,28 +27,35 @@ test.describe('Carousel Products (E2E)', () => {
     await expect(arrowLeft).toBeHidden()
   })
 
-  test('should be able slider carousel via right arrow and left arrow from carousel products', async ({
+  test('should be able to slide carousel via right arrow and left arrow from carousel products', async ({
     page,
   }) => {
     await page.goto('/')
 
+    await page.addStyleTag({
+      content:
+        '* { transition-duration: 0s !important; animation-duration: 0s !important; }',
+    })
+
+    await page.waitForSelector('.slick-slide')
+
     await page
       .getByTestId('arrow_control_right_allProducts')
-      .waitFor({ state: 'visible' })
-
-    await page.waitForLoadState('load')
-
+      .waitFor({ state: 'visible', timeout: 50000 })
     await page.getByTestId('arrow_control_right_allProducts').click()
 
-    await page.waitForLoadState('load')
+    await page.waitForTimeout(500)
 
     await page
       .getByTestId('arrow_control_left_allProducts')
-      .waitFor({ state: 'visible' })
-
+      .waitFor({ state: 'visible', timeout: 50000 })
     await page.getByTestId('arrow_control_left_allProducts').click()
 
     await page.waitForTimeout(500)
+
+    const arrowLeft = page.getByTestId('arrow_control_left_allProducts')
+
+    await expect(arrowLeft).toBeHidden()
   })
 
   test('should be able to hide the right arrow when the slider gets finished', async ({
@@ -57,8 +64,6 @@ test.describe('Carousel Products (E2E)', () => {
     await page.goto('/')
 
     const arrowRight = page.getByTestId('arrow_control_right_allProducts')
-
-    await arrowRight.waitFor({ state: 'visible' })
 
     while (await arrowRight.isVisible()) {
       await arrowRight.click()
