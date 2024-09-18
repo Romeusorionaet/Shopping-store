@@ -34,7 +34,6 @@ test.describe('Home test (E2E)', () => {
     await page.waitForURL('/catalog')
 
     const catalogPage = page.url()
-    console.log(catalogPage, '==')
 
     expect(catalogPage).toBe('http://localhost:3000/catalog')
   })

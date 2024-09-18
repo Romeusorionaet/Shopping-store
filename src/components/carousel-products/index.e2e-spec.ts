@@ -39,16 +39,21 @@ test.describe('Carousel Products (E2E)', () => {
 
     await page.waitForSelector('.slick-slide')
 
-    await page
-      .getByTestId('arrow_control_right_allProducts')
-      .waitFor({ state: 'visible', timeout: 50000 })
-    await page.getByTestId('arrow_control_right_allProducts').click()
+    while (true) {
+      const isLeftVisible = await page
+        .getByTestId('arrow_control_left_allProducts')
+        .isVisible()
 
-    await page.waitForTimeout(500)
+      if (isLeftVisible) break
+
+      await page.getByTestId('arrow_control_right_allProducts').click()
+      await page.waitForTimeout(500)
+    }
 
     await page
       .getByTestId('arrow_control_left_allProducts')
       .waitFor({ state: 'visible', timeout: 50000 })
+
     await page.getByTestId('arrow_control_left_allProducts').click()
 
     await page.waitForTimeout(500)
