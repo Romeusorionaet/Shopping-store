@@ -33,6 +33,7 @@ export default async function Home() {
 
               <div className="flex flex-col gap-4 md:flex-row">
                 <Link
+                  type="button"
                   className="flex w-44 items-center justify-center gap-2 rounded-md border border-base_color_text_top p-2 font-bold hover:bg-base_reference_card hover:text-base_color_dark"
                   href="/catalog"
                 >

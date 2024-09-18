@@ -11,12 +11,12 @@ test.describe('Header test (E2E)', () => {
 
     await page.waitForLoadState('load')
 
-    await page.getByRole('button', { name: 'Close' }).waitFor()
+    await page.getByRole('button', { name: 'Close', exact: true }).waitFor()
 
     const ariaExpanded = await btnMenu.getAttribute('aria-expanded')
     expect(ariaExpanded).toBe('true')
 
-    await page.getByRole('button', { name: 'Close' }).click()
+    await page.getByRole('button', { name: 'Close', exact: true }).click()
 
     const ariaExpandedAfter = await btnMenu.getAttribute('aria-expanded')
     expect(ariaExpandedAfter).toBe('false')

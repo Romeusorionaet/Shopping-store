@@ -12,6 +12,12 @@ test.describe('Home test (E2E)', () => {
       .nth(3)
 
     await page.getByRole('button', { name: 'OK' }).click()
+
+    const buttonSignOut = page.getByRole('button', { name: 'Sign out' })
+
+    if (await buttonSignOut.isVisible()) {
+      await buttonSignOut.click()
+    }
   })
 
   test('should be able visualize the header component', async ({ page }) => {
@@ -27,9 +33,11 @@ test.describe('Home test (E2E)', () => {
   }) => {
     await page.goto('/')
 
-    await page.getByRole('link', { name: 'Ver Catálogo' }).click()
+    await page
+      .getByRole('link', { name: 'Ver Catálogo', exact: true })
+      .waitFor()
 
-    await page.waitForLoadState('load')
+    await page.getByRole('link', { name: 'Ver Catálogo', exact: true }).click()
 
     await page.waitForURL('/catalog')
 
