@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { Search } from 'lucide-react'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { FormEvent, useState } from 'react'
 import { Button } from '../ui/button'
 
@@ -10,25 +10,11 @@ export function SearchForm() {
   const [valueInput, setValueInput] = useState('')
 
   const router = useRouter()
-  const searchParams = useSearchParams()
-
-  const query = searchParams.get('q')
 
   const handleSearch = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
-    const formData = new FormData(event.currentTarget)
-    const data = Object.fromEntries(formData)
-
-    const query = data.q
-
-    if (!query) {
-      return
-    }
-
-    if (query !== `/search?q=${query}`) {
-      router.push(`/search?q=${query}&p=1`)
-    }
+    router.push(`/search?q=${valueInput}&p=1`)
   }
 
   return (
@@ -46,7 +32,7 @@ export function SearchForm() {
 
         <input
           type="text"
-          defaultValue={query ?? ''}
+          value={valueInput}
           placeholder="Buscar produtos..."
           onChange={(e) => setValueInput(e.target.value)}
           name="q"
@@ -57,8 +43,7 @@ export function SearchForm() {
         <Button
           variant="secondary"
           type="submit"
-          disabled={!valueInput}
-          className="rounded-md bg-base_one_reference_header p-1 text-xs text-base_color_text_top/80 duration-700 disabled:cursor-not-allowed disabled:bg-base_one_reference_header/40 max-md:-mr-5"
+          className="rounded-md bg-base_one_reference_header p-1 text-xs text-base_color_text_top/80 duration-700 max-md:-mr-5"
         >
           buscar
         </Button>

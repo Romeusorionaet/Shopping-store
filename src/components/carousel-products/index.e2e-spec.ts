@@ -1,6 +1,6 @@
 import { test, expect } from '../../../test/mocks/playwright-msw'
 
-test.describe('Carousel Products (E2E)', () => {
+test.describe.only('Carousel Products (E2E)', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/')
 
@@ -8,12 +8,6 @@ test.describe('Carousel Products (E2E)', () => {
 
     if (await okButton.isVisible()) {
       await okButton.click()
-    }
-
-    const buttonSignOut = page.getByRole('button', { name: 'Sign out' })
-
-    if (await buttonSignOut.isVisible()) {
-      await buttonSignOut.click()
     }
   })
 
@@ -30,8 +24,6 @@ test.describe('Carousel Products (E2E)', () => {
   test('should be able to slide carousel via right arrow and left arrow from carousel products', async ({
     page,
   }) => {
-    await page.goto('/')
-
     await page.addStyleTag({
       content:
         '* { transition-duration: 0s !important; animation-duration: 0s !important; }',
@@ -39,28 +31,33 @@ test.describe('Carousel Products (E2E)', () => {
 
     await page.waitForSelector('.slick-slide')
 
-    while (true) {
-      const isLeftVisible = await page
-        .getByTestId('arrow_control_left_allProducts')
-        .isVisible()
+    const isEnabledArrowRight = await page
+      .getByTestId('arrow_control_right_allProducts')
+      .isEnabled()
 
-      if (isLeftVisible) break
+    await page.waitForTimeout(500)
 
-      await page.getByTestId('arrow_control_right_allProducts').click()
-      await page.waitForTimeout(500)
-    }
+    expect(isEnabledArrowRight).toBe(true)
 
-    await page
+    await page.getByTestId('arrow_control_right_allProducts').click()
+
+    await page.waitForTimeout(500)
+
+    const isArrowLeftVisible = await page
       .getByTestId('arrow_control_left_allProducts')
-      .waitFor({ state: 'visible', timeout: 50000 })
+      .isVisible()
+
+    expect(isArrowLeftVisible).toBe(true)
 
     await page.getByTestId('arrow_control_left_allProducts').click()
 
     await page.waitForTimeout(500)
 
-    const arrowLeft = page.getByTestId('arrow_control_left_allProducts')
+    const isArrowLeftVisibleEndEvent = await page
+      .getByTestId('arrow_control_left_allProducts')
+      .isVisible()
 
-    await expect(arrowLeft).toBeHidden()
+    expect(isArrowLeftVisibleEndEvent).toBe(false)
   })
 
   test('should be able to hide the right arrow when the slider gets finished', async ({

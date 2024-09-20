@@ -12,12 +12,6 @@ test.describe('Home test (E2E)', () => {
       .nth(3)
 
     await page.getByRole('button', { name: 'OK' }).click()
-
-    const buttonSignOut = page.getByRole('button', { name: 'Sign out' })
-
-    if (await buttonSignOut.isVisible()) {
-      await buttonSignOut.click()
-    }
   })
 
   test('should be able visualize the header component', async ({ page }) => {
@@ -64,22 +58,25 @@ test.describe('Home test (E2E)', () => {
   test('should be able to navigate for search page when searching for some product from Home', async ({
     page,
   }) => {
-    await page.goto('/')
-
     await page.locator('form').waitFor()
-
-    await page.getByPlaceholder('Buscar produtos...').waitFor()
-
-    await page.waitForTimeout(5000)
 
     await page.getByPlaceholder('Buscar produtos...').fill('Realme Note 50')
 
-    await page.getByRole('button', { name: 'buscar' }).click()
+    const inputValue = await page
+      .getByPlaceholder('Buscar produtos...')
+      .inputValue()
 
-    await page.waitForTimeout(5000)
+    expect(inputValue).toEqual('Realme Note 50')
+
+    await page.getByRole('button', { name: 'buscar', exact: true }).click()
+
+    await page.waitForTimeout(1000)
 
     const currentUrl = page.url()
-    expect(currentUrl).toContain('http://localhost:3000/search')
+
+    expect(currentUrl).toContain(
+      'http://localhost:3000/search?q=Realme%20Note%2050&p=1',
+    )
   })
 
   test('should be able add some product in cart from section (Todos os produtos)', async ({

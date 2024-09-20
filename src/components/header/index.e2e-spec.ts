@@ -29,11 +29,15 @@ test.describe('Header test (E2E)', () => {
 
     await page.getByTestId('btn_menu').click()
 
-    await page.getByRole('button', { name: 'Catálogo', exact: true }).waitFor()
+    const button = await page
+      .getByRole('button', { name: 'Catálogo', exact: true })
+      .isVisible()
+
+    expect(button).toBe(true)
 
     await page.getByRole('button', { name: 'Catálogo', exact: true }).click()
 
-    await page.waitForURL('/catalog')
+    await page.waitForTimeout(1000)
 
     const catalogPage = page.url()
 
