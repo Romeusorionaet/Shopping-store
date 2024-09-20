@@ -1,6 +1,6 @@
 import { test, expect } from '../../../test/mocks/playwright-msw'
 
-test.describe.only('Carousel Products (E2E)', () => {
+test.describe('Carousel Products (E2E)', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/')
 
