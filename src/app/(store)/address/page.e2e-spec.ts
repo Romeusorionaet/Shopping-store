@@ -28,6 +28,12 @@ test.describe('Address test (E2E)', () => {
       .getByRole('button', {
         name: 'Preencher formulário',
       })
+      .waitFor()
+
+    await page
+      .getByRole('button', {
+        name: 'Preencher formulário',
+      })
       .click()
 
     await page.getByPlaceholder('example@gmail.com').fill('romeu soares')

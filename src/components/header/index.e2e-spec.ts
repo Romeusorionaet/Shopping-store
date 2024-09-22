@@ -9,12 +9,14 @@ test.describe('Header test (E2E)', () => {
 
     await btnMenu.click()
 
-    await page.getByRole('button', { name: 'Close' }).waitFor()
+    await page.waitForLoadState('load')
+
+    await page.getByRole('button', { name: 'Close', exact: true }).waitFor()
 
     const ariaExpanded = await btnMenu.getAttribute('aria-expanded')
     expect(ariaExpanded).toBe('true')
 
-    await page.getByRole('button', { name: 'Close' }).click()
+    await page.getByRole('button', { name: 'Close', exact: true }).click()
 
     const ariaExpandedAfter = await btnMenu.getAttribute('aria-expanded')
     expect(ariaExpandedAfter).toBe('false')
@@ -27,11 +29,19 @@ test.describe('Header test (E2E)', () => {
 
     await page.getByTestId('btn_menu').click()
 
-    await page.getByRole('button', { name: 'Catálogo', exact: true }).waitFor()
+    const button = await page
+      .getByRole('button', { name: 'Catálogo', exact: true })
+      .isVisible()
+
+    expect(button).toBe(true)
 
     await page.getByRole('button', { name: 'Catálogo', exact: true }).click()
 
-    await page.waitForURL('/catalog')
+    await page.waitForTimeout(1000)
+
+    const catalogPage = page.url()
+
+    expect(catalogPage).toBe('http://localhost:3000/catalog')
   })
 
   test('should be able navigate to home page if click in (Início) from menu options', async ({
@@ -70,6 +80,8 @@ test.describe('Header test (E2E)', () => {
     await page.goto('/')
 
     await page.getByTestId('btn_menu').click()
+
+    await page.waitForLoadState('load')
 
     await page
       .getByRole('button', { name: 'Endereço de entrega', exact: true })
@@ -131,6 +143,6 @@ test.describe('Header test (E2E)', () => {
 
     await page.getByRole('link', { name: 'Shopping Store' }).click()
 
-    await page.waitForURL('/')
+    await page.waitForURL('http://localhost:3000')
   })
 })

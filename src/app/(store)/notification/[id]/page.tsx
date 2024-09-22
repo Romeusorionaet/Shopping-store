@@ -3,6 +3,7 @@ import { NotificationProps } from '@/core/@types/api-store'
 import { formatDistanceToNow } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import { Clock, Eye } from 'lucide-react'
+import Link from 'next/link'
 
 interface Props {
   params: {
@@ -22,11 +23,11 @@ export default async function Notification({ params }: Props) {
   const notification: NotificationProps = JSON.parse(props.notification || '{}')
 
   return (
-    <div className="mx-auto max-w-[800px] px-4 pt-20 md:pt-32">
+    <main className="mx-auto max-w-[800px] px-4 pt-20 md:pt-32">
       <h1 className="font-bold">Informações</h1>
 
-      <div className="mt-4 bg-zinc-100 p-2">
-        <div className="space-y-4">
+      <article className="mt-4 bg-zinc-100 p-2">
+        <header className="space-y-4">
           <div className="flex gap-2">
             <Clock size={16} />
             <span className="text-xs">
@@ -39,13 +40,17 @@ export default async function Notification({ params }: Props) {
           </div>
 
           <h2 className="mb-4 font-semibold">{notification.title}</h2>
-        </div>
+        </header>
 
         <div className="my-4">
           <p>{notification.content}</p>
+
+          <Link href="/orders" className="m-4 inline-block underline">
+            Acessar área de pedidos
+          </Link>
         </div>
 
-        <div className="flex gap-2">
+        <footer className="flex gap-2">
           <Eye size={16} />
           <span className="text-xs">
             {notification.readAt &&
@@ -54,8 +59,8 @@ export default async function Notification({ params }: Props) {
                 locale: ptBR,
               })}
           </span>
-        </div>
-      </div>
-    </div>
+        </footer>
+      </article>
+    </main>
   )
 }
