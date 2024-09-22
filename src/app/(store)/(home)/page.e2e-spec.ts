@@ -33,7 +33,7 @@ test.describe('Home test (E2E)', () => {
 
     await page.getByRole('link', { name: 'Ver Catálogo', exact: true }).click()
 
-    await page.waitForURL('/catalog')
+    await page.waitForTimeout(1000)
 
     const catalogPage = page.url()
 

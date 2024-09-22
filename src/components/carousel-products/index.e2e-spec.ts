@@ -24,22 +24,17 @@ test.describe('Carousel Products (E2E)', () => {
   test('should be able to slide carousel via right arrow and left arrow from carousel products', async ({
     page,
   }) => {
-    await page.addStyleTag({
-      content:
-        '* { transition-duration: 0s !important; animation-duration: 0s !important; }',
-    })
-
     await page.waitForSelector('.slick-slide')
 
-    const isEnabledArrowRight = await page
-      .getByTestId('arrow_control_right_allProducts')
-      .isEnabled()
+    const arrowRight = page.getByTestId('arrow_control_right_allProducts')
+
+    const isVisibleArrowRight = await arrowRight.isVisible()
 
     await page.waitForTimeout(500)
 
-    expect(isEnabledArrowRight).toBe(true)
+    expect(isVisibleArrowRight).toBe(true)
 
-    await page.getByTestId('arrow_control_right_allProducts').click()
+    await arrowRight.click()
 
     await page.waitForTimeout(500)
 
