@@ -1,12 +1,9 @@
-import { ReactNode, createContext, useEffect, useState } from 'react'
+import { createContext, useEffect, useState } from 'react'
 import { signOut, useSession } from 'next-auth/react'
 import { getDataUser } from '@/actions/get/user/get-data.user'
 import { getDataRefreshToken } from '@/actions/get/refresh-token/get-data-refresh-token'
-import {
-  QueryObserverResult,
-  RefetchOptions,
-  useQuery,
-} from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
+import type { QueryObserverResult, RefetchOptions } from '@tanstack/react-query'
 import { KeyLocalStorage } from '@/constants/key-local-storage'
 import { useCartStore } from '../zustand-store'
 
@@ -27,7 +24,7 @@ interface UserContextType {
 }
 
 interface UserContextProps {
-  children: ReactNode
+  children: React.ReactNode
 }
 
 export const UserContext = createContext({} as UserContextType)
@@ -72,6 +69,8 @@ export function UserContextProvider({ children }: UserContextProps) {
           return
         } else {
           await refetchUserProfile()
+
+          return
         }
       }
     }

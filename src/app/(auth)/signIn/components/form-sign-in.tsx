@@ -2,7 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { z } from 'zod'
+import type z from 'zod'
 import { FormError } from '@/components/form/form-error'
 import { Button } from '@/components/ui/button'
 import { signInWithEmailAndPassword } from '@/actions/auth/signIn'
@@ -26,6 +26,12 @@ export function FormSignIn() {
   } = useForm<LoginFormData>({
     resolver: zodResolver(signInFormSchema),
   })
+
+  // TODO Fazer com que a api quando dispertar, emitir algum sinal
+  // para o front para eu poder fazer lógica de permitir
+  // user logar se a api sair da hibernação
+  // da forma que está, como a api hiberna e se o user tentar fazer
+  // login por exemplo pelo google, ele irá ver um erro
 
   const { refetchUserProfile } = useContext(UserContext)
 
