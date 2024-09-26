@@ -1,6 +1,6 @@
 'use client'
 
-import '@/assets/styles/slide-slick/slick.css'
+import '@/assets/styles/components/slide-slick/slick.css'
 import Slider from 'react-slick'
 import { Suspense, useEffect, useRef, useState } from 'react'
 import { ArrowControlLeft, ArrowControlRight } from './arrows-carousel'

@@ -29,7 +29,7 @@ module.exports = withUt({
         ring: 'hsl(var(--ring))',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
-        base_one_reference_header: 'rgb(23 37 84 / 0.9)',
+        base_one_reference_header: 'rgb(50, 116, 139)',
         base_reference_card: '#FAFAFF',
         base_reference_card_hover: '#FEFEFA',
         base_detail_decoration: 'rgb(245 158 11)',

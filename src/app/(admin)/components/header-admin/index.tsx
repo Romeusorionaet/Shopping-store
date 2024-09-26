@@ -1,35 +1,33 @@
+'use client'
+
 import { BellNotification } from '@/components/notification/bell-notification'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Mail, Menu, RefreshCcw } from 'lucide-react'
+import { Mail, RefreshCcw } from 'lucide-react'
 
 export default function HeaderAdmin() {
   const profile = { username: 'Romeu soares', picture: '' }
+
   return (
-    <header>
-      <div className="mx-auto flex max-w-[1000px] items-center justify-between gap-2 p-10 md:justify-around">
-        <div className="flex items-center gap-6">
-          <RefreshCcw size={30} className="opacity-50" />
-
-          <div className="rounded-lg bg-base_one_reference_header p-2 max-md:hidden">
-            <h1 className="whitespace-nowrap text-2xl font-bold text-base_color_text_top">
-              S.S <span className="font-thin uppercase">adm</span>
-            </h1>
-          </div>
-        </div>
-
-        <div className="flex items-end gap-4">
+    <header className="fixed h-24 w-full bg-slate-100">
+      <div className="flex w-full items-center justify-between gap-2 p-4 md:justify-around">
+        <div className="mt-2 flex items-center justify-center rounded-full bg-base_one_reference_header p-1 text-base_color_text_top max-md:ml-16 md:gap-4 md:rounded-lg">
           <Avatar>
             <AvatarFallback>{profile.username}</AvatarFallback>
 
             {profile.picture && <AvatarImage src={`${profile.picture}`} />}
           </Avatar>
-          <p className="font-medium max-md:hidden">{profile.username}</p>
+          <div>
+            <h1 className="whitespace-nowrap font-bold max-md:hidden">
+              S.S <span className="font-thin uppercase">adm</span>
+            </h1>
+            <p className="font-medium max-md:hidden">{profile.username}</p>
+          </div>
         </div>
 
         <div className="flex items-center gap-6 md:gap-10">
-          <Mail size={30} />
+          <Mail className="h-6 w-6 md:h-8 md:w-8" />
           <BellNotification sizeNotification={1} username={profile.username} />
-          <Menu />
+          <RefreshCcw size={30} className="h-6 w-6 opacity-50 md:h-8 md:w-8" />
         </div>
       </div>
     </header>

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Roboto } from 'next/font/google'
 import '@/assets/styles/globals.css'
-import '@/assets/styles/scrollbar.css'
+import '@/assets/styles/components/scrollbar.css'
 import { NextSSRPlugin } from '@uploadthing/react/next-ssr-plugin'
 import { extractRouterConfig } from 'uploadthing/server'
 import { ToastContainer } from 'react-toastify'
@@ -42,7 +42,7 @@ export default async function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${roboto.variable} mx-auto max-w-[1680px] antialiased`}>
+      <body className={`${roboto.variable} antialiased`}>
         <ClientProviders>
           <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
 
