@@ -8,22 +8,24 @@ import {
 
 export default function DashboardAdmin() {
   return (
-    <main className="ml-12 w-full px-2 pt-44 max-md:w-[300px]">
-      <section className="flex justify-around">
-        <div className="flex items-end gap-4">
-          <div className="rounded-lg bg-gray-600 p-1">
-            <Home color="white" />
-          </div>
+    <main className="ml-12 w-full pt-44">
+      <section className="fixed left-0 top-24 z-10 flex h-28 w-full items-center justify-evenly gap-10 bg-base_color_text_top md:justify-evenly">
+        <div className="flex items-end gap-2">
+          <Home
+            color="white"
+            className="rounded-lg bg-base_color_dark p-1"
+            size={30}
+          />
           <p>Dashboard</p>
         </div>
 
-        <div className="flex items-end gap-4">
-          <p>Overview</p>
+        <div className="flex items-end gap-2">
+          <p className="max-md:hidden">Overview</p>
           <AlertCircle />
         </div>
       </section>
 
-      <section className="mt-20 flex flex-1 items-center justify-center gap-4 max-md:flex-wrap">
+      <section className="mt-20 flex flex-1 items-center justify-center gap-4 px-1 max-md:flex-wrap">
         <article className="flex h-56 w-full max-w-[300px] flex-col justify-around rounded-lg bg-teal-200 pl-4">
           <header className="flex items-center gap-6">
             <h3>Vendas da semana</h3>

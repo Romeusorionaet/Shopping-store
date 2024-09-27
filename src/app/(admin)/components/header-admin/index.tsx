@@ -8,7 +8,7 @@ export default function HeaderAdmin() {
   const profile = { username: 'Romeu soares', picture: '' }
 
   return (
-    <header className="fixed h-24 w-full bg-slate-100">
+    <header className="fixed z-10 h-24 w-full bg-slate-100">
       <div className="flex w-full items-center justify-between gap-2 p-4 md:justify-around">
         <div className="mt-2 flex items-center justify-center rounded-full bg-base_one_reference_header p-1 text-base_color_text_top max-md:ml-16 md:gap-4 md:rounded-lg">
           <Avatar>

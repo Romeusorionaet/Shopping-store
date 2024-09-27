@@ -1,0 +1,7 @@
+@tailwind utilities;
+
+@layer utilities {
+    #accordion-item-product-admin > h3 button {
+        @apply max-w-[350px]
+    }
+}

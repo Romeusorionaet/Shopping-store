@@ -4,9 +4,7 @@
   .scrollbar::-webkit-scrollbar {
     width: 2px;
   }
-
-.scrollbar::-webkit-scrollbar-thumb {
-  background: black; 
-}
-
+  .scrollbar::-webkit-scrollbar-thumb {
+    background: black; 
+  }
 }
