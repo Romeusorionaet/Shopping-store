@@ -1,5 +1,5 @@
 export const APP_ROUTES = {
-  private: ['dashboard-admin', 'register-product'],
+  private: ['/dashboard-admin', '/product-manage/register-product'],
 
   public: {
     dashboard: [

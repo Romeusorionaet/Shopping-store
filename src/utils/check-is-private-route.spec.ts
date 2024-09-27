@@ -2,7 +2,7 @@ import { checkIsPrivateRoute } from './check-is-private-route'
 
 describe('Check is private route', () => {
   test('should be able return true if the route be private', () => {
-    const result = checkIsPrivateRoute('/control-adm')
+    const result = checkIsPrivateRoute('/dashboard-admin')
 
     expect(result).toEqual(true)
   })
