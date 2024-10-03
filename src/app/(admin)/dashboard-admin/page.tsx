@@ -9,7 +9,7 @@ import {
 export default function DashboardAdmin() {
   return (
     <main className="ml-12 w-full pt-44">
-      <section className="fixed left-0 top-24 z-10 flex h-28 w-full items-center justify-evenly gap-10 bg-base_color_text_top md:justify-evenly">
+      <section className="fixed left-0 top-24 z-10 flex h-28 w-full items-center justify-evenly gap-10 border-b border-b-base_one_reference_header/20 bg-base_color_text_top md:justify-evenly">
         <div className="flex items-end gap-2">
           <Home
             color="white"

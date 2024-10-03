@@ -11,7 +11,6 @@ import {
 } from '@/core/@types/api-store'
 import { ProductImages } from '../../components/product-images'
 import { AskForProductReturn } from '../../components/Ask-for-product-return'
-import { TechnicalProductDetails } from '../../components/technical-product-details'
 import { PaymentAndPolices } from '@/components/rules-and-policies/payment-and-rules'
 import { ReturnPolices } from '@/components/rules-and-policies/return-policies'
 import { PaymentAndOptions } from '@/components/rules-and-policies/payment-options'
@@ -19,6 +18,7 @@ import { DecorationPercentageIndicator } from '@/components/decoration-percentag
 import { getDataProductsTheSameCategory } from '@/actions/get/product/get-data-products-the-same-category'
 import { getDataUniqueProduct } from '@/actions/get/product/get-data-unique-product'
 import { SectionProductName } from '@/constants/section-product-name'
+import { TechnicalProductDetails } from '@/components/technical-product-details'
 
 interface ParamsProps {
   params: {

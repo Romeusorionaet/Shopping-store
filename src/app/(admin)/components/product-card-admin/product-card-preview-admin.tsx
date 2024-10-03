@@ -1,6 +1,6 @@
 import Image from 'next/image'
 
-export function ProductCardAdmin() {
+export function ProductCardPreviewAdmin() {
   return (
     <div className="flex h-28 w-28 flex-col justify-center gap-1 rounded-lg md:h-48 md:w-44">
       <div className="flex gap-1">
