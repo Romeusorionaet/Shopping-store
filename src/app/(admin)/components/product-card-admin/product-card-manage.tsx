@@ -1,18 +1,10 @@
 import { DecorationPercentageIndicator } from '@/components/decoration-percentage-indicator'
-import { ModeOfSale } from '@/core/@types/api-store'
+import { ModeOfSale, ProductProps } from '@/core/@types/api-store'
 import { CalculateValueProduct } from '@/utils/calculate-value-product'
 import Image from 'next/image'
 
 interface Props {
-  product: {
-    corsList: string[]
-    title: string
-    price: number
-    imgUrlList: string[]
-    discountPercentage: number
-    stockQuantity: number
-    placeOfSale: ModeOfSale
-  }
+  product: ProductProps
 }
 
 export function ProductCardManage({ product }: Props) {
@@ -89,23 +81,7 @@ export function ProductCardManage({ product }: Props) {
       </div>
 
       <div className="max-h-[26rem] max-w-[500px] overflow-auto border border-black/30 p-1">
-        <p className="max-md:text-sm">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus
-          voluptatem quisquam velit recusandae asperiores debitis. Maiores aut
-          vitae obcaecati nihil sunt quis iure quasi delectus quas? Iure neque
-          autem beatae. ipsum dolor sit amet consectetur adipisicing elit.
-          Ducimus voluptatem quisquam velit recusandae asperiores debitis.
-          Maiores aut vitae obcaecati. Lorem ipsum dolor sit amet consectetur
-          adipisicing elit. Ducimus voluptatem quisquam velit recusandae
-          asperiores debitis. Maiores aut vitae obcaecati nihil sunt quis iure
-          quasi delectus quas? Iure neque autem beatae. ipsum dolor sit amet.
-          Ducimus voluptatem quisquam velit recusandae asperiores debitis.
-          Maiores aut vitae obcaecati nihil sunt quis iure quasi delectus quas?
-          Iure neque autem beatae. ipsum dolor sit amet consectetur adipisicing
-          elit. Ducimus voluptatem quisquam velit recusandae asperiores debitis.
-          Maiores aut vitae obcaecati. Lorem ipsum dolor sit amet consectetur
-          adipisicing elit.
-        </p>
+        <p className="max-md:text-sm">{product.description}</p>
       </div>
     </div>
   )

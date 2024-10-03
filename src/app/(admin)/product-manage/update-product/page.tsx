@@ -8,6 +8,7 @@ import {
 import '@/assets/styles/components/accordion.css'
 import { ProductManageHeader } from '../components/product-manage-header'
 import { ProductCardPreviewAdmin } from '../../components/product-card-admin/product-card-preview-admin'
+import Link from 'next/link'
 
 export default function UpdateProduct() {
   return (
@@ -66,26 +67,9 @@ export default function UpdateProduct() {
               </AccordionTrigger>
               <AccordionContent>
                 <section className="mt-4 flex flex-1 flex-wrap justify-center gap-2 data-[value=true]:hidden md:justify-start xl:justify-center">
-                  <ProductCardPreviewAdmin />
-                  <ProductCardPreviewAdmin />
-                  <ProductCardPreviewAdmin />
-                  <ProductCardPreviewAdmin />
-                  <ProductCardPreviewAdmin />
-                  <ProductCardPreviewAdmin />
-                  <ProductCardPreviewAdmin />
-                  <ProductCardPreviewAdmin />
-                  <ProductCardPreviewAdmin />
-                  <ProductCardPreviewAdmin />
-                  <ProductCardPreviewAdmin />
-                  <ProductCardPreviewAdmin />
-                  <ProductCardPreviewAdmin />
-                  <ProductCardPreviewAdmin />
-                  <ProductCardPreviewAdmin />
-                  <ProductCardPreviewAdmin />
-                  <ProductCardPreviewAdmin />
-                  <ProductCardPreviewAdmin />
-                  <ProductCardPreviewAdmin />
-                  <ProductCardPreviewAdmin />
+                  <Link href={`/product-manage/update-product/id-test`}>
+                    <ProductCardPreviewAdmin />
+                  </Link>
                 </section>
                 <Pagination disableArrowIf={true} sizeList={15} />
               </AccordionContent>

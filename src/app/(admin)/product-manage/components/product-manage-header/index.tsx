@@ -9,6 +9,10 @@ export function ProductManageHeader() {
 
   const isRegisterPage = pathname === '/product-manage/register-product'
   const isUpdatePage = pathname === '/product-manage/update-product'
+  const isUpdateSpecificPage = pathname.startsWith(
+    '/product-manage/update-product/',
+  )
+  const productId = isUpdateSpecificPage ? pathname.split('/').pop() : null
 
   return (
     <section className="fixed left-0 top-24 z-10 flex h-44 w-full flex-col justify-evenly gap-2 border-b border-b-base_one_reference_header/20 bg-base_color_text_top md:justify-evenly">
@@ -16,20 +20,19 @@ export function ProductManageHeader() {
         <div className="flex items-end gap-2">
           <Package
             color="white"
-            className="rounded-lg bg-base_color_dark p-1"
-            size={30}
+            className="h-6 w-6 rounded-lg bg-base_color_dark p-1 md:h-8 md:w-8"
           />
-          <h1>Produto</h1>
+          <h1 className="max-md:text-sm">Produto</h1>
         </div>
 
         <div className="flex items-end gap-2">
           <p className="max-md:hidden">Gerenciamento</p>
-          <AlertCircle />
+          <AlertCircle className="h-6 w-6" />
         </div>
       </section>
 
       <div className="ml-16 max-md:pr-6">
-        <ul className="flex gap-4 max-md:text-xs">
+        <ul className="flex gap-4 max-md:text-sm">
           <li
             data-value={isRegisterPage}
             className="rounded-lg p-1 data-[value=true]:bg-slate-200"
@@ -51,6 +54,12 @@ export function ProductManageHeader() {
             >
               Atualizar algum produto
             </Link>
+          </li>
+          <li
+            data-value={isUpdateSpecificPage}
+            className="rounded-lg  p-1 data-[value=true]:bg-slate-200 max-md:hidden"
+          >
+            {isUpdateSpecificPage && <span>ID: {productId}</span>}
           </li>
         </ul>
       </div>

@@ -13,15 +13,14 @@ export default function DashboardAdmin() {
         <div className="flex items-end gap-2">
           <Home
             color="white"
-            className="rounded-lg bg-base_color_dark p-1"
-            size={30}
+            className="h-6 w-6 rounded-lg bg-base_color_dark p-1 md:h-8 md:w-8"
           />
           <p>Dashboard</p>
         </div>
 
         <div className="flex items-end gap-2">
           <p className="max-md:hidden">Overview</p>
-          <AlertCircle />
+          <AlertCircle className="h-6 w-6" />
         </div>
       </section>
 
