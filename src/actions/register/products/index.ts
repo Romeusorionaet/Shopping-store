@@ -1,49 +1,44 @@
-// 'use server'
+'use server'
 
-// import { PrismaClient } from '@prisma/client'
+import { ProductFormData } from '@/app/(admin)/product-manage/components/product-form/form'
+import { api } from '@/lib/api'
+import { getAccessTokenFromCookies } from '@/utils/get-tokens-from-cookies'
 
-// interface Props {
-//   dataProduct: {
-//     name: string
-//     slug: string
-//     description: string
-//     basePrice: string
-//     imageUrls: string[]
-//     categoryId: string
-//     discountPercentage: number
-//     quantity: number
-//   }
-// }
+interface Props {
+  product: ProductFormData
+}
 
-// const prisma = new PrismaClient()
+export const createProduct = async (
+  product: Props,
+): Promise<{ success: boolean; message: string }> => {
+  const accessToken = await getAccessTokenFromCookies()
 
-// export const createProduct = async ({ dataProduct }: Props) => {
-//   try {
-//     const existingProduct = await prisma.category.findFirst({
-//       where: {
-//         AND: [
-//           { id: dataProduct.categoryId },
-//           {
-//             products: {
-//               some: {
-//                 name: dataProduct.name,
-//               },
-//             },
-//           },
-//         ],
-//       },
-//     })
+  if (!accessToken) {
+    return {
+      success: false,
+      message: 'Não autorizado',
+    }
+  }
 
-//     if (existingProduct) {
-//       return { message: 'Já existe um produto com esse nome nesta categoria.' }
-//     } else {
-//       await prisma.product.createMany({
-//         data: dataProduct,
-//       })
-//       return { messageSuccess: 'Produto registrado' }
-//     }
-//   } catch (err) {
-//     console.log(err)
-//     return { messageError: 'Error ao registrar produto' }
-//   }
-// }
+  try {
+    const response = await api.post(
+      '/product/create',
+      {
+        ...product,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    )
+
+    return { success: true, message: response.data.message }
+  } catch (err: any) {
+    const errorMessage =
+      err.response?.data?.error ||
+      'Aconteceu um erro inesperado, tente novamente mais tarde.'
+
+    return { success: false, message: errorMessage }
+  }
+}

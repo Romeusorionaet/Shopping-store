@@ -1,15 +1,15 @@
 import { ProductCardManage } from '@/app/(admin)/components/product-card-admin/product-card-manage'
-import { ProductForm } from '../../components/product-form'
 import { TechnicalProductDetails } from '@/components/technical-product-details'
 import { ModeOfSale } from '@/core/@types/api-store'
-import { ButtonUpdate } from '../../components/product-form/button-update'
 import { ProductManageHeader } from '../../components/product-manage-header'
+import { ButtonFormProduct } from '../../components/product-form/button-form-product'
+import { ProductForm } from '../../components/product-form/form'
 
 export default function update() {
   const product = {
     id: 'edded',
     categoryId: 'deded',
-    categoryTitle: 'Xiaomi',
+    categoryTitle: 'Motorola',
     corsList: ['vermelho', 'azul'],
     title: 'Xiaomi redmi note 7 pro',
     slug: 'xiaomi-redmi-note-7-pro',
@@ -79,7 +79,7 @@ export default function update() {
         </section>
 
         <div className="flex justify-center">
-          <ButtonUpdate />
+          <ButtonFormProduct />
         </div>
       </section>
     </main>

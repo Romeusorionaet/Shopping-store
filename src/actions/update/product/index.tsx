@@ -1,42 +1,44 @@
-// 'use server'
+'use server'
 
-// import { PrismaClient } from '@prisma/client'
+import { ProductFormData } from '@/app/(admin)/product-manage/components/product-form/form'
+import { api } from '@/lib/api'
+import { getAccessTokenFromCookies } from '@/utils/get-tokens-from-cookies'
 
-// const prisma = new PrismaClient()
+interface Props {
+  product: ProductFormData
+}
 
-// interface updateProdutoProps {
-//   updatedData: {
-//     id: string
-//     name: string
-//     slug: string
-//     basePrice: string
-//     description: string
-//     imageUrls: string[]
-//     discountPercentage: string
-//     quantity: number
-//   }
-// }
+export const updateProduct = async (
+  product: Props,
+): Promise<{ success: boolean; message: string }> => {
+  const accessToken = await getAccessTokenFromCookies()
 
-// export const updateProduct = async ({ updatedData }: updateProdutoProps) => {
-//   try {
-//     await prisma.product.update({
-//       where: {
-//         id: updatedData.id,
-//       },
-//       data: {
-//         name: updatedData.name,
-//         slug: updatedData.slug,
-//         basePrice: Number(updatedData.basePrice),
-//         discountPercentage: Number(updatedData.discountPercentage),
-//         imageUrls: updatedData.imageUrls,
-//         description: updatedData.description,
-//         quantity: updatedData.quantity,
-//       },
-//     })
+  if (!accessToken) {
+    return {
+      success: false,
+      message: 'Não autorizado',
+    }
+  }
 
-//     return { messageSuccess: 'Produto atualizado' }
-//   } catch (err) {
-//     console.log(err)
-//     return { messageError: 'Error ao atualizar produto' }
-//   }
-// }
+  try {
+    const response = await api.post(
+      '/product/update',
+      {
+        ...product,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    )
+
+    return { success: true, message: response.data.message }
+  } catch (err: any) {
+    const errorMessage =
+      err.response?.data?.error ||
+      'Aconteceu um erro inesperado, tente novamente mais tarde.'
+
+    return { success: false, message: errorMessage }
+  }
+}

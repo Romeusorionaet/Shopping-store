@@ -2,12 +2,10 @@ import { TechnicalProductDetails } from '@/components/technical-product-details'
 import { ProductCardManage } from '../../components/product-card-admin/product-card-manage'
 import { ProductManageHeader } from '../components/product-manage-header'
 import { ModeOfSale } from '@/core/@types/api-store'
-import { ProductForm } from '../components/product-form'
-import { ButtonRegister } from '../components/product-form/button-register'
+import { ProductForm } from '../components/product-form/form'
+import { ButtonFormProduct } from '../components/product-form/button-form-product'
 
 export default function RegisterProduct() {
-  // TODO criar o context para criar a função que atualiza ou registra os dados desse form
-
   const product = {
     id: '',
     categoryId: '',
@@ -91,7 +89,7 @@ export default function RegisterProduct() {
         </section>
 
         <div className="flex justify-center">
-          <ButtonRegister />
+          <ButtonFormProduct />
         </div>
       </section>
     </main>
