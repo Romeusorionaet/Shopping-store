@@ -12,12 +12,12 @@ import {
   AccordionTrigger,
 } from '@radix-ui/react-accordion'
 import { CheckoutCart } from './checkout-cart'
+import { useContext } from 'react'
+import { AddressFormContext } from '@/providers/address-form-context'
 import {
   AddressFormData,
   addressFormSchema,
-} from '../schemas/address-form-schema'
-import { useContext } from 'react'
-import { AddressFormContext } from '@/providers/address-form-context'
+} from '@/schemas/address-form-schema'
 
 export function FormAddress() {
   const {

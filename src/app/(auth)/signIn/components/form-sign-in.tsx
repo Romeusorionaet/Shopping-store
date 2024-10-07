@@ -13,8 +13,8 @@ import { UserContext } from '@/providers/user-context'
 import { motion } from 'framer-motion'
 import { signIn } from 'next-auth/react'
 import { Separator } from '@/components/ui/separator'
-import { signInFormSchema } from '../../schema/form-sign-in'
 import ClipLoader from 'react-spinners/ClipLoader'
+import { signInFormSchema } from '@/schemas/form-sign-in'
 
 type LoginFormData = z.infer<typeof signInFormSchema>
 

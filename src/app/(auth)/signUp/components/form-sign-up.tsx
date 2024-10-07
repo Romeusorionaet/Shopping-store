@@ -15,7 +15,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { UploadButton } from '@/utils/generate-components'
 import { useState } from 'react'
 import { User } from 'lucide-react'
-import { signUpFormSchema } from '../../schema/form-sign-up'
+import { signUpFormSchema } from '@/schemas/form-sign-up'
 
 interface ImageProfileProps {
   name: string
