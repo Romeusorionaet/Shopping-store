@@ -7,7 +7,7 @@ const upProfile = createUploadthing()
 const auth = (req: Request) => ({ id: 'fakeId' })
 
 export const ourFileRouter = {
-  imageShoppingStore: upStore({
+  imagesProductShoppingStore: upStore({
     image: {
       maxFileSize: '2MB',
       maxFileCount: 4,

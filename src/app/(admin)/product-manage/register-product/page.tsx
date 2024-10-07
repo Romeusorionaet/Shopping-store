@@ -24,7 +24,7 @@ export default function RegisterProduct() {
         <section className="my-10">
           <ProductForm />
 
-          <div className="flex justify-center">
+          <div className="mt-20 flex justify-center">
             <ButtonFormProduct />
           </div>
         </section>

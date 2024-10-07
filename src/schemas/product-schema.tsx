@@ -10,7 +10,6 @@ const baseProductSchema = z.object({
   }),
   description: z.string().min(1, { message: defaultMessageError }),
   price: z.coerce.number().min(1, { message: defaultMessageError }),
-  //   imgUrlList: z.array(z.string()),
   corsList: z.array(z.string()).min(1, { message: 'Selecione uma Cor' }),
   stockQuantity: z.coerce.number().min(1, { message: defaultMessageError }),
   minimumQuantityStock: z.coerce

@@ -19,6 +19,13 @@ import { Asterisk } from 'lucide-react'
 import { usePathname } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
+import { UploadImages } from './upload-imagens'
+import { useState } from 'react'
+
+export interface ImagesProductProps {
+  name: string
+  url: string
+}
 
 interface ProductFormProps {
   product?: ProductProps
@@ -37,6 +44,12 @@ export function ProductForm({ product, technicalProduct }: ProductFormProps) {
   })
   const { createOrUpdateProduct, setProductActionType } = useManageProduct()
   const { notifyError, notifySuccess } = useNotification()
+  const [imagesProduct, setImagesProduct] = useState<ImagesProductProps[]>([
+    {
+      name: product?.title ?? '',
+      url: product?.imgUrlList[0] ?? '',
+    },
+  ])
 
   const pathname = usePathname()
 
@@ -55,7 +68,24 @@ export function ProductForm({ product, technicalProduct }: ProductFormProps) {
   const handleProductForm = async (productData: ProductFormData) => {
     setProductActionType(isUpdateOrCreatePath)
 
-    const data = { ...productData, categoryId: product?.categoryId }
+    const hasValidImageCount = product
+      ? imagesProduct.length >= 2
+      : imagesProduct.length >= 1
+
+    if (!hasValidImageCount) {
+      const message = 'O produto deve ter pelo menos 1 imagem ao atualizar.'
+
+      return notifyError({
+        message,
+        origin: 'server',
+      })
+    }
+
+    const data = {
+      ...productData,
+      categoryId: product!.categoryId,
+      imgUrlList: imagesProduct,
+    }
 
     const result = await createOrUpdateProduct(data)
 
@@ -73,10 +103,11 @@ export function ProductForm({ product, technicalProduct }: ProductFormProps) {
       className="flex flex-col gap-4 space-y-10"
     >
       <div className="flex flex-wrap gap-4">
-        <label className="space-y-2">
-          <span>Imagem</span>
-          <Input type="file" className="bg-transparent" />
-        </label>
+        <UploadImages
+          imagesProduct={imagesProduct}
+          setImagesProduct={setImagesProduct}
+        />
+
         <label className="flex flex-col">
           <p className="flex gap-2">
             Categoria
@@ -91,9 +122,7 @@ export function ProductForm({ product, technicalProduct }: ProductFormProps) {
           >
             <option value="">Selecione</option>
             {categories.map((category, index) => (
-              <option key={index} value={category.title}>
-                {category.title}
-              </option>
+              <option key={index}>{category.title}</option>
             ))}
           </select>
         </label>
