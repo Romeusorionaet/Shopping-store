@@ -353,7 +353,7 @@ export function ProductForm({ product, technicalProduct }: ProductFormProps) {
       <div className="flex flex-col space-y-2">
         <label className="flex flex-col space-y-2">
           <p className="flex gap-2">
-            Categoria
+            Modalidade de venda
             <span>
               {errors.placeOfSale ? <Asterisk size={16} color="red" /> : ''}
             </span>
