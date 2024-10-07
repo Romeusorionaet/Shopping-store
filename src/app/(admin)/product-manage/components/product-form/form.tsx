@@ -52,8 +52,6 @@ export function ProductForm({ product, technicalProduct }: ProductFormProps) {
     ? JSON.parse(data.propsCategories.categories)
     : []
 
-  console.log(errors, '==frfr')
-
   const handleProductForm = async (productData: ProductFormData) => {
     setProductActionType(isUpdateOrCreatePath)
 
