@@ -11,7 +11,6 @@ import {
   TechnicalProductDetailsProps,
 } from '@/core/@types/api-store'
 import { useNotification } from '@/hooks/use-notifications'
-import { useManageProduct } from '@/providers/zustand-manage-product'
 import { productCreateSchema } from '@/schemas/product-schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useQuery } from '@tanstack/react-query'
@@ -21,6 +20,8 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { UploadImages } from './upload-imagens'
 import { useState } from 'react'
+import { createProduct } from '@/actions/register/products'
+import { updateProduct } from '@/actions/update/product'
 
 export interface ImagesProductProps {
   name: string
@@ -42,7 +43,6 @@ export function ProductForm({ product, technicalProduct }: ProductFormProps) {
   } = useForm<ProductFormData>({
     resolver: zodResolver(productCreateSchema),
   })
-  const { createOrUpdateProduct, setProductActionType } = useManageProduct()
   const { notifyError, notifySuccess } = useNotification()
   const [imagesProduct, setImagesProduct] = useState<ImagesProductProps[]>([
     {
@@ -53,7 +53,7 @@ export function ProductForm({ product, technicalProduct }: ProductFormProps) {
 
   const pathname = usePathname()
 
-  const isUpdateOrCreatePath = pathname === '/product-manage/register-product'
+  const isRegisterPath = pathname === '/product-manage/register-product'
 
   const { data } = useQuery({
     queryKey: ['catalogDataAdmin'],
@@ -66,8 +66,6 @@ export function ProductForm({ product, technicalProduct }: ProductFormProps) {
     : []
 
   const handleProductForm = async (productData: ProductFormData) => {
-    setProductActionType(isUpdateOrCreatePath)
-
     const hasValidImageCount = product
       ? imagesProduct.length >= 2
       : imagesProduct.length >= 1
@@ -87,13 +85,12 @@ export function ProductForm({ product, technicalProduct }: ProductFormProps) {
       imgUrlList: imagesProduct,
     }
 
-    const result = await createOrUpdateProduct(data)
+    const productAction = isRegisterPath ? createProduct : updateProduct
 
-    if (result.success) {
-      return notifySuccess({ message: result.message, origin: 'server' })
-    } else {
-      return notifyError({ message: result.message, origin: 'server' })
-    }
+    const result = await productAction({ product: data })
+
+    const notify = result.success ? notifySuccess : notifyError
+    notify({ message: result.message, origin: 'server' })
   }
 
   return (
