@@ -12,7 +12,7 @@ import Link from 'next/link'
 
 export default function UpdateProduct() {
   return (
-    <main className="ml-12 w-full pt-44">
+    <main className="ml-12 w-full pt-32">
       <ProductManageHeader />
 
       <section className="mt-28 px-1">

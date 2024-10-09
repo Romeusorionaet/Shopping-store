@@ -4,7 +4,7 @@ import { ButtonFormProduct } from '../components/product-form/button-form-produc
 
 export default function RegisterProduct() {
   return (
-    <main className="ml-12 w-full pt-44">
+    <main className="ml-12 w-full pt-32">
       <ProductManageHeader />
 
       <section className="mt-28 px-1">
