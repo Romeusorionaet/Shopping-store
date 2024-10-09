@@ -56,9 +56,7 @@ export function MenuAside() {
           <li>
             <Button
               variant="ghost"
-              onClick={() =>
-                handleNavigateTo('/product-manage/register-product')
-              }
+              onClick={() => handleNavigateTo('/product-manage')}
               className="flex items-center gap-2"
             >
               <p

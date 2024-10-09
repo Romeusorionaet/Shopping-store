@@ -17,13 +17,18 @@ export function ProductManageHeader() {
   return (
     <section className="flex h-44 w-full flex-col justify-evenly gap-2 border-b border-b-base_one_reference_header/20 bg-base_color_text_top md:justify-evenly">
       <section className="flex w-full items-center justify-evenly">
-        <div className="flex items-end gap-2">
+        <Link
+          href="/product-manage"
+          className="group flex items-end gap-2 rounded-lg border border-base_color_dark/10 p-1 duration-500 hover:bg-base_one_reference_header"
+        >
           <Package
             color="white"
             className="h-6 w-6 rounded-lg bg-base_color_dark p-1 md:h-8 md:w-8"
           />
-          <h1 className="max-md:text-sm">Produto</h1>
-        </div>
+          <h1 className="duration-500 group-hover:text-base_color_text_top max-md:text-sm">
+            Produto
+          </h1>
+        </Link>
 
         <div className="flex items-end gap-2">
           <p className="max-md:hidden">Gerenciamento</p>
@@ -32,32 +37,32 @@ export function ProductManageHeader() {
       </section>
 
       <div className="ml-16 max-md:pr-6">
-        <ul className="flex gap-4 max-md:text-sm">
+        <ul className="flex flex-wrap gap-4 max-md:text-sm">
           <li
             data-value={isRegisterPage}
-            className="rounded-lg p-1 data-[value=true]:bg-slate-200"
+            className="group rounded-lg p-1 data-[value=true]:bg-slate-200"
           >
             <Link
               href="/product-manage/register-product"
-              className="hover:underline"
+              className="underline group-data-[value=true]:no-underline"
             >
               Registrar um novo produto
             </Link>
           </li>
           <li
             data-value={isUpdatePage}
-            className="rounded-lg  p-1 data-[value=true]:bg-slate-200"
+            className="group rounded-lg p-1 data-[value=true]:bg-slate-200"
           >
             <Link
               href="/product-manage/update-product"
-              className="hover:underline"
+              className="underline group-data-[value=true]:no-underline"
             >
               Atualizar algum produto
             </Link>
           </li>
           <li
             data-value={isUpdateSpecificPage}
-            className="rounded-lg  p-1 data-[value=true]:bg-slate-200 max-md:hidden"
+            className="rounded-lg  p-1 data-[value=true]:bg-slate-200"
           >
             {isUpdateSpecificPage && <span>ID: {productId}</span>}
           </li>

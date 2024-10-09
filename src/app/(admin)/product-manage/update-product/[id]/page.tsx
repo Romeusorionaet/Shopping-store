@@ -48,41 +48,44 @@ export default function update() {
   }
 
   return (
-    <main className="ml-12 w-full px-1 pt-44">
+    <div className="ml-12 w-full px-1 pt-32">
       <ProductManageHeader />
 
-      <section className="my-10 mt-28 px-1">
-        <h2 className="text-lg font-medium">
-          Atualizar produto: <span className="font-light">{product.slug}</span>
-        </h2>
+      <main>
+        <section className="my-10 mt-28 px-1">
+          <h2 className="text-lg font-medium">
+            Atualizar produto:{' '}
+            <span className="font-light">{product.slug}</span>
+          </h2>
 
-        <section className="my-10">
-          <ProductForm
-            product={product}
-            technicalProduct={technicalProductDetails}
-          />
-        </section>
+          <section className="my-10">
+            <ProductForm
+              product={product}
+              technicalProduct={technicalProductDetails}
+            />
+          </section>
 
-        <section className="my-10 space-y-10">
-          <div className="space-y-10">
-            <h2 className="text-lg font-medium">
-              Visualização do produto a ser atualizado
-            </h2>
+          <section className="my-10 space-y-10">
+            <div className="space-y-10">
+              <h2 className="text-lg font-medium">
+                Visualização do produto a ser atualizado
+              </h2>
 
-            <div className="flex flex-wrap justify-center gap-4">
-              <ProductCardManage product={product} />
+              <div className="flex flex-wrap justify-center gap-4">
+                <ProductCardManage product={product} />
 
-              <TechnicalProductDetails
-                technicalProductDetails={technicalProductDetails}
-              />
+                <TechnicalProductDetails
+                  technicalProductDetails={technicalProductDetails}
+                />
+              </div>
             </div>
+          </section>
+
+          <div className="flex justify-center">
+            <ButtonFormProduct />
           </div>
         </section>
-
-        <div className="flex justify-center">
-          <ButtonFormProduct />
-        </div>
-      </section>
-    </main>
+      </main>
+    </div>
   )
 }
