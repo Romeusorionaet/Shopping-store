@@ -149,7 +149,7 @@ export function ProductForm({ product, technicalProduct }: ProductFormProps) {
           <Input
             type="number"
             defaultValue={product?.discountPercentage}
-            className="bg-transparent"
+            className="w-20 bg-transparent"
             {...register('discountPercentage')}
           />
           <FormError errors={errors.discountPercentage?.message} />
@@ -159,7 +159,7 @@ export function ProductForm({ product, technicalProduct }: ProductFormProps) {
           <Input
             type="number"
             defaultValue={product?.stockQuantity}
-            className="bg-transparent"
+            className="w-20 bg-transparent"
             {...register('stockQuantity')}
           />
           <FormError errors={errors.stockQuantity?.message} />
@@ -170,7 +170,7 @@ export function ProductForm({ product, technicalProduct }: ProductFormProps) {
           <Input
             type="number"
             defaultValue={product?.minimumQuantityStock}
-            className="bg-transparent"
+            className="w-20 bg-transparent"
             {...register('minimumQuantityStock')}
           />
           <FormError errors={errors.minimumQuantityStock?.message} />

@@ -16,8 +16,10 @@ export function ProductCardManage({ product }: Props) {
   })
 
   return (
-    <div className="flex flex-wrap justify-center gap-4">
-      <ProductImages imageUrls={product.imgUrlList} name={product.title} />
+    <div className="flex flex-col justify-center gap-4">
+      <div className="flex justify-center lg:w-[50rem]">
+        <ProductImages imageUrls={product.imgUrlList} name={product.title} />
+      </div>
 
       <div className="flex flex-wrap justify-center gap-4">
         <div className="group h-72 w-72 md:h-[26rem]">
