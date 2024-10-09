@@ -5,7 +5,13 @@ import { ProductManageHeader } from '../../components/product-manage-header'
 import { ButtonFormProduct } from '../../components/product-form/button-form-product'
 import { ProductForm } from '../../components/product-form/form'
 
-export default function update() {
+interface Props {
+  params: { id: string }
+}
+
+export default function update({ params }: Props) {
+  const { id } = params
+
   const product = {
     id: 'edded',
     categoryId: 'deded',
@@ -49,7 +55,7 @@ export default function update() {
 
   return (
     <div className="ml-12 w-full px-1 pt-32">
-      <ProductManageHeader />
+      <ProductManageHeader productId={id} />
 
       <main>
         <section className="my-10 mt-28 px-1">

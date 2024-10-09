@@ -68,9 +68,21 @@ export default function UpdateProduct() {
                 </AccordionTrigger>
                 <AccordionContent>
                   <section className="mt-4 flex flex-1 flex-wrap justify-center gap-2 data-[value=true]:hidden md:justify-start xl:justify-center">
-                    <Link href={`/product-manage/update-product/id-test`}>
+                    <div className="flex flex-col gap-6">
+                      <Link
+                        href={`/product-manage/update-product/id-test`}
+                        className="text-center underline"
+                      >
+                        Atualizar
+                      </Link>
                       <ProductCardPreviewAdmin />
-                    </Link>
+                      <Link
+                        href="/product-manage/product-view/id-test"
+                        className="underline"
+                      >
+                        Detalhes tecnicos
+                      </Link>
+                    </div>
                   </section>
                   <Pagination disableArrowIf={true} sizeList={15} />
                 </AccordionContent>

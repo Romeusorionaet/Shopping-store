@@ -4,15 +4,15 @@ import { AlertCircle, Package } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
-export function ProductManageHeader() {
+interface Props {
+  productId?: string
+}
+
+export function ProductManageHeader({ productId }: Props) {
   const pathname = usePathname()
 
   const isRegisterPage = pathname === '/product-manage/register-product'
   const isUpdatePage = pathname === '/product-manage/update-product'
-  const isUpdateSpecificPage = pathname.startsWith(
-    '/product-manage/update-product/',
-  )
-  const productId = isUpdateSpecificPage ? pathname.split('/').pop() : null
 
   return (
     <section className="flex h-44 w-full flex-col justify-evenly gap-2 border-b border-b-base_one_reference_header/20 bg-base_color_text_top md:justify-evenly">
@@ -61,10 +61,12 @@ export function ProductManageHeader() {
             </Link>
           </li>
           <li
-            data-value={isUpdateSpecificPage}
-            className="rounded-lg  p-1 data-[value=true]:bg-slate-200"
+            data-value={!!productId}
+            className="group rounded-lg p-1 data-[value=true]:bg-slate-200"
           >
-            {isUpdateSpecificPage && <span>ID: {productId}</span>}
+            <span className="group-data-[value=false]:hidden">
+              ID: {productId}
+            </span>
           </li>
         </ul>
       </div>
