@@ -1,4 +1,4 @@
-import { GraphicBar } from './components/graphics/graphic-bar'
+import { GraphicBarStockProduct } from './components/graphics/graphic-bar-stock-product'
 import { ProductManageHeader } from './components/product-manage-header'
 
 export default function ProductManage() {
@@ -38,10 +38,11 @@ export default function ProductManage() {
             </select>
 
             <div className="flex items-end gap-4">
-              <GraphicBar
+              <GraphicBarStockProduct
                 data={productData}
                 title="Quantidade de Produtos em Estoque"
                 threshold={10}
+                category="Samsung"
               />
             </div>
           </div>

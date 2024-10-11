@@ -8,9 +8,15 @@ interface Props {
   data: { title: string; stock: number }[]
   title: string
   threshold: number
+  category: string
 }
 
-export function GraphicBar({ data, title, threshold }: Props) {
+export function GraphicBarStockProduct({
+  data,
+  title,
+  threshold,
+  category,
+}: Props) {
   const minWidthPerBar = 50
 
   const chartWidth = useMemo(() => {
@@ -35,7 +41,7 @@ export function GraphicBar({ data, title, threshold }: Props) {
       },
     },
     title: {
-      text: `${title}: ${data.length}`,
+      text: `${title}: ${data.length} da categoria ${category}`,
       align: 'left',
     },
     plotOptions: {
@@ -62,13 +68,11 @@ export function GraphicBar({ data, title, threshold }: Props) {
     tooltip: {
       custom: function ({ dataPointIndex }) {
         const product = data[dataPointIndex]
-        return (
-          <div style={{ padding: '10px' }}>
-            <strong>${product.title}</strong>
-            <br />
-            <span>Estoque: ${product.stock} unidades</span>
-          </div>
-        )
+        return `<div style={{ padding: '10px' }}>
+                  <strong>${product.title}</strong>
+                  <br />
+                  <span>Estoque: ${product.stock} unidades</span>
+                </div>`
       },
     },
     annotations: {
