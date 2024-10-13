@@ -42,7 +42,7 @@ export function GraphicBarProductsLikes({ data, title, category }: Props) {
       },
     },
     dataLabels: {
-      enabled: false,
+      enabled: true,
     },
     xaxis: {
       title: {

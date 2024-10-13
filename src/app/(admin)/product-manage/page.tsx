@@ -29,7 +29,8 @@ export default function ProductManage() {
   ]
 
   const productsLikesData = [
-    { title: 'Produto A', like: 9 },
+    { title: 'Produto A', like: 1 },
+    { title: 'Produto A', like: 0 },
     { title: 'Produto B', like: 5 },
     { title: 'Produto C', like: 58 },
     { title: 'Produto D', like: 250 },
@@ -104,15 +105,26 @@ export default function ProductManage() {
             <p>Analize de curtidas no produtos por categoria.</p>
           </div>
 
-          <select
-            defaultValue="Samsung"
-            className="w-32 rounded-lg bg-base_one_reference_header p-1 text-base_color_text_top"
-          >
-            <option value="">Selecione</option>
-            {categories.map((category, index) => (
-              <option key={index}>{category.title}</option>
-            ))}
-          </select>
+          <div className="flex gap-6">
+            <select
+              defaultValue="Samsung"
+              className="w-32 rounded-lg bg-base_one_reference_header p-1 text-base_color_text_top"
+            >
+              <option value="">Selecione</option>
+              {categories.map((category, index) => (
+                <option key={index}>{category.title}</option>
+              ))}
+            </select>
+
+            <select
+              defaultValue="maior"
+              className="w-32 rounded-lg bg-base_one_reference_header p-1 text-base_color_text_top"
+            >
+              <option value="">Selecione</option>
+              <option value="maior">Mais curtidos</option>
+              <option value="menor">Menos curtidos</option>
+            </select>
+          </div>
 
           <div className="flex items-end gap-4">
             <GraphicBarProductsLikes
