@@ -41,7 +41,7 @@ export function GraphicBarStockProduct({
       },
     },
     title: {
-      text: `${title}: ${data.length} da categoria ${category}`,
+      text: `${title}: total de ${data.length} da categoria ${category}`,
       align: 'left',
     },
     plotOptions: {
@@ -62,7 +62,7 @@ export function GraphicBarStockProduct({
     },
     yaxis: {
       title: {
-        text: 'Quantidade',
+        text: 'Estoque',
       },
     },
     tooltip: {
