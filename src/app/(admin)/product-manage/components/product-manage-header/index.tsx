@@ -12,7 +12,7 @@ export function ProductManageHeader({ productId }: Props) {
   const pathname = usePathname()
 
   const isRegisterPage = pathname === '/product-manage/register-product'
-  const isUpdatePage = pathname === '/product-manage/update-product'
+  const isUpdatePage = pathname === '/product-manage/product-listing'
 
   return (
     <section className="flex h-44 w-full flex-col justify-evenly gap-2 border-b border-b-base_one_reference_header/20 bg-base_color_text_top md:justify-evenly">
@@ -54,10 +54,10 @@ export function ProductManageHeader({ productId }: Props) {
             className="group rounded-lg p-1 data-[value=true]:bg-slate-200"
           >
             <Link
-              href="/product-manage/update-product"
+              href="/product-manage/product-listing"
               className="underline group-data-[value=true]:no-underline"
             >
-              Atualizar algum produto
+              Listagem de produtos
             </Link>
           </li>
           <li
