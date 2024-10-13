@@ -1,9 +1,8 @@
 'use client'
 
-import Link from 'next/link'
-
 interface Product {
-  name: string
+  name?: string
+  accountable: string
   createdAt: string
   updatedAt: string
 }
@@ -14,10 +13,16 @@ interface Props {
 
 export function GraphicTimelineProducts({ data }: Props) {
   const timelineEntries = data.flatMap((product) => [
-    { date: new Date(product.createdAt), name: product.name, status: 'criado' },
+    {
+      date: new Date(product.createdAt),
+      name: product.name,
+      accountable: product.accountable,
+      status: 'criado',
+    },
     {
       date: new Date(product.updatedAt),
       name: product.name,
+      accountable: product.accountable,
       status: 'atualizado',
     },
   ])
@@ -28,14 +33,13 @@ export function GraphicTimelineProducts({ data }: Props) {
     <div className="w-full p-4">
       <ul className="mt-4 space-y-2">
         {timelineEntries.map((entry, index) => (
-          <Link href="/" key={index}>
-            <li className="flex w-[30rem] items-center px-1 duration-300 hover:bg-slate-200">
-              <span className="text-gray-600">
-                {entry.date.toLocaleString('pt-BR')} ── {entry.status}:{' '}
-                {entry.name}
-              </span>
-            </li>
-          </Link>
+          <li key={index} className="flex items-center gap-4">
+            <span className="text-gray-600">
+              {entry.date.toLocaleString('pt-BR')} ── {entry.status}:{' '}
+              {entry.name}
+            </span>
+            <span> - {entry.accountable}</span>
+          </li>
         ))}
       </ul>
     </div>

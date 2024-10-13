@@ -1,9 +1,9 @@
 import { Input } from '@/components/ui/input'
-import { GraphicBarProductsLikes } from './components/graphics/graphic-bar-products-likes'
-import { GraphicBarQuantitySold } from './components/graphics/graphic-bar-quantity-sold'
-import { GraphicBarStockProduct } from './components/graphics/graphic-bar-stock-product'
+import { GraphicBarProductsLikes } from '../components/graphics/graphic-bar-products-likes'
+import { GraphicBarQuantitySold } from '../components/graphics/graphic-bar-quantity-sold'
+import { GraphicBarStockProduct } from '../components/graphics/graphic-bar-stock-product'
 import { ProductManageHeader } from './components/product-manage-header'
-import { GraphicTimelineProducts } from './components/graphics/graphic-time-line-products'
+import { GraphicTimelineProducts } from '../components/graphics/graphic-timeline-products'
 
 export default function ProductManage() {
   const categories = [{ title: 'Samsung' }, { title: 'Motorola' }]
@@ -46,16 +46,19 @@ export default function ProductManage() {
 
   const productsTimelineData = [
     {
+      accountable: 'Romeu soares',
       name: 'Produto A',
       createdAt: '2024-10-05 15:11:02',
       updatedAt: '2024-10-06 13:15:30',
     },
     {
+      accountable: 'Romeu soares',
       name: 'Produto B',
       createdAt: '2024-10-05 11:11:02',
       updatedAt: '2024-10-06 12:15:30',
     },
     {
+      accountable: 'Romeu soares',
       name: 'Produto C',
       createdAt: '2024-10-09 08:47:09',
       updatedAt: '2024-10-09 09:00:00',
