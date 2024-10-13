@@ -7,14 +7,27 @@ interface Props {
   data: { title: string; like: number }[]
   title: string
   category: string
+  orderType: string
 }
 
-export function GraphicBarProductsLikes({ data, title, category }: Props) {
+export function GraphicBarProductsLikes({
+  data,
+  title,
+  category,
+  orderType,
+}: Props) {
   const minHeightPerBar = 50
 
-  const sortedData = [...data].sort((a, b) => b.like - a.like)
-
+  const sortedData =
+    orderType === 'bigger'
+      ? [...data].sort((a, b) => b.like - a.like)
+      : [...data].sort((a, b) => a.like - b.like)
   const chartHeight = sortedData.length * minHeightPerBar
+
+  const colors =
+    orderType === 'bigger'
+      ? sortedData.map((_, index) => (index < 3 ? '#00FF00' : '#0000FF'))
+      : sortedData.map((product) => (product.like <= 3 ? '#FF0000' : '#0000FF'))
 
   const series = [
     {
@@ -41,6 +54,7 @@ export function GraphicBarProductsLikes({ data, title, category }: Props) {
         distributed: true,
       },
     },
+    colors,
     dataLabels: {
       enabled: true,
     },

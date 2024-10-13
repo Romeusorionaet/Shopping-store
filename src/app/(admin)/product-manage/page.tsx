@@ -1,3 +1,4 @@
+import { Input } from '@/components/ui/input'
 import { GraphicBarProductsLikes } from './components/graphics/graphic-bar-products-likes'
 import { GraphicBarQuantitySold } from './components/graphics/graphic-bar-quantity-sold'
 import { GraphicBarStockProduct } from './components/graphics/graphic-bar-stock-product'
@@ -40,11 +41,13 @@ export default function ProductManage() {
     })),
   ]
 
+  const defaultDate = new Date().toISOString().split('T')[0]
+
   return (
     <div className="ml-12 w-full overflow-x-hidden pt-32">
       <ProductManageHeader />
 
-      <main>
+      <main className="pb-20">
         <section className="mt-28 flex h-full w-full flex-col justify-center gap-6 rounded-lg px-1 max-md:flex-wrap">
           <div>
             <h2 className="text-xl">Controle de estoque do produto</h2>
@@ -80,15 +83,23 @@ export default function ProductManage() {
             </p>
           </div>
 
-          <select
-            defaultValue="Samsung"
-            className="w-32 rounded-lg bg-base_one_reference_header p-1 text-base_color_text_top"
-          >
-            <option value="">Selecione</option>
-            {categories.map((category, index) => (
-              <option key={index}>{category.title}</option>
-            ))}
-          </select>
+          <div className="flex gap-6">
+            <select
+              defaultValue="Samsung"
+              className="w-32 rounded-lg bg-base_one_reference_header p-1 text-base_color_text_top"
+            >
+              <option value="">Selecione</option>
+              {categories.map((category, index) => (
+                <option key={index}>{category.title}</option>
+              ))}
+            </select>
+
+            <Input
+              type="date"
+              defaultValue={defaultDate.toString()}
+              className="w-44 bg-transparent"
+            />
+          </div>
 
           <div className="flex items-end gap-4">
             <GraphicBarQuantitySold
@@ -117,12 +128,12 @@ export default function ProductManage() {
             </select>
 
             <select
-              defaultValue="maior"
+              defaultValue="bigger"
               className="w-32 rounded-lg bg-base_one_reference_header p-1 text-base_color_text_top"
             >
               <option value="">Selecione</option>
-              <option value="maior">Mais curtidos</option>
-              <option value="menor">Menos curtidos</option>
+              <option value="bigger">Mais curtidos</option>
+              <option value="minor">Menos curtidos</option>
             </select>
           </div>
 
@@ -131,6 +142,7 @@ export default function ProductManage() {
               data={productsLikesData}
               title="Quantidade de Produtos"
               category="Samsung"
+              orderType="bigger"
             />
           </div>
         </section>
