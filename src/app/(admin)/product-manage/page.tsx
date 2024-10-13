@@ -3,6 +3,7 @@ import { GraphicBarProductsLikes } from './components/graphics/graphic-bar-produ
 import { GraphicBarQuantitySold } from './components/graphics/graphic-bar-quantity-sold'
 import { GraphicBarStockProduct } from './components/graphics/graphic-bar-stock-product'
 import { ProductManageHeader } from './components/product-manage-header'
+import { GraphicTimelineProducts } from './components/graphics/graphic-time-line-products'
 
 export default function ProductManage() {
   const categories = [{ title: 'Samsung' }, { title: 'Motorola' }]
@@ -42,6 +43,24 @@ export default function ProductManage() {
   ]
 
   const defaultDate = new Date().toISOString().split('T')[0]
+
+  const productsTimelineData = [
+    {
+      name: 'Produto A',
+      createdAt: '2024-10-05 15:11:02',
+      updatedAt: '2024-10-06 13:15:30',
+    },
+    {
+      name: 'Produto B',
+      createdAt: '2024-10-05 11:11:02',
+      updatedAt: '2024-10-06 12:15:30',
+    },
+    {
+      name: 'Produto C',
+      createdAt: '2024-10-09 08:47:09',
+      updatedAt: '2024-10-09 09:00:00',
+    },
+  ]
 
   return (
     <div className="ml-12 w-full overflow-x-hidden pt-32">
@@ -144,6 +163,14 @@ export default function ProductManage() {
               category="Samsung"
               orderType="bigger"
             />
+          </div>
+        </section>
+
+        <section className="mt-28 flex h-full w-full flex-col justify-center gap-6 rounded-lg px-1 max-md:flex-wrap">
+          <h2 className="text-xl">Linha do tempo</h2>
+
+          <div className="flex items-end gap-4">
+            <GraphicTimelineProducts data={productsTimelineData} />
           </div>
         </section>
       </main>
