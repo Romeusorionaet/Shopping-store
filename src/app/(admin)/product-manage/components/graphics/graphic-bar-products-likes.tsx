@@ -4,40 +4,40 @@ import { ApexOptions } from 'apexcharts'
 import Chart from 'react-apexcharts'
 
 interface Props {
-  data: { title: string; quantitySold: number }[]
+  data: { title: string; like: number }[]
   title: string
   category: string
 }
 
-export function GraphicBarQuantitySold({ data, title, category }: Props) {
-  const minWidthPerBar = 50
+export function GraphicBarProductsLikes({ data, title, category }: Props) {
+  const minHeightPerBar = 50
 
-  const sortedData = [...data].sort((a, b) => b.quantitySold - a.quantitySold)
+  const sortedData = [...data].sort((a, b) => b.like - a.like)
 
-  const chartWidth = sortedData.length * minWidthPerBar
+  const chartHeight = sortedData.length * minHeightPerBar
 
   const series = [
     {
-      data: sortedData.map((product) => product.quantitySold),
+      data: sortedData.map((product) => product.like),
     },
   ]
 
   const options: ApexOptions = {
     chart: {
       type: 'bar',
-      height: 350,
+      height: chartHeight,
       toolbar: {
         show: true,
       },
     },
     title: {
-      text: `${title}: total de ${sortedData.length} da categoria ${category}`,
+      text: `${title}: ${sortedData.length} da categoria ${category}`,
       align: 'left',
     },
     plotOptions: {
       bar: {
-        horizontal: false,
-        columnWidth: '50%',
+        horizontal: true,
+        barHeight: '50%',
         distributed: true,
       },
     },
@@ -45,14 +45,12 @@ export function GraphicBarQuantitySold({ data, title, category }: Props) {
       enabled: false,
     },
     xaxis: {
+      title: {
+        text: 'Likes',
+      },
       categories: sortedData.map((product) => product.title),
       labels: {
-        rotate: -45,
-      },
-    },
-    yaxis: {
-      title: {
-        text: 'Vendas',
+        rotate: 0,
       },
     },
     tooltip: {
@@ -60,7 +58,7 @@ export function GraphicBarQuantitySold({ data, title, category }: Props) {
         const product = sortedData[dataPointIndex]
         return `<div style="padding: 10px;">
                   <strong>${product.title}</strong><br/>
-                  <span>Vendido: ${product.quantitySold} unidades</span>
+                  <span>Likes: ${product.like}</span>
                 </div>`
       },
     },
@@ -75,9 +73,17 @@ export function GraphicBarQuantitySold({ data, title, category }: Props) {
   }
 
   return (
-    <div className="scrollbar w-full overflow-x-auto rounded-lg bg-blue-50 p-4">
-      <div style={{ width: `${chartWidth}px` }}>
-        <Chart options={options} series={series} type="bar" height={350} />
+    <div
+      className="scrollbar w-full overflow-y-auto rounded-lg bg-blue-50 p-4"
+      style={{ height: '500px' }}
+    >
+      <div style={{ height: `${chartHeight}px` }}>
+        <Chart
+          options={options}
+          series={series}
+          type="bar"
+          height={chartHeight}
+        />
       </div>
     </div>
   )
