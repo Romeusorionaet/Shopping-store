@@ -9,7 +9,7 @@ interface Update {
   accountable: string
 }
 
-interface Product {
+interface Entry {
   accountable: string
   commit: string
   createdAt: string
@@ -23,7 +23,7 @@ interface TimelineEntry {
 }
 
 interface Props {
-  data: (Update[] | Product)[]
+  data: (Update[] | Entry)[]
 }
 
 export function GraphicTimelineUpdates({ data }: Props) {
@@ -37,12 +37,12 @@ export function GraphicTimelineUpdates({ data }: Props) {
       commit,
     }))
 
-  const handleProductObject = (product: Product): TimelineEntry[] => [
+  const handleProductObject = (entry: Entry): TimelineEntry[] => [
     {
-      date: new Date(product.createdAt),
+      date: new Date(entry.createdAt),
       status: 'criado',
-      accountable: product.accountable,
-      commit: product.commit,
+      accountable: entry.accountable,
+      commit: entry.commit,
     },
   ]
 

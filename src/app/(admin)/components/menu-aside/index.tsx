@@ -1,7 +1,7 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
-import { Home, Menu, Package } from 'lucide-react'
+import { Home, Menu, Package, SquareStack } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
@@ -32,13 +32,13 @@ export function MenuAside() {
     >
       <nav className="h-screen bg-slate-100 pt-6">
         <ul className="flex w-full flex-col items-end gap-6">
-          <li className="fixed -left-2 top-6 md:top-8 xl:left-10">
+          <li title="Menu" className="fixed -left-2 top-6 md:top-8 xl:left-10">
             <Button variant="ghost" onClick={() => handleExpandMenuAside()}>
               <span className="mr-4 max-xl:hidden">Menu</span>
               <Menu />
             </Button>
           </li>
-          <li>
+          <li title="Dashboard">
             <Button
               variant="ghost"
               onClick={() => handleNavigateTo('/dashboard-admin')}
@@ -53,7 +53,7 @@ export function MenuAside() {
               <Home />
             </Button>
           </li>
-          <li>
+          <li title="Produto">
             <Button
               variant="ghost"
               onClick={() => handleNavigateTo('/product-manage')}
@@ -66,6 +66,21 @@ export function MenuAside() {
                 Produto
               </p>
               <Package />
+            </Button>
+          </li>
+          <li title="Categoria">
+            <Button
+              variant="ghost"
+              onClick={() => handleNavigateTo('/category-manage')}
+              className="flex items-center gap-2"
+            >
+              <p
+                data-value={isMenuExpanded}
+                className="data-[value=false]:hidden"
+              >
+                Categoria
+              </p>
+              <SquareStack />
             </Button>
           </li>
         </ul>

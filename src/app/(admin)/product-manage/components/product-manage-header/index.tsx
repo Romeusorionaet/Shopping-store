@@ -36,7 +36,7 @@ export function ProductManageHeader({ productId }: Props) {
         </div>
       </section>
 
-      <div className="ml-16 max-md:pr-6">
+      <nav className="ml-16 max-md:pr-6">
         <ul className="flex flex-wrap gap-4 max-md:text-sm">
           <li
             data-value={isRegisterPage}
@@ -69,7 +69,7 @@ export function ProductManageHeader({ productId }: Props) {
             </span>
           </li>
         </ul>
-      </div>
+      </nav>
     </section>
   )
 }
