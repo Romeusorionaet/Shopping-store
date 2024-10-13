@@ -61,7 +61,7 @@ export function GraphicTimelineUpdates({ data }: Props) {
   }
 
   return (
-    <div className="w-full p-4">
+    <div className="scrollbar w-full overflow-auto border-y border-base_color_dark/20 p-4">
       <ul>
         {timelineEntries.map((entry, index) => (
           <li

@@ -43,23 +43,30 @@ export default function ProductManage() {
   ]
 
   const defaultDate = new Date().toISOString().split('T')[0]
+  const defaultDateTimeline = new Date().toISOString().slice(0, 7)
 
   const productsTimelineData = [
     {
       accountable: 'Romeu soares',
       name: 'Produto A',
+      commit:
+        'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Alias quisquam quasi sequi sit maiores molestias similique, quibusdam porro quam quae doloremque est neque nihil odio modi recusandae voluptates, eveniet iure.',
       createdAt: '2024-10-05 15:11:02',
       updatedAt: '2024-10-06 13:15:30',
     },
     {
       accountable: 'Romeu soares',
       name: 'Produto B',
+      commit:
+        ' ipsum dolor, sit amet consectetur adipisicing elit. Alias quisquam.',
       createdAt: '2024-10-05 11:11:02',
       updatedAt: '2024-10-06 12:15:30',
     },
     {
       accountable: 'Romeu soares',
       name: 'Produto C',
+      commit:
+        ' ipsum dolor, sit amet consectetur adipisicing elit. Alias quisquam.',
       createdAt: '2024-10-09 08:47:09',
       updatedAt: '2024-10-09 09:00:00',
     },
@@ -170,7 +177,15 @@ export default function ProductManage() {
         </section>
 
         <section className="mt-28 flex h-full w-full flex-col justify-center gap-6 rounded-lg px-1 max-md:flex-wrap">
-          <h2 className="text-xl">Linha do tempo</h2>
+          <h2 className="text-xl">
+            Linha do tempo <span className="text-sm font-light">(por mês)</span>
+          </h2>
+
+          <Input
+            type="month"
+            defaultValue={defaultDateTimeline.toString()}
+            className="w-44 bg-transparent"
+          />
 
           <div className="flex items-end gap-4">
             <GraphicTimelineProducts data={productsTimelineData} />
