@@ -1,7 +1,6 @@
-import { AlertCircle, SquareStack } from 'lucide-react'
-import Link from 'next/link'
 import { GraphicTimelineUpdates } from '../components/graphics/graphic-timeline-updates'
 import { GraphicBarCategoryProducts } from '../components/graphics/graphic-bar-category-products'
+import { CategoryManageHeader } from './components/category-manage-header'
 
 export default function CategoryManage() {
   const categoryProductsData = [
@@ -38,25 +37,7 @@ export default function CategoryManage() {
 
   return (
     <div className="ml-12 w-full overflow-x-hidden pt-32">
-      <section className="flex h-28 w-full items-center justify-evenly gap-10 border-b border-b-base_one_reference_header/20 bg-base_color_text_top md:justify-evenly">
-        <Link
-          href="/category-manage"
-          className="group flex items-end gap-2 rounded-lg border border-base_color_dark/10 p-1 duration-500 hover:bg-base_one_reference_header"
-        >
-          <SquareStack
-            color="white"
-            className="h-6 w-6 rounded-lg bg-base_color_dark p-1 md:h-8 md:w-8"
-          />
-          <h1 className="duration-500 group-hover:text-base_color_text_top max-md:text-sm">
-            Categoria
-          </h1>
-        </Link>
-
-        <div className="flex items-end gap-2">
-          <p className="max-md:hidden">Overview</p>
-          <AlertCircle className="h-6 w-6" />
-        </div>
-      </section>
+      <CategoryManageHeader />
 
       <main className="px-1 pb-20">
         <section className="mt-28 flex h-full w-full flex-col justify-center gap-6 rounded-lg px-1 max-md:flex-wrap">

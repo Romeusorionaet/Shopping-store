@@ -1,9 +1,9 @@
 import LogoMarcaAsus from '@/assets/img/logo-marca/logo-asus.png'
 import Image from 'next/image'
 
-export function CategoryCardAdmin() {
+export function CategoryCardPreviewAdmin() {
   return (
-    <div>
+    <div className="flex flex-col items-center">
       <div className="h-16 w-16 md:h-20 md:w-20">
         <Image
           height={400}
@@ -13,7 +13,7 @@ export function CategoryCardAdmin() {
           className="h-full w-full border border-slate-300 object-fill"
         />
       </div>
-      <p className="text-center">Asus</p>
+      <p>Asus</p>
     </div>
   )
 }

@@ -1,34 +1,44 @@
-// 'use server'
+'use server'
 
-// import { PrismaClient } from '@prisma/client'
+import { CategoryFormData } from '@/app/(admin)/category-manage/components/category-form/form'
+import { api } from '@/lib/api'
+import { getAccessTokenFromCookies } from '@/utils/get-tokens-from-cookies'
 
-// const prisma = new PrismaClient()
+interface Props {
+  category: CategoryFormData
+}
 
-// interface updateCategoryProps {
-//   updatedData: {
-//     name: string
-//     slug: string
-//     imageUrl: string
-//     id: string
-//   }
-// }
+export const updateCategory = async (
+  category: Props,
+): Promise<{ success: boolean; message: string }> => {
+  const accessToken = await getAccessTokenFromCookies()
 
-// export const updateCategory = async ({ updatedData }: updateCategoryProps) => {
-//   try {
-//     await prisma.category.update({
-//       where: {
-//         id: updatedData.id,
-//       },
-//       data: {
-//         name: updatedData.name,
-//         slug: updatedData.slug,
-//         imageUrl: updatedData.imageUrl,
-//       },
-//     })
+  if (!accessToken) {
+    return {
+      success: false,
+      message: 'Não autorizado',
+    }
+  }
 
-//     return { messageSuccess: 'Categoria atualizada.' }
-//   } catch (err) {
-//     console.log(err)
-//     return { messageError: 'Error ao atualizar categoria.' }
-//   }
-// }
+  try {
+    const response = await api.post(
+      '/update/create',
+      {
+        ...category,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    )
+
+    return { success: true, message: response.data.message }
+  } catch (err: any) {
+    const errorMessage =
+      err.response?.data?.error ||
+      'Aconteceu um erro inesperado, tente novamente mais tarde.'
+
+    return { success: false, message: errorMessage }
+  }
+}

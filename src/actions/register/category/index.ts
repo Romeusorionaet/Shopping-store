@@ -1,40 +1,44 @@
-// 'use server'
+'use server'
 
-// import { PrismaClient } from '@prisma/client'
+import { CategoryFormData } from '@/app/(admin)/category-manage/components/category-form/form'
+import { api } from '@/lib/api'
+import { getAccessTokenFromCookies } from '@/utils/get-tokens-from-cookies'
 
-// interface Props {
-//   dataCategory: {
-//     name: string
-//     slug: string
-//     fileUrl: string
-//   }
-// }
+interface Props {
+  category: CategoryFormData
+}
 
-// const prisma = new PrismaClient()
+export const createCategory = async (
+  category: Props,
+): Promise<{ success: boolean; message: string }> => {
+  const accessToken = await getAccessTokenFromCookies()
 
-// export const createCategory = async ({ dataCategory }: Props) => {
-//   try {
-//     const existingCategory = await prisma.category.findFirst({
-//       where: {
-//         name: dataCategory.name,
-//       },
-//     })
+  if (!accessToken) {
+    return {
+      success: false,
+      message: 'Não autorizado',
+    }
+  }
 
-//     if (existingCategory) {
-//       return { message: 'Este item já existe.' }
-//     } else {
-//       await prisma.category.create({
-//         data: {
-//           name: dataCategory.name,
-//           slug: dataCategory.slug,
-//           imageUrl: dataCategory.fileUrl,
-//         },
-//       })
+  try {
+    const response = await api.post(
+      '/category/create',
+      {
+        ...category,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    )
 
-//       return { messageSuccess: 'Categoria criado' }
-//     }
-//   } catch (err) {
-//     console.log(err)
-//     return { messageError: 'Error ao criar categoria' }
-//   }
-// }
+    return { success: true, message: response.data.message }
+  } catch (err: any) {
+    const errorMessage =
+      err.response?.data?.error ||
+      'Aconteceu um erro inesperado, tente novamente mais tarde.'
+
+    return { success: false, message: errorMessage }
+  }
+}
