@@ -3,7 +3,7 @@
 import { CarouselProducts } from '@/components/carousel-products'
 import { ProductProps } from '@/core/@types/api-store'
 import { getDataProducts } from '@/actions/get/product/get-data-products'
-import { NoProductRegistrationMessage } from '@/components/no-product-registration-message'
+import { NoRegistrationMessage } from '@/components/no-registration-message'
 import { useQuery } from '@tanstack/react-query'
 import { SkeletonCarousel } from './skeleton-carousel'
 import { SectionProductName } from '@/constants/section-product-name'
@@ -23,7 +23,7 @@ export function SectionAllProducts() {
     !data || data?.notFound || data?.props?.products?.length === 0
 
   if (hasProduct) {
-    return <NoProductRegistrationMessage />
+    return <NoRegistrationMessage type="PRODUCT" />
   }
 
   const allProducts: ProductProps[] = JSON.parse(data.props.products).sort(

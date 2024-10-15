@@ -37,7 +37,7 @@ export default async function Search({ searchParams }: SearchProps) {
   const productListToShow =
     productsFiltered.length !== 0 ? productsFiltered : products
 
-  const searchedItemHasNotBeenFound = productsFiltered.length === 0 && query
+  const searchedItemHasNotBeenFound = productsFiltered.length === 0 && !!query
 
   return (
     <div className="flex h-full w-full flex-col justify-between gap-4 pt-28">
@@ -72,7 +72,7 @@ export default async function Search({ searchParams }: SearchProps) {
       <div className="pb-28">
         <Pagination
           sizeList={productListToShow.length}
-          disableArrowIf={!searchedItemHasNotBeenFound}
+          disableArrowIf={searchedItemHasNotBeenFound}
         />
       </div>
     </div>

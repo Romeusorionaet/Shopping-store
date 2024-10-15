@@ -13,7 +13,7 @@ export default function ProductListing() {
       <ProductManageHeader />
 
       <main>
-        <section className="mt-20 px-1 data-[value=true]:hidden md:justify-start xl:justify-center">
+        <section className="mt-20 px-1 md:justify-start xl:justify-center">
           <div className="mb-10 flex gap-6 max-md:flex-col">
             <select
               defaultValue="Samsung"

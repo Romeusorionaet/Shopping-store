@@ -1,6 +1,6 @@
 'use server'
 
-import { CategoryFormData } from '@/app/(admin)/category-manage/components/category-form/form'
+import { CategoryFormData } from '@/app/(admin)/category-manage/components/form/category-form'
 import { api } from '@/lib/api'
 import { getAccessTokenFromCookies } from '@/utils/get-tokens-from-cookies'
 
