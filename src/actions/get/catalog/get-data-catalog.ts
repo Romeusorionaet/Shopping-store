@@ -1,8 +1,8 @@
 import { api } from '@/lib/api'
 
-export const getDataCatalog = async () => {
+export const getDataCatalog = async (page?: number) => {
   try {
-    const response = await api.get('/categories')
+    const response = await api.get(`/categories?page=${page}`)
 
     return {
       propsCategories: {
