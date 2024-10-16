@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input'
 import { CategoryProps } from '@/core/@types/api-store'
 import { useNotification } from '@/hooks/use-notifications'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { useState } from 'react'
@@ -42,6 +42,8 @@ export function CategoryForm({ category }: CategoryFormProps) {
 
   const pathname = usePathname()
 
+  const router = useRouter()
+
   const isRegisterPath = pathname === '/category-manage/register-category'
 
   const hasValidImageCount = !!imageCategory.url
@@ -56,11 +58,18 @@ export function CategoryForm({ category }: CategoryFormProps) {
       })
     }
 
-    const data = {
+    const dataUpdate = {
       ...categoryData,
-      categoryId: category!.id,
-      imgUrlList: imageCategory,
+      id: category?.id,
+      imgUrl: imageCategory.url,
     }
+
+    const dataCreate = {
+      ...categoryData,
+      imgUrl: imageCategory.url,
+    }
+
+    const data = isRegisterPath ? dataCreate : dataUpdate
 
     const categoryAction = isRegisterPath ? createCategory : updateCategory
 
@@ -68,6 +77,8 @@ export function CategoryForm({ category }: CategoryFormProps) {
 
     const notify = result.success ? notifySuccess : notifyError
     notify({ message: result.message, origin: 'server' })
+
+    router.push('/category-manage/category-listing')
   }
 
   return (

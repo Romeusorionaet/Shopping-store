@@ -1,63 +1,29 @@
-// 'use server'
+import { api } from '@/lib/api'
+import { getAccessTokenFromCookies } from '@/utils/get-tokens-from-cookies'
 
-// import { OrderStatus, OrderStatusTracking, PrismaClient } from '@prisma/client'
+export const deleteCategory = async (id: string) => {
+  const accessToken = await getAccessTokenFromCookies()
 
-// const prisma = new PrismaClient()
+  if (!accessToken) {
+    return {
+      success: false,
+      message: 'Não autorizado',
+    }
+  }
 
-// export const deleteCategory = async (categoryId: string) => {
-//   try {
-//     const ordersProduct = await prisma.orderProduct.findMany({
-//       where: {
-//         product: {
-//           categoryId,
-//         },
-//       },
-//       include: {
-//         order: true,
-//       },
-//     })
+  try {
+    const response = await api.delete(`/category/remove/${id}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
 
-//     const hasOrderProductWithExpectedStatus = ordersProduct.find(
-//       (orderProduct) =>
-//         (orderProduct.order.orderTracking === OrderStatusTracking.WAITING ||
-//           orderProduct.order.orderTracking ===
-//             OrderStatusTracking.PRODUCT_DELIVERED_TO_CORREIOS) &&
-//         orderProduct.order.status === OrderStatus.PAYMENT_CONFIRMED,
-//     )
+    return { success: true, message: response.data.message }
+  } catch (err: any) {
+    const errorMessage =
+      err.response?.data?.error ||
+      'Aconteceu um erro inesperado, tente novamente mais tarde.'
 
-//     if (!hasOrderProductWithExpectedStatus) {
-//       await prisma.category.delete({
-//         where: {
-//           id: categoryId,
-//         },
-//       })
-
-//       const countOrderProducts = await prisma.order.findUnique({
-//         where: {
-//           id: ordersProduct[0].orderId,
-//         },
-//         include: {
-//           orderProducts: true,
-//         },
-//       })
-
-//       if (countOrderProducts?.orderProducts.length === 0) {
-//         await prisma.order.delete({
-//           where: {
-//             id: countOrderProducts.id,
-//           },
-//         })
-//       }
-
-//       return { messageSuccess: 'Categoria deletada.' }
-//     } else {
-//       return {
-//         messageError:
-//           'Produtos atualmente em processo com clientes estão associados a esta categoria e não podem ser removidos no momento.',
-//       }
-//     }
-//   } catch (err) {
-//     console.log(err)
-//     return { messageError: 'Error ao deletar categoria.' }
-//   }
-// }
+    return { success: false, message: errorMessage }
+  }
+}

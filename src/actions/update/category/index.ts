@@ -8,9 +8,9 @@ interface Props {
   category: CategoryFormData
 }
 
-export const updateCategory = async (
-  category: Props,
-): Promise<{ success: boolean; message: string }> => {
+export const updateCategory = async ({
+  category,
+}: Props): Promise<{ success: boolean; message: string }> => {
   const accessToken = await getAccessTokenFromCookies()
 
   if (!accessToken) {
@@ -21,17 +21,11 @@ export const updateCategory = async (
   }
 
   try {
-    const response = await api.post(
-      '/update/create',
-      {
-        ...category,
+    const response = await api.put('/category/update', category, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
       },
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      },
-    )
+    })
 
     return { success: true, message: response.data.message }
   } catch (err: any) {
