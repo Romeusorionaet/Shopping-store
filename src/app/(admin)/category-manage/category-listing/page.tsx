@@ -1,10 +1,11 @@
 import { Pagination } from '@/components/pagination'
 import Link from 'next/link'
 import { CategoryManageHeader } from '../components/category-manage-header'
-import { CategoryCardPreviewAdmin } from '../../components/category-card-admin/category-card-preview-admin'
 import { getDataCatalog } from '@/actions/get/catalog/get-data-catalog'
 import { CategoryProps } from '@/core/@types/api-store'
 import { NoRegistrationMessage } from '@/components/no-registration-message'
+import Image from 'next/image'
+import { BaseUrl } from '@/constants/base-url'
 
 interface SearchProps {
   searchParams: {
@@ -39,10 +40,18 @@ export default async function CategoryListing({ searchParams }: SearchProps) {
                     >
                       Atualizar
                     </Link>
-                    <CategoryCardPreviewAdmin
-                      imgURL={category.imgUrl}
-                      title={category.title}
-                    />
+                    <div className="flex flex-col items-center">
+                      <div className="h-16 w-16 md:h-20 md:w-20">
+                        <Image
+                          height={400}
+                          width={400}
+                          src={`${BaseUrl.IMG}/${category.imgUrl}`}
+                          alt="product image view"
+                          className="h-full w-full border border-slate-300 object-fill"
+                        />
+                      </div>
+                      <p className="font-bold">{category.title}</p>
+                    </div>
                     <Link
                       href={`/category-manage/category-view/${category.id}`}
                       className="text-sm underline"
