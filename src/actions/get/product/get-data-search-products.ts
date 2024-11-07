@@ -4,16 +4,18 @@ interface Props {
   page?: number
   query?: string
   section?: string
+  categoryId?: string
 }
 
 export const getDataSearchProducts = async ({
   page,
   query,
   section,
+  categoryId,
 }: Props) => {
   try {
     const response = await api.get('products/search', {
-      params: { page, query, section },
+      params: { page, query, section, categoryId },
     })
 
     return {

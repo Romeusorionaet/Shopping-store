@@ -1,31 +1,43 @@
 import { Pagination } from '@/components/pagination'
 import { ProductManageHeader } from '../components/product-manage-header'
 import Link from 'next/link'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
 import { ProductProps } from '@/core/@types/api-store'
 import { getDataProducts } from '@/actions/get/product/get-data-products'
 import { NoRegistrationMessage } from '@/components/no-registration-message'
 import Image from 'next/image'
 import { BaseUrl } from '@/constants/base-url'
+import { FormSearchProducts } from '../components/product-form/form-search-products'
+import { Suspense } from 'react'
+import { getDataSearchProducts } from '@/actions/get/product/get-data-search-products'
 
 interface SearchProps {
   searchParams: {
     p: number
+    q: string
+    categoryId: string
   }
 }
 
 export default async function ProductListing({ searchParams }: SearchProps) {
-  const { p: page } = searchParams
-  const categories = [{ title: 'Samsung' }, { title: 'Motorola' }]
+  const { p: page, q: query, categoryId } = searchParams
 
   const { props } = await getDataProducts({ page: page ?? 1 })
   const products: ProductProps[] = JSON.parse(props.products)
 
   const noProduct = !products || products.length === 0
 
+  const { props: propsSearched } = await getDataSearchProducts({
+    page,
+    query,
+    categoryId,
+  })
+
+  const productsSearched: ProductProps[] = JSON.parse(propsSearched.products)
+
+  const productList = productsSearched || products
+
   return (
-    <div className="ml-12 w-full pt-32">
+    <div className="ml-12 w-full pb-10 pt-32">
       <ProductManageHeader />
 
       {noProduct ? (
@@ -33,30 +45,12 @@ export default async function ProductListing({ searchParams }: SearchProps) {
       ) : (
         <main>
           <section className="mt-20 px-1 md:justify-start xl:justify-center">
-            <div className="mb-10 flex gap-6 max-md:flex-col">
-              <select
-                defaultValue="Samsung"
-                className="w-32 rounded-lg bg-base_one_reference_header p-1 text-base_color_text_top"
-              >
-                <option value="">Selecione</option>
-                {categories.map((category, index) => (
-                  <option key={index}>{category.title}</option>
-                ))}
-              </select>
-
-              <div className="flex gap-4">
-                <Input
-                  type="text"
-                  placeholder="nome"
-                  className="bg-transparent md:w-[25rem]"
-                />
-
-                <Button>Buscar</Button>
-              </div>
-            </div>
+            <Suspense fallback={null}>
+              <FormSearchProducts />
+            </Suspense>
 
             <div className="mt-10 flex flex-wrap gap-4">
-              {products.map((product) => {
+              {productList.map((product) => {
                 return (
                   <div key={product.id} className="flex flex-wrap gap-4">
                     <div className="flex flex-col gap-6">
@@ -100,7 +94,10 @@ export default async function ProductListing({ searchParams }: SearchProps) {
               })}
             </div>
           </section>
-          <Pagination disableArrowIf={noProduct} sizeList={products.length} />
+          <Pagination
+            disableArrowIf={noProduct}
+            sizeList={productList.length}
+          />
         </main>
       )}
     </div>
