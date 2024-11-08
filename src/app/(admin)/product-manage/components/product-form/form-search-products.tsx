@@ -17,8 +17,9 @@ export function FormSearchProducts() {
   const router = useRouter()
 
   const { data, isLoading, error } = useQuery({
-    queryKey: ['productPromotionFiltered'],
+    queryKey: ['catalogBasicData'],
     queryFn: () => getCatalogBasicData(),
+    staleTime: 1000 * 60 * 60, // 60 minutes
   })
 
   if (isLoading) {
