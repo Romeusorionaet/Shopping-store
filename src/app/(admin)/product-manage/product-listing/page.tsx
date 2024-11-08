@@ -55,7 +55,7 @@ export default async function ProductListing({ searchParams }: SearchProps) {
                   <div key={product.id} className="flex flex-wrap gap-4">
                     <div className="flex flex-col gap-6">
                       <Link
-                        href={`/product-manage/update-product/id-test`}
+                        href={`/product-manage/update-product/${product.id}`}
                         className="text-center underline"
                       >
                         Atualizar
