@@ -21,7 +21,7 @@ export const updateProduct = async (
   }
 
   try {
-    const response = await api.post(
+    const response = await api.put(
       '/product/update',
       {
         ...product,

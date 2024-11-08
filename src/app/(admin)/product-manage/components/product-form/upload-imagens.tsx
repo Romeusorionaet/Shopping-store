@@ -1,26 +1,25 @@
+import { BaseUrl } from '@/constants/base-url'
 import { useNotification } from '@/hooks/use-notifications'
 import { UploadButton } from '@/utils/generate-components'
 import Image from 'next/image'
-import { ImagesProductProps } from './form'
 import { Dispatch, SetStateAction } from 'react'
 
 interface Props {
-  imagesProduct: ImagesProductProps[]
-  setImagesProduct: Dispatch<SetStateAction<ImagesProductProps[]>>
+  imagesProduct: string[]
+  setImagesProduct: Dispatch<SetStateAction<string[]>>
 }
 
 export function UploadImages({ imagesProduct, setImagesProduct }: Props) {
   const { notifyError, notifySuccess } = useNotification()
 
   const handleUploadComplete = (res: any) => {
-    const currentImageCount = imagesProduct.slice(1).length
+    const currentImageCount = imagesProduct.length
     const remainingSlots = 4 - currentImageCount
 
     if (remainingSlots > 0) {
-      const newImages = res.slice(0, remainingSlots).map((image: any) => ({
-        name: image.name,
-        url: image.url,
-      }))
+      const newImages = res
+        .slice(0, remainingSlots)
+        .map((image: { key: string }) => image.key)
 
       setImagesProduct((prevImages) => [...prevImages, ...newImages])
 
@@ -36,14 +35,17 @@ export function UploadImages({ imagesProduct, setImagesProduct }: Props) {
     }
   }
 
-  const isMaxQuantityImages = imagesProduct.slice(1).length >= 4
+  const handleRemoveImage = (imageToRemove: string) => {
+    setImagesProduct((prevImages) =>
+      prevImages.filter((img) => img !== imageToRemove),
+    )
+  }
+
+  const maxLimitImage = imagesProduct.length === 4
 
   return (
     <div>
-      <div
-        data-value={isMaxQuantityImages}
-        className="data-[value=true]:hidden"
-      >
+      <div data-value={maxLimitImage} className="data-[value=true]:hidden">
         <UploadButton
           className="mt-4 ut-button:bg-base_one_reference_header ut-button:ut-uploading:bg-red-500/50"
           endpoint="imagesProductShoppingStore"
@@ -54,23 +56,31 @@ export function UploadImages({ imagesProduct, setImagesProduct }: Props) {
         />
       </div>
 
-      <div className="flex flex-wrap">
-        {imagesProduct.slice(1).map((img, index) => {
+      <div className="flex flex-wrap border border-black/20">
+        {imagesProduct.map((img) => {
           return (
-            <Image
-              width={100}
-              height={100}
-              key={index}
-              src={img.url}
-              alt={img.name}
-              className="h-8 w-8"
-            />
+            <div
+              key={img}
+              className="relative cursor-pointer"
+              onClick={() => handleRemoveImage(img)}
+            >
+              <Image
+                width={100}
+                height={100}
+                src={`${BaseUrl.IMG}/${img}`}
+                alt=""
+                className="h-8 w-8"
+              />
+              <span className="absolute right-0 top-0 rounded-full bg-red-500 px-1 text-xs text-white">
+                x
+              </span>
+            </div>
           )
         })}
       </div>
-      {imagesProduct.length >= 5 && (
-        <p className="text-xs">
-          {imagesProduct.slice(1).length}: Imagens a serem utilizadas
+      {imagesProduct.length > 0 && (
+        <p className="text-center text-xs font-bold">
+          {imagesProduct.length}/4
         </p>
       )}
     </div>
