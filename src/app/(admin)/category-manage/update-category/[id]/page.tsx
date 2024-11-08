@@ -3,6 +3,7 @@ import { CategoryManageHeader } from '../../components/category-manage-header'
 import { CategoryForm } from '../../components/form/category-form'
 import { CategoryProps } from '@/core/@types/api-store'
 import { ButtonDeleteCategory } from '../../components/button-delete-category'
+import { CategoryDetailsNotFoundError } from '../../components/category-details-not-found-error'
 
 interface Props {
   params: { id: string }
@@ -14,7 +15,7 @@ export default async function UpdateCategory({ params }: Props) {
   const { props } = await getDataUniqueCategory(id)
 
   if (!props.category) {
-    return
+    return <CategoryDetailsNotFoundError id={id} />
   }
 
   const category: CategoryProps = JSON.parse(props.category)
