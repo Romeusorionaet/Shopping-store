@@ -7,6 +7,8 @@ import { ButtonFormProduct } from '../../components/product-form/button-form-pro
 import { ProductForm } from '../../components/product-form/form'
 import { getDataUniqueProduct } from '@/actions/get/product/get-data-unique-product'
 import { ProductCardManage } from '@/app/(admin)/components/product-card-admin/product-card-manage'
+import { ButtonDeleteProduct } from '../../components/button-delete-product'
+import { ProductDetailsNotFoundError } from '../../components/product-details-not-found-error'
 
 interface Props {
   params: { id: string }
@@ -18,7 +20,7 @@ export default async function update({ params }: Props) {
   const { props } = await getDataUniqueProduct(id)
 
   if (!props.product) {
-    return null
+    return <ProductDetailsNotFoundError id={id} />
   }
 
   const product: ProductProps = JSON.parse(props.product)
@@ -54,8 +56,9 @@ export default async function update({ params }: Props) {
             </div>
           </section>
 
-          <div className="flex justify-center">
+          <div className="flex justify-between md:justify-evenly">
             <ButtonFormProduct />
+            <ButtonDeleteProduct productId={id} />
           </div>
         </section>
       </main>

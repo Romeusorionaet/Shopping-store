@@ -59,7 +59,7 @@ export function ProductForm({ product, technicalProduct }: ProductFormProps) {
     : []
 
   const handleProductForm = async (productData: ProductFormData) => {
-    const hasValidImageCount = imagesProduct.length > 1
+    const hasValidImageCount = imagesProduct.length > 0
 
     if (!hasValidImageCount) {
       const message = 'O produto deve ter pelo menos 1 imagem.'
