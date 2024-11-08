@@ -21,17 +21,11 @@ export const createProduct = async (
   }
 
   try {
-    const response = await api.post(
-      '/product/create',
-      {
-        ...product,
+    const response = await api.post('/product/create', product, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
       },
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      },
-    )
+    })
 
     return { success: true, message: response.data.message }
   } catch (err: any) {

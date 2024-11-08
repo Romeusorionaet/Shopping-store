@@ -1,11 +1,9 @@
 'use client'
 
-import { getDataCatalog } from '@/actions/get/catalog/get-data-catalog'
 import { FormError } from '@/components/form/form-error'
 import { Input } from '@/components/ui/input'
 import { listBaseColor } from '@/constants/list-base-color'
 import {
-  CategoryProps,
   ModeOfSale,
   ProductProps,
   TechnicalProductDetailsProps,
@@ -15,18 +13,14 @@ import { productCreateSchema } from '@/schemas/product-schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useQuery } from '@tanstack/react-query'
 import { Asterisk } from 'lucide-react'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { UploadImages } from './upload-imagens'
 import { useState } from 'react'
 import { createProduct } from '@/actions/register/products'
 import { updateProduct } from '@/actions/update/product'
-
-export interface ImagesProductProps {
-  name: string
-  url: string
-}
+import { getCatalogBasicData } from '@/actions/get/catalog/get-data-catalog-basic-data'
 
 interface ProductFormProps {
   product?: ProductProps
@@ -44,45 +38,45 @@ export function ProductForm({ product, technicalProduct }: ProductFormProps) {
     resolver: zodResolver(productCreateSchema),
   })
   const { notifyError, notifySuccess } = useNotification()
-  const [imagesProduct, setImagesProduct] = useState<ImagesProductProps[]>([
-    {
-      name: product?.title ?? '',
-      url: product?.imgUrlList[0] ?? '',
-    },
-  ])
+  const [imagesProduct, setImagesProduct] = useState<string[]>(
+    product?.imgUrlList || [],
+  )
+  const [category, setCategory] = useState({ id: '', title: '' })
 
   const pathname = usePathname()
+  const router = useRouter()
 
   const isRegisterPath = pathname === '/product-manage/register-product'
 
-  const { data } = useQuery({
-    queryKey: ['catalogDataAdmin'],
-    queryFn: () => getDataCatalog(),
-    staleTime: 1000 * 60 * 60 * 24, // 24 hours
+  const { data, isLoading, error } = useQuery({
+    queryKey: ['catalogBasicData'],
+    queryFn: () => getCatalogBasicData(),
+    staleTime: 1000 * 60 * 60, // 60 minutes
   })
 
-  const categories: CategoryProps[] = data
-    ? JSON.parse(data.propsCategories.categories)
+  const categories: { id: string; title: string }[] = data
+    ? JSON.parse(data.props.categoriesBasicData)
     : []
 
   const handleProductForm = async (productData: ProductFormData) => {
-    const hasValidImageCount = product
-      ? imagesProduct.length >= 2
-      : imagesProduct.length >= 1
+    const hasValidImageCount = imagesProduct.length > 1
 
     if (!hasValidImageCount) {
-      const message = 'O produto deve ter pelo menos 1 imagem ao atualizar.'
+      const message = 'O produto deve ter pelo menos 1 imagem.'
 
       return notifyError({
         message,
-        origin: 'server',
+        origin: 'client',
       })
     }
 
     const data = {
       ...productData,
-      categoryId: product!.categoryId,
-      imgUrlList: imagesProduct,
+      id: product?.id || '',
+      technicalProductId: technicalProduct?.id || '',
+      imgUrlList: imagesProduct.map((img) => img),
+      categoryId: category.id || product?.categoryId,
+      categoryTitle: category.title || product?.categoryTitle,
     }
 
     const productAction = isRegisterPath ? createProduct : updateProduct
@@ -91,6 +85,8 @@ export function ProductForm({ product, technicalProduct }: ProductFormProps) {
 
     const notify = result.success ? notifySuccess : notifyError
     notify({ message: result.message, origin: 'server' })
+
+    router.replace('/product-manage/product-listing')
   }
 
   return (
@@ -106,22 +102,33 @@ export function ProductForm({ product, technicalProduct }: ProductFormProps) {
         />
 
         <label className="flex flex-col">
-          <p className="flex gap-2">
-            Categoria
-            <span>
-              {errors.categoryTitle ? <Asterisk size={16} color="red" /> : ''}
-            </span>
-          </p>
-          <select
-            defaultValue={product?.categoryTitle || 0}
-            className="rounded-lg bg-base_color_dark/80 p-1 text-base_color_text_top"
-            {...register('categoryTitle')}
+          <p
+            data-value={error}
+            className="flex gap-2 data-[value=true]:text-red-500"
           >
-            <option value="">Selecione</option>
-            {categories.map((category, index) => (
-              <option key={index}>{category.title}</option>
-            ))}
-          </select>
+            Categoria
+          </p>
+          {isLoading ? (
+            <div className="h-8 w-24 animate-pulse rounded-lg bg-zinc-800" />
+          ) : (
+            <select
+              defaultValue={
+                JSON.stringify({
+                  id: product?.categoryId,
+                  title: product?.categoryTitle,
+                }) || ''
+              }
+              onChange={(e) => setCategory(JSON.parse(e.target.value))}
+              className="rounded-lg bg-base_color_dark/80 p-1 text-base_color_text_top"
+            >
+              <option value="">Selecione</option>
+              {categories.map((category) => (
+                <option key={category.id} value={JSON.stringify(category)}>
+                  {category.title}
+                </option>
+              ))}
+            </select>
+          )}
         </label>
 
         <label className="space-y-2">
@@ -184,13 +191,13 @@ export function ProductForm({ product, technicalProduct }: ProductFormProps) {
             </span>
           </p>
           <div className="flex flex-wrap items-center gap-4">
-            {listBaseColor.map((cor, index: number) => {
+            {listBaseColor.map((cor) => {
               const isCheck = product?.corsList.some(
                 (productCor) => productCor.toLowerCase() === cor.toLowerCase(),
               )
 
               return (
-                <label key={index} className="flex items-center gap-1">
+                <label key={cor} className="flex items-center gap-1">
                   <Input
                     type="checkbox"
                     defaultChecked={isCheck}

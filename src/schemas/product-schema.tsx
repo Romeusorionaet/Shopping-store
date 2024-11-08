@@ -4,7 +4,7 @@ import { z } from 'zod'
 const defaultMessageError = 'Campo obrigatório'
 
 const baseProductSchema = z.object({
-  title: z.string().min(1, { message: defaultMessageError }).max(100, {
+  title: z.string().min(1, { message: defaultMessageError }).max(150, {
     message:
       'O Título do seu produto deve conter no máximo 100 caracteres. Informações mais detalhada do produto pode ser registrado em descrição do produto.',
   }),
@@ -22,7 +22,6 @@ const baseProductSchema = z.object({
 })
 
 const additionalProductCreateSchema = z.object({
-  categoryTitle: z.string().min(1),
   technicalProductDetails: z.object({
     width: z.string().min(1, { message: defaultMessageError }),
     height: z.string().min(1, { message: defaultMessageError }),
