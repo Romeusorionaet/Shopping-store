@@ -1,9 +1,9 @@
 import { Input } from '@/components/ui/input'
-import { GraphicBarProductsLikes } from '../components/graphics/graphic-bar-products-likes'
-import { GraphicBarQuantitySold } from '../components/graphics/graphic-bar-quantity-sold'
-import { GraphicBarStockProduct } from '../components/graphics/graphic-bar-stock-product'
 import { ProductManageHeader } from './components/product-manage-header'
 import { GraphicTimelineProducts } from '../components/graphics/graphic-timeline-products'
+import { GraphicBarStockProduct } from '../components/graphics/graphic-bar-stock-product'
+import { GraphicBarQuantitySold } from '../components/graphics/graphic-bar-quantity-sold'
+import { GraphicBarProductsLikes } from '../components/graphics/graphic-bar-products-likes'
 
 export default function ProductManage() {
   const categories = [{ title: 'Samsung' }, { title: 'Motorola' }]

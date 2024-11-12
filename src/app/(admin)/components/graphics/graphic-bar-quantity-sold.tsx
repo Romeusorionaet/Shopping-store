@@ -1,7 +1,12 @@
 'use client'
 
 import { ApexOptions } from 'apexcharts'
-import Chart from 'react-apexcharts'
+import dynamic from 'next/dynamic'
+
+const Chart = dynamic(
+  () => import('react-apexcharts').then((mod) => mod.default),
+  { ssr: false },
+)
 
 interface Props {
   data: { title: string; quantitySold: number }[]
