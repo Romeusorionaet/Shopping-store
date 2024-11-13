@@ -9,8 +9,9 @@ export const authOptions: AuthOptions = {
     GoogleProvider({
       clientId: process.env.NEXTAUTH_GOOGLE_CLIENT_ID,
       clientSecret: process.env.NEXTAUTH_GOOGLE_CLIENT_SECRET_ID,
+      wellKnown: 'https://accounts.google.com/.well-known/openid-configuration',
       authorization: {
-        url: 'http://www.google.com/oauth/v2/accessToken',
+        url: 'https://accounts.google.com/o/oauth2/v2/auth',
         params: {
           prompt: 'consent',
           access_type: 'offline',
@@ -20,6 +21,11 @@ export const authOptions: AuthOptions = {
             'https://www.googleapis.com/auth/userinfo.email',
           ].join(' '),
           include_granted_scopes: 'true',
+          id: 'google',
+          name: 'Google',
+          type: 'oauth',
+          idToken: true,
+          checks: ['pkce', 'state'],
         },
       },
       async profile(profile: GoogleProfile) {
@@ -32,8 +38,7 @@ export const authOptions: AuthOptions = {
               emailVerified: profile.email_verified,
             })
 
-            const accessToken = response.data.accessToken
-            const refreshToken = response.data.refreshToken
+            const { accessToken, refreshToken } = response.data
 
             setAuthTokenForCookies({
               token: accessToken,
