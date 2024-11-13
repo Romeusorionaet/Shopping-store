@@ -91,6 +91,7 @@ export function CategoryForm({ category }: CategoryFormProps) {
         imageCategory={imageCategory}
         setImageCategory={setImageCategory}
       />
+
       <label className="space-y-2">
         <span>Nome</span>
         <Input
@@ -100,6 +101,15 @@ export function CategoryForm({ category }: CategoryFormProps) {
           {...register('title')}
         />
         <FormError errors={errors.title?.message} />
+      </label>
+
+      <label className="flex flex-col space-y-2">
+        <span>Descrição</span>
+        <textarea
+          className="scrollbar h-44 resize-none rounded-lg border border-black/10 bg-transparent p-4"
+          {...register('commit')}
+        />
+        <FormError errors={errors.commit?.message} />
       </label>
 
       <Button
