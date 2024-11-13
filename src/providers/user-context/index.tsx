@@ -1,3 +1,5 @@
+'use client'
+
 import { createContext, useEffect, useState } from 'react'
 import { signOut, useSession } from 'next-auth/react'
 import { getDataUser } from '@/actions/get/user/get-data.user'

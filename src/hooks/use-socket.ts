@@ -1,3 +1,5 @@
+'use client'
+
 import { useEffect, useContext } from 'react'
 import { io } from 'socket.io-client'
 import { UserContext } from '@/providers/user-context'

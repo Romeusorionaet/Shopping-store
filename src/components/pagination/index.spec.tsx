@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react'
 import { Pagination } from '.'
 
-describe.only('Pagination', () => {
+describe('Pagination', () => {
   test('the button left should be hidden in the first pagination (1)', () => {
     const wrapper = render(<Pagination disableArrowIf={false} sizeList={14} />)
 

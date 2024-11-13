@@ -1,3 +1,5 @@
+'use client'
+
 import { useCartStore } from '@/providers/zustand-store'
 import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'

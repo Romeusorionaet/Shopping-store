@@ -1,3 +1,5 @@
+'use client'
+
 import { Separator } from '../ui/separator'
 import { Button } from '../ui/button'
 import { useCartStore } from '@/providers/zustand-store'
