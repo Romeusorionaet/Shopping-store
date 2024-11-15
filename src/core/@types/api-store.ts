@@ -119,3 +119,48 @@ export interface NotificationProps {
   createdAt: Date
   readAt: string | boolean
 }
+
+export enum Role {
+  ADMIN = 'ADMIN',
+  MANAGER = 'MANAGER',
+  SUPPORT = 'SUPPORT',
+}
+
+export enum EntityType {
+  PRODUCT = 'PRODUCT',
+  CATEGORY = 'CATEGORY',
+}
+
+export enum ActivityStatus {
+  CREATED = 'CREATED',
+  UPDATED = 'UPDATED',
+  DELETED = 'DELETED',
+}
+
+export interface CategoryTechnicalDetailsProps {
+  id: string
+  commit: string
+  dateTimeIso: string
+  entityType: EntityType
+  status: ActivityStatus
+  staff: {
+    role: Role
+    user: {
+      name: string
+      email: string
+    }
+  }
+}
+
+export interface CategoryTechnicalDetails {
+  productQuantityPerCategory: number
+  categoryBasicInformation: {
+    id: string
+    title: string
+    slug: string
+    imgUrl: string
+    createdAt: string
+    updatedAt: string
+  }
+  categoryTechnicalDetails: CategoryTechnicalDetailsProps[]
+}

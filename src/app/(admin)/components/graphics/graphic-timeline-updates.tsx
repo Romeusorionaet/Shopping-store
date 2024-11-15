@@ -1,58 +1,21 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
+import { CategoryTechnicalDetailsProps } from '@/core/@types/api-store'
 import { useState } from 'react'
-
-interface Update {
-  update: string
-  commit: string
-  accountable: string
-}
-
-interface Entry {
-  accountable: string
-  commit: string
-  createdAt: string
-}
-
-interface TimelineEntry {
-  date: Date
-  status: string
-  accountable: string
-  commit?: string
-}
+import { format } from 'date-fns'
+import { ptBR } from 'date-fns/locale'
+import { ActivityStatusTranslations } from '@/utils/activity-status-translations'
 
 interface Props {
-  data: (Update[] | Entry)[]
+  data: CategoryTechnicalDetailsProps[]
 }
 
 export function GraphicTimelineUpdates({ data }: Props) {
-  const [selectedEntry, setSelectedEntry] = useState<TimelineEntry | null>(null)
+  const [selectedEntry, setSelectedEntry] =
+    useState<CategoryTechnicalDetailsProps | null>()
 
-  const handleUpdatesArray = (updates: Update[]): TimelineEntry[] =>
-    updates.map(({ update, accountable, commit }) => ({
-      date: new Date(update),
-      status: 'atualizado',
-      accountable,
-      commit,
-    }))
-
-  const handleProductObject = (entry: Entry): TimelineEntry[] => [
-    {
-      date: new Date(entry.createdAt),
-      status: 'criado',
-      accountable: entry.accountable,
-      commit: entry.commit,
-    },
-  ]
-
-  const timelineEntries: TimelineEntry[] = data.flatMap((item) =>
-    Array.isArray(item) ? handleUpdatesArray(item) : handleProductObject(item),
-  )
-
-  timelineEntries.sort((a, b) => b.date.getTime() - a.date.getTime())
-
-  const handleEntryClick = (entry: TimelineEntry) => {
+  const handleEntryClick = (entry: CategoryTechnicalDetailsProps) => {
     setSelectedEntry(entry)
   }
 
@@ -63,16 +26,19 @@ export function GraphicTimelineUpdates({ data }: Props) {
   return (
     <div className="scrollbar w-full overflow-auto border-y border-base_color_dark/20 p-4">
       <ul>
-        {timelineEntries.map((entry, index) => (
+        {data.map((entry, index) => (
           <li
             key={index}
             className="flex cursor-pointer items-center gap-4 rounded p-2 hover:bg-gray-100"
             onClick={() => handleEntryClick(entry)}
           >
             <span className="text-gray-600">
-              {entry.date.toLocaleString('pt-BR')} ── {entry.status}:
+              {format(new Date(entry.dateTimeIso), "dd/MM/yyyy 'às' HH:mm", {
+                locale: ptBR,
+              })}{' '}
+              ── {ActivityStatusTranslations[entry.status]}:
             </span>
-            <span> {entry.accountable}</span>
+            <span>{entry.staff.user.name}</span>
           </li>
         ))}
       </ul>
@@ -83,13 +49,23 @@ export function GraphicTimelineUpdates({ data }: Props) {
             <h3 className="text-lg font-semibold">Detalhes do Commit</h3>
             <p>
               <strong>Data:</strong>{' '}
-              {selectedEntry.date.toLocaleString('pt-BR')}
+              {format(
+                new Date(selectedEntry.dateTimeIso),
+                "dd/MM/yyyy 'às' HH:mm",
+                {
+                  locale: ptBR,
+                },
+              )}
             </p>
             <p>
-              <strong>Status:</strong> {selectedEntry.status}
+              <strong>Status:</strong>{' '}
+              {ActivityStatusTranslations[selectedEntry.status]}
             </p>
             <p>
-              <strong>Responsável:</strong> {selectedEntry.accountable}
+              <strong>Responsável:</strong> {selectedEntry.staff.user.name}
+            </p>
+            <p>
+              <strong>Email:</strong> {selectedEntry.staff.user.email}
             </p>
             {selectedEntry.commit && (
               <p>

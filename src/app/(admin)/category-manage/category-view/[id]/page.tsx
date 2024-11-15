@@ -1,35 +1,28 @@
+import { getDataCategoryTechnicalDetails } from '@/actions/get/catalog/get-data-category-technical-details'
 import { GraphicTimelineUpdates } from '@/app/(admin)/components/graphics/graphic-timeline-updates'
-import Image from 'next/image'
+import { CategoryDetailsNotFoundError } from '../../components/category-details-not-found-error'
 import { CategoryManageHeader } from '../../components/category-manage-header'
-import LogoMarcaAsus from '@/assets/img/logo-marca/logo-asus.png'
+import { CategoryTechnicalDetails } from '@/core/@types/api-store'
+import Image from 'next/image'
+import { BaseUrl } from '@/constants/base-url'
 
 interface Props {
   params: { id: string }
 }
 
-export default function CategoryView({ params }: Props) {
+export default async function CategoryView({ params }: Props) {
   const { id } = params
 
-  const categoryTimelineData = [
-    [
-      {
-        update: '2024-10-06 13:15:30',
-        commit: 'Imagem atualizada.',
-        accountable: 'Fulano de tal',
-      },
-      {
-        update: '2024-10-06 12:15:30',
-        commit:
-          'Correção no nome da categoria de Iphon para Iphone lorem ded ede d ed e de  g rweg  eg qwerf q wef  qwef q wf  qwf q wf qerg e gqrwefgqe rg qwerfgqer gq weg qer gqe rg.',
-        accountable: 'Romeu soares',
-      },
-    ],
-    {
-      accountable: 'Fulano de tal',
-      commit: 'Criação da categoria.',
-      createdAt: '2024-10-09 08:47:09',
-    },
-  ]
+  const { props } = await getDataCategoryTechnicalDetails(id)
+
+  if (!props?.category) {
+    return <CategoryDetailsNotFoundError id={id} />
+  }
+
+  const category: CategoryTechnicalDetails = JSON.parse(props.category)
+
+  const basicInfo = category.categoryBasicInformation
+  const categoryTimelineData = category.categoryTechnicalDetails
 
   return (
     <div className="ml-12 w-full pt-32">
@@ -42,15 +35,15 @@ export default function CategoryView({ params }: Props) {
               <Image
                 height={500}
                 width={500}
-                src={LogoMarcaAsus}
+                src={`${BaseUrl.IMG}/${basicInfo.imgUrl}`}
                 alt="product image view"
                 className="h-full w-full border border-slate-300 object-fill"
               />
             </div>
 
             <div>
-              <p>Nome: Iphone lorem rt juj ddqwdqw dwedwe</p>
-              <p>Produtos: 86 unidades</p>
+              <p>Nome: {basicInfo.title}</p>
+              <p>Produtos: {category.productQuantityPerCategory} unidades</p>
             </div>
           </div>
 
