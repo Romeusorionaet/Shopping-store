@@ -18,7 +18,7 @@ export function CategoryManageHeader({ categoryId }: Props) {
     <section className="flex h-44 w-full flex-col justify-evenly gap-2 border-b border-b-base_one_reference_header/20 bg-base_color_text_top md:justify-evenly">
       <section className="flex w-full items-center justify-evenly">
         <Link
-          href="/product-manage"
+          href="/category-manage"
           className="group flex items-end gap-2 rounded-lg border border-base_color_dark/10 p-1 duration-500 hover:bg-base_one_reference_header"
         >
           <SquareStack
