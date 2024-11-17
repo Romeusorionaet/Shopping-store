@@ -3,7 +3,7 @@
 import { api } from '@/lib/api'
 import { getAccessTokenFromCookies } from '@/utils/get-tokens-from-cookies'
 
-export const getDataCategoryTechnicalDetails = async (categoryId: string) => {
+export const getRetrieveCategorySummaries = async () => {
   const accessToken = await getAccessTokenFromCookies()
 
   if (!accessToken) {
@@ -14,26 +14,24 @@ export const getDataCategoryTechnicalDetails = async (categoryId: string) => {
   }
 
   try {
-    const response = await api.get(
-      `/category/technical-details/${categoryId}`,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
+    const response = await api.get('/category/retrieve-summaries', {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
       },
-    )
+    })
 
     return {
       props: {
-        category: JSON.stringify(response.data),
+        retrieveCategorySummaries: JSON.stringify(
+          response.data.retrieveCategorySummaries,
+        ),
       },
       revalidate: 60 * 60 * 24, // 1 day
     }
   } catch (err) {
     return {
       notFound: true,
-      revalidate: 0,
-      props: { category: null },
+      props: { retrieveCategorySummaries: '[]' },
     }
   }
 }

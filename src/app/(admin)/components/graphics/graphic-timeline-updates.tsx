@@ -32,13 +32,18 @@ export function GraphicTimelineUpdates({ data }: Props) {
             className="flex cursor-pointer items-center gap-4 rounded p-2 hover:bg-gray-100"
             onClick={() => handleEntryClick(entry)}
           >
-            <span className="text-gray-600">
+            <p>
               {format(new Date(entry.dateTimeIso), "dd/MM/yyyy 'às' HH:mm", {
                 locale: ptBR,
-              })}{' '}
-              ── {ActivityStatusTranslations[entry.status]}:
-            </span>
-            <span>{entry.staff.user.name}</span>
+              })}
+              <span className="text-gray-600">
+                {' '}
+                ── {ActivityStatusTranslations[entry.status]}:
+              </span>
+            </p>
+            <p className="lowercase">
+              {entry.staff.user.name} <span>({entry.staff.role})</span>
+            </p>
           </li>
         ))}
       </ul>
@@ -61,8 +66,9 @@ export function GraphicTimelineUpdates({ data }: Props) {
               <strong>Status:</strong>{' '}
               {ActivityStatusTranslations[selectedEntry.status]}
             </p>
-            <p>
-              <strong>Responsável:</strong> {selectedEntry.staff.user.name}
+            <p className="lowercase">
+              <strong>Responsável:</strong> {selectedEntry.staff.user.name}{' '}
+              <span>({selectedEntry.staff.role})</span>
             </p>
             <p>
               <strong>Email:</strong> {selectedEntry.staff.user.email}

@@ -10,7 +10,7 @@ const Chart = dynamic(
 )
 
 interface Props {
-  data: { title: string; products: number }[]
+  data: { title: string; productCount: number }[]
   title: string
 }
 
@@ -18,7 +18,7 @@ export function GraphicBarCategoryProducts({ data, title }: Props) {
   const minWidthPerBar = 50
 
   const sortedData = useMemo(() => {
-    return [...data].sort((a, b) => b.products - a.products)
+    return [...data].sort((a, b) => b.productCount - a.productCount)
   }, [data])
 
   const chartWidth = useMemo(() => {
@@ -27,7 +27,7 @@ export function GraphicBarCategoryProducts({ data, title }: Props) {
 
   const series = [
     {
-      data: sortedData.map((category) => category.products),
+      data: sortedData.map((category) => category.productCount),
     },
   ]
 
@@ -40,7 +40,7 @@ export function GraphicBarCategoryProducts({ data, title }: Props) {
       },
     },
     title: {
-      text: `${title}: total de ${sortedData.length} categorias`,
+      text: `${title}: ${sortedData.length}`,
       align: 'left',
     },
     plotOptions: {
@@ -70,7 +70,7 @@ export function GraphicBarCategoryProducts({ data, title }: Props) {
         return `<div style={{ padding: '10px' }}>
                   <strong>${category.title}</strong>
                   <br />
-                  <span>${category.products} produtos</span>
+                  <span>${category.productCount} produtos</span>
                 </div>`
       },
     },

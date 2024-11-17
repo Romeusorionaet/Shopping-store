@@ -164,3 +164,9 @@ export interface CategoryTechnicalDetails {
   }
   categoryTechnicalDetails: CategoryTechnicalDetailsProps[]
 }
+
+export interface RetrieveCategorySummaryProps {
+  id: string
+  title: string
+  productCount: number
+}
