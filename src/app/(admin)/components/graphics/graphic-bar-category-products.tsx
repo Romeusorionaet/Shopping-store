@@ -25,6 +25,10 @@ export function GraphicBarCategoryProducts({ data, title }: Props) {
     return sortedData.length * minWidthPerBar
   }, [sortedData.length])
 
+  const colors = sortedData.map((category) =>
+    category.productCount <= 3 ? '#FF0000' : '#3498db',
+  )
+
   const series = [
     {
       data: sortedData.map((category) => category.productCount),
@@ -82,6 +86,7 @@ export function GraphicBarCategoryProducts({ data, title }: Props) {
         right: 20,
       },
     },
+    colors,
   }
 
   return (
